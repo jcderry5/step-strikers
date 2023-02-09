@@ -32,10 +32,14 @@
 		643651152991AA280017AA0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		643651222992C6180017AA0E /* RPGCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPGCharacter.swift; sourceTree = "<group>"; };
 <<<<<<< HEAD
+<<<<<<< HEAD
 		EB6657B9299563FC00CAEAEC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "step-strikers-app/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 =======
 		EB6657BB2995691600CAEAEC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "step-strikers-app/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 >>>>>>> 3f60bd425792d9193fa1beee1d0cffb263a8df76
+=======
+		EB6657BB2995691600CAEAEC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+>>>>>>> b48277e (commit message)
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
