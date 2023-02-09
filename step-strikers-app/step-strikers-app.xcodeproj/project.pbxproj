@@ -19,6 +19,7 @@
 		EB6657902992ECAE00CAEAEC /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EB66578F2992ECAE00CAEAEC /* FirebaseAnalyticsSwift */; };
 		EB6657922992ECAE00CAEAEC /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = EB6657912992ECAE00CAEAEC /* FirebaseFirestore */; };
 		EB6657942992ECAE00CAEAEC /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EB6657932992ECAE00CAEAEC /* FirebaseFirestoreSwift */; };
+		EBC206852995777D00DEB48C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EBC206842995777D00DEB48C /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		643651152991AA280017AA0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		643651222992C6180017AA0E /* RPGCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPGCharacter.swift; sourceTree = "<group>"; };
 		643651252992D6450017AA0E /* commandline-testing.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "commandline-testing.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		EBC206842995777D00DEB48C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 				643651102991AA280017AA0E /* Assets.xcassets */,
 				643651122991AA280017AA0E /* LaunchScreen.storyboard */,
 				643651152991AA280017AA0E /* Info.plist */,
+				EBC206842995777D00DEB48C /* GoogleService-Info.plist */,
 				643651222992C6180017AA0E /* RPGCharacter.swift */,
 				640D14BD29955EB0007DB8D3 /* Armor.swift */,
 			);
@@ -151,6 +154,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				643651142991AA280017AA0E /* LaunchScreen.storyboard in Resources */,
+				EBC206852995777D00DEB48C /* GoogleService-Info.plist in Resources */,
 				643651112991AA280017AA0E /* Assets.xcassets in Resources */,
 				6436510F2991AA270017AA0E /* Main.storyboard in Resources */,
 			);
