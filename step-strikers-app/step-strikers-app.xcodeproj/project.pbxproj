@@ -18,6 +18,7 @@
 		EB6657902992ECAE00CAEAEC /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EB66578F2992ECAE00CAEAEC /* FirebaseAnalyticsSwift */; };
 		EB6657922992ECAE00CAEAEC /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = EB6657912992ECAE00CAEAEC /* FirebaseFirestore */; };
 		EB6657942992ECAE00CAEAEC /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EB6657932992ECAE00CAEAEC /* FirebaseFirestoreSwift */; };
+		EB6657BA299563FC00CAEAEC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EB6657B9299563FC00CAEAEC /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,7 +31,7 @@
 		643651132991AA280017AA0E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		643651152991AA280017AA0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		643651222992C6180017AA0E /* RPGCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPGCharacter.swift; sourceTree = "<group>"; };
-		643651252992D6450017AA0E /* commandline-testing.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "commandline-testing.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		EB6657B9299563FC00CAEAEC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +52,6 @@
 		643650FB2991AA260017AA0E = {
 			isa = PBXGroup;
 			children = (
-				643651252992D6450017AA0E /* commandline-testing.playground */,
 				643651062991AA260017AA0E /* step-strikers-app */,
 				643651052991AA260017AA0E /* Products */,
 			);
@@ -72,6 +72,7 @@
 				643651092991AA260017AA0E /* SceneDelegate.swift */,
 				6436510B2991AA260017AA0E /* ViewController.swift */,
 				6436510D2991AA270017AA0E /* Main.storyboard */,
+				EB6657B9299563FC00CAEAEC /* GoogleService-Info.plist */,
 				643651102991AA280017AA0E /* Assets.xcassets */,
 				643651122991AA280017AA0E /* LaunchScreen.storyboard */,
 				643651152991AA280017AA0E /* Info.plist */,
@@ -148,6 +149,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				643651142991AA280017AA0E /* LaunchScreen.storyboard in Resources */,
+				EB6657BA299563FC00CAEAEC /* GoogleService-Info.plist in Resources */,
 				643651112991AA280017AA0E /* Assets.xcassets in Resources */,
 				6436510F2991AA270017AA0E /* Main.storyboard in Resources */,
 			);
