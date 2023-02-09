@@ -147,6 +147,5 @@ class Rogue: RPGCharacter {
         return ("Character Name: \(characterName)\nUser Name: \(userName)\nCurrent Health: \(currHealth)\nCurrent Stamina: \(currStamina)")
     }
     
-    
 }
 
