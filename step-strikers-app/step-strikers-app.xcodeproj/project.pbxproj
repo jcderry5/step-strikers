@@ -14,7 +14,6 @@
 		643651112991AA280017AA0E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 643651102991AA280017AA0E /* Assets.xcassets */; };
 		643651142991AA280017AA0E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 643651122991AA280017AA0E /* LaunchScreen.storyboard */; };
 		643651232992C6180017AA0E /* RPGCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643651222992C6180017AA0E /* RPGCharacter.swift */; };
-		EB66578B2992EC2200CAEAEC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EB66578A2992EC2200CAEAEC /* GoogleService-Info.plist */; };
 		EB66578E2992ECAE00CAEAEC /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = EB66578D2992ECAE00CAEAEC /* FirebaseAnalytics */; };
 		EB6657902992ECAE00CAEAEC /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EB66578F2992ECAE00CAEAEC /* FirebaseAnalyticsSwift */; };
 		EB6657922992ECAE00CAEAEC /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = EB6657912992ECAE00CAEAEC /* FirebaseFirestore */; };
@@ -32,7 +31,6 @@
 		643651152991AA280017AA0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		643651222992C6180017AA0E /* RPGCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPGCharacter.swift; sourceTree = "<group>"; };
 		643651252992D6450017AA0E /* commandline-testing.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "commandline-testing.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		EB66578A2992EC2200CAEAEC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,7 +76,6 @@
 				643651122991AA280017AA0E /* LaunchScreen.storyboard */,
 				643651152991AA280017AA0E /* Info.plist */,
 				643651222992C6180017AA0E /* RPGCharacter.swift */,
-				EB66578A2992EC2200CAEAEC /* GoogleService-Info.plist */,
 			);
 			path = "step-strikers-app";
 			sourceTree = "<group>";
@@ -151,7 +148,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				643651142991AA280017AA0E /* LaunchScreen.storyboard in Resources */,
-				EB66578B2992EC2200CAEAEC /* GoogleService-Info.plist in Resources */,
 				643651112991AA280017AA0E /* Assets.xcassets in Resources */,
 				6436510F2991AA270017AA0E /* Main.storyboard in Resources */,
 			);
