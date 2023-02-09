@@ -53,18 +53,26 @@
 		643651252992D6450017AA0E /* commandline-testing.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "commandline-testing.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> Create protocols (#3)
 =======
 		EBC206842995777D00DEB48C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 >>>>>>> Add firebase config file (#5)
 =======
+=======
+>>>>>>> Old files from when i branched
 		EB69AF3E299AA16A00FB5D25 /* DamageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DamageViewController.swift; sourceTree = "<group>"; };
 		EBC0637B2996ED4B00B00110 /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		EBC0637F299A9D5900B00110 /* StatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
 		EBC206842995777D00DEB48C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EBCBEEA1299C0BDF005009D7 /* DisplayInitiativeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayInitiativeViewController.swift; sourceTree = "<group>"; };
 		EBCBEEA3299C0C43005009D7 /* InitiativeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitiativeViewController.swift; sourceTree = "<group>"; };
+<<<<<<< HEAD
 >>>>>>> Implement game functions for combat (#9)
+=======
+=======
+>>>>>>> Old files from when i branched
+>>>>>>> Old files from when i branched
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,12 +204,18 @@
 				643651142991AA280017AA0E /* LaunchScreen.storyboard in Resources */,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 				EBC206852995777D00DEB48C /* GoogleService-Info.plist in Resources */,
 =======
 >>>>>>> Create protocols (#3)
 =======
 				EBC206852995777D00DEB48C /* GoogleService-Info.plist in Resources */,
 >>>>>>> Add firebase config file (#5)
+=======
+				EBC206852995777D00DEB48C /* GoogleService-Info.plist in Resources */,
+=======
+>>>>>>> Old files from when i branched
+>>>>>>> Old files from when i branched
 				643651112991AA280017AA0E /* Assets.xcassets in Resources */,
 				6436510F2991AA270017AA0E /* Main.storyboard in Resources */,
 			);
