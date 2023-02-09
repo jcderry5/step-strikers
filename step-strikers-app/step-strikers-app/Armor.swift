@@ -6,6 +6,9 @@
 //
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Add base code of armor and rpgcharacter
 protocol Armor {
     var name: String { get}
     var armorClass: Int {get}
@@ -80,6 +83,7 @@ func modifyArmorClass(wearer: RPGCharacter) -> Int {
         return rollDie(quant: 1, sides: wearer.currArmor.armorClass)
     }
 }
+<<<<<<< HEAD
 
 // create all armor variables
 let leatherArmor = leather()
@@ -92,3 +96,5 @@ let noArmorArmor = noArmor()
 =======
 import Foundation
 >>>>>>> Created Armor.swift
+=======
+>>>>>>> Add base code of armor and rpgcharacter
