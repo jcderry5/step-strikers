@@ -5,6 +5,7 @@
 //  Created by Jalyn Derry on 2/9/23.
 //
 
+<<<<<<< HEAD
 protocol Armor {
     var name: String { get}
     var armorClass: Int {get}
@@ -88,3 +89,6 @@ let chainMailArmor = chainMail()
 let shieldArmor = shield()
 let noArmorArmor = noArmor()
 
+=======
+import Foundation
+>>>>>>> Created Armor.swift

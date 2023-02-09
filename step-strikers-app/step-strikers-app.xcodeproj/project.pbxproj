@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		640D14BE29955EB0007DB8D3 /* Armor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640D14BD29955EB0007DB8D3 /* Armor.swift */; };
 		643651082991AA260017AA0E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643651072991AA260017AA0E /* AppDelegate.swift */; };
 		6436510A2991AA260017AA0E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643651092991AA260017AA0E /* SceneDelegate.swift */; };
 		6436510C2991AA270017AA0E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6436510B2991AA260017AA0E /* ViewController.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		640D14BD29955EB0007DB8D3 /* Armor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Armor.swift; sourceTree = "<group>"; };
 		643651042991AA260017AA0E /* step-strikers-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "step-strikers-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		643651072991AA260017AA0E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		643651092991AA260017AA0E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				643651062991AA260017AA0E /* step-strikers-app */,
+				643651252992D6450017AA0E /* commandline-testing.playground */,
 				643651052991AA260017AA0E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -124,12 +127,16 @@
 				EBC206842995777D00DEB48C /* GoogleService-Info.plist */,
 				643651222992C6180017AA0E /* RPGCharacter.swift */,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				645227D029959295008B58D4 /* Armor.swift */,
 				6463B42B2995ECEE0031B1A4 /* Weapon.swift */,
 				6463B42D2995F0E20031B1A4 /* Game.swift */,
 				64EE2AB0299D533A00418066 /* Item.swift */,
 =======
 >>>>>>> Create protocols (#3)
+=======
+				640D14BD29955EB0007DB8D3 /* Armor.swift */,
+>>>>>>> Created Armor.swift
 			);
 			path = "step-strikers-app";
 			sourceTree = "<group>";
@@ -230,12 +237,19 @@
 			files = (
 				6436510C2991AA270017AA0E /* ViewController.swift in Sources */,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				64EE2AB1299D533A00418066 /* Item.swift in Sources */,
 				645227D129959295008B58D4 /* Armor.swift in Sources */,
 				6463B42E2995F0E20031B1A4 /* Game.swift in Sources */,
 =======
 				EBC0637C2996ED4B00B00110 /* Game.swift in Sources */,
 >>>>>>> Implement game functions for combat (#9)
+=======
+				EBC0637C2996ED4B00B00110 /* Game.swift in Sources */,
+=======
+				640D14BE29955EB0007DB8D3 /* Armor.swift in Sources */,
+>>>>>>> Created Armor.swift
+>>>>>>> Created Armor.swift
 				643651232992C6180017AA0E /* RPGCharacter.swift in Sources */,
 				EBCBEEA2299C0BDF005009D7 /* DisplayInitiativeViewController.swift in Sources */,
 				643651082991AA260017AA0E /* AppDelegate.swift in Sources */,
