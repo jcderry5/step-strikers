@@ -261,6 +261,7 @@ class Fighter: RPGCharacter {
         return ("Character Name: \(characterName)\nUser Name: \(userName)\nCurrent Health: \(currHealth)\nCurrent Stamina: \(currStamina)")
     }
     
+<<<<<<< HEAD
     override init(characterName: String, userName: String, health: Int,
               stamina: Int){
         super.init(characterName: characterName, userName: userName, health: health, stamina: stamina)
@@ -299,6 +300,8 @@ class Rogue: RPGCharacter {
         return ("Character Name: \(characterName)\nUser Name: \(userName)\nCurrent Health: \(currHealth)\nCurrent Stamina: \(currStamina)")
     }
     
+=======
+>>>>>>> Add gitignore file (#6)
 }
 
 =======
