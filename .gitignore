@@ -1,2 +1,6 @@
+<<<<<<< HEAD
 *.DS_Store
 xcuserdata/
+=======
+step-strikers-app/step-strikers-app.xcodeproj/project.xcworkspace/xcuserdata
+>>>>>>> Add gitignore file (#6)
