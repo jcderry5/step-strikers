@@ -29,7 +29,7 @@ protocol RPGCharacter: CustomStringConvertible {
 }
 
 
-protocol Caster {
+protocol Caster: RPGCharacter {
     var characterName: String { get set}
     var userName: String { get set}
     var maxHealth: Int { get set}
@@ -195,6 +195,18 @@ class Wizard: Caster {
         self.currSpellPoints = spellPoints
     }
     
+    // DO NOT USE. This is initializer for RPGCharacter. Necessary to run.
+    required init(characterName: String, userName: String, health: Int, stamina: Int) {
+        self.characterName = characterName
+        self.userName = userName
+        self.maxHealth = health
+        self.currHealth = health
+        self.maxStamina = stamina
+        self.currStamina = stamina
+        self.maxSpellPoints = -1
+        self.currSpellPoints = -1
+    }
+    
 }
 
 
@@ -224,6 +236,18 @@ class Bard: Caster {
         self.currStamina = stamina
         self.maxSpellPoints = spellPoints
         self.currSpellPoints = spellPoints
+    }
+    
+    // DO NOT USE. This is initializer for RPGCharacter. Necessary to run.
+    required init(characterName: String, userName: String, health: Int, stamina: Int) {
+        self.characterName = characterName
+        self.userName = userName
+        self.maxHealth = health
+        self.currHealth = health
+        self.maxStamina = stamina
+        self.currStamina = stamina
+        self.maxSpellPoints = -1
+        self.currSpellPoints = -1
     }
 }
 

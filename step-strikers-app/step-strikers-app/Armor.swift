@@ -7,6 +7,7 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> Add base code of armor and rpgcharacter
 protocol Armor {
@@ -14,9 +15,19 @@ protocol Armor {
     var armorClass: Int {get}
     
     func checkIfSuited(potentialWearer: RPGCharacter) -> Bool
+=======
+
+protocol Armor {
+    var name: String { get set}
+    var armorClass: Int {get set}
+    
+    func checkCanEquip(potentialWearer: RPGCharacter) -> Bool
+>>>>>>> Added all armors
 }
 
+
 struct leather: Armor {
+<<<<<<< HEAD
     let name = "Leather"
     let armorClass = 11
     
@@ -52,6 +63,78 @@ struct chainMail: Armor {
     
     // Only Rogues and Bards can wear this armor
     func checkIfSuited(potentialWearer: RPGCharacter) -> Bool{
+=======
+    var name: String
+    var armorClass: Int
+    
+    init(){
+        name = "Leather"
+        armorClass = 11
+    }
+    
+    // Only Rogues and Bards can wear this armor
+    func checkCanEquip(potentialWearer: RPGCharacter) -> Bool{
+        return potentialWearer is Rogue || potentialWearer is Bard || potentialWearer is Fighter
+    }
+}
+
+struct padding: Armor {
+    var name: String
+    var armorClass: Int
+    
+    init() {
+        name = "Padding"
+        armorClass = 11
+    }
+    
+    // Only Rogues and Bards can wear this armor
+    func checkCanEquip(potentialWearer: RPGCharacter) -> Bool{
+        return potentialWearer is Rogue || potentialWearer is Bard
+    }
+}
+
+struct studdedLeather: Armor {
+    var name: String
+    var armorClass: Int
+    
+    init() {
+        name = "Studded Leather"
+        armorClass = 12
+    }
+    
+    // Only Rogues and Bards can wear this armor
+    func checkCanEquip(potentialWearer: RPGCharacter) -> Bool{
+        return potentialWearer is Rogue || potentialWearer is Bard
+    }
+}
+
+struct chainMail: Armor {
+    var name: String
+    var armorClass: Int
+    
+    init() {
+        name = "Chain Mail"
+        armorClass = 16
+    }
+    
+    // Only Rogues and Bards can wear this armor
+    func checkCanEquip(potentialWearer: RPGCharacter) -> Bool{
+        return potentialWearer is Fighter
+    }
+}
+
+struct shield: Armor {
+    var name: String
+    var armorClass: Int
+    
+    init() {
+        name = "Shield"
+        armorClass = 2
+    }
+    
+    // Only Rogues and Bards can wear this armor
+    func checkCanEquip(potentialWearer: RPGCharacter) -> Bool{
+>>>>>>> Added all armors
         return potentialWearer is Fighter
     }
 }
