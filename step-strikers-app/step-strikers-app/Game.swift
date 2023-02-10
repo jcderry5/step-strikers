@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 // This is called when ONE person decides they want to form a team.
 func makeTeam(){
@@ -79,30 +80,40 @@ func setTeams(blueTeam: [RPGCharacter], redTeam: [RPGCharacter]) {
 
 // This will be called once the observer sees that hasStarted is true
 func startGame(){
-    /*
-     1. rollInitiative
-        a. show the screen of a rolling d20
-        b. on click, call rollDie(quant: 1, sides: 20) it displays returned number
-     2. Have everyone send their name and initiative order to the server
-     3. When the observer observes that order.length == numPlayers OR check len after each fire
-     3. Call setOrder
-     4. Send sorted order to fb
-     */
+    // wait for everyone to finish rolling initiative and send info to server
+    Firestore.firestore().collection("games").document("zIuUhRjKte6oUcvdrP4D").addSnapshotListener {
+        documentSnapshot, error in guard let document = documentSnapshot else {
+            print("Error fetching document: \(error!)")
+            return
+        }
+        
+        let data = document.data()
+        var dict = [String:Int]()
+        dict = data?["initiative"] as! [String:Int]
+        print("Current data: \(dict)")
+        
+        if dict.count >= 3 {
+            print("greater than 3! returning")
+            setOrder(initiative: dict)
+            return
+        }
+    }
 }
 
 func rollInitiative(){
     /*
      Visually show a d20 rolling
-     On click: show number
+     on click, call rollDie(quant: 1, sides: 20) it displays returned number
+     send name and initiative order to the server
      */
 }
 
-func setOrder(){
+func setOrder(initiative: [String:Int]){
     
     /*
      1. Read order from fb
      2. Sort by initiative
-     3. Write
+     3. Write order to fb
      4. startObserving
      */
     

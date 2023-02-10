@@ -40,6 +40,8 @@ class ViewController: UIViewController {
                 print("Document does not exist")
             }
         }
+        
+        startGame()
     }
 
     override func viewDidLoad() {
