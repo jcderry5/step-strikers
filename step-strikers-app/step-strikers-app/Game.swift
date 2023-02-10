@@ -1,0 +1,15 @@
+//
+//  Game.swift
+//  step-strikers-app
+//
+//  Created by Jalyn Derry on 2/9/23.
+//
+
+func rollDie(quant: Int, sides: Int) -> Int {
+    var sum = 0
+    for _ in 1...quant {
+        sum += Int.random(in: 1...sides)
+    }
+    
+    return sum
+}
