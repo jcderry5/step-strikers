@@ -144,6 +144,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 				645227D029959295008B58D4 /* Armor.swift */,
 				6463B42B2995ECEE0031B1A4 /* Weapon.swift */,
 				6463B42D2995F0E20031B1A4 /* Game.swift */,
@@ -159,6 +160,9 @@
 				645227D029959295008B58D4 /* Armor.swift */,
 >>>>>>> Add base code of armor and rpgcharacter
 >>>>>>> Add base code of armor and rpgcharacter
+=======
+				645227D029959295008B58D4 /* Armor.swift */,
+>>>>>>> Added random but needed files
 			);
 			path = "step-strikers-app";
 			sourceTree = "<group>";
@@ -261,6 +265,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 				64EE2AB1299D533A00418066 /* Item.swift in Sources */,
 				645227D129959295008B58D4 /* Armor.swift in Sources */,
 				6463B42E2995F0E20031B1A4 /* Game.swift in Sources */,
@@ -270,6 +275,8 @@
 =======
 =======
 >>>>>>> Add base code of armor and rpgcharacter
+=======
+>>>>>>> Added random but needed files
 				EBC0637C2996ED4B00B00110 /* Game.swift in Sources */,
 =======
 				640D14BE29955EB0007DB8D3 /* Armor.swift in Sources */,
@@ -283,7 +290,13 @@
 				645227D129959295008B58D4 /* Armor.swift in Sources */,
 >>>>>>> Add base code of armor and rpgcharacter
 >>>>>>> Add base code of armor and rpgcharacter
+<<<<<<< HEAD
 >>>>>>> Add base code of armor and rpgcharacter
+=======
+=======
+				645227D129959295008B58D4 /* Armor.swift in Sources */,
+>>>>>>> Added random but needed files
+>>>>>>> Added random but needed files
 				643651232992C6180017AA0E /* RPGCharacter.swift in Sources */,
 				EBCBEEA2299C0BDF005009D7 /* DisplayInitiativeViewController.swift in Sources */,
 				643651082991AA260017AA0E /* AppDelegate.swift in Sources */,
