@@ -18,8 +18,8 @@ protocol Armor {
 =======
 
 protocol Armor {
-    var name: String { get set}
-    var armorClass: Int {get set}
+    var name: String { get}
+    var armorClass: Int {get}
     
     func checkCanEquip(potentialWearer: RPGCharacter) -> Bool
 >>>>>>> Added all armors
@@ -27,6 +27,7 @@ protocol Armor {
 
 
 struct leather: Armor {
+<<<<<<< HEAD
 <<<<<<< HEAD
     let name = "Leather"
     let armorClass = 11
@@ -71,6 +72,10 @@ struct chainMail: Armor {
         name = "Leather"
         armorClass = 11
     }
+=======
+    let name = "Leather"
+    let armorClass = 11
+>>>>>>> Made all armor and weapons
     
     // Only Rogues and Bards can wear this armor
     func checkCanEquip(potentialWearer: RPGCharacter) -> Bool{
@@ -79,13 +84,8 @@ struct chainMail: Armor {
 }
 
 struct padding: Armor {
-    var name: String
-    var armorClass: Int
-    
-    init() {
-        name = "Padding"
-        armorClass = 11
-    }
+    let name = "Padding"
+    let armorClass = 11
     
     // Only Rogues and Bards can wear this armor
     func checkCanEquip(potentialWearer: RPGCharacter) -> Bool{
@@ -94,13 +94,8 @@ struct padding: Armor {
 }
 
 struct studdedLeather: Armor {
-    var name: String
-    var armorClass: Int
-    
-    init() {
-        name = "Studded Leather"
-        armorClass = 12
-    }
+    let name = "Studded Leather"
+    let armorClass = 12
     
     // Only Rogues and Bards can wear this armor
     func checkCanEquip(potentialWearer: RPGCharacter) -> Bool{
@@ -109,13 +104,8 @@ struct studdedLeather: Armor {
 }
 
 struct chainMail: Armor {
-    var name: String
-    var armorClass: Int
-    
-    init() {
-        name = "Chain Mail"
-        armorClass = 16
-    }
+    let name = "Chain Mail"
+    let armorClass = 16
     
     // Only Rogues and Bards can wear this armor
     func checkCanEquip(potentialWearer: RPGCharacter) -> Bool{
@@ -124,13 +114,8 @@ struct chainMail: Armor {
 }
 
 struct shield: Armor {
-    var name: String
-    var armorClass: Int
-    
-    init() {
-        name = "Shield"
-        armorClass = 2
-    }
+    var name = "Shield"
+    var armorClass = 2
     
     // Only Rogues and Bards can wear this armor
     func checkCanEquip(potentialWearer: RPGCharacter) -> Bool{
@@ -153,11 +138,16 @@ struct noArmor: Armor {
     var name = "No Armor"
     var armorClass = 0
     
+<<<<<<< HEAD
     func checkIfSuited(potentialWearer: RPGCharacter) -> Bool {
+=======
+    func checkCanEquip(potentialWearer: RPGCharacter) -> Bool {
+>>>>>>> Made all armor and weapons
         return true
     }
 }
 
+<<<<<<< HEAD
 // This function will return the modified armor class in case the wearer is ill-suited for their currArmor
 func modifyArmorClass(wearer: RPGCharacter) -> Int {
     if(wearer.currArmor.checkIfSuited(potentialWearer: wearer)){
@@ -168,6 +158,8 @@ func modifyArmorClass(wearer: RPGCharacter) -> Int {
 }
 <<<<<<< HEAD
 
+=======
+>>>>>>> Made all armor and weapons
 // create all armor variables
 let leatherArmor = leather()
 let paddingArmor = padding()
@@ -176,8 +168,11 @@ let chainMailArmor = chainMail()
 let shieldArmor = shield()
 let noArmorArmor = noArmor()
 
+<<<<<<< HEAD
 =======
 import Foundation
 >>>>>>> Created Armor.swift
 =======
 >>>>>>> Add base code of armor and rpgcharacter
+=======
+>>>>>>> Made all armor and weapons

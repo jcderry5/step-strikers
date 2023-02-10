@@ -7,30 +7,60 @@
 
 import Foundation
 
+<<<<<<< HEAD
 protocol Weapon {
     var name: String {get}
     var damage: Int {get}
     var staminaCost: Int {get}
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool
+=======
+func calculateDamage(target: RPGCharacter, damage: Int) -> Int {
+    if (rollDie(quant: 1, sides: 20) >= target.currArmor.armorClass){
+        return rollDie(quant: 1, sides: 4)
+    } else {
+        return 0
+    }
+}
+
+protocol Weapon {
+    var name: String {get}
+    var damage: Int {get}
+    
+    func checkCanEquip(wearer: RPGCharacter) -> Bool
+    
+>>>>>>> Made all armor and weapons
 }
 
 struct fists: Weapon {
     let name = "Fists"
     let damage = 2
+<<<<<<< HEAD
     let staminaCost = 1
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
         return true
     }
+=======
+    
+    func checkCanEquip(wearer: RPGCharacter) -> Bool {
+        return true
+    }
+    
+>>>>>>> Made all armor and weapons
 }
 
 struct dagger: Weapon {
     let name = "Dagger"
     let damage = 4
+<<<<<<< HEAD
     let staminaCost = 3
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
+=======
+    
+    func checkCanEquip(wearer: RPGCharacter) -> Bool {
+>>>>>>> Made all armor and weapons
         return wearer is Wizard
     }
 }
@@ -38,9 +68,14 @@ struct dagger: Weapon {
 struct darts: Weapon {
     let name = "Darts"
     let damage = 5
+<<<<<<< HEAD
     let staminaCost = 4
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
+=======
+    
+    func checkCanEquip(wearer: RPGCharacter) -> Bool {
+>>>>>>> Made all armor and weapons
         return wearer is Wizard
     }
 }
@@ -48,9 +83,15 @@ struct darts: Weapon {
 struct crossBow: Weapon {
     let name = "Cross Bow"
     let damage = 8
+<<<<<<< HEAD
     let staminaCost = 5
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
+=======
+    
+    // Anyone can equip a crossbow
+    func checkCanEquip(wearer: RPGCharacter) -> Bool {
+>>>>>>> Made all armor and weapons
         return true
     }
 }
@@ -58,9 +99,14 @@ struct crossBow: Weapon {
 struct rapier: Weapon {
     let name = "Rapier"
     let damage = 8
+<<<<<<< HEAD
     let staminaCost = 5
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
+=======
+    
+    func checkCanEquip(wearer: RPGCharacter) -> Bool {
+>>>>>>> Made all armor and weapons
         return wearer is Rogue || wearer is Bard
     }
 }
@@ -68,9 +114,14 @@ struct rapier: Weapon {
 struct shortSword: Weapon {
     let name = "Short Sword"
     let damage = 6
+<<<<<<< HEAD
     let staminaCost = 4
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
+=======
+    
+    func checkCanEquip(wearer: RPGCharacter) -> Bool {
+>>>>>>> Made all armor and weapons
         return wearer is Rogue
     }
 }
@@ -78,9 +129,14 @@ struct shortSword: Weapon {
 struct longBow: Weapon {
     let name = "Long Bow"
     let damage = 8
+<<<<<<< HEAD
     let staminaCost = 6
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
+=======
+    
+    func checkCanEquip(wearer: RPGCharacter) -> Bool {
+>>>>>>> Made all armor and weapons
         return wearer is Fighter
     }
 }
@@ -88,9 +144,14 @@ struct longBow: Weapon {
 struct handAxe: Weapon {
     let name = "Hand Axe"
     let damage = 6
+<<<<<<< HEAD
     let staminaCost = 5
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
+=======
+    
+    func checkCanEquip(wearer: RPGCharacter) -> Bool {
+>>>>>>> Made all armor and weapons
         return wearer is Fighter
     }
 }
@@ -98,9 +159,14 @@ struct handAxe: Weapon {
 struct battleAxe: Weapon {
     let name = "Battle Axe"
     let damage = 10
+<<<<<<< HEAD
     let staminaCost = 8
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
+=======
+    
+    func checkCanEquip(wearer: RPGCharacter) -> Bool {
+>>>>>>> Made all armor and weapons
         return wearer is Fighter
     }
 }
@@ -108,13 +174,19 @@ struct battleAxe: Weapon {
 struct longSword: Weapon {
     let name = "Long Sword"
     let damage = 8
+<<<<<<< HEAD
     let staminaCost = 5
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
+=======
+    
+    func checkCanEquip(wearer: RPGCharacter) -> Bool {
+>>>>>>> Made all armor and weapons
         return wearer is Bard
     }
 }
 
+<<<<<<< HEAD
 // This function will calculate the damage that the wielder imposes on their target, given their proficiency in their currWeapon and the target's currArmor suitability.
 // proficient wielder def: The weapon is assigned to their class, they roll with the weapon's damage
 func calculateDamage(wielder: RPGCharacter, target: RPGCharacter, damage: Int) -> Int {
@@ -140,6 +212,9 @@ func modifyDamage(wielder: RPGCharacter) -> Int{
 }
 
 // create all weapon variables
+=======
+// create all weapons
+>>>>>>> Made all armor and weapons
 let fistsWeapon = fists()
 let daggerWeapon = dagger()
 let dartsWeapon = darts()

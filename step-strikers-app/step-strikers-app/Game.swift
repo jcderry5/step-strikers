@@ -2,6 +2,7 @@
 //  Game.swift
 //  step-strikers-app
 //
+<<<<<<< HEAD
 //  Created by Jalyn Derry on 2/8/23.
 //
 
@@ -150,6 +151,11 @@ func setOrder(initiative: [String:Int], game: String){
     
 }
 
+=======
+//  Created by Jalyn Derry on 2/9/23.
+//
+
+>>>>>>> Made all armor and weapons
 func rollDie(quant: Int, sides: Int) -> Int {
     var sum = 0
     for _ in 1...quant {
@@ -158,6 +164,7 @@ func rollDie(quant: Int, sides: Int) -> Int {
     
     return sum
 }
+<<<<<<< HEAD
 
 func refreshStats(character: String, game: String) {
     // read updated character info and game stats
@@ -215,3 +222,5 @@ func takeTurn(game: String) {
     // Write the new order to firebase
     Firestore.firestore().collection("games").document(game).setData([ "order": order ], merge: true)
 }
+=======
+>>>>>>> Made all armor and weapons

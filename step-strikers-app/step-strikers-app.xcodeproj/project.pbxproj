@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		640D14BE29955EB0007DB8D3 /* Armor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640D14BD29955EB0007DB8D3 /* Armor.swift */; };
 		643651082991AA260017AA0E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643651072991AA260017AA0E /* AppDelegate.swift */; };
 		6436510A2991AA260017AA0E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643651092991AA260017AA0E /* SceneDelegate.swift */; };
 		6436510C2991AA270017AA0E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6436510B2991AA260017AA0E /* ViewController.swift */; };
@@ -25,7 +24,12 @@
 >>>>>>> Create protocols (#3)
 =======
 		645227D129959295008B58D4 /* Armor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645227D029959295008B58D4 /* Armor.swift */; };
+<<<<<<< HEAD
 >>>>>>> Add base code of armor and rpgcharacter
+=======
+		6463B42C2995ECEE0031B1A4 /* Weapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6463B42B2995ECEE0031B1A4 /* Weapon.swift */; };
+		6463B42E2995F0E20031B1A4 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6463B42D2995F0E20031B1A4 /* Game.swift */; };
+>>>>>>> Made all armor and weapons
 		EB66578E2992ECAE00CAEAEC /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = EB66578D2992ECAE00CAEAEC /* FirebaseAnalytics */; };
 		EB6657902992ECAE00CAEAEC /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EB66578F2992ECAE00CAEAEC /* FirebaseAnalyticsSwift */; };
 		EB6657922992ECAE00CAEAEC /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = EB6657912992ECAE00CAEAEC /* FirebaseFirestore */; };
@@ -39,7 +43,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		640D14BD29955EB0007DB8D3 /* Armor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Armor.swift; sourceTree = "<group>"; };
 		643651042991AA260017AA0E /* step-strikers-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "step-strikers-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		643651072991AA260017AA0E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		643651092991AA260017AA0E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -80,7 +83,12 @@
 =======
 >>>>>>> Added all armors
 		645227D029959295008B58D4 /* Armor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Armor.swift; sourceTree = "<group>"; };
+<<<<<<< HEAD
 >>>>>>> Add base code of armor and rpgcharacter
+=======
+		6463B42B2995ECEE0031B1A4 /* Weapon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weapon.swift; sourceTree = "<group>"; };
+		6463B42D2995F0E20031B1A4 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+>>>>>>> Made all armor and weapons
 		EBC206842995777D00DEB48C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EBCBEEA1299C0BDF005009D7 /* DisplayInitiativeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayInitiativeViewController.swift; sourceTree = "<group>"; };
 		EBCBEEA3299C0C43005009D7 /* InitiativeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitiativeViewController.swift; sourceTree = "<group>"; };
@@ -111,7 +119,6 @@
 			isa = PBXGroup;
 			children = (
 				643651062991AA260017AA0E /* step-strikers-app */,
-				643651252992D6450017AA0E /* commandline-testing.playground */,
 				643651052991AA260017AA0E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -148,6 +155,7 @@
 				645227D029959295008B58D4 /* Armor.swift */,
 				6463B42B2995ECEE0031B1A4 /* Weapon.swift */,
 				6463B42D2995F0E20031B1A4 /* Game.swift */,
+<<<<<<< HEAD
 				64EE2AB0299D533A00418066 /* Item.swift */,
 =======
 >>>>>>> Create protocols (#3)
@@ -163,6 +171,8 @@
 =======
 				645227D029959295008B58D4 /* Armor.swift */,
 >>>>>>> Added random but needed files
+=======
+>>>>>>> Made all armor and weapons
 			);
 			path = "step-strikers-app";
 			sourceTree = "<group>";
@@ -288,6 +298,7 @@
 				640D14BE29955EB0007DB8D3 /* Armor.swift in Sources */,
 =======
 				645227D129959295008B58D4 /* Armor.swift in Sources */,
+<<<<<<< HEAD
 >>>>>>> Add base code of armor and rpgcharacter
 >>>>>>> Add base code of armor and rpgcharacter
 <<<<<<< HEAD
@@ -296,7 +307,13 @@
 =======
 				645227D129959295008B58D4 /* Armor.swift in Sources */,
 >>>>>>> Added random but needed files
+<<<<<<< HEAD
 >>>>>>> Added random but needed files
+=======
+=======
+				6463B42E2995F0E20031B1A4 /* Game.swift in Sources */,
+>>>>>>> Made all armor and weapons
+>>>>>>> Made all armor and weapons
 				643651232992C6180017AA0E /* RPGCharacter.swift in Sources */,
 				EBCBEEA2299C0BDF005009D7 /* DisplayInitiativeViewController.swift in Sources */,
 				643651082991AA260017AA0E /* AppDelegate.swift in Sources */,
@@ -304,10 +321,17 @@
 				EB69AF3F299AA16A00FB5D25 /* DamageViewController.swift in Sources */,
 				6436510A2991AA260017AA0E /* SceneDelegate.swift in Sources */,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				6463B42C2995ECEE0031B1A4 /* Weapon.swift in Sources */,
 =======
 				EBCBEEA4299C0C43005009D7 /* InitiativeViewController.swift in Sources */,
 >>>>>>> Implement game functions for combat (#9)
+=======
+				EBCBEEA4299C0C43005009D7 /* InitiativeViewController.swift in Sources */,
+=======
+				6463B42C2995ECEE0031B1A4 /* Weapon.swift in Sources */,
+>>>>>>> Made all armor and weapons
+>>>>>>> Made all armor and weapons
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
