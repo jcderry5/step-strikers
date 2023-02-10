@@ -82,11 +82,7 @@
 				643651152991AA280017AA0E /* Info.plist */,
 				EBC206842995777D00DEB48C /* GoogleService-Info.plist */,
 				643651222992C6180017AA0E /* RPGCharacter.swift */,
-<<<<<<< HEAD
-				640D14BD29955EB0007DB8D3 /* Armor.swift */,
-=======
 				645227D029959295008B58D4 /* Armor.swift */,
->>>>>>> Add base code of armor and rpgcharacter
 			);
 			path = "step-strikers-app";
 			sourceTree = "<group>";
@@ -173,11 +169,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6436510C2991AA270017AA0E /* ViewController.swift in Sources */,
-<<<<<<< HEAD
-				640D14BE29955EB0007DB8D3 /* Armor.swift in Sources */,
-=======
 				645227D129959295008B58D4 /* Armor.swift in Sources */,
->>>>>>> Add base code of armor and rpgcharacter
 				643651232992C6180017AA0E /* RPGCharacter.swift in Sources */,
 				643651082991AA260017AA0E /* AppDelegate.swift in Sources */,
 				6436510A2991AA260017AA0E /* SceneDelegate.swift in Sources */,
