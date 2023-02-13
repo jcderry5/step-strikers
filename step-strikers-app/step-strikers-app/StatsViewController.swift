@@ -35,7 +35,6 @@ class StatsViewController: UIViewController, TextChanger {
         let player1Ref = db.collection("players").document("Player 1")
         player1Ref.getDocument { (document, error) in
             if let document = document, document.exists {
-                print("Player 1 doc does exist")
                 self.playerOneName.text = document.get("character_name") as? String
                 self.playerOneHealth.text = "\(document.get("health_points") as! Int)"
             } else {
@@ -46,7 +45,6 @@ class StatsViewController: UIViewController, TextChanger {
         let player2Ref = db.collection("players").document("Player 2")
         player2Ref.getDocument { (document, error) in
             if let document = document, document.exists {
-                print("Player 2 doc does exist")
                 self.playerTwoName.text = document.get("character_name") as? String
                 self.playerTwoHealth.text = "\(document.get("health_points") as! Int)"
             } else {

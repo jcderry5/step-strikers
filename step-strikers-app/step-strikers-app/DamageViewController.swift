@@ -32,29 +32,21 @@ class DamageViewController: UIViewController {
     }
     
     @IBAction func attackPressed(_ sender: Any) {
-        // read opponent's current health
-        print("attack pressed")
         var currentHealth: Int = Int()
         let playerRef = db.collection("players").document(opponent)
         playerRef.getDocument { (document, error) in
             if let document = document, document.exists {
+                // read opponent's current health
                 currentHealth = document.get("health_points") as! Int
-                print("current health: \(currentHealth)")
+                let damageDone = Int(self.damageField.text ?? "0") ?? 0
+                
+                // caluclate new health
+                let newHealth = currentHealth - damageDone
+                
+                // update on firebase
+                self.db.collection("players").document(self.opponent).setData([ "health_points": newHealth ], merge: true)
             }
         }
-        
-        sleep(10)
-        
-        let damageDone = Int(damageField.text ?? "0") ?? 0
-        print("damage done: \(damageDone)")
-        
-        // caluclate new health
-        let newHealth = currentHealth - damageDone
-        print("\(currentHealth) - \(damageDone) = \(newHealth)")
-        
-        // update on firebase
-        db.collection("players").document(opponent).setData([ "health_points": newHealth ], merge: true)
-        
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
