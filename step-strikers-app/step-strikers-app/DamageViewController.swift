@@ -42,21 +42,11 @@ class DamageViewController: UIViewController {
         }
         
         // caluclate new health
-        let newHealth = currentHealth = damageDone
+        let newHealth = currentHealth - damageDone
         
         // update on firebase
         Firestore.firestore().collection("players").document(opponent).setData([ "health": newHealth ], merge: true)
         
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "StatsSegue", let nextVC = segue.destination as? StatsViewController {
-            nextVC.delegate = self
-            nextVC.playerOneName.text = self.playerOneName
-            nextVC.playerOneHealth.text = self.playerOneHealth
-            nextVC.playerTwoName.text = self.playerTwoName
-            nextVC.playerTwoHealth.text = self.playerTwoHealth
-        }
     }
 
     @IBAction func statsPressed(_ sender: Any) {
@@ -79,6 +69,16 @@ class DamageViewController: UIViewController {
             } else {
                 print("Document does not exist")
             }
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "StatsSegue", let nextVC = segue.destination as? StatsViewController {
+            nextVC.delegate = self
+            nextVC.playerOneName.text = self.playerOneName
+            nextVC.playerOneHealth.text = self.playerOneHealth
+            nextVC.playerTwoName.text = self.playerTwoName
+            nextVC.playerTwoHealth.text = self.playerTwoHealth
         }
     }
 }
