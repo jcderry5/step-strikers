@@ -19,6 +19,7 @@
 		645227D129959295008B58D4 /* Armor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645227D029959295008B58D4 /* Armor.swift */; };
 		6463B42C2995ECEE0031B1A4 /* Weapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6463B42B2995ECEE0031B1A4 /* Weapon.swift */; };
 		6463B42E2995F0E20031B1A4 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6463B42D2995F0E20031B1A4 /* Game.swift */; };
+<<<<<<< HEAD
 		64EE2AB1299D533A00418066 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EE2AB0299D533A00418066 /* Item.swift */; };
 =======
 >>>>>>> Create protocols (#3)
@@ -30,6 +31,9 @@
 		6463B42C2995ECEE0031B1A4 /* Weapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6463B42B2995ECEE0031B1A4 /* Weapon.swift */; };
 		6463B42E2995F0E20031B1A4 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6463B42D2995F0E20031B1A4 /* Game.swift */; };
 >>>>>>> Made all armor and weapons
+=======
+		64D6FFAB2997097A00443334 /* Spell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D6FFAA2997097A00443334 /* Spell.swift */; };
+>>>>>>> Adding ill-suited armor and non-proficient weapon wielding functionality
 		EB66578E2992ECAE00CAEAEC /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = EB66578D2992ECAE00CAEAEC /* FirebaseAnalytics */; };
 		EB6657902992ECAE00CAEAEC /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EB66578F2992ECAE00CAEAEC /* FirebaseAnalyticsSwift */; };
 		EB6657922992ECAE00CAEAEC /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = EB6657912992ECAE00CAEAEC /* FirebaseFirestore */; };
@@ -88,7 +92,11 @@
 =======
 		6463B42B2995ECEE0031B1A4 /* Weapon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weapon.swift; sourceTree = "<group>"; };
 		6463B42D2995F0E20031B1A4 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+<<<<<<< HEAD
 >>>>>>> Made all armor and weapons
+=======
+		64D6FFAA2997097A00443334 /* Spell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spell.swift; sourceTree = "<group>"; };
+>>>>>>> Adding ill-suited armor and non-proficient weapon wielding functionality
 		EBC206842995777D00DEB48C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EBCBEEA1299C0BDF005009D7 /* DisplayInitiativeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayInitiativeViewController.swift; sourceTree = "<group>"; };
 		EBCBEEA3299C0C43005009D7 /* InitiativeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitiativeViewController.swift; sourceTree = "<group>"; };
@@ -156,6 +164,7 @@
 				6463B42B2995ECEE0031B1A4 /* Weapon.swift */,
 				6463B42D2995F0E20031B1A4 /* Game.swift */,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				64EE2AB0299D533A00418066 /* Item.swift */,
 =======
 >>>>>>> Create protocols (#3)
@@ -173,6 +182,9 @@
 >>>>>>> Added random but needed files
 =======
 >>>>>>> Made all armor and weapons
+=======
+				64D6FFAA2997097A00443334 /* Spell.swift */,
+>>>>>>> Adding ill-suited armor and non-proficient weapon wielding functionality
 			);
 			path = "step-strikers-app";
 			sourceTree = "<group>";
@@ -322,13 +334,19 @@
 				6436510A2991AA260017AA0E /* SceneDelegate.swift in Sources */,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 				6463B42C2995ECEE0031B1A4 /* Weapon.swift in Sources */,
 =======
 				EBCBEEA4299C0C43005009D7 /* InitiativeViewController.swift in Sources */,
 >>>>>>> Implement game functions for combat (#9)
 =======
+=======
+>>>>>>> Adding ill-suited armor and non-proficient weapon wielding functionality
 				EBCBEEA4299C0C43005009D7 /* InitiativeViewController.swift in Sources */,
 =======
+=======
+				64D6FFAB2997097A00443334 /* Spell.swift in Sources */,
+>>>>>>> Adding ill-suited armor and non-proficient weapon wielding functionality
 				6463B42C2995ECEE0031B1A4 /* Weapon.swift in Sources */,
 >>>>>>> Made all armor and weapons
 >>>>>>> Made all armor and weapons

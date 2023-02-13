@@ -165,6 +165,7 @@ func rollDie(quant: Int, sides: Int) -> Int {
     return sum
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 func refreshStats(character: String, game: String) {
     // read updated character info and game stats
@@ -224,3 +225,11 @@ func takeTurn(game: String) {
 }
 =======
 >>>>>>> Made all armor and weapons
+=======
+
+func rollDieDisadvantage(sides: Int) -> Int {
+    var firstRoll = rollDie(quant: 1, sides: sides)
+    var secondRoll = rollDie(quant: 1, sides: sides)
+    return (firstRoll <= secondRoll) ? firstRoll : secondRoll
+}
+>>>>>>> Adding ill-suited armor and non-proficient weapon wielding functionality

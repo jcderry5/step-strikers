@@ -402,5 +402,38 @@ class Rogue: RPGCharacter {
 >>>>>>> Add gitignore file (#6)
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> Create protocols (#3)
+=======
+// Universal Functions
+
+func wield(weaponObject: Weapon, wielder: inout RPGCharacter){
+    if(weaponObject.checkIfProficient(wearer: wielder)){
+        wielder.currWeapon = weaponObject
+    } else {
+        print("\(wielder.characterName) is not proficient with \(weaponObject.name).\n They will use this weapon at a disadvantage")
+        wielder.currWeapon = weaponObject
+    }
+}
+
+func wear(armorObject: Armor, wearer: inout RPGCharacter){
+    if(armorObject.checkIfSuited(potentialWearer: wearer)){
+        wearer.currArmor = armorObject
+    } else {
+        print("\(armorObject.name) is not properly suited for \(wearer.characterName). Their armor class will be at a disadvantage")
+    }
+}
+
+func fight(fighter: RPGCharacter, target: inout RPGCharacter){
+    
+    let damageDealt = calculateDamage(wielder: fighter, target: target, damage: fighter.currWeapon.damage)
+    takeDamage(recepient: &target, amtDamage: damageDealt)
+    
+    // TODO: Change the stamina of fighter dependent on their currWeapon
+}
+
+func takeDamage(recepient: inout RPGCharacter, amtDamage: Int){
+    recepient.currHealth -= amtDamage
+}
+>>>>>>> Adding ill-suited armor and non-proficient weapon wielding functionality

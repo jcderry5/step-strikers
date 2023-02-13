@@ -4,9 +4,11 @@
 //
 //  Created by Jalyn Derry on 2/9/23.
 //
+// TODO: Half damage for non-class weapons
 
 import Foundation
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 protocol Weapon {
     var name: String {get}
@@ -16,10 +18,30 @@ protocol Weapon {
     func checkIfProficient(wearer: RPGCharacter) -> Bool
 =======
 func calculateDamage(target: RPGCharacter, damage: Int) -> Int {
+=======
+func calculateDamage(wielder: RPGCharacter, target: RPGCharacter, damage: Int) -> Int {
+    // If you are a proficient wielder (This weapon is assigned to your class, you roll with weapon's damage)
+    // Check if your target is wearing suited armor
+    var armorClassToBeat = modifyArmorClass(wearer: target)
+    if(rollDie(quant: 1, sides: 20) >= armorClassToBeat) {
+        // check if wielder is proficient in their weapon
+        return modifyDamage(wielder: wielder)
+    }
+    
+>>>>>>> Adding ill-suited armor and non-proficient weapon wielding functionality
     if (rollDie(quant: 1, sides: 20) >= target.currArmor.armorClass){
-        return rollDie(quant: 1, sides: 4)
+        return rollDie(quant: 1, sides: damage)
     } else {
+        // This is a non wielder,
         return 0
+    }
+}
+
+func modifyDamage(wielder: RPGCharacter) -> Int{
+    if(wielder.currWeapon.checkIfProficient(wearer: wielder)){
+        return wielder.currWeapon.damage
+    } else {
+        return rollDie(quant: 1, sides: wielder.currWeapon.damage)
     }
 }
 
@@ -27,7 +49,7 @@ protocol Weapon {
     var name: String {get}
     var damage: Int {get}
     
-    func checkCanEquip(wearer: RPGCharacter) -> Bool
+    func checkIfProficient(wearer: RPGCharacter) -> Bool
     
 >>>>>>> Made all armor and weapons
 }
@@ -43,7 +65,7 @@ struct fists: Weapon {
     }
 =======
     
-    func checkCanEquip(wearer: RPGCharacter) -> Bool {
+    func checkIfProficient(wearer: RPGCharacter) -> Bool {
         return true
     }
     
@@ -59,8 +81,12 @@ struct dagger: Weapon {
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
 =======
     
+<<<<<<< HEAD
     func checkCanEquip(wearer: RPGCharacter) -> Bool {
 >>>>>>> Made all armor and weapons
+=======
+    func checkIfProficient(wearer: RPGCharacter) -> Bool {
+>>>>>>> Adding ill-suited armor and non-proficient weapon wielding functionality
         return wearer is Wizard
     }
 }
@@ -74,8 +100,12 @@ struct darts: Weapon {
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
 =======
     
+<<<<<<< HEAD
     func checkCanEquip(wearer: RPGCharacter) -> Bool {
 >>>>>>> Made all armor and weapons
+=======
+    func checkIfProficient(wearer: RPGCharacter) -> Bool {
+>>>>>>> Adding ill-suited armor and non-proficient weapon wielding functionality
         return wearer is Wizard
     }
 }
@@ -90,8 +120,12 @@ struct crossBow: Weapon {
 =======
     
     // Anyone can equip a crossbow
+<<<<<<< HEAD
     func checkCanEquip(wearer: RPGCharacter) -> Bool {
 >>>>>>> Made all armor and weapons
+=======
+    func checkIfProficient(wearer: RPGCharacter) -> Bool {
+>>>>>>> Adding ill-suited armor and non-proficient weapon wielding functionality
         return true
     }
 }
@@ -105,8 +139,12 @@ struct rapier: Weapon {
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
 =======
     
+<<<<<<< HEAD
     func checkCanEquip(wearer: RPGCharacter) -> Bool {
 >>>>>>> Made all armor and weapons
+=======
+    func checkIfProficient(wearer: RPGCharacter) -> Bool {
+>>>>>>> Adding ill-suited armor and non-proficient weapon wielding functionality
         return wearer is Rogue || wearer is Bard
     }
 }
@@ -120,8 +158,12 @@ struct shortSword: Weapon {
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
 =======
     
+<<<<<<< HEAD
     func checkCanEquip(wearer: RPGCharacter) -> Bool {
 >>>>>>> Made all armor and weapons
+=======
+    func checkIfProficient(wearer: RPGCharacter) -> Bool {
+>>>>>>> Adding ill-suited armor and non-proficient weapon wielding functionality
         return wearer is Rogue
     }
 }
@@ -135,8 +177,12 @@ struct longBow: Weapon {
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
 =======
     
+<<<<<<< HEAD
     func checkCanEquip(wearer: RPGCharacter) -> Bool {
 >>>>>>> Made all armor and weapons
+=======
+    func checkIfProficient(wearer: RPGCharacter) -> Bool {
+>>>>>>> Adding ill-suited armor and non-proficient weapon wielding functionality
         return wearer is Fighter
     }
 }
@@ -150,8 +196,12 @@ struct handAxe: Weapon {
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
 =======
     
+<<<<<<< HEAD
     func checkCanEquip(wearer: RPGCharacter) -> Bool {
 >>>>>>> Made all armor and weapons
+=======
+    func checkIfProficient(wearer: RPGCharacter) -> Bool {
+>>>>>>> Adding ill-suited armor and non-proficient weapon wielding functionality
         return wearer is Fighter
     }
 }
@@ -165,8 +215,12 @@ struct battleAxe: Weapon {
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
 =======
     
+<<<<<<< HEAD
     func checkCanEquip(wearer: RPGCharacter) -> Bool {
 >>>>>>> Made all armor and weapons
+=======
+    func checkIfProficient(wearer: RPGCharacter) -> Bool {
+>>>>>>> Adding ill-suited armor and non-proficient weapon wielding functionality
         return wearer is Fighter
     }
 }
@@ -180,8 +234,12 @@ struct longSword: Weapon {
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
 =======
     
+<<<<<<< HEAD
     func checkCanEquip(wearer: RPGCharacter) -> Bool {
 >>>>>>> Made all armor and weapons
+=======
+    func checkIfProficient(wearer: RPGCharacter) -> Bool {
+>>>>>>> Adding ill-suited armor and non-proficient weapon wielding functionality
         return wearer is Bard
     }
 }
