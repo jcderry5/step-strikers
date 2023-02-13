@@ -6,9 +6,17 @@
 //
 
 import UIKit
+import FirebaseCore
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
-class StatsViewController: UIViewController {
-    var delegate: DamageViewController!
+protocol TextChanger {
+    func changeText()
+}
+
+class StatsViewController: UIViewController, TextChanger {
+    var delegate: UIViewController!
+    var db: Firestore!
     
     @IBOutlet weak var playerOneName: UILabel!
     @IBOutlet weak var playerOneHealth: UILabel!
@@ -18,10 +26,36 @@ class StatsViewController: UIViewController {
     @IBOutlet weak var playerTwoHealth: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        db = Firestore.firestore()
         // Do any additional setup after loading the view.
     }
     
+    func changeText() {
+        // get everything from firebase
+        let player1Ref = db.collection("players").document("Player 1")
+        player1Ref.getDocument { (document, error) in
+            if let document = document, document.exists {
+                print("Player 1 doc does exist")
+                self.playerOneName.text = document.get("character_name") as? String
+                self.playerOneHealth.text = "\(document.get("health_points") as! Int)"
+            } else {
+                print("Document does not exist")
+            }
+        }
+
+        let player2Ref = db.collection("players").document("Player 2")
+        player2Ref.getDocument { (document, error) in
+            if let document = document, document.exists {
+                print("Player 2 doc does exist")
+                self.playerTwoName.text = document.get("character_name") as? String
+                self.playerTwoHealth.text = "\(document.get("health_points") as! Int)"
+            } else {
+                print("Document does not exist")
+            }
+        }
+
+
+    }
 
     /*
     // MARK: - Navigation
