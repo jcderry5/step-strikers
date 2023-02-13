@@ -79,6 +79,7 @@ func setTeams(blueTeam: [RPGCharacter], redTeam: [RPGCharacter]) {
 }
 
 // This will be called once the observer sees that hasStarted is true
+// TODO: check if you're the host!
 func startGame(){
     // TODO: game id shouldn't be hardcoded
     
@@ -101,14 +102,20 @@ func startGame(){
     }
 }
 
-func rollInitiative(){
+func rollInitiative(game: String){
     /*
      Visually show a d20 rolling
      on click, call rollDie(quant: 1, sides: 20) it displays returned number
      send name and initiative order to the server
      */
+    
+    let initiative = rollDie(quant: 1, sides: 20)
+    // send initiative to firebase
+
+    //    Firestore.firestore().collection("games").document(game).setData([ "initiative": order ], merge: true)
 }
 
+// TODO: check if you're the host!
 func setOrder(initiative: [String:Int], game: String){
     // sort initiative
     let sorted = initiative.sorted { (first, second) -> Bool in
@@ -130,8 +137,13 @@ func setOrder(initiative: [String:Int], game: String){
     
 }
 
-func rollDice(){
+func rollDie(quant: Int, sides: Int) -> Int {
+    var sum = 0
+    for _ in 1...quant {
+        sum += Int.random(in: 1...sides)
+    }
     
+    return sum
 }
 
 func refreshStats(character: String, game: String) {

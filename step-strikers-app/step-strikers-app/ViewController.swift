@@ -20,6 +20,21 @@ class ViewController: UIViewController {
     @IBOutlet weak var characterName2: UILabel!
     @IBOutlet weak var healthPoints2: UILabel!
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "PlayerOneSegue", let nextVC = segue.destination as? DamageViewController {
+            nextVC.delegate = self
+            nextVC.player = "Player 1"
+            nextVC.opponent = "Player 2"
+//            rollInitiative(game: "zIuUhRjKte6oUcvdrP4D")
+        } else if segue.identifier == "PlayerTwoSegue", let nextVC = segue.destination as? DamageViewController {
+            nextVC.delegate = self
+            nextVC.player = "Player 2"
+            nextVC.opponent = "Player 1"
+//            rollInitiative(game: "zIuUhRjKte6oUcvdrP4D")
+        }
+    }
+    
+    
     @IBAction func readFromFireBase(_ sender: Any) {
         let jalynRef = db.collection("players").document("jazzyjalyn")
         jalynRef.getDocument { (document, error) in
