@@ -264,12 +264,17 @@ func wear(armorObject: Armor, wearer: inout RPGCharacter){
     }
 }
 
-func fight(fighter: RPGCharacter, target: inout RPGCharacter){
+func fight(fighter: inout RPGCharacter, target: inout RPGCharacter){
     
     let damageDealt = calculateDamage(wielder: fighter, target: target, damage: fighter.currWeapon.damage)
-    takeDamage(recepient: &target, amtDamage: damageDealt)
     
-    // TODO: Change the stamina of fighter dependent on their currWeapon
+    takeDamage(recepient: &target, amtDamage: damageDealt)
+
+    modifyStamina(player: &fighter)
+}
+
+func modifyStamina(player: inout RPGCharacter){
+    player.currStamina -= player.currWeapon.staminaCost
 }
 
 func takeDamage(recepient: inout RPGCharacter, amtDamage: Int){

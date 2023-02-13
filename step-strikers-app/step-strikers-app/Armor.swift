@@ -5,21 +5,11 @@
 //  Created by Jalyn Derry on 2/9/23.
 //
 
-
 protocol Armor {
     var name: String { get}
     var armorClass: Int {get}
     
     func checkIfSuited(potentialWearer: RPGCharacter) -> Bool
-}
-
-// This function will return the modified armor class in case the wearer is ill-suited for their currArmor
-func modifyArmorClass(wearer: RPGCharacter) -> Int {
-    if(wearer.currArmor.checkIfSuited(potentialWearer: wearer)){
-        return wearer.currArmor.armorClass
-    } else {
-        return rollDie(quant: 1, sides: wearer.currArmor.armorClass)
-    }
 }
 
 struct leather: Armor {
@@ -78,6 +68,15 @@ struct noArmor: Armor {
     
     func checkIfSuited(potentialWearer: RPGCharacter) -> Bool {
         return true
+    }
+}
+
+// This function will return the modified armor class in case the wearer is ill-suited for their currArmor
+func modifyArmorClass(wearer: RPGCharacter) -> Int {
+    if(wearer.currArmor.checkIfSuited(potentialWearer: wearer)){
+        return wearer.currArmor.armorClass
+    } else {
+        return rollDie(quant: 1, sides: wearer.currArmor.armorClass)
     }
 }
 
