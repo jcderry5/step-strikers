@@ -106,7 +106,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1156" y="4"/>
+            <point key="canvasLocation" x="2112" y="18"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Siv-QL-OUe">
@@ -124,7 +124,7 @@
                                 <connections>
                                     <action selector="playerOnePressed:" destination="W7x-je-CrJ" eventType="touchUpInside" id="7BI-eU-wbS"/>
                                     <action selector="playerOnePressed:" destination="PGb-Sk-0L5" eventType="touchUpInside" id="LQx-7D-hau"/>
-                                    <segue destination="Qui-tt-beH" kind="presentation" identifier="PlayerOneSegue" id="BIZ-R4-JX9"/>
+                                    <segue destination="b3L-dF-5Hl" kind="presentation" identifier="PlayerOneSegue" modalPresentationStyle="fullScreen" id="zkX-rv-h8j"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hlH-bE-UVT">
@@ -134,7 +134,7 @@
                                 <buttonConfiguration key="configuration" style="plain" title="Play as player 2!"/>
                                 <connections>
                                     <action selector="playerTwoPressed:" destination="PGb-Sk-0L5" eventType="touchUpInside" id="Fyk-N7-JeW"/>
-                                    <segue destination="Qui-tt-beH" kind="presentation" identifier="PlayerTwoSegue" id="Nwq-uM-Gp7"/>
+                                    <segue destination="b3L-dF-5Hl" kind="presentation" identifier="PlayerTwoSegue" modalPresentationStyle="fullScreen" id="XmG-gp-6yP"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -147,12 +147,75 @@
             </objects>
             <point key="canvasLocation" x="-611.45038167938924" y="3.5211267605633805"/>
         </scene>
+        <!--Initiative View Controller-->
+        <scene sceneID="Tvc-ay-lTZ">
+            <objects>
+                <viewController id="b3L-dF-5Hl" customClass="InitiativeViewController" customModule="step_strikers_app" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fAi-I3-265">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L5D-ho-atO">
+                                <rect key="frame" x="135" y="360" width="124" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Roll initiative!"/>
+                                <connections>
+                                    <action selector="rollButtonPressed:" destination="b3L-dF-5Hl" eventType="touchUpInside" id="xoI-O5-IXx"/>
+                                    <segue destination="4Mt-gq-Z4B" kind="presentation" identifier="DisplaySegue" modalPresentationStyle="fullScreen" id="Z8C-bc-Gzv"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="2Q0-3T-utD"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="003-tM-4ph" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="204" y="18"/>
+        </scene>
+        <!--Display Initiative View Controller-->
+        <scene sceneID="m46-wJ-gNE">
+            <objects>
+                <viewController id="4Mt-gq-Z4B" customClass="DisplayInitiativeViewController" customModule="step_strikers_app" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="f2Y-wl-ljl">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7q0-wk-teU">
+                                <rect key="frame" x="159" y="409" width="75" height="75"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Next"/>
+                                <connections>
+                                    <segue destination="Qui-tt-beH" kind="presentation" identifier="AttackSegue" modalPresentationStyle="fullScreen" id="s0S-zt-96w"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CXd-fH-WPH">
+                                <rect key="frame" x="89" y="346" width="215" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="E6U-mE-j5b"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <connections>
+                        <outlet property="displayInitiativeLabel" destination="CXd-fH-WPH" id="JOm-zQ-krM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ege-WJ-o9u" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="193.12977099236642" y="694.36619718309862"/>
+        </scene>
         <!--Damage View Controller-->
         <scene sceneID="IdX-1f-muR">
             <objects>
                 <viewController id="Qui-tt-beH" customClass="DamageViewController" customModule="step_strikers_app" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Vd2-cB-z1J">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Do some damage!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ACs-4f-18g">
@@ -197,11 +260,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jzW-8c-CbZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="270.99236641221376" y="17.605633802816904"/>
+            <point key="canvasLocation" x="1195" y="18"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Nwq-uM-Gp7"/>
+        <segue reference="XmG-gp-6yP"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">

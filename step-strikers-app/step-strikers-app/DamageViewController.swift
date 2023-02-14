@@ -60,17 +60,4 @@ class DamageViewController: UIViewController {
         let otherVC = nextVC as! TextChanger
         otherVC.changeText()
     }
-    
-    
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//            // set variables
-//        if segue.identifier == "StatsSegue", let nextVC = segue.destination as? StatsViewController {
-//            nextVC.delegate = self
-//            nextVC.playerOneName.text = self.playerOneName
-//            nextVC.playerOneHealth.text = self.playerOneHealth
-//            nextVC.playerTwoName.text = self.playerTwoName
-//            nextVC.playerTwoHealth.text = self.playerTwoHealth
-//        }
-//    }
 }

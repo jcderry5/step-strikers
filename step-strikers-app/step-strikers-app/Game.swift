@@ -80,29 +80,39 @@ func setTeams(blueTeam: [RPGCharacter], redTeam: [RPGCharacter]) {
 
 // This will be called once the observer sees that hasStarted is true
 // TODO: check if you're the host!
-func startGame(){
+func startGame(player: String, game: String){
     // TODO: game id shouldn't be hardcoded
     
-    // wait for everyone to finish rolling initiative and send info to server
-    Firestore.firestore().collection("games").document("zIuUhRjKte6oUcvdrP4D").addSnapshotListener {
-        documentSnapshot, error in guard let document = documentSnapshot else {
-            print("Error fetching document: \(error!)")
-            return
+    var isLeader = Bool()
+    let docRef = Firestore.firestore().collection("games").document(game)
+    docRef.getDocument { (document, error) in
+        if let document = document, document.exists {
+            isLeader = (document.get("leader") as! String == player)
         }
-        
-        let data = document.data()
-        var dict = [String:Int]()
-        dict = data?["initiative"] as! [String:Int]
-        
-        if dict.count == data?["num_players"] as! Int {
-            print("finished listening, calling setOrder()")
-            setOrder(initiative: dict, game: "zIuUhRjKte6oUcvdrP4D")
-            return
+    }
+    
+    if isLeader {
+        // wait for everyone to finish rolling initiative and send info to server
+        docRef.addSnapshotListener {
+            documentSnapshot, error in guard let document = documentSnapshot else {
+                print("Error fetching document: \(error!)")
+                return
+            }
+            
+            let data = document.data()
+            var dict = [String:Int]()
+            dict = data?["initiative"] as! [String:Int]
+            
+            if dict.count == data?["num_players"] as! Int {
+                print("finished listening, calling setOrder()")
+                setOrder(initiative: dict, game: game)
+                return
+            }
         }
     }
 }
 
-func rollInitiative(game: String){
+func rollInitiative(player:String, game: String) -> Int{
     /*
      Visually show a d20 rolling
      on click, call rollDie(quant: 1, sides: 20) it displays returned number
@@ -110,9 +120,13 @@ func rollInitiative(game: String){
      */
     
     let initiative = rollDie(quant: 1, sides: 20)
+    
     // send initiative to firebase
-
-    //    Firestore.firestore().collection("games").document(game).setData([ "initiative": order ], merge: true)
+    let data: [String:Int] = [player:initiative]
+    Firestore.firestore().collection("games").document(game).updateData([
+        "initiative": FieldValue.arrayUnion([data])])
+    
+    return initiative
 }
 
 // TODO: check if you're the host!
