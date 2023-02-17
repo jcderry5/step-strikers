@@ -143,7 +143,6 @@ func setOrder(initiative: [String:Int], game: String){
     }
     
     // write array to database
-    // TODO: game id shouldn't be hardcoded
     Firestore.firestore().collection("games").document(game).setData([ "order": order ], merge: true)
     
     // flip flag
@@ -176,7 +175,7 @@ func refreshStats(character: String, game: String) {
             // check if it's your turn now
             order = document.get("order") as! [String]
             
-            // check other game stats?
+            // check other game stats
             
         }
     }
@@ -207,8 +206,7 @@ func takeTurn(game: String) {
         }
     }
     
-    // I sure hope this doesn't have an off by one error
-    var me = order[0]
+    let me = order[0]
     for i in 0..<order.count - 1 {
         order[i] = order[i + 1]
     }
