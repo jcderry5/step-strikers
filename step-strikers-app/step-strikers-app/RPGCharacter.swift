@@ -83,6 +83,11 @@ class Fighter: RPGCharacter {
     var defenseModifier = 0
     var magicResistanceModifier = 0
     
+    // Rolling modifiers
+    var attackModifier = 0
+    var defenseModifier = 0
+    var magicResistanceModifier = 0
+    
     init(characterName: String, userName: String, health: Int,
          stamina: Int) {
         self.characterName = characterName
@@ -103,6 +108,57 @@ class Fighter: RPGCharacter {
         self.armorInInventory = [noArmorArmor]
         self.currArmor = noArmorArmor
 <<<<<<< HEAD
+    }
+    
+    // Universal Functions
+    func wield(weaponObject: Weapon){
+        if(weaponObject.checkIfProficient(wearer: self)){
+            self.currWeapon = weaponObject
+        } else {
+            print("\(self.characterName) is not proficient with \(weaponObject.name).\n They will use this weapon at a disadvantage")
+            self.currWeapon = weaponObject
+        }
+    }
+
+    func wear(armorObject: Armor){
+        if(armorObject.checkIfSuited(potentialWearer: self)){
+            self.currArmor = armorObject
+        } else {
+            print("\(armorObject.name) is not properly suited for \(self.characterName). Their armor class will be at a disadvantage")
+        }
+    }
+
+    func fight(target: inout RPGCharacter){
+        
+        let damageDealt = calculateDamage(wielder: self, target: target, damage: self.currWeapon.damage)
+        
+        decreaseHealth(amtDamage: damageDealt)
+
+        decreaseStamina()
+    }
+
+    func decreaseStamina(){
+        self.currStamina -= self.currWeapon.staminaCost
+        // TODO: Do something when exhausted
+    }
+
+    func decreaseHealth(amtDamage: Int){
+        self.currHealth -= amtDamage
+        // TODO: Do something when dead
+    }
+
+    func increaseStamina(amtIncrease: Int){
+        self.currStamina += amtIncrease
+        if(amtIncrease > self.maxStamina){
+            self.currStamina = self.maxStamina
+        }
+    }
+
+    func increaseHealth(amtIncrease: Int){
+        self.currHealth += amtIncrease
+        if(amtIncrease > self.maxHealth){
+            self.currHealth = self.maxHealth
+        }
     }
     
     // Universal Functions
@@ -184,6 +240,7 @@ class Caster: RPGCharacter {
         self.currSpellPoints -= amtDecrease
         
         // TODO: Do something when out of spell points
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> Made all armor and weapons
@@ -348,6 +405,8 @@ class Rogue: RPGCharacter {
     var description: String {
         return ("Character Name: \(characterName)\nUser Name: \(userName)\nCurrent Health: \(currHealth)\nCurrent Stamina: \(currStamina)")
 >>>>>>> Create protocols (#3)
+=======
+>>>>>>> Changing RPGCharacter and Caster to classes and subclasses instead of protocols
     }
 }
 
@@ -403,6 +462,7 @@ class Rogue: RPGCharacter {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> Create protocols (#3)
 =======
@@ -437,3 +497,5 @@ func takeDamage(recepient: inout RPGCharacter, amtDamage: Int){
     recepient.currHealth -= amtDamage
 }
 >>>>>>> Adding ill-suited armor and non-proficient weapon wielding functionality
+=======
+>>>>>>> Changing RPGCharacter and Caster to classes and subclasses instead of protocols

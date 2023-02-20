@@ -16,6 +16,7 @@ protocol Weapon {
     var staminaCost: Int {get}
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool
+<<<<<<< HEAD
 =======
 func calculateDamage(target: RPGCharacter, damage: Int) -> Int {
 =======
@@ -52,6 +53,8 @@ protocol Weapon {
     func checkIfProficient(wearer: RPGCharacter) -> Bool
     
 >>>>>>> Made all armor and weapons
+=======
+>>>>>>> Changing RPGCharacter and Caster to classes and subclasses instead of protocols
 }
 
 struct fists: Weapon {
@@ -63,6 +66,7 @@ struct fists: Weapon {
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
         return true
     }
+<<<<<<< HEAD
 =======
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
@@ -70,6 +74,8 @@ struct fists: Weapon {
     }
     
 >>>>>>> Made all armor and weapons
+=======
+>>>>>>> Changing RPGCharacter and Caster to classes and subclasses instead of protocols
 }
 
 struct dagger: Weapon {

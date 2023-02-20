@@ -70,6 +70,7 @@ struct elixirOfMagic: Item {
     }
 }
 
+<<<<<<< HEAD
 // restores a small amount of stamina
 struct energyPill: Item {
     var name = "Energy Pill"
@@ -91,6 +92,12 @@ struct energyPill: Item {
 
 // cures any ailments
 struct antidote: Item {
+=======
+// cures any ailments
+struct antidote: Item {
+    
+    
+>>>>>>> Changing RPGCharacter and Caster to classes and subclasses instead of protocols
     let name = "Antidote"
     var owner: RPGCharacter
     var tier = 1
@@ -176,6 +183,7 @@ struct elixirOfGreaterMagic: Item {
     }
 }
 
+<<<<<<< HEAD
 // restores a moderate amount of stamina
 struct energyPowder: Item {
     var name = "Energy Powder"
@@ -195,6 +203,8 @@ struct energyPowder: Item {
     }
 }
 
+=======
+>>>>>>> Changing RPGCharacter and Caster to classes and subclasses instead of protocols
 // revives the target with small healing
 struct resurrectionStone: Item {
     let name = "Resurrection Stone"
@@ -254,8 +264,13 @@ struct leatherArmorPad: Item {
 }
 
 // increases attack by a small amount
+<<<<<<< HEAD
 struct featherOfVigor: Item {
     let name = "Feather of Vigor"
+=======
+struct energyPowder: Item {
+    let name = "Energy Powder"
+>>>>>>> Changing RPGCharacter and Caster to classes and subclasses instead of protocols
     var owner: RPGCharacter
     var tier = 2
     
@@ -338,6 +353,7 @@ struct elixirOfSuperiorMagic: Item {
     }
 }
 
+<<<<<<< HEAD
 // restore a large amount of stamina
 struct energyRoot: Item {
     var name = "Energy Root"
@@ -357,6 +373,8 @@ struct energyRoot: Item {
     }
 }
 
+=======
+>>>>>>> Changing RPGCharacter and Caster to classes and subclasses instead of protocols
 // revives the target with moderate healing
 struct revivalCrystal: Item {
     var name = "Revival Crystal"
@@ -415,8 +433,13 @@ struct metalArmorPad: Item {
 }
 
 // increases attack by a moderate amount
+<<<<<<< HEAD
 struct vialOfVigor: Item {
     var name = "Vial of Vigor"
+=======
+struct energyRoot: Item {
+    var name = "Energy Root"
+>>>>>>> Changing RPGCharacter and Caster to classes and subclasses instead of protocols
     var owner: RPGCharacter
     var tier = 3
     
@@ -505,6 +528,7 @@ struct elixirOfSorcery: Item {
     }
 }
 
+<<<<<<< HEAD
 // Fully restores stamina
 struct energySap: Item {
     var name = "Energy Sap"
@@ -526,6 +550,8 @@ struct energySap: Item {
     }
 }
 
+=======
+>>>>>>> Changing RPGCharacter and Caster to classes and subclasses instead of protocols
 // Fully Revives Target with Full Health
 struct miracleOfLife: Item {
     var name = "Miracle of Life"
