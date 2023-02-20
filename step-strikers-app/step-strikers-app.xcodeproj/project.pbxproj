@@ -19,7 +19,12 @@
 		EB6657902992ECAE00CAEAEC /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EB66578F2992ECAE00CAEAEC /* FirebaseAnalyticsSwift */; };
 		EB6657922992ECAE00CAEAEC /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = EB6657912992ECAE00CAEAEC /* FirebaseFirestore */; };
 		EB6657942992ECAE00CAEAEC /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EB6657932992ECAE00CAEAEC /* FirebaseFirestoreSwift */; };
+		EB69AF3F299AA16A00FB5D25 /* DamageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB69AF3E299AA16A00FB5D25 /* DamageViewController.swift */; };
+		EBC0637C2996ED4B00B00110 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC0637B2996ED4B00B00110 /* Game.swift */; };
+		EBC06380299A9D5900B00110 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC0637F299A9D5900B00110 /* StatsViewController.swift */; };
 		EBC206852995777D00DEB48C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EBC206842995777D00DEB48C /* GoogleService-Info.plist */; };
+		EBCBEEA2299C0BDF005009D7 /* DisplayInitiativeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBCBEEA1299C0BDF005009D7 /* DisplayInitiativeViewController.swift */; };
+		EBCBEEA4299C0C43005009D7 /* InitiativeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBCBEEA3299C0C43005009D7 /* InitiativeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,8 +38,16 @@
 		643651152991AA280017AA0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		643651222992C6180017AA0E /* RPGCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPGCharacter.swift; sourceTree = "<group>"; };
 		643651252992D6450017AA0E /* commandline-testing.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "commandline-testing.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+<<<<<<< HEAD
 		645227D029959295008B58D4 /* Armor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Armor.swift; sourceTree = "<group>"; };
+=======
+		EB69AF3E299AA16A00FB5D25 /* DamageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DamageViewController.swift; sourceTree = "<group>"; };
+		EBC0637B2996ED4B00B00110 /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		EBC0637F299A9D5900B00110 /* StatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
+>>>>>>> c5e80aeb1aecde0af94d0c54f9e4554a45fcc44e
 		EBC206842995777D00DEB48C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		EBCBEEA1299C0BDF005009D7 /* DisplayInitiativeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayInitiativeViewController.swift; sourceTree = "<group>"; };
+		EBCBEEA3299C0C43005009D7 /* InitiativeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitiativeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,8 +88,13 @@
 				643651072991AA260017AA0E /* AppDelegate.swift */,
 				643651092991AA260017AA0E /* SceneDelegate.swift */,
 				6436510B2991AA260017AA0E /* ViewController.swift */,
+				EBCBEEA1299C0BDF005009D7 /* DisplayInitiativeViewController.swift */,
+				EBCBEEA3299C0C43005009D7 /* InitiativeViewController.swift */,
 				6436510D2991AA270017AA0E /* Main.storyboard */,
+				EBC0637F299A9D5900B00110 /* StatsViewController.swift */,
 				643651102991AA280017AA0E /* Assets.xcassets */,
+				EBC0637B2996ED4B00B00110 /* Game.swift */,
+				EB69AF3E299AA16A00FB5D25 /* DamageViewController.swift */,
 				643651122991AA280017AA0E /* LaunchScreen.storyboard */,
 				643651152991AA280017AA0E /* Info.plist */,
 				EBC206842995777D00DEB48C /* GoogleService-Info.plist */,
@@ -168,10 +186,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				6436510C2991AA270017AA0E /* ViewController.swift in Sources */,
+<<<<<<< HEAD
 				645227D129959295008B58D4 /* Armor.swift in Sources */,
+=======
+				EBC0637C2996ED4B00B00110 /* Game.swift in Sources */,
+>>>>>>> c5e80aeb1aecde0af94d0c54f9e4554a45fcc44e
 				643651232992C6180017AA0E /* RPGCharacter.swift in Sources */,
+				EBCBEEA2299C0BDF005009D7 /* DisplayInitiativeViewController.swift in Sources */,
 				643651082991AA260017AA0E /* AppDelegate.swift in Sources */,
+				EBC06380299A9D5900B00110 /* StatsViewController.swift in Sources */,
+				EB69AF3F299AA16A00FB5D25 /* DamageViewController.swift in Sources */,
 				6436510A2991AA260017AA0E /* SceneDelegate.swift in Sources */,
+				EBCBEEA4299C0C43005009D7 /* InitiativeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

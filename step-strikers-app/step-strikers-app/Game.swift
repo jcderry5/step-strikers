@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 // This is called when ONE person decides they want to form a team.
 func makeTeam(){
@@ -78,54 +79,139 @@ func setTeams(blueTeam: [RPGCharacter], redTeam: [RPGCharacter]) {
 }
 
 // This will be called once the observer sees that hasStarted is true
-func startGame(){
-    /*
-     1. rollInitiative
-        a. show the screen of a rolling d20
-        b. on click, call rollDie(quant: 1, sides: 20) it displays returned number
-     2. Have everyone send their name and initiative order to the server
-     3. When the observer observes that order.length == numPlayers OR check len after each fire
-     3. Call setOrder
-     4. Send sorted order to fb
-     */
+// TODO: check if you're the host!
+func startGame(player: String, game: String){
+    // TODO: game id shouldn't be hardcoded
+    
+    var isLeader = Bool()
+    let docRef = Firestore.firestore().collection("games").document(game)
+    docRef.getDocument { (document, error) in
+        if let document = document, document.exists {
+            isLeader = (document.get("leader") as! String == player)
+        }
+    }
+    
+    if isLeader {
+        // wait for everyone to finish rolling initiative and send info to server
+        docRef.addSnapshotListener {
+            documentSnapshot, error in guard let document = documentSnapshot else {
+                print("Error fetching document: \(error!)")
+                return
+            }
+            
+            let data = document.data()
+            var dict = [String:Int]()
+            dict = data?["initiative"] as! [String:Int]
+            
+            if dict.count == data?["num_players"] as! Int {
+                print("finished listening, calling setOrder()")
+                setOrder(initiative: dict, game: game)
+                return
+            }
+        }
+    }
 }
 
-func rollInitiative(){
+func rollInitiative(player:String, game: String) -> Int{
     /*
      Visually show a d20 rolling
-     On click: show number
-     */
-}
-
-func setOrder(){
-    
-    /*
-     1. Read order from fb
-     2. Sort by initiative
-     3. Write
-     4. startObserving
+     on click, call rollDie(quant: 1, sides: 20) it displays returned number
+     send name and initiative order to the server
      */
     
-//    // everyone roll die
-//    // blue team rolls first
-//    for character in blueTeam {
-//        var initiative = rollDie(quant: 1, sides: 20)
-//        print("\(character.name) rolles a \(initiative) in the initiative order")
-//        order.append((playerName: character, initiativeOrder: initiative))
-//    }
-//    order = order.sorted(by: {$0.initiativeOrder > $1.initiativeOrder} -> Bool)
+    let initiative = rollDie(quant: 1, sides: 20)
+    
+    // send initiative to firebase
+    let data: [String:Int] = [player:initiative]
+    Firestore.firestore().collection("games").document(game).updateData([
+        "initiative": FieldValue.arrayUnion([data])])
+    
+    return initiative
 }
 
-func rollDice(){
+// TODO: check if you're the host!
+func setOrder(initiative: [String:Int], game: String){
+    // sort initiative
+    let sorted = initiative.sorted { (first, second) -> Bool in
+        return first.value > second.value
+    }
+    
+    // get ordered usernames into an array
+    var order : Array<String> = Array()
+    for elem in sorted {
+        order.append(elem.key)
+    }
+    
+    // write array to database
+    Firestore.firestore().collection("games").document(game).setData([ "order": order ], merge: true)
+    
+    // flip flag
+    Firestore.firestore().collection("games").document(game).setData([ "combat_start": true ], merge: true)
     
 }
 
-func refreshStats(){
+func rollDie(quant: Int, sides: Int) -> Int {
+    var sum = 0
+    for _ in 1...quant {
+        sum += Int.random(in: 1...sides)
+    }
+    
+    return sum
+}
+
+func refreshStats(character: String, game: String) {
+    // read updated character info and game stats
+    let playerRef = Firestore.firestore().collection("players").document(character)
+    playerRef.getDocument { (document, error) in
+        if let document = document, document.exists {
+            // use this info to update stats on combat screen
+        }
+    }
+    
+    var order: Array<String> = Array()
+    let gameRef = Firestore.firestore().collection("games").document(game)
+    gameRef.getDocument { (document, error) in
+        if let document = document, document.exists {
+            // check if it's your turn now
+            order = document.get("order") as! [String]
+            
+            // check other game stats
+            
+        }
+    }
+    
+    if order[0] == character {
+        takeTurn(game: game)
+    }
+}
+
     /*
      1. fetch their updated character info
-     2. Check order[0] to see if
+     2. Check order[0] to see if you're next up
      3. getGameStats() - invisisble, sleep, dead
         if true:
         if false: restart listener for change in order
      */
+
+func takeTurn(game: String) {
+    // wait for button click action
+    // read and write to firebase as necessary
+    
+    // put yourself at the end of the order list
+    var order: Array<String> = Array()
+    let gameRef = Firestore.firestore().collection("games").document(game)
+    gameRef.getDocument { (document, error) in
+        if let document = document, document.exists {
+            order = document.get("order") as! [String]
+        }
+    }
+    
+    let me = order[0]
+    for i in 0..<order.count - 1 {
+        order[i] = order[i + 1]
+    }
+    order[order.count - 1] = me
+    
+    // Write the new order to firebase
+    Firestore.firestore().collection("games").document(game).setData([ "order": order ], merge: true)
 }
