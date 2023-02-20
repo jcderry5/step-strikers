@@ -27,7 +27,7 @@ class RPGCharacter {
     var magicResistanceModifier = 0
     
     init(characterName: String, userName: String, health: Int,
-         stamina: Int){
+         stamina: Int, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item]){
         self.characterName = characterName
         self.userName = userName
         self.maxHealth = health
@@ -36,10 +36,10 @@ class RPGCharacter {
         self.currStamina = stamina
         
         // Initialize Starter Inventory
-        self.weaponsInInventory = [fistsWeapon]
-        self.currWeapon = fistsWeapon
-        self.armorInInventory = [noArmorArmor]
-        self.currArmor = noArmorArmor
+        self.weaponsInInventory = weaponsInInventory
+        self.currWeapon = currWeapon
+        self.armorInInventory = armorInInventory
+        self.currArmor = currArmor
     }
     
     // Universal Functions
@@ -61,22 +61,25 @@ class RPGCharacter {
     }
 
     func fight(target: inout RPGCharacter){
-        
         let damageDealt = calculateDamage(wielder: self, target: target, damage: self.currWeapon.damage)
-        
         decreaseHealth(amtDamage: damageDealt)
-
         decreaseStamina()
     }
 
     func decreaseStamina(){
         self.currStamina -= self.currWeapon.staminaCost
         // TODO: Do something when exhausted
+        if self.currStamina < 0 {
+            self.currStamina = 0
+        }
     }
 
     func decreaseHealth(amtDamage: Int){
         self.currHealth -= amtDamage
-        // TODO: Do something when dead
+        if self.currHealth < 0 {
+            self.currHealth = 0
+            // TODO: Add functionality for when a person dies
+        }
     }
 
     func increaseStamina(amtIncrease: Int){
@@ -103,11 +106,11 @@ class Caster: RPGCharacter {
     var spellModifier = 0
     
     init(characterName: String, userName: String, health: Int,
-         stamina: Int, spellPoints: Int) {
+         stamina: Int, spellPoints: Int, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item]) {
         self.currSpellPoints = spellPoints
         self.maxSpellPoints = spellPoints
         super.init(characterName: characterName, userName: userName, health: health,
-                   stamina: stamina)
+                   stamina: stamina, currWeapon: currWeapon, weaponsInInventory: weaponsInInventory, currArmor: currArmor, armorInInventory: armorInInventory, itemsInInventory: itemsInInventory)
     }
     
     func increaseSpellPoints(amtIncrease: Int){
@@ -124,51 +127,27 @@ class Caster: RPGCharacter {
     
 class Fighter: RPGCharacter {
     override init(characterName: String, userName: String, health: Int,
-                  stamina: Int){
-        super.init(characterName: characterName, userName: userName, health: health, stamina: stamina)
-        
-        // Initialize Starter Inventory
-        self.weaponsInInventory = [fistsWeapon]
-        self.currWeapon = fistsWeapon
-        self.armorInInventory = [noArmorArmor]
-        self.currArmor = noArmorArmor
+                  stamina: Int, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item]){
+        super.init(characterName: characterName, userName: userName, health: health, stamina: stamina, currWeapon: currWeapon, weaponsInInventory: weaponsInInventory, currArmor: currArmor, armorInInventory: armorInInventory, itemsInInventory: itemsInInventory)
     }
 }
 
 class Wizard: Caster {
-    override init(characterName: String, userName: String, health: Int, stamina: Int, spellPoints: Int) {
-        super.init(characterName: characterName, userName: userName, health: health, stamina: stamina, spellPoints: spellPoints)
-        
-        // Initialize Starter Inventory
-        self.weaponsInInventory = [fistsWeapon]
-        self.currWeapon = fistsWeapon
-        self.armorInInventory = [noArmorArmor]
-        self.currArmor = noArmorArmor
+    override init(characterName: String, userName: String, health: Int, stamina: Int, spellPoints: Int, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item]) {
+        super.init(characterName: characterName, userName: userName, health: health, stamina: stamina, spellPoints: spellPoints, currWeapon: currWeapon, weaponsInInventory: weaponsInInventory, currArmor: currArmor, armorInInventory: armorInInventory, itemsInInventory: itemsInInventory)
     }
 }
 
 
 class Bard: Caster {
-    override init(characterName: String, userName: String, health: Int, stamina: Int, spellPoints: Int) {
-        super.init(characterName: characterName, userName: userName, health: health, stamina: stamina, spellPoints: spellPoints)
-        
-        // Initialize Starter Inventory
-        self.weaponsInInventory = [fistsWeapon]
-        self.currWeapon = fistsWeapon
-        self.armorInInventory = [noArmorArmor]
-        self.currArmor = noArmorArmor
+    override init(characterName: String, userName: String, health: Int, stamina: Int, spellPoints: Int, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item]) {
+        super.init(characterName: characterName, userName: userName, health: health, stamina: stamina, spellPoints: spellPoints, currWeapon: currWeapon, weaponsInInventory: weaponsInInventory, currArmor: currArmor, armorInInventory: armorInInventory, itemsInInventory: itemsInInventory)
     }
 }
 
 
 class Rogue: RPGCharacter {
-    override init(characterName: String, userName: String, health: Int, stamina: Int) {
-        super.init(characterName: characterName, userName: userName, health: health, stamina: stamina)
-        
-        // Initialize Starter Inventory
-        self.weaponsInInventory = [fistsWeapon]
-        self.currWeapon = fistsWeapon
-        self.armorInInventory = [noArmorArmor]
-        self.currArmor = noArmorArmor
+    override init(characterName: String, userName: String, health: Int, stamina: Int, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item]) {
+        super.init(characterName: characterName, userName: userName, health: health, stamina: stamina, currWeapon: currWeapon, weaponsInInventory: weaponsInInventory, currArmor: currArmor, armorInInventory: armorInInventory, itemsInInventory: itemsInInventory)
     }
 }
