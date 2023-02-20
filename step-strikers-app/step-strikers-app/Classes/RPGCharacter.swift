@@ -34,8 +34,6 @@ class RPGCharacter {
         self.currHealth = health
         self.maxStamina = stamina
         self.currStamina = stamina
-        self.maxSpellPoints = spellPoints
-        self.currSpellPoints = spellPoints
         
         // Initialize Starter Inventory
         self.weaponsInInventory = [fistsWeapon]
@@ -121,12 +119,12 @@ class Caster: RPGCharacter {
     
     func decreaseSpellPoints(amtDecrease: Int){
         self.currSpellPoints -= amtDecrease
+    }
 }
-
-
+    
 class Fighter: RPGCharacter {
     override init(characterName: String, userName: String, health: Int,
-              stamina: Int){
+                  stamina: Int){
         super.init(characterName: characterName, userName: userName, health: health, stamina: stamina)
         
         // Initialize Starter Inventory
