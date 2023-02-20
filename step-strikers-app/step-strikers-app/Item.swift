@@ -70,10 +70,27 @@ struct elixirOfMagic: Item {
     }
 }
 
+// restores a small amount of stamina
+struct energyPill: Item {
+    var name = "Energy Pill"
+    var owner: RPGCharacter
+    var tier: Int = 1
+    
+    init(owner: RPGCharacter) {
+        self.owner = owner
+    }
+    
+    func use() {
+        owner.increaseStamina(amtIncrease: smallAmountOfRestoration)
+    }
+    
+    func use(target: RPGCharacter) {
+        target.increaseStamina(amtIncrease: smallAmountOfRestoration)
+    }
+}
+
 // cures any ailments
 struct antidote: Item {
-    
-    
     let name = "Antidote"
     var owner: RPGCharacter
     var tier = 1
@@ -159,6 +176,25 @@ struct elixirOfGreaterMagic: Item {
     }
 }
 
+// restores a moderate amount of stamina
+struct energyPowder: Item {
+    var name = "Energy Powder"
+    var owner: RPGCharacter
+    var tier = 2
+    
+    init(owner: RPGCharacter) {
+        self.owner = owner
+    }
+    
+    func use() {
+        owner.increaseStamina(amtIncrease: moderateAmountOfRestoration)
+    }
+    
+    func use(target: RPGCharacter) {
+        target.increaseStamina(amtIncrease: moderateAmountOfRestoration)
+    }
+}
+
 // revives the target with small healing
 struct resurrectionStone: Item {
     let name = "Resurrection Stone"
@@ -218,8 +254,8 @@ struct leatherArmorPad: Item {
 }
 
 // increases attack by a small amount
-struct energyPowder: Item {
-    let name = "Energy Powder"
+struct featherOfVigor: Item {
+    let name = "Feather of Vigor"
     var owner: RPGCharacter
     var tier = 2
     
@@ -302,6 +338,25 @@ struct elixirOfSuperiorMagic: Item {
     }
 }
 
+// restore a large amount of stamina
+struct energyRoot: Item {
+    var name = "Energy Root"
+    var owner: RPGCharacter
+    var tier = 3
+    
+    init(owner: RPGCharacter) {
+        self.owner = owner
+    }
+    
+    func use() {
+        owner.increaseStamina(amtIncrease: largeAmountOfRestoration)
+    }
+    
+    func use(target: RPGCharacter) {
+        target.increaseStamina(amtIncrease: largeAmountOfRestoration)
+    }
+}
+
 // revives the target with moderate healing
 struct revivalCrystal: Item {
     var name = "Revival Crystal"
@@ -360,8 +415,8 @@ struct metalArmorPad: Item {
 }
 
 // increases attack by a moderate amount
-struct energyRoot: Item {
-    var name = "Energy Root"
+struct vialOfVigor: Item {
+    var name = "Vial of Vigor"
     var owner: RPGCharacter
     var tier = 3
     
@@ -447,6 +502,27 @@ struct elixirOfSorcery: Item {
         } else {
             print("\(target.characterName) cannot take \(self.name) because they are not a Caster")
         }
+    }
+}
+
+// Fully restores stamina
+struct energySap: Item {
+    var name = "Energy Sap"
+    var owner: RPGCharacter
+    var tier = 4
+    
+    init(owner: RPGCharacter) {
+        self.owner = owner
+    }
+    
+    func use() {
+        let difference = owner.maxStamina - owner.currStamina
+        owner.increaseStamina(amtIncrease: difference)
+    }
+    
+    func use(target: RPGCharacter) {
+        let difference = target.maxStamina - target.currStamina
+        target.increaseStamina(amtIncrease: difference)
     }
 }
 
