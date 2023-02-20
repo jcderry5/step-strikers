@@ -92,9 +92,7 @@
 				EBCBEEA1299C0BDF005009D7 /* DisplayInitiativeViewController.swift */,
 				EBCBEEA3299C0C43005009D7 /* InitiativeViewController.swift */,
 				6436510D2991AA270017AA0E /* Main.storyboard */,
-				64A2875D29A4211D00922509 /* Adventurer.ttf */,
-				64A2875F29A4211D00922509 /* iso8.ttf */,
-				64A2875E29A4211D00922509 /* munro.ttf */,
+				64A2876329A4262900922509 /* custom fonts */,
 				EBC0637F299A9D5900B00110 /* StatsViewController.swift */,
 				643651102991AA280017AA0E /* Assets.xcassets */,
 				EBC0637B2996ED4B00B00110 /* Game.swift */,
@@ -105,6 +103,16 @@
 				643651222992C6180017AA0E /* RPGCharacter.swift */,
 			);
 			path = "step-strikers-app";
+			sourceTree = "<group>";
+		};
+		64A2876329A4262900922509 /* custom fonts */ = {
+			isa = PBXGroup;
+			children = (
+				64A2875D29A4211D00922509 /* Adventurer.ttf */,
+				64A2875F29A4211D00922509 /* iso8.ttf */,
+				64A2875E29A4211D00922509 /* munro.ttf */,
+			);
+			path = "custom fonts";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
