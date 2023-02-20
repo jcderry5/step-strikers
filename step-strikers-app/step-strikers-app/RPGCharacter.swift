@@ -25,6 +25,11 @@ class RPGCharacter {
     var armorInInventory: [Armor]
     var currArmor: Armor
     
+    // Rolling modifiers
+    var attackModifier = 0
+    var defenseModifier = 0
+    var magicResistanceModifier = 0
+    
     init(characterName: String, userName: String, health: Int,
          stamina: Int) {
         self.characterName = characterName
@@ -39,6 +44,57 @@ class RPGCharacter {
         self.armorInInventory = [noArmorArmor]
         self.currArmor = noArmorArmor
     }
+    
+    // Universal Functions
+    func wield(weaponObject: Weapon){
+        if(weaponObject.checkIfProficient(wearer: self)){
+            self.currWeapon = weaponObject
+        } else {
+            print("\(self.characterName) is not proficient with \(weaponObject.name).\n They will use this weapon at a disadvantage")
+            self.currWeapon = weaponObject
+        }
+    }
+
+    func wear(armorObject: Armor){
+        if(armorObject.checkIfSuited(potentialWearer: self)){
+            self.currArmor = armorObject
+        } else {
+            print("\(armorObject.name) is not properly suited for \(self.characterName). Their armor class will be at a disadvantage")
+        }
+    }
+
+    func fight(target: inout RPGCharacter){
+        
+        let damageDealt = calculateDamage(wielder: self, target: target, damage: self.currWeapon.damage)
+        
+        decreaseHealth(amtDamage: damageDealt)
+
+        decreaseStamina()
+    }
+
+    func decreaseStamina(){
+        self.currStamina -= self.currWeapon.staminaCost
+        // TODO: Do something when exhausted
+    }
+
+    func decreaseHealth(amtDamage: Int){
+        self.currHealth -= amtDamage
+        // TODO: Do something when dead
+    }
+
+    func increaseStamina(amtIncrease: Int){
+        self.currStamina += amtIncrease
+        if(amtIncrease > self.maxStamina){
+            self.currStamina = self.maxStamina
+        }
+    }
+
+    func increaseHealth(amtIncrease: Int){
+        self.currHealth += amtIncrease
+        if(amtIncrease > self.maxHealth){
+            self.currHealth = self.maxHealth
+        }
+    }
 }
 
 
@@ -46,12 +102,28 @@ class Caster: RPGCharacter {
     var currSpellPoints: Int
     var maxSpellPoints: Int
     
-    override init(characterName: String, userName: String, health: Int,
+    // Rolling modifier
+    var spellModifier = 0
+    
+    init(characterName: String, userName: String, health: Int,
          stamina: Int, spellPoints: Int) {
-        super.init(characterName: characterName, userName: userName, health: health, stamina: stamina)
         self.currSpellPoints = spellPoints
         self.maxSpellPoints = spellPoints
+        super.init(characterName: characterName, userName: userName, health: health,
+                   stamina: stamina)
+    }
+    
+    func increaseSpellPoints(amtIncrease: Int){
+        self.currSpellPoints += amtIncrease
+        if(self.currSpellPoints > maxSpellPoints){
+            self.currSpellPoints = maxSpellPoints
+        }
+    }
+    
+    func decreaseSpellPoints(amtDecrease: Int){
+        self.currSpellPoints -= amtDecrease
         
+        // TODO: Do something when out of spell points
     }
 }
 
@@ -81,19 +153,14 @@ class Wizard: Caster {
     
 }
 
-
 class Bard: Caster {
-    
     var description: String {
         return ("Character Name: \(characterName)\nUser Name: \(userName)\nCurrent Health: \(currHealth)\nCurrent Stamina: \(currStamina)\nCurrent Spellpoints: \(currSpellPoints)")
     }
-    
     override init(characterName: String, userName: String, health: Int, stamina: Int, spellPoints: Int) {
         super.init(characterName: characterName, userName: userName, health: health, stamina: stamina, spellPoints: spellPoints)
     }
-    
 }
-
 
 class Rogue: RPGCharacter {
     
@@ -107,38 +174,3 @@ class Rogue: RPGCharacter {
     
 }
 
-// Universal Functions
-
-func wield(weaponObject: Weapon, wielder: inout RPGCharacter){
-    if(weaponObject.checkIfProficient(wearer: wielder)){
-        wielder.currWeapon = weaponObject
-    } else {
-        print("\(wielder.characterName) is not proficient with \(weaponObject.name).\n They will use this weapon at a disadvantage")
-        wielder.currWeapon = weaponObject
-    }
-}
-
-func wear(armorObject: Armor, wearer: inout RPGCharacter){
-    if(armorObject.checkIfSuited(potentialWearer: wearer)){
-        wearer.currArmor = armorObject
-    } else {
-        print("\(armorObject.name) is not properly suited for \(wearer.characterName). Their armor class will be at a disadvantage")
-    }
-}
-
-func fight(fighter: inout RPGCharacter, target: inout RPGCharacter){
-    
-    let damageDealt = calculateDamage(wielder: fighter, target: target, damage: fighter.currWeapon.damage)
-    
-    takeDamage(recepient: &target, amtDamage: damageDealt)
-
-    modifyStamina(player: &fighter)
-}
-
-func modifyStamina(player: inout RPGCharacter){
-    player.currStamina -= player.currWeapon.staminaCost
-}
-
-func takeDamage(recepient: inout RPGCharacter, amtDamage: Int){
-    recepient.currHealth -= amtDamage
-}

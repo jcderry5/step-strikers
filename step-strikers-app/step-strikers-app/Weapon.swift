@@ -13,7 +13,6 @@ protocol Weapon {
     var staminaCost: Int {get}
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool
-    
 }
 
 struct fists: Weapon {
@@ -24,7 +23,6 @@ struct fists: Weapon {
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
         return true
     }
-    
 }
 
 struct dagger: Weapon {
@@ -123,11 +121,12 @@ func calculateDamage(wielder: RPGCharacter, target: RPGCharacter, damage: Int) -
     // If they are a proficient wielder
     // Check if your target is wearing suited armor
     var armorClassToBeat = modifyArmorClass(wearer: target)
-    if(rollDie(quant: 1, sides: 20) >= armorClassToBeat) {
+    // TODO: Check with team if modifiers are persitant
+    if(rollDie(quant: 1, sides: 20) + wielder.attackModifier >= armorClassToBeat + target.defenseModifier) {
         // check if wielder is proficient in their weapon
         return modifyDamage(wielder: wielder)
     } else {
-        return 0 // if wielder does not beat the character's AC, they do not inflict damage upon it
+        return 0 // if wielder does not beat the character's AC, they do not inflict damage upon themc
     }
 }
 
