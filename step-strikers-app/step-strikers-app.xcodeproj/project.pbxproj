@@ -14,6 +14,9 @@
 		643651112991AA280017AA0E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 643651102991AA280017AA0E /* Assets.xcassets */; };
 		643651142991AA280017AA0E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 643651122991AA280017AA0E /* LaunchScreen.storyboard */; };
 		643651232992C6180017AA0E /* RPGCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643651222992C6180017AA0E /* RPGCharacter.swift */; };
+		64A2876029A4211D00922509 /* Adventurer.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64A2875D29A4211D00922509 /* Adventurer.ttf */; };
+		64A2876129A4211D00922509 /* munro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64A2875E29A4211D00922509 /* munro.ttf */; };
+		64A2876229A4211D00922509 /* iso8.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64A2875F29A4211D00922509 /* iso8.ttf */; };
 		EB66578E2992ECAE00CAEAEC /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = EB66578D2992ECAE00CAEAEC /* FirebaseAnalytics */; };
 		EB6657902992ECAE00CAEAEC /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EB66578F2992ECAE00CAEAEC /* FirebaseAnalyticsSwift */; };
 		EB6657922992ECAE00CAEAEC /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = EB6657912992ECAE00CAEAEC /* FirebaseFirestore */; };
@@ -37,6 +40,9 @@
 		643651152991AA280017AA0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		643651222992C6180017AA0E /* RPGCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPGCharacter.swift; sourceTree = "<group>"; };
 		643651252992D6450017AA0E /* commandline-testing.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "commandline-testing.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		64A2875D29A4211D00922509 /* Adventurer.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Adventurer.ttf; sourceTree = "<group>"; };
+		64A2875E29A4211D00922509 /* munro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = munro.ttf; sourceTree = "<group>"; };
+		64A2875F29A4211D00922509 /* iso8.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = iso8.ttf; sourceTree = "<group>"; };
 		EB69AF3E299AA16A00FB5D25 /* DamageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DamageViewController.swift; sourceTree = "<group>"; };
 		EBC0637B2996ED4B00B00110 /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		EBC0637F299A9D5900B00110 /* StatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
@@ -86,6 +92,7 @@
 				EBCBEEA1299C0BDF005009D7 /* DisplayInitiativeViewController.swift */,
 				EBCBEEA3299C0C43005009D7 /* InitiativeViewController.swift */,
 				6436510D2991AA270017AA0E /* Main.storyboard */,
+				64A2876329A4262900922509 /* custom fonts */,
 				EBC0637F299A9D5900B00110 /* StatsViewController.swift */,
 				643651102991AA280017AA0E /* Assets.xcassets */,
 				EBC0637B2996ED4B00B00110 /* Game.swift */,
@@ -96,6 +103,16 @@
 				643651222992C6180017AA0E /* RPGCharacter.swift */,
 			);
 			path = "step-strikers-app";
+			sourceTree = "<group>";
+		};
+		64A2876329A4262900922509 /* custom fonts */ = {
+			isa = PBXGroup;
+			children = (
+				64A2875D29A4211D00922509 /* Adventurer.ttf */,
+				64A2875F29A4211D00922509 /* iso8.ttf */,
+				64A2875E29A4211D00922509 /* munro.ttf */,
+			);
+			path = "custom fonts";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -165,9 +182,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64A2876229A4211D00922509 /* iso8.ttf in Resources */,
 				643651142991AA280017AA0E /* LaunchScreen.storyboard in Resources */,
 				EBC206852995777D00DEB48C /* GoogleService-Info.plist in Resources */,
+				64A2876129A4211D00922509 /* munro.ttf in Resources */,
 				643651112991AA280017AA0E /* Assets.xcassets in Resources */,
+				64A2876029A4211D00922509 /* Adventurer.ttf in Resources */,
 				6436510F2991AA270017AA0E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
