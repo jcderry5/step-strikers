@@ -22,6 +22,7 @@
 		EB6657922992ECAE00CAEAEC /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = EB6657912992ECAE00CAEAEC /* FirebaseFirestore */; };
 		EB6657942992ECAE00CAEAEC /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EB6657932992ECAE00CAEAEC /* FirebaseFirestoreSwift */; };
 		EB69AF3F299AA16A00FB5D25 /* DamageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB69AF3E299AA16A00FB5D25 /* DamageViewController.swift */; };
+		EBAA396A29A53D9100A56347 /* WaitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAA396929A53D9100A56347 /* WaitViewController.swift */; };
 		EBC0637C2996ED4B00B00110 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC0637B2996ED4B00B00110 /* Game.swift */; };
 		EBC06380299A9D5900B00110 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC0637F299A9D5900B00110 /* StatsViewController.swift */; };
 		EBC206852995777D00DEB48C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EBC206842995777D00DEB48C /* GoogleService-Info.plist */; };
@@ -44,6 +45,7 @@
 		64A2875E29A4211D00922509 /* munro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = munro.ttf; sourceTree = "<group>"; };
 		64A2875F29A4211D00922509 /* iso8.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = iso8.ttf; sourceTree = "<group>"; };
 		EB69AF3E299AA16A00FB5D25 /* DamageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DamageViewController.swift; sourceTree = "<group>"; };
+		EBAA396929A53D9100A56347 /* WaitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitViewController.swift; sourceTree = "<group>"; };
 		EBC0637B2996ED4B00B00110 /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		EBC0637F299A9D5900B00110 /* StatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
 		EBC206842995777D00DEB48C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 				643651092991AA260017AA0E /* SceneDelegate.swift */,
 				6436510B2991AA260017AA0E /* ViewController.swift */,
 				EBCBEEA1299C0BDF005009D7 /* DisplayInitiativeViewController.swift */,
+				EBAA396929A53D9100A56347 /* WaitViewController.swift */,
 				EBCBEEA3299C0C43005009D7 /* InitiativeViewController.swift */,
 				6436510D2991AA270017AA0E /* Main.storyboard */,
 				64A2876329A4262900922509 /* custom fonts */,
@@ -202,6 +205,7 @@
 				6436510C2991AA270017AA0E /* ViewController.swift in Sources */,
 				EBC0637C2996ED4B00B00110 /* Game.swift in Sources */,
 				643651232992C6180017AA0E /* RPGCharacter.swift in Sources */,
+				EBAA396A29A53D9100A56347 /* WaitViewController.swift in Sources */,
 				EBCBEEA2299C0BDF005009D7 /* DisplayInitiativeViewController.swift in Sources */,
 				643651082991AA260017AA0E /* AppDelegate.swift in Sources */,
 				EBC06380299A9D5900B00110 /* StatsViewController.swift in Sources */,

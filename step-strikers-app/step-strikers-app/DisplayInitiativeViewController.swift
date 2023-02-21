@@ -24,10 +24,20 @@ class DisplayInitiativeViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "AttackSegue", let nextVC = segue.destination as? DamageViewController {
+//        if segue.identifier == "AttackSegue", let nextVC = segue.destination as? DamageViewController {
+//            nextVC.delegate = self
+//            nextVC.player = player
+//            nextVC.opponent = opponent
+//        }
+        
+        if player == "Player 1", let nextVC = segue.destination as? DamageViewController {
             nextVC.delegate = self
-            nextVC.player = player
-            nextVC.opponent = opponent
+            nextVC.player = "Player 1"
+            nextVC.opponent = "Player 2"
+        } else if player == "Player 2", let nextVC = segue.destination as? WaitViewController{
+            nextVC.delegate = self
+            nextVC.player = "Player 1"
+            nextVC.opponent = "Player 2"
         }
     }
 
