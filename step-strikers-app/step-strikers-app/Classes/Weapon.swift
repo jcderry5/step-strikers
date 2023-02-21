@@ -20,6 +20,7 @@ let maxWeaponUses = 20
 
 protocol Weapon {
     var name: String {get}
+    var owner: RPGCharacter {get set}
     var damage: Int {get}
     var staminaCost: Int {get}
     var condition: Int {get set}
@@ -30,10 +31,15 @@ protocol Weapon {
 
 struct fists: Weapon {
     let name = "Fists"
+    var owner: RPGCharacter
     let damage = 2
     let staminaCost = 1
     var condition = 4
     var useCount = 0
+    
+    init(owner: RPGCharacter) {
+        self.owner = owner
+    }
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
         return true
@@ -42,10 +48,15 @@ struct fists: Weapon {
 
 struct dagger: Weapon {
     let name = "Dagger"
+    var owner: RPGCharacter
     let damage = 4
     let staminaCost = 3
     var condition = 4
     var useCount = 0
+    
+    init(owner: RPGCharacter) {
+        self.owner = owner
+    }
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
         return wearer is Wizard
@@ -54,10 +65,15 @@ struct dagger: Weapon {
 
 struct darts: Weapon {
     let name = "Darts"
+    var owner: RPGCharacter
     let damage = 5
     let staminaCost = 4
     var condition = 4
     var useCount = 0
+    
+    init(owner: RPGCharacter) {
+        self.owner = owner
+    }
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
         return wearer is Wizard
@@ -66,11 +82,16 @@ struct darts: Weapon {
 
 struct crossBow: Weapon {
     let name = "Cross Bow"
+    var owner: RPGCharacter
     let damage = 8
     let staminaCost = 5
     var condition = 4
     var useCount = 0
 
+    init(owner: RPGCharacter) {
+        self.owner = owner
+    }
+    
     // Anyone can equip a crossbow
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
         return true
@@ -79,10 +100,15 @@ struct crossBow: Weapon {
 
 struct rapier: Weapon {
     let name = "Rapier"
+    var owner: RPGCharacter
     let damage = 8
     let staminaCost = 5
     var condition = 4
     var useCount = 0
+    
+    init(owner: RPGCharacter) {
+        self.owner = owner
+    }
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
         return wearer is Rogue || wearer is Bard
@@ -91,10 +117,15 @@ struct rapier: Weapon {
 
 struct shortSword: Weapon {
     let name = "Short Sword"
+    var owner: RPGCharacter
     let damage = 6
     let staminaCost = 4
     var condition = 4
     var useCount = 0
+    
+    init(owner: RPGCharacter) {
+        self.owner = owner
+    }
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
         return wearer is Rogue
@@ -103,10 +134,15 @@ struct shortSword: Weapon {
 
 struct longBow: Weapon {
     let name = "Long Bow"
+    var owner: RPGCharacter
     let damage = 8
     let staminaCost = 6
     var condition = 4
     var useCount = 0
+    
+    init(owner: RPGCharacter) {
+        self.owner = owner
+    }
 
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
         return wearer is Fighter
@@ -115,10 +151,15 @@ struct longBow: Weapon {
 
 struct handAxe: Weapon {
     let name = "Hand Axe"
+    var owner: RPGCharacter
     let damage = 6
     let staminaCost = 5
     var condition = 4
     var useCount = 0
+    
+    init(owner: RPGCharacter) {
+        self.owner = owner
+    }
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
         return wearer is Fighter
@@ -127,10 +168,15 @@ struct handAxe: Weapon {
 
 struct battleAxe: Weapon {
     let name = "Battle Axe"
+    var owner: RPGCharacter
     let damage = 10
     let staminaCost = 8
     var condition = 4
     var useCount = 0
+    
+    init(owner: RPGCharacter) {
+        self.owner = owner
+    }
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
         return wearer is Fighter
@@ -139,10 +185,15 @@ struct battleAxe: Weapon {
 
 struct longSword: Weapon {
     let name = "Long Sword"
+    var owner: RPGCharacter
     let damage = 8
     let staminaCost = 5
     var condition = 4
     var useCount = 0
+    
+    init(owner: RPGCharacter) {
+        self.owner = owner
+    }
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
         return wearer is Bard
@@ -165,6 +216,11 @@ func calculateDamage(wielder: RPGCharacter, target: RPGCharacter, damage: Int) -
     // reset attack and defense modifier after interaction
     wielder.attackModifier = 0
     target.defenseModifier = 0
+    
+    // adjust the condition of the wielder's weapon and the target's armor
+    adjustCondition(armorUsed: &target.currArmor)
+    adjustCondition(weaponUsed: &wielder.currWeapon)
+    
     return damage
 }
 
@@ -179,37 +235,42 @@ func calculateModifiedDamage(wielder: RPGCharacter) -> Int{
 
 func adjustCondition(weaponUsed: inout Weapon){
     weaponUsed.useCount += 1
-    
+    let useCounter: Int = weaponUsed.useCount
     // Condition of Fists is forever
-    if !(weaponUsed is fists) {
         // checks if conditionBoundary contains the useCount, if so change condition
-        if conditionBoundary.contains(where: {$0.boundary == weaponUsed.useCount}) {
-            // changingIndex holds the index in conditionBoundary with the new condition of the weapon
-            let changingIndex = conditionBoundary.firstIndex(where: {$0.boundary == weaponUsed.useCount})
+    if !(weaponUsed is fists) {
+        if conditionBoundary.contains(where: {$0.boundary == useCounter}) {
+            // changingIndex holds the index in conditionBoundary with their previous condition of the weapon
+            let changingIndex = conditionBoundary.firstIndex(where: {$0.boundary == useCounter})
             
             // new Condition is the new condition of weaponUsed
-            let newCondition: String = conditionBoundary[changingIndex!].condition
+            let newCondition: String = conditionBoundary[(changingIndex)!].condition
             
             // Set the condition Int in weaponUsed to new Int associated with the newCondition
             weaponUsed.condition = conditionIntEquivalent[conditionIntEquivalent.firstIndex(where: {$0.condition == newCondition})!].intEquivalent
+        } else if (useCounter >= 20){
+            // Take action when weapon is deteriorated
+            destroyWeapon(weaponToDestroy: weaponUsed)
         }
     }
 }
 
-
-
-
-
-
-
-// create all weapon variables
-let fistsWeapon = fists()
-let daggerWeapon = dagger()
-let dartsWeapon = darts()
-let crossBowWeapon = crossBow()
-let rapierWeapon = rapier()
-let shortSwordWeapon = shortSword()
-let longBowWeapon = longBow()
-let handAxeWeapon = handAxe()
-let battleAxeWeapon = battleAxe()
-let longSwordWeapon = longSword()
+// destroys all weapons in inventory that have this name and disarms you
+func destroyWeapon(weaponToDestroy: Weapon){
+    let owner = weaponToDestroy.owner
+    owner.weaponsInInventory.removeAll { weapon in
+        weapon.name == weaponToDestroy.name && weapon.useCount == 20
+    }
+    
+    // if they already have fists in their weapons inventory, equip it
+    // if not, make them a new fists and put it in inventory
+    if let fistIndexToEquip: Int = owner.weaponsInInventory.firstIndex(where: { weapon in
+        weapon.name == "Fists"
+    }) {
+        owner.currWeapon = owner.weaponsInInventory[fistIndexToEquip]
+    } else {
+        let newFists: Weapon = fists(owner: owner)
+        owner.currWeapon = newFists
+        owner.weaponsInInventory += [newFists]
+    }
+}

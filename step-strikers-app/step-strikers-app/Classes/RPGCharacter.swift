@@ -20,6 +20,7 @@ class RPGCharacter {
     var currWeapon: Weapon
     var armorInInventory: [Armor]
     var currArmor: Armor
+    var itemsInInventory: [Item]
     
     // Rolling modifiers
     var attackModifier = 0
@@ -40,6 +41,7 @@ class RPGCharacter {
         self.currWeapon = currWeapon
         self.armorInInventory = armorInInventory
         self.currArmor = currArmor
+        self.itemsInInventory = itemsInInventory
     }
     
     // Universal Functions
