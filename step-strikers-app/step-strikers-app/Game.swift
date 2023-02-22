@@ -159,12 +159,6 @@ func rollDie(quant: Int, sides: Int) -> Int {
     return sum
 }
 
-func rollDieDisadvantage(sides: Int) -> Int {
-    var firstRoll = rollDie(quant: 1, sides: sides)
-    var secondRoll = rollDie(quant: 1, sides: sides)
-    return (firstRoll <= secondRoll) ? firstRoll : secondRoll
-}
-
 func refreshStats(character: String, game: String) {
     // read updated character info and game stats
     let playerRef = Firestore.firestore().collection("players").document(character)
