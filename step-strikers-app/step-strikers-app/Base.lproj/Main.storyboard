@@ -111,7 +111,7 @@
         <!--Battle Select Action View Controller-->
         <scene sceneID="BaN-XQ-48P">
             <objects>
-                <viewController id="YvA-5L-X4a" customClass="BattleSelectActionViewController" customModule="step_strikers_app" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BattleSelectActionViewController" id="YvA-5L-X4a" customClass="BattleSelectActionViewController" customModule="step_strikers_app" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TSX-g9-2Am">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -123,10 +123,10 @@
             </objects>
             <point key="canvasLocation" x="-1519" y="9"/>
         </scene>
-        <!--View Controller-->
+        <!--Battle Select Item View Controller-->
         <scene sceneID="qPa-1e-ajM">
             <objects>
-                <viewController id="ebY-fX-98a" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BattleSelectItemViewController" id="ebY-fX-98a" customClass="BattleSelectItemViewController" customModule="step_strikers_app" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cGX-ir-LMT">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -291,6 +291,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jzW-8c-CbZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1195" y="18"/>
+        </scene>
+        <!--Battle Select Equip View Controller-->
+        <scene sceneID="XyZ-nA-EM6">
+            <objects>
+                <viewController storyboardIdentifier="BattleSelectEquipViewController" id="lc8-gV-aHz" customClass="BattleSelectEquipViewController" customModule="step_strikers_app" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9j3-e7-W4g">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="7Pr-2A-hMJ"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iJT-oj-gl3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2234" y="680"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

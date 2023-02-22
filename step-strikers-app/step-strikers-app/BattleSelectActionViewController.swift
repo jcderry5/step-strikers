@@ -16,26 +16,14 @@ class BattleSelectActionViewController: UIViewController {
         assignBackground()
         createBattleActionMenu()
         createBattleStatsDisplay()
-        createBattleActionButtons()
+        let selectedButton:String = "Selected Action Button"
+        let unselectedButton:String = "Unselected action button"
+        createBattleActionButtons(actionSelected: selectedButton, itemSelected: unselectedButton, equipSelected: unselectedButton)
         createSettingsButton(x: 10, y: 50, width: 40, height: 40)
         
         // create characters
         // will need to change "name" based on what the enemy players are
-        // player 1
-        let player1 = characterSprites(name: "Fighter")
-        player1.drawCharacter(view: self.view, x: 10, y: 400, width: 100, height: 100)
-        
-        // player 2
-        let player2 = characterSprites(name: "Bard")
-        player2.drawCharacter(view: self.view, x: 100, y: 400, width: 100, height: 100)
-        
-        // player 3
-        let player3 = characterSprites(name: "Rogue")
-        player3.drawCharacter(view: self.view, x: 200, y: 400, width: 100, height: 100)
-        
-        // player  4
-        let player4 = characterSprites(name: "Wizard")
-        player4.drawCharacter(view: self.view, x: 290, y: 400, width: 100, height: 100)
+        drawEnemies(enemy1: "Fighter", enemy2: "Bard", enemy3: "Rogue", enemy4: "Wizard")
     }
 
 }
@@ -66,27 +54,22 @@ extension UIViewController {
         imageView = UIImageView(frame: CGRect(x: self.view.safeAreaInsets.left+10, y: 600, width: 375, height: 240))
         imageView.image = battleBottomBoard
         view.addSubview(imageView)
-        
-        // create the three buttons on the bottom of the board
-        createBattleActionButtons()
     }
     
-    func createBattleActionButtons() {
-        let selectedButton:String = "Selected Action Button"
-        let unselectedButton:String = "Unselected action button"
+    func createBattleActionButtons(actionSelected:String, itemSelected:String, equipSelected:String) {
         let fontNamed:String = "munro"
         // action button
-        let actionButton:UIButton = createButton(x:20, y:785, width:126, height:50, fontName: fontNamed, imageName: selectedButton, fontColor: UIColor.black, buttonTitle: "ACTION")
+        let actionButton:UIButton = createButton(x:20, y:785, width:126, height:50, fontName: fontNamed, imageName: actionSelected, fontColor: UIColor.black, buttonTitle: "ACTION")
         actionButton.addTarget(self, action:#selector(self.actionButtonPressed(_:)), for: .touchUpInside)
         self.view.addSubview(actionButton)
         
         // item button
-        let itemButton:UIButton = createButton(x:137, y:785, width:126, height:50, fontName: fontNamed, imageName: unselectedButton, fontColor: UIColor.black, buttonTitle: "ITEM")
+        let itemButton:UIButton = createButton(x:137, y:785, width:126, height:50, fontName: fontNamed, imageName: itemSelected, fontColor: UIColor.black, buttonTitle: "ITEM")
         itemButton.addTarget(self, action:#selector(self.itemButtonPressed(_:)), for: .touchUpInside)
         self.view.addSubview(itemButton)
 
         // equip button
-        let equipButton:UIButton = createButton(x:254, y:785, width:126, height:50, fontName: fontNamed, imageName: unselectedButton, fontColor: UIColor.black, buttonTitle: "EQUIP")
+        let equipButton:UIButton = createButton(x:254, y:785, width:126, height:50, fontName: fontNamed, imageName: equipSelected, fontColor: UIColor.black, buttonTitle: "EQUIP")
         equipButton.addTarget(self, action:#selector(self.equipButtonPressed(_:)), for: .touchUpInside)
         self.view.addSubview(equipButton)
 
@@ -110,18 +93,50 @@ extension UIViewController {
         self.view.addSubview(settingsButton)
     }
     
-    func drawEnemies(enemy1:String, enemy2:String, enemy3:String, enemy4:String)
+    func drawEnemies(enemy1:String, enemy2:String, enemy3:String, enemy4:String) {
+        // will need to change "name" based on what the enemy players are
+        // player 1
+        let player1 = characterSprites(name: enemy1)
+        player1.drawCharacter(view: self.view, x: 10, y: 400, width: 100, height: 100)
+        
+        // player 2
+        let player2 = characterSprites(name: enemy2)
+        player2.drawCharacter(view: self.view, x: 100, y: 400, width: 100, height: 100)
+        
+        // player 3
+        let player3 = characterSprites(name: enemy3)
+        player3.drawCharacter(view: self.view, x: 200, y: 400, width: 100, height: 100)
+        
+        // player  4
+        let player4 = characterSprites(name: enemy4)
+        player4.drawCharacter(view: self.view, x: 290, y: 400, width: 100, height: 100)
+    }
     
     @objc func actionButtonPressed(_ sender:UIButton!) {
         print("my action button pressed")
+        let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "BattleSelectActionViewController") as! BattleSelectActionViewController
+        self.modalPresentationStyle = .fullScreen
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc,animated: false)
     }
     
     @objc func itemButtonPressed(_ sender:UIButton!) {
         print("my item button pressed")
+        let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "BattleSelectItemViewController") as! BattleSelectItemViewController
+        self.modalPresentationStyle = .fullScreen
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc,animated: false)
     }
     
     @objc func equipButtonPressed(_ sender:UIButton!) {
         print("my equip button pressed")
+        let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "BattleSelectEquipViewController") as! BattleSelectEquipViewController
+        self.modalPresentationStyle = .fullScreen
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc,animated: false)
     }
     
     @objc func settingsButtonPressed(_ sender:UIButton!) {
