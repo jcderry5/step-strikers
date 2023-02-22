@@ -186,9 +186,9 @@
                                 <rect key="frame" x="159" y="409" width="75" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Next"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Battle!"/>
                                 <connections>
-                                    <segue destination="Qui-tt-beH" kind="presentation" identifier="AttackSegue" modalPresentationStyle="fullScreen" id="s0S-zt-96w"/>
+                                    <action selector="battleButtonPressed:" destination="4Mt-gq-Z4B" eventType="touchUpInside" id="8an-DH-aR5"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CXd-fH-WPH">
@@ -204,18 +204,20 @@
                     </view>
                     <connections>
                         <outlet property="displayInitiativeLabel" destination="CXd-fH-WPH" id="JOm-zQ-krM"/>
+                        <segue destination="t9c-bg-LaA" kind="presentation" identifier="WaitSegue" id="ywc-Bt-yOE"/>
+                        <segue destination="Qui-tt-beH" kind="presentation" identifier="ActionSegue" id="FdC-KR-x3P"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ege-WJ-o9u" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="193.12977099236642" y="694.36619718309862"/>
+            <point key="canvasLocation" x="204" y="734"/>
         </scene>
         <!--Wait View Controller-->
         <scene sceneID="at1-Qs-Yln">
             <objects>
                 <viewController id="t9c-bg-LaA" customClass="WaitViewController" customModule="step_strikers_app" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="w5P-9X-09t">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="It's not your turn! Wait..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="74R-5p-sea">
@@ -239,7 +241,7 @@
             <objects>
                 <viewController id="Qui-tt-beH" customClass="DamageViewController" customModule="step_strikers_app" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Vd2-cB-z1J">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Do some damage!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ACs-4f-18g">
@@ -288,7 +290,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="XmG-gp-6yP"/>
+        <segue reference="zkX-rv-h8j"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">

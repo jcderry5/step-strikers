@@ -12,6 +12,8 @@ class DisplayInitiativeViewController: UIViewController {
     var player: String!
     var opponent: String!
     var initiative: Int!
+    let actionSegueIdentifier: String = "ActionSegue"
+    let waitSegueIdentifier: String = "WaitSegue"
     
     
     @IBOutlet weak var displayInitiativeLabel: UILabel!
@@ -30,6 +32,7 @@ class DisplayInitiativeViewController: UIViewController {
 //            nextVC.opponent = opponent
 //        }
         
+        
         if player == "Player 1", let nextVC = segue.destination as? DamageViewController {
             nextVC.delegate = self
             nextVC.player = "Player 1"
@@ -41,4 +44,14 @@ class DisplayInitiativeViewController: UIViewController {
         }
     }
 
+    @IBAction func battleButtonPressed(_ sender: Any) {
+        if localCharacter.userName == "Player 1" {
+            performSegue(withIdentifier: actionSegueIdentifier, sender: self)
+        } else if localCharacter.userName == "Player 2" {
+            performSegue(withIdentifier: waitSegueIdentifier, sender: self)
+        } else {
+            print("Whoops, something bad happened. local character's username is \(localCharacter.userName)")
+        }
+    }
 }
+
