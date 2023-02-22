@@ -13,7 +13,11 @@
 		6436510F2991AA270017AA0E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6436510D2991AA270017AA0E /* Main.storyboard */; };
 		643651112991AA280017AA0E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 643651102991AA280017AA0E /* Assets.xcassets */; };
 		643651142991AA280017AA0E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 643651122991AA280017AA0E /* LaunchScreen.storyboard */; };
-		643651232992C6180017AA0E /* RPGCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643651222992C6180017AA0E /* RPGCharacter.swift */; };
+		646DD2BA29A6B6DB001FB2BB /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646DD2B929A6B6DB001FB2BB /* Game.swift */; };
+		646DD2BC29A6B6F2001FB2BB /* RPGCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646DD2BB29A6B6F2001FB2BB /* RPGCharacter.swift */; };
+		646DD2BE29A6B6FC001FB2BB /* Weapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646DD2BD29A6B6FC001FB2BB /* Weapon.swift */; };
+		646DD2C029A6B70A001FB2BB /* Armor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646DD2BF29A6B70A001FB2BB /* Armor.swift */; };
+		646DD2C229A6B721001FB2BB /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646DD2C129A6B721001FB2BB /* Item.swift */; };
 		64A2876029A4211D00922509 /* Adventurer.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64A2875D29A4211D00922509 /* Adventurer.ttf */; };
 		64A2876129A4211D00922509 /* munro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64A2875E29A4211D00922509 /* munro.ttf */; };
 		64A2876229A4211D00922509 /* iso8.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64A2875F29A4211D00922509 /* iso8.ttf */; };
@@ -22,7 +26,6 @@
 		EB6657922992ECAE00CAEAEC /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = EB6657912992ECAE00CAEAEC /* FirebaseFirestore */; };
 		EB6657942992ECAE00CAEAEC /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EB6657932992ECAE00CAEAEC /* FirebaseFirestoreSwift */; };
 		EB69AF3F299AA16A00FB5D25 /* DamageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB69AF3E299AA16A00FB5D25 /* DamageViewController.swift */; };
-		EBC0637C2996ED4B00B00110 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC0637B2996ED4B00B00110 /* Game.swift */; };
 		EBC06380299A9D5900B00110 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC0637F299A9D5900B00110 /* StatsViewController.swift */; };
 		EBC206852995777D00DEB48C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EBC206842995777D00DEB48C /* GoogleService-Info.plist */; };
 		EBCBEEA2299C0BDF005009D7 /* DisplayInitiativeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBCBEEA1299C0BDF005009D7 /* DisplayInitiativeViewController.swift */; };
@@ -38,12 +41,15 @@
 		643651102991AA280017AA0E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		643651132991AA280017AA0E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		643651152991AA280017AA0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		643651222992C6180017AA0E /* RPGCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPGCharacter.swift; sourceTree = "<group>"; };
+		646DD2B929A6B6DB001FB2BB /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		646DD2BB29A6B6F2001FB2BB /* RPGCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPGCharacter.swift; sourceTree = "<group>"; };
+		646DD2BD29A6B6FC001FB2BB /* Weapon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weapon.swift; sourceTree = "<group>"; };
+		646DD2BF29A6B70A001FB2BB /* Armor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Armor.swift; sourceTree = "<group>"; };
+		646DD2C129A6B721001FB2BB /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		64A2875D29A4211D00922509 /* Adventurer.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Adventurer.ttf; sourceTree = "<group>"; };
 		64A2875E29A4211D00922509 /* munro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = munro.ttf; sourceTree = "<group>"; };
 		64A2875F29A4211D00922509 /* iso8.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = iso8.ttf; sourceTree = "<group>"; };
 		EB69AF3E299AA16A00FB5D25 /* DamageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DamageViewController.swift; sourceTree = "<group>"; };
-		EBC0637B2996ED4B00B00110 /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		EBC0637F299A9D5900B00110 /* StatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
 		EBC206842995777D00DEB48C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EBCBEEA1299C0BDF005009D7 /* DisplayInitiativeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayInitiativeViewController.swift; sourceTree = "<group>"; };
@@ -93,14 +99,25 @@
 				64A2876329A4262900922509 /* custom fonts */,
 				EBC0637F299A9D5900B00110 /* StatsViewController.swift */,
 				643651102991AA280017AA0E /* Assets.xcassets */,
-				EBC0637B2996ED4B00B00110 /* Game.swift */,
 				EB69AF3E299AA16A00FB5D25 /* DamageViewController.swift */,
 				643651122991AA280017AA0E /* LaunchScreen.storyboard */,
 				643651152991AA280017AA0E /* Info.plist */,
 				EBC206842995777D00DEB48C /* GoogleService-Info.plist */,
-				643651222992C6180017AA0E /* RPGCharacter.swift */,
+				646DD2B829A6B68C001FB2BB /* Classes */,
 			);
 			path = "step-strikers-app";
+			sourceTree = "<group>";
+		};
+		646DD2B829A6B68C001FB2BB /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				646DD2B929A6B6DB001FB2BB /* Game.swift */,
+				646DD2BB29A6B6F2001FB2BB /* RPGCharacter.swift */,
+				646DD2BD29A6B6FC001FB2BB /* Weapon.swift */,
+				646DD2BF29A6B70A001FB2BB /* Armor.swift */,
+				646DD2C129A6B721001FB2BB /* Item.swift */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 		64A2876329A4262900922509 /* custom fonts */ = {
@@ -198,10 +215,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				6436510C2991AA270017AA0E /* ViewController.swift in Sources */,
-				EBC0637C2996ED4B00B00110 /* Game.swift in Sources */,
-				643651232992C6180017AA0E /* RPGCharacter.swift in Sources */,
+				646DD2BC29A6B6F2001FB2BB /* RPGCharacter.swift in Sources */,
+				646DD2BA29A6B6DB001FB2BB /* Game.swift in Sources */,
+				646DD2C029A6B70A001FB2BB /* Armor.swift in Sources */,
+				646DD2C229A6B721001FB2BB /* Item.swift in Sources */,
 				EBCBEEA2299C0BDF005009D7 /* DisplayInitiativeViewController.swift in Sources */,
 				643651082991AA260017AA0E /* AppDelegate.swift in Sources */,
+				646DD2BE29A6B6FC001FB2BB /* Weapon.swift in Sources */,
 				EBC06380299A9D5900B00110 /* StatsViewController.swift in Sources */,
 				EB69AF3F299AA16A00FB5D25 /* DamageViewController.swift in Sources */,
 				6436510A2991AA260017AA0E /* SceneDelegate.swift in Sources */,
