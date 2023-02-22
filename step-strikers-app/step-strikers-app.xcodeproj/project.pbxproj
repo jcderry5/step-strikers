@@ -90,6 +90,7 @@
 		643651062991AA260017AA0E /* step-strikers-app */ = {
 			isa = PBXGroup;
 			children = (
+				646DD2B829A6B68C001FB2BB /* Classes */,
 				643651072991AA260017AA0E /* AppDelegate.swift */,
 				643651092991AA260017AA0E /* SceneDelegate.swift */,
 				6436510B2991AA260017AA0E /* ViewController.swift */,
@@ -103,7 +104,6 @@
 				643651122991AA280017AA0E /* LaunchScreen.storyboard */,
 				643651152991AA280017AA0E /* Info.plist */,
 				EBC206842995777D00DEB48C /* GoogleService-Info.plist */,
-				646DD2B829A6B68C001FB2BB /* Classes */,
 			);
 			path = "step-strikers-app";
 			sourceTree = "<group>";
