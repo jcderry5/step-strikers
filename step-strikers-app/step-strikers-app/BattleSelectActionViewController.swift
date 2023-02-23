@@ -7,11 +7,13 @@
 
 import UIKit
 
-class BattleSelectActionViewController: UIViewController {
-
+class BattleSelectActionViewController: UIViewController, UITableViewDataSource {
+    
+    var actions: [Action] = [Action]()
+    let cellId = "actionCell"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // puts full screen image as background of view controller
         assignBackground()
         createBattleActionMenu()
@@ -24,8 +26,55 @@ class BattleSelectActionViewController: UIViewController {
         // create characters
         // will need to change "name" based on what the enemy players are
         drawEnemies(enemy1: "Fighter", enemy2: "Bard", enemy3: "Rogue", enemy4: "Wizard")
+        
+        // create UI Table View with
+        createActionArray()
+        let actionDisplay = UITableView(frame: CGRect(x: self.view.safeAreaInsets.left+40, y: 640, width: 320, height: 150))
+        actionDisplay.translatesAutoresizingMaskIntoConstraints = false
+        actionDisplay.dataSource = self
+        actionDisplay.register(ActionTableViewCell.self, forCellReuseIdentifier: cellId)
+        actionDisplay.backgroundColor = UIColor.clear
+        self.view.addSubview(actionDisplay)
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return actions.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! ActionTableViewCell
+        let currentLastAction = actions[indexPath.row]
+        cell.action = currentLastAction
+        cell.backgroundColor = UIColor.clear
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath:IndexPath) {
+        tableView.deselectRow(at: indexPath, animated:true)
+        let rowValue = actions[indexPath.row]
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath:IndexPath) -> CGFloat {
+        if indexPath.row == 0 {
+            return 80
+        }
+        
+        return UITableView.automaticDimension
     }
 
+    func createActionArray() {
+        actions.append(Action(name: "one", staminaCost: "5 STA"))
+        actions.append(Action(name: "two", staminaCost: "5 STA"))
+        actions.append(Action(name: "three", staminaCost: "5 STA"))
+        actions.append(Action(name: "four", staminaCost: "5 STA"))
+        actions.append(Action(name: "five", staminaCost: "5 STA"))
+        actions.append(Action(name: "six", staminaCost: "5 STA"))
+        actions.append(Action(name: "seven", staminaCost: "5 STA"))
+        actions.append(Action(name: "eight", staminaCost: "5 STA"))
+        actions.append(Action(name: "nine", staminaCost: "5 STA"))
+        actions.append(Action(name: "ten", staminaCost: "5 STA"))
+    }
+    
 }
 
 extension UIViewController {
@@ -112,6 +161,35 @@ extension UIViewController {
         player4.drawCharacter(view: self.view, x: 290, y: 400, width: 100, height: 100)
     }
     
+    func drawEnemiesButton(enemy1:String, enemy2:String, enemy3:String, enemy4:String) {
+        // will need to change "name" based on what the enemy players are
+        // player 1
+        let player1 = characterSprites(name: enemy1)
+        let player1Button = player1.drawButtonCharacter(controller: self, x: 10, y: 400, width: 100, height: 100)
+        // need to change to a method that does whatever happens when enemy 1 is pressed
+        player1Button.addTarget(self, action:#selector(self.settingsButtonPressed(_:)), for: .touchUpInside)
+        self.view.addSubview(player1Button)
+        
+        // player 2
+        let player2 = characterSprites(name: enemy2)
+        player2.drawCharacter(view: self.view, x: 100, y: 400, width: 100, height: 100)
+        let player2Button = player2.drawButtonCharacter(controller: self, x: 10, y: 400, width: 100, height: 100)
+        player2Button.addTarget(self, action:#selector(self.settingsButtonPressed(_:)), for: .touchUpInside)
+        self.view.addSubview(player1Button)
+        
+        // player 3
+        let player3 = characterSprites(name: enemy3)
+        let player3Button = player3.drawButtonCharacter(controller: self, x: 10, y: 400, width: 100, height: 100)
+        player3Button.addTarget(self, action:#selector(self.settingsButtonPressed(_:)), for: .touchUpInside)
+        self.view.addSubview(player3Button)
+        
+        // player  4
+        let player4 = characterSprites(name: enemy4)
+        let player4Button = player4.drawButtonCharacter(controller: self, x: 10, y: 400, width: 100, height: 100)
+        player4Button.addTarget(self, action:#selector(self.settingsButtonPressed(_:)), for: .touchUpInside)
+        self.view.addSubview(player4Button)
+    }
+    
     @objc func actionButtonPressed(_ sender:UIButton!) {
         print("my action button pressed")
         let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
@@ -160,4 +238,9 @@ struct characterSprites {
         let characterButton = controller.createButton(x:x, y:y, width:width, height:height, fontName: "munro", imageName:imageName, fontColor: UIColor.black, buttonTitle:"")
         return characterButton
     }
+}
+
+struct Action {
+    let name:String?
+    let staminaCost:String?
 }

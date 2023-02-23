@@ -23,7 +23,7 @@ class BattleSelectTargetViewController: UIViewController {
         
         // create characters
         // will need to change "name" based on what the enemy players are
-        drawEnemies(enemy1: "Fighter", enemy2: "Bard", enemy3: "Rogue", enemy4: "Wizard")
+        drawEnemiesButton(enemy1: "Fighter", enemy2: "Bard", enemy3: "Rogue", enemy4: "Wizard")
     }
     
 
