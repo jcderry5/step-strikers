@@ -24,6 +24,7 @@
 		64AD9BB429A694FD00BA5B21 /* BattleItemSelectTargetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AD9BB329A694FD00BA5B21 /* BattleItemSelectTargetViewController.swift */; };
 		64CA37FE29A7DD7400BB96D5 /* ActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64CA37FD29A7DD7400BB96D5 /* ActionTableViewCell.swift */; };
 		64CA380029A7EC2100BB96D5 /* ItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64CA37FF29A7EC2100BB96D5 /* ItemTableViewCell.swift */; };
+		64CA380229A7EDEE00BB96D5 /* EquipTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64CA380129A7EDEE00BB96D5 /* EquipTableViewCell.swift */; };
 		EB66578E2992ECAE00CAEAEC /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = EB66578D2992ECAE00CAEAEC /* FirebaseAnalytics */; };
 		EB6657902992ECAE00CAEAEC /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EB66578F2992ECAE00CAEAEC /* FirebaseAnalyticsSwift */; };
 		EB6657922992ECAE00CAEAEC /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = EB6657912992ECAE00CAEAEC /* FirebaseFirestore */; };
@@ -57,6 +58,7 @@
 		64AD9BB329A694FD00BA5B21 /* BattleItemSelectTargetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleItemSelectTargetViewController.swift; sourceTree = "<group>"; };
 		64CA37FD29A7DD7400BB96D5 /* ActionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionTableViewCell.swift; sourceTree = "<group>"; };
 		64CA37FF29A7EC2100BB96D5 /* ItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTableViewCell.swift; sourceTree = "<group>"; };
+		64CA380129A7EDEE00BB96D5 /* EquipTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquipTableViewCell.swift; sourceTree = "<group>"; };
 		EB69AF3E299AA16A00FB5D25 /* DamageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DamageViewController.swift; sourceTree = "<group>"; };
 		EBC0637B2996ED4B00B00110 /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		EBC0637F299A9D5900B00110 /* StatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				6436510D2991AA270017AA0E /* Main.storyboard */,
 				64AD9BAD29A694C200BA5B21 /* BattleSelectTargetViewController.swift */,
 				64AD9BAF29A694DF00BA5B21 /* BattleSelectEquipViewController.swift */,
+				64CA380129A7EDEE00BB96D5 /* EquipTableViewCell.swift */,
 				64AD9BB129A694EE00BA5B21 /* BattleSelectItemViewController.swift */,
 				64CA37FF29A7EC2100BB96D5 /* ItemTableViewCell.swift */,
 				64AD9BB329A694FD00BA5B21 /* BattleItemSelectTargetViewController.swift */,
@@ -216,6 +219,7 @@
 				6436510C2991AA270017AA0E /* ViewController.swift in Sources */,
 				64AD9BB229A694EE00BA5B21 /* BattleSelectItemViewController.swift in Sources */,
 				EBC0637C2996ED4B00B00110 /* Game.swift in Sources */,
+				64CA380229A7EDEE00BB96D5 /* EquipTableViewCell.swift in Sources */,
 				64CA380029A7EC2100BB96D5 /* ItemTableViewCell.swift in Sources */,
 				643651232992C6180017AA0E /* RPGCharacter.swift in Sources */,
 				64AD9BAE29A694C200BA5B21 /* BattleSelectTargetViewController.swift in Sources */,

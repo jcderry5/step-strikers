@@ -6,9 +6,9 @@
 //
 
 import UIKit
-
+// class that creates the custom cells for the action table when in battle
 class ActionTableViewCell: UITableViewCell {
-    
+    // stores the values of the action struct in the label's text fields
     var action : Action? {
         didSet {
             actionNameLabel.text = action?.name
@@ -39,8 +39,9 @@ class ActionTableViewCell: UITableViewCell {
         actionStaminaCost.translatesAutoresizingMaskIntoConstraints = false
         addSubview(actionNameLabel)
         addSubview(actionStaminaCost)
+        // anchors the two strings based on their relative position within the cell and each other
         actionNameLabel.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 0, width: 90, height: 0, enableInsets: false)
-        actionStaminaCost.anchor(top: topAnchor, left: actionNameLabel.rightAnchor, bottom: nil, right: nil, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 0, width: 90, height: 0, enableInsets: false)
+        actionStaminaCost.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 0, width: 90, height: 0, enableInsets: false)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -48,10 +49,13 @@ class ActionTableViewCell: UITableViewCell {
     }
 }
 
+
+// taken from: https://medium.com/@kemalekren/swift-create-custom-tableview-cell-with-programmatically-in-ios-835d3880513d
+// extension to the UIView to anchor custom cell contents within their row
 extension UIView {
     func anchor (top: NSLayoutYAxisAnchor?, left: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, right: NSLayoutXAxisAnchor?, paddingTop: CGFloat, paddingLeft: CGFloat, paddingBottom: CGFloat, paddingRight: CGFloat, width: CGFloat, height: CGFloat, enableInsets: Bool) {
-     var topInset = CGFloat(0)
-     var bottomInset = CGFloat(0)
+     let topInset = CGFloat(0)
+     let bottomInset = CGFloat(0)
      
      translatesAutoresizingMaskIntoConstraints = false
      

@@ -23,19 +23,7 @@ class BattleItemSelectTargetViewController: UIViewController {
         
         // create characters
         // will need to change "name" based on what the enemy players are
-        // for target selection need to change this to button ver. 
+        // TODO: for target selection need to change this to button ver. 
         drawEnemies(enemy1: "Fighter", enemy2: "Bard", enemy3: "Rogue", enemy4: "Wizard")
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

@@ -8,7 +8,8 @@
 import UIKit
 
 class BattleSelectItemViewController: UIViewController, UITableViewDataSource {
-
+    
+    // array of the items to be displayed in the items menu in battle
     var items: [Item] = [Item]()
     let itemCellId = "itemCell"
     
@@ -16,6 +17,7 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        // background images and view set up
         assignBackground()
         createBattleActionMenu()
         createBattleStatsDisplay()
@@ -26,13 +28,20 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource {
         
         // create characters
         // will need to change "name" based on what the enemy players are
+        // TODO: change based to reflect the actual classes that enemies have
         drawEnemies(enemy1: "Fighter", enemy2: "Bard", enemy3: "Rogue", enemy4: "Wizard")
-        // create UI Table View with
+        
+        // create a Table View that displays the item menu, and when pressed does something
+        // TODO: set up the transfer to the select target screen when a item is selected
+        // the array of all the items a player has
         createItemArray()
+        // frame for where table view should be located
         let itemDisplay = UITableView(frame: CGRect(x: self.view.safeAreaInsets.left+40, y: 640, width: 320, height: 150))
         itemDisplay.translatesAutoresizingMaskIntoConstraints = false
         itemDisplay.dataSource = self
+        // registers the table with the display
         itemDisplay.register(ItemTableViewCell.self, forCellReuseIdentifier: itemCellId)
+        // sets the background of the table to transparent
         itemDisplay.backgroundColor = UIColor.clear
         self.view.addSubview(itemDisplay)
     }
@@ -49,6 +58,7 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource {
         return cell
     }
     
+    // TODO: complete for when a row is selected to segue to Battle Item Select target screen
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath:IndexPath) {
         tableView.deselectRow(at: indexPath, animated:true)
         let rowValue = items[indexPath.row]
@@ -62,6 +72,7 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource {
         return UITableView.automaticDimension
     }
 
+    // TODO: Update with actual item data
     func createItemArray() {
         items.append(Item(name: "one", quantity: "x5"))
         items.append(Item(name: "two", quantity: "x5"))
@@ -75,20 +86,9 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource {
         items.append(Item(name: "ten", quantity: "x5"))
     }
 
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
+// struct that will hold the name and quantity of an item a player has
 struct Item {
     let name:String?
     let quantity:String?
