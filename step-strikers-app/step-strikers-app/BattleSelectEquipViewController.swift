@@ -87,7 +87,3 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource {
 
 }
 
-struct Equip {
-    let name:String?
-    let quantity:String?
-}

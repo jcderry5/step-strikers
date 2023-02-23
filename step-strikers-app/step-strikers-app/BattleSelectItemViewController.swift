@@ -87,9 +87,3 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource {
     }
 
 }
-
-// struct that will hold the name and quantity of an item a player has
-struct Item {
-    let name:String?
-    let quantity:String?
-}
