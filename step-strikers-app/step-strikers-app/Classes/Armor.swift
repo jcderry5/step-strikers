@@ -23,8 +23,10 @@ struct leather: Armor {
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter) {
+    init(owner: RPGCharacter, useCount: Int, condition: Int) {
         self.owner = owner
+        self.useCount = useCount
+        self.condition = condition
     }
     
     // Only Rogues and Bards can wear this armor

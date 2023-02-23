@@ -37,8 +37,10 @@ struct fists: Weapon {
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter) {
+    init(owner: RPGCharacter, useCount: Int, condition: Int) {
         self.owner = owner
+        self.useCount = useCount
+        self.condition = condition
     }
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
