@@ -80,11 +80,16 @@ func setTeams(blueTeam: [RPGCharacter], redTeam: [RPGCharacter]) {
 
 // resets player stats that don't carry over between games
 func resetPlayerStats(player:String) {
-    Firestore.firestore().collection("players").document(player).setData(["is_asleep": false], merge: true)
-    Firestore.firestore().collection("players").document(player).setData(["is_blind": false], merge: true)
-    Firestore.firestore().collection("players").document(player).setData(["is_dead": false], merge: true)
-    Firestore.firestore().collection("players").document(player).setData(["has_advantage": false], merge: true)
-    Firestore.firestore().collection("players").document(player).setData(["has_disadvantage": false], merge: true)
+    Firestore.firestore().collection("players").document(player).setData([
+        "is_asleep": false,
+        "is_blind": false,
+        "is_dead": false,
+        "has_advantage": false,
+        "has_disadvantage": false,
+        "attack_modifier": 0,
+        "defense_modifier": 0,
+        "magic_resistance_modifier": 0
+    ], merge: true)
 }
 
 // This will be called once the observer sees that hasStarted is true
