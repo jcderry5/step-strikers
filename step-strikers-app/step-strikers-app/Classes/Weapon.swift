@@ -26,6 +26,8 @@ protocol Weapon {
     var condition: Int {get set}
     var useCount: Int {get set}
     
+    init(owner: RPGCharacter)
+    init(owner:RPGCharacter, useCount: Int, condition: Int)
     func checkIfProficient(wearer: RPGCharacter) -> Bool
 }
 
@@ -36,6 +38,10 @@ struct fists: Weapon {
     let staminaCost = 1
     var condition = 4
     var useCount = 0
+    
+    init(owner: RPGCharacter){
+        self.owner = owner
+    }
     
     init(owner: RPGCharacter, useCount: Int, condition: Int) {
         self.owner = owner
@@ -56,8 +62,14 @@ struct dagger: Weapon {
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter) {
+    init(owner: RPGCharacter){
         self.owner = owner
+    }
+    
+    init(owner: RPGCharacter, useCount: Int, condition: Int) {
+        self.owner = owner
+        self.useCount = useCount
+        self.condition = condition
     }
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
@@ -73,8 +85,14 @@ struct darts: Weapon {
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter) {
+    init(owner: RPGCharacter){
         self.owner = owner
+    }
+    
+    init(owner: RPGCharacter, useCount: Int, condition: Int) {
+        self.owner = owner
+        self.useCount = useCount
+        self.condition = condition
     }
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
@@ -90,8 +108,14 @@ struct crossBow: Weapon {
     var condition = 4
     var useCount = 0
 
-    init(owner: RPGCharacter) {
+    init(owner: RPGCharacter){
         self.owner = owner
+    }
+    
+    init(owner: RPGCharacter, useCount: Int, condition: Int) {
+        self.owner = owner
+        self.useCount = useCount
+        self.condition = condition
     }
     
     // Anyone can equip a crossbow
@@ -108,8 +132,14 @@ struct rapier: Weapon {
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter) {
+    init(owner: RPGCharacter){
         self.owner = owner
+    }
+    
+    init(owner: RPGCharacter, useCount: Int, condition: Int) {
+        self.owner = owner
+        self.useCount = useCount
+        self.condition = condition
     }
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
@@ -125,8 +155,14 @@ struct shortSword: Weapon {
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter) {
+    init(owner: RPGCharacter){
         self.owner = owner
+    }
+    
+    init(owner: RPGCharacter, useCount: Int, condition: Int) {
+        self.owner = owner
+        self.useCount = useCount
+        self.condition = condition
     }
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
@@ -142,8 +178,14 @@ struct longBow: Weapon {
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter) {
+    init(owner: RPGCharacter){
         self.owner = owner
+    }
+    
+    init(owner: RPGCharacter, useCount: Int, condition: Int) {
+        self.owner = owner
+        self.useCount = useCount
+        self.condition = condition
     }
 
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
@@ -159,8 +201,14 @@ struct handAxe: Weapon {
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter) {
+    init(owner: RPGCharacter){
         self.owner = owner
+    }
+    
+    init(owner: RPGCharacter, useCount: Int, condition: Int) {
+        self.owner = owner
+        self.useCount = useCount
+        self.condition = condition
     }
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
@@ -176,8 +224,14 @@ struct battleAxe: Weapon {
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter) {
+    init(owner: RPGCharacter){
         self.owner = owner
+    }
+    
+    init(owner: RPGCharacter, useCount: Int, condition: Int) {
+        self.owner = owner
+        self.useCount = useCount
+        self.condition = condition
     }
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool {
@@ -193,8 +247,14 @@ struct longSword: Weapon {
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter) {
+    init(owner: RPGCharacter){
         self.owner = owner
+    }
+    
+    init(owner: RPGCharacter, useCount: Int, condition: Int) {
+        self.owner = owner
+        self.useCount = useCount
+        self.condition = condition
     }
     
     func checkIfProficient(wearer: RPGCharacter) -> Bool {

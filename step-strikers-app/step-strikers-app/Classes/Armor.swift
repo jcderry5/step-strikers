@@ -13,6 +13,8 @@ protocol Armor {
     var condition: Int {get set}
     var useCount: Int {get set}
     
+    init(owner: RPGCharacter)
+    init(owner:RPGCharacter, useCount: Int, condition: Int)
     func checkIfSuited(potentialWearer: RPGCharacter) -> Bool
 }
 
@@ -22,6 +24,10 @@ struct leather: Armor {
     let armorClass = 11
     var condition = 4
     var useCount = 0
+    
+    init(owner: RPGCharacter){
+        self.owner = owner
+    }
     
     init(owner: RPGCharacter, useCount: Int, condition: Int) {
         self.owner = owner
@@ -42,8 +48,14 @@ struct padding: Armor {
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter) {
+    init(owner: RPGCharacter){
         self.owner = owner
+    }
+    
+    init(owner: RPGCharacter, useCount: Int, condition: Int) {
+        self.owner = owner
+        self.useCount = useCount
+        self.condition = condition
     }
     
     // Only Rogues and Bards can wear this armor
@@ -59,8 +71,14 @@ struct studdedLeather: Armor {
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter) {
+    init(owner: RPGCharacter){
         self.owner = owner
+    }
+    
+    init(owner: RPGCharacter, useCount: Int, condition: Int) {
+        self.owner = owner
+        self.useCount = useCount
+        self.condition = condition
     }
     
     // Only Rogues and Bards can wear this armor
@@ -76,8 +94,14 @@ struct chainMail: Armor {
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter) {
+    init(owner: RPGCharacter){
         self.owner = owner
+    }
+    
+    init(owner: RPGCharacter, useCount: Int, condition: Int) {
+        self.owner = owner
+        self.useCount = useCount
+        self.condition = condition
     }
     
     // Only Fighters can wear this armor
@@ -93,8 +117,14 @@ struct shield: Armor {
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter) {
+    init(owner: RPGCharacter){
         self.owner = owner
+    }
+    
+    init(owner: RPGCharacter, useCount: Int, condition: Int) {
+        self.owner = owner
+        self.useCount = useCount
+        self.condition = condition
     }
     
     // Only Fighters can wear this armor
@@ -110,8 +140,14 @@ struct noArmor: Armor {
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter) {
+    init(owner: RPGCharacter){
         self.owner = owner
+    }
+    
+    init(owner: RPGCharacter, useCount: Int, condition: Int) {
+        self.owner = owner
+        self.useCount = useCount
+        self.condition = condition
     }
 
     func checkIfSuited(potentialWearer: RPGCharacter) -> Bool {
