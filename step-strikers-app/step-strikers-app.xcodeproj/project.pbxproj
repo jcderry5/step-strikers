@@ -18,6 +18,18 @@
 		646DD2BE29A6B6FC001FB2BB /* Weapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646DD2BD29A6B6FC001FB2BB /* Weapon.swift */; };
 		646DD2C029A6B70A001FB2BB /* Armor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646DD2BF29A6B70A001FB2BB /* Armor.swift */; };
 		646DD2C229A6B721001FB2BB /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646DD2C129A6B721001FB2BB /* Item.swift */; };
+		6474D72029A9193E00AAA169 /* StatsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6474D71F29A9193E00AAA169 /* StatsTableViewCell.swift */; };
+		6474D72429A919C600AAA169 /* StatsHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6474D72329A919C600AAA169 /* StatsHeaderTableViewCell.swift */; };
+		6474D72629A919E600AAA169 /* ItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6474D72529A919E600AAA169 /* ItemTableViewCell.swift */; };
+		6474D72829A91A1000AAA169 /* EquipTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6474D72729A91A1000AAA169 /* EquipTableViewCell.swift */; };
+		6474D72A29A91A6200AAA169 /* BattleTableStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6474D72929A91A6200AAA169 /* BattleTableStructs.swift */; };
+		6474D72C29A91A9900AAA169 /* BattleSelectTargetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6474D72B29A91A9900AAA169 /* BattleSelectTargetViewController.swift */; };
+		6474D72E29A91AF500AAA169 /* BattleSelectItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6474D72D29A91AF500AAA169 /* BattleSelectItemViewController.swift */; };
+		6474D73029A91B0E00AAA169 /* BattleSelectEquipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6474D72F29A91B0E00AAA169 /* BattleSelectEquipViewController.swift */; };
+		6474D73229A91B3900AAA169 /* BattleSelectActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6474D73129A91B3900AAA169 /* BattleSelectActionViewController.swift */; };
+		6474D73429A91B5300AAA169 /* BattleItemSelectTargetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6474D73329A91B5300AAA169 /* BattleItemSelectTargetViewController.swift */; };
+		6474D73629A91B7100AAA169 /* ActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6474D73529A91B7100AAA169 /* ActionTableViewCell.swift */; };
+		6474D73829A91D6D00AAA169 /* BattleRollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6474D73729A91D6D00AAA169 /* BattleRollViewController.swift */; };
 		64A2876029A4211D00922509 /* Adventurer.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64A2875D29A4211D00922509 /* Adventurer.ttf */; };
 		64A2876129A4211D00922509 /* munro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64A2875E29A4211D00922509 /* munro.ttf */; };
 		64A2876229A4211D00922509 /* iso8.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64A2875F29A4211D00922509 /* iso8.ttf */; };
@@ -46,6 +58,18 @@
 		646DD2BD29A6B6FC001FB2BB /* Weapon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weapon.swift; sourceTree = "<group>"; };
 		646DD2BF29A6B70A001FB2BB /* Armor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Armor.swift; sourceTree = "<group>"; };
 		646DD2C129A6B721001FB2BB /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		6474D71F29A9193E00AAA169 /* StatsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsTableViewCell.swift; sourceTree = "<group>"; };
+		6474D72329A919C600AAA169 /* StatsHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		6474D72529A919E600AAA169 /* ItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTableViewCell.swift; sourceTree = "<group>"; };
+		6474D72729A91A1000AAA169 /* EquipTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquipTableViewCell.swift; sourceTree = "<group>"; };
+		6474D72929A91A6200AAA169 /* BattleTableStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BattleTableStructs.swift; path = TableViewCells/BattleTableStructs.swift; sourceTree = "<group>"; };
+		6474D72B29A91A9900AAA169 /* BattleSelectTargetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleSelectTargetViewController.swift; sourceTree = "<group>"; };
+		6474D72D29A91AF500AAA169 /* BattleSelectItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleSelectItemViewController.swift; sourceTree = "<group>"; };
+		6474D72F29A91B0E00AAA169 /* BattleSelectEquipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleSelectEquipViewController.swift; sourceTree = "<group>"; };
+		6474D73129A91B3900AAA169 /* BattleSelectActionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleSelectActionViewController.swift; sourceTree = "<group>"; };
+		6474D73329A91B5300AAA169 /* BattleItemSelectTargetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleItemSelectTargetViewController.swift; sourceTree = "<group>"; };
+		6474D73529A91B7100AAA169 /* ActionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionTableViewCell.swift; sourceTree = "<group>"; };
+		6474D73729A91D6D00AAA169 /* BattleRollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleRollViewController.swift; sourceTree = "<group>"; };
 		64A2875D29A4211D00922509 /* Adventurer.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Adventurer.ttf; sourceTree = "<group>"; };
 		64A2875E29A4211D00922509 /* munro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = munro.ttf; sourceTree = "<group>"; };
 		64A2875F29A4211D00922509 /* iso8.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = iso8.ttf; sourceTree = "<group>"; };
@@ -95,6 +119,7 @@
 				643651092991AA260017AA0E /* SceneDelegate.swift */,
 				6436510B2991AA260017AA0E /* ViewController.swift */,
 				EBCBEEA1299C0BDF005009D7 /* DisplayInitiativeViewController.swift */,
+				6474D71D29A9187500AAA169 /* Battle Screens */,
 				EBCBEEA3299C0C43005009D7 /* InitiativeViewController.swift */,
 				6436510D2991AA270017AA0E /* Main.storyboard */,
 				64A2876329A4262900922509 /* custom fonts */,
@@ -118,6 +143,33 @@
 				646DD2C129A6B721001FB2BB /* Item.swift */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		6474D71D29A9187500AAA169 /* Battle Screens */ = {
+			isa = PBXGroup;
+			children = (
+				6474D72929A91A6200AAA169 /* BattleTableStructs.swift */,
+				6474D72B29A91A9900AAA169 /* BattleSelectTargetViewController.swift */,
+				6474D72D29A91AF500AAA169 /* BattleSelectItemViewController.swift */,
+				6474D72F29A91B0E00AAA169 /* BattleSelectEquipViewController.swift */,
+				6474D73129A91B3900AAA169 /* BattleSelectActionViewController.swift */,
+				6474D73329A91B5300AAA169 /* BattleItemSelectTargetViewController.swift */,
+				6474D71E29A9187F00AAA169 /* TableViewCells */,
+				6474D73729A91D6D00AAA169 /* BattleRollViewController.swift */,
+			);
+			path = "Battle Screens";
+			sourceTree = "<group>";
+		};
+		6474D71E29A9187F00AAA169 /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				6474D71F29A9193E00AAA169 /* StatsTableViewCell.swift */,
+				6474D72329A919C600AAA169 /* StatsHeaderTableViewCell.swift */,
+				6474D72529A919E600AAA169 /* ItemTableViewCell.swift */,
+				6474D72729A91A1000AAA169 /* EquipTableViewCell.swift */,
+				6474D73529A91B7100AAA169 /* ActionTableViewCell.swift */,
+			);
+			path = TableViewCells;
 			sourceTree = "<group>";
 		};
 		64A2876329A4262900922509 /* custom fonts */ = {
@@ -216,15 +268,27 @@
 			files = (
 				6436510C2991AA270017AA0E /* ViewController.swift in Sources */,
 				646DD2BC29A6B6F2001FB2BB /* RPGCharacter.swift in Sources */,
+				6474D72E29A91AF500AAA169 /* BattleSelectItemViewController.swift in Sources */,
 				646DD2BA29A6B6DB001FB2BB /* Game.swift in Sources */,
+				6474D72C29A91A9900AAA169 /* BattleSelectTargetViewController.swift in Sources */,
 				646DD2C029A6B70A001FB2BB /* Armor.swift in Sources */,
 				646DD2C229A6B721001FB2BB /* Item.swift in Sources */,
+				6474D73229A91B3900AAA169 /* BattleSelectActionViewController.swift in Sources */,
+				6474D73029A91B0E00AAA169 /* BattleSelectEquipViewController.swift in Sources */,
 				EBCBEEA2299C0BDF005009D7 /* DisplayInitiativeViewController.swift in Sources */,
+				6474D72A29A91A6200AAA169 /* BattleTableStructs.swift in Sources */,
 				643651082991AA260017AA0E /* AppDelegate.swift in Sources */,
 				646DD2BE29A6B6FC001FB2BB /* Weapon.swift in Sources */,
+				6474D73829A91D6D00AAA169 /* BattleRollViewController.swift in Sources */,
+				6474D72429A919C600AAA169 /* StatsHeaderTableViewCell.swift in Sources */,
+				6474D72029A9193E00AAA169 /* StatsTableViewCell.swift in Sources */,
+				6474D72829A91A1000AAA169 /* EquipTableViewCell.swift in Sources */,
+				6474D72629A919E600AAA169 /* ItemTableViewCell.swift in Sources */,
 				EBC06380299A9D5900B00110 /* StatsViewController.swift in Sources */,
 				EB69AF3F299AA16A00FB5D25 /* DamageViewController.swift in Sources */,
 				6436510A2991AA260017AA0E /* SceneDelegate.swift in Sources */,
+				6474D73429A91B5300AAA169 /* BattleItemSelectTargetViewController.swift in Sources */,
+				6474D73629A91B7100AAA169 /* ActionTableViewCell.swift in Sources */,
 				EBCBEEA4299C0C43005009D7 /* InitiativeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
