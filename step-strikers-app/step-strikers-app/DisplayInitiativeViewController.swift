@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class DisplayInitiativeViewController: UIViewController {
     var delegate: UIViewController!
@@ -26,31 +27,22 @@ class DisplayInitiativeViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "AttackSegue", let nextVC = segue.destination as? DamageViewController {
-//            nextVC.delegate = self
-//            nextVC.player = player
-//            nextVC.opponent = opponent
-//        }
-        
-        
-        if player == "Player 1", let nextVC = segue.destination as? DamageViewController {
-            nextVC.delegate = self
-            nextVC.player = "Player 1"
-            nextVC.opponent = "Player 2"
-        } else if player == "Player 2", let nextVC = segue.destination as? WaitViewController{
-            nextVC.delegate = self
-            nextVC.player = "Player 1"
-            nextVC.opponent = "Player 2"
-        }
     }
 
     @IBAction func battleButtonPressed(_ sender: Any) {
-        if localCharacter.userName == "Player 1" {
-            performSegue(withIdentifier: actionSegueIdentifier, sender: self)
-        } else if localCharacter.userName == "Player 2" {
-            performSegue(withIdentifier: waitSegueIdentifier, sender: self)
-        } else {
-            print("Whoops, something bad happened. local character's username is \(localCharacter.userName)")
+        let docRef = Firestore.firestore().collection("games").document("zIuUhRjKte6oUcvdrP4D")
+        docRef.getDocument { [self] (document, error) in
+            if let document = document, document.exists {
+                let order = document.get("order") as! [String]
+
+                if self.player == order[0] {
+                    performSegue(withIdentifier: actionSegueIdentifier, sender: self)
+                } else if self.player != order[0] {
+                    performSegue(withIdentifier: waitSegueIdentifier, sender: self)
+                } else {
+                    print("Whoops, something bad happened. local character's username is \(localCharacter.userName)")
+                }
+            }
         }
     }
 }

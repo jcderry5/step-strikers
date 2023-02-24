@@ -79,34 +79,31 @@ func setTeams(blueTeam: [RPGCharacter], redTeam: [RPGCharacter]) {
 }
 
 // This will be called once the observer sees that hasStarted is true
-// TODO: check if you're the host!
 func startGame(player: String, game: String){
-    // TODO: game id shouldn't be hardcoded
-    
     var isLeader = Bool()
     let docRef = Firestore.firestore().collection("games").document(game)
     docRef.getDocument { (document, error) in
         if let document = document, document.exists {
-            isLeader = (document.get("leader") as! String == player)
-        }
-    }
-    
-    if isLeader {
-        // wait for everyone to finish rolling initiative and send info to server
-        docRef.addSnapshotListener {
-            documentSnapshot, error in guard let document = documentSnapshot else {
-                print("Error fetching document: \(error!)")
-                return
-            }
-            
-            let data = document.data()
-            var dict = [String:Int]()
-            dict = data?["initiative"] as! [String:Int]
-            
-            if dict.count == data?["num_players"] as! Int {
-                print("finished listening, calling setOrder()")
-                setOrder(initiative: dict, game: game)
-                return
+            isLeader = (document.get("game_leader") as! String == player)
+
+            if isLeader {
+                // wait for everyone to finish rolling initiative and send info to server
+                docRef.addSnapshotListener {
+                    documentSnapshot, error in guard let document = documentSnapshot else {
+                        print("Error fetching document: \(error!)")
+                        return
+                    }
+                    
+                    let data = document.data()
+                    var dict = [String:Int]()
+                    dict = data?["initiative"] as! [String:Int]
+                    
+                    if dict.count == data?["num_players"] as! Int {
+                        print("finished listening, calling setOrder()")
+                        setOrder(initiative: dict, game: game)
+                        return
+                    }
+                }
             }
         }
     }
@@ -122,14 +119,10 @@ func rollInitiative(player:String, game: String) -> Int{
     let initiative = rollDie(quant: 1, sides: 20)
     
     // send initiative to firebase
-    let data: [String:Int] = [player:initiative]
-    Firestore.firestore().collection("games").document(game).updateData([
-        "initiative": FieldValue.arrayUnion([data])])
-    
+    Firestore.firestore().collection("games").document(game).updateData(["initiative.\(player)": initiative])
     return initiative
 }
 
-// TODO: check if you're the host!
 func setOrder(initiative: [String:Int], game: String){
     // sort initiative
     let sorted = initiative.sorted { (first, second) -> Bool in
@@ -142,12 +135,11 @@ func setOrder(initiative: [String:Int], game: String){
         order.append(elem.key)
     }
     
-    // write array to database
-    Firestore.firestore().collection("games").document(game).setData([ "order": order ], merge: true)
-    
-    // flip flag
-    Firestore.firestore().collection("games").document(game).setData([ "combat_start": true ], merge: true)
-    
+    // write array to database and signal that game is ready to start
+    Firestore.firestore().collection("games").document(game).setData([
+        "order": order,
+        "combat_start": true
+    ], merge: true)
 }
 
 func rollDie(quant: Int, sides: Int) -> Int {

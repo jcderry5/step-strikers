@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class InitiativeViewController: UIViewController {
     
@@ -21,6 +22,7 @@ class InitiativeViewController: UIViewController {
     }
     
     @IBAction func rollButtonPressed(_ sender: Any) {
+        startGame(player: player, game: "zIuUhRjKte6oUcvdrP4D")
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
