@@ -169,18 +169,22 @@ class Caster: RPGCharacter {
         let targetRef = Firestore.firestore().collection("players").document(target)
         targetRef.getDocument { (document, error) in
             if let document = document, document.exists {
-                let weapon = document.get("current_weapon") as! String
-                // TODO: @Kelly
-                // read info from firebase
-                // initialize new weapon with firebase info
-                // set self.curr weapon to that
-                // put weapon in their inventory
-                Firestore.firestore().collection("players").document(caster).updateData([
-                    "weapon_inventory": FieldValue.arrayUnion([weapon])])
-                Firestore.firestore().collection("players").document(caster).setData(["current_weapon": weapon], merge: true)
+                // get info about target's current weapon
+                let weaponName = document.get("current_weapon") as! String
+                let weaponMap = document.get("weapon_inventory") as! [String:[String:Int]]
+                let condition = weaponMap[weaponName]!["condition"]
+                let useCount = weaponMap[weaponName]!["use_count"]
+                
+                // update target info on firebase
                 Firestore.firestore().collection("players").document(target).updateData([
-                    "weapon_inventory": FieldValue.arrayRemove([weapon])])
+                    "weapon_inventory": FieldValue.arrayRemove([weaponName])])
                 Firestore.firestore().collection("players").document(target).setData(["current_weapon": "fists"], merge: true)
+                
+                // update own info locally
+                    // TODO: @Jalyn when you figure out Weapon/RPGCharacter init
+                    // initialize new weapon
+                    // set self.currWeapon to that
+                    // put weapon in their inventory
                 
             }
         }
