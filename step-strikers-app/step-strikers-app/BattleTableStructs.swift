@@ -25,9 +25,12 @@ struct Equip {
     let quantity:String?
 }
 
-struct PlayerStats {
-    let name:String?
-    let health:String?
-    let spellPoints:String?
-    let staminaPoints:String?
+struct StatsRow {
+    let imageName:UIImage?
+    let points:[Int]
+    let totalPoints:[Int]
+}
+
+struct StatsHeaderRow {
+    let names:[String]
 }

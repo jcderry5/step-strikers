@@ -7,12 +7,17 @@
 
 import UIKit
 
-class BattleSelectActionViewController: UIViewController, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate  {
+class BattleSelectActionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     // array of all the actions a player can take
     var actions: [Action] = [Action]()
     let cellId = "actionCell"
-    var myCollectionView:UICollectionView?
+    let statsCellID = "statsCell"
+    let statsHeaderID = "statsHeader"
+    var stats: [StatsRow] = [StatsRow]()
+    var header: [StatsHeaderRow] = [StatsHeaderRow]()
+    var actionDisplay:UITableView = UITableView()
+    var statsDisplay:UITableView = UITableView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +42,7 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         // the array of all the action a player can do
         createActionArray()
         // the frame of where the table will appear
-        let actionDisplay = UITableView(frame: CGRect(x: self.view.safeAreaInsets.left+40, y: 640, width: 320, height: 150))
+        actionDisplay = UITableView(frame: CGRect(x: self.view.safeAreaInsets.left+40, y: 640, width: 320, height: 150))
         actionDisplay.translatesAutoresizingMaskIntoConstraints = false
         actionDisplay.dataSource = self
         // register the table since it was not created with the storyboard
@@ -46,28 +51,64 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         self.view.addSubview(actionDisplay)
         
         // stats menu
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 30, left: 30, bottom: 3, right: 10)
-        layout.itemSize = CGSize(width: 60, height:60)
-        
-         myCollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
-         myCollectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "MyCell")
-         myCollectionView?.backgroundColor = UIColor.clear
-         myCollectionView?.dataSource = self
-         myCollectionView?.delegate = self
-         view.addSubview(myCollectionView ?? UICollectionView())
+        createStatsArray()
+        statsDisplay = UITableView(frame: CGRect(x: self.view.safeAreaInsets.left+40, y: 140, width: 300, height: 300))
+        statsDisplay.translatesAutoresizingMaskIntoConstraints = false
+        statsDisplay.dataSource = self
+        // register the table since it was not created with the storyboard
+        // two different types of custom cells hence
+        // need to register both types
+        statsDisplay.register(StatsTableViewCell.self, forCellReuseIdentifier: statsCellID)
+        statsDisplay.register(StatsHeaderTableViewCell.self, forCellReuseIdentifier: statsHeaderID)
+        statsDisplay.backgroundColor = UIColor.clear
+        statsDisplay.delegate = self
+        // cannot press on a row
+        statsDisplay.allowsSelection = false
+        // get rid of grey separator line in between rows
+        statsDisplay.separatorColor = UIColor.clear
+        self.view.addSubview(statsDisplay)
+       
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tableView == actionDisplay {
+            return actions.count
+        } else if tableView == statsDisplay {
+            return stats.count
+        }
         return actions.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! ActionTableViewCell
-        let currentLastAction = actions[indexPath.row]
-        cell.action = currentLastAction
-        cell.backgroundColor = UIColor.clear
-        return cell
+        // bottom display
+        if tableView == actionDisplay {
+            let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! ActionTableViewCell
+            let currentLastAction = actions[indexPath.row]
+            cell.action = currentLastAction
+            cell.backgroundColor = UIColor.clear
+            return cell
+        } else if tableView == statsDisplay { // top stats display
+            if indexPath.row == 0 {
+                // if its the first row then it just should be the header
+                // of team member names
+                let cell = tableView.dequeueReusableCell(withIdentifier: statsHeaderID, for: indexPath) as! StatsHeaderTableViewCell
+                let currentLastAction = header[indexPath.row]
+                cell.head = currentLastAction
+                // set background of each cell to clear
+                cell.backgroundColor = UIColor.clear
+                // no separator inset!
+                cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: statsCellID, for: indexPath) as! StatsTableViewCell
+                let currentLastAction = stats[indexPath.row]
+                cell.stats = currentLastAction
+                cell.backgroundColor = UIColor.clear
+                cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+                return cell
+            }
+        }
+        return UITableViewCell()
     }
     
     // TODO: update with segue to select target view controller when pressed
@@ -75,27 +116,27 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath:IndexPath) {
         tableView.deselectRow(at: indexPath, animated:true)
         let rowValue = actions[indexPath.row]
+        if tableView == actionDisplay {
+            let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "BattleSelectTargetViewController") as! BattleSelectTargetViewController
+            self.modalPresentationStyle = .fullScreen
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc,animated: false)
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath:IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
-            return 80
-    }
+        if tableView == statsDisplay {
+            return 30
+        } else {
+            if indexPath.row == 0 {
+                return 80
+            }
+        }
         
         return UITableView.automaticDimension
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4 // how many cells to display
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCell", for: indexPath)
-        // need to change this to have the data we want to display
-        myCell.backgroundColor = UIColor.black
-        return myCell
-    }
-
     // TODO: update array with actual actions player can do
     func createActionArray() {
         actions.append(Action(name: "one", staminaCost: "5 STA"))
@@ -108,6 +149,15 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         actions.append(Action(name: "eight", staminaCost: "5 STA"))
         actions.append(Action(name: "nine", staminaCost: "5 STA"))
         actions.append(Action(name: "ten", staminaCost: "5 STA"))
+    }
+    
+    func createStatsArray() {
+        header.append(StatsHeaderRow(names: ["Host", "Player 1", "Player 2", "Player 3"]))
+        // extra to account for header messing everything up
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
+        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
+        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points:[1,2,3,4] , totalPoints: [1,2,3,4]))
     }
     
 }
