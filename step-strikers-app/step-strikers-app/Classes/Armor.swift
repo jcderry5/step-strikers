@@ -8,31 +8,26 @@
 
 protocol Armor {
     var name: String { get}
-    var owner: RPGCharacter {get set}
     var armorClass: Int {get}
     var condition: Int {get set}
     var useCount: Int {get set}
     
-    init(owner: RPGCharacter)
-    init(owner:RPGCharacter, useCount: Int, condition: Int)
+    init()
+    init(useCount: Int)
     func checkIfSuited(potentialWearer: RPGCharacter) -> Bool
 }
 
 struct leather: Armor {
     let name = "Leather"
-    var owner: RPGCharacter
     let armorClass = 11
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter){
-        self.owner = owner
-    }
+    init() {}
     
-    init(owner: RPGCharacter, useCount: Int, condition: Int) {
-        self.owner = owner
+    init(useCount: Int) {
         self.useCount = useCount
-        self.condition = condition
+        self.condition = getConditionFromUseCount(useCount: useCount)
     }
     
     // Only Rogues and Bards can wear this armor
@@ -43,19 +38,15 @@ struct leather: Armor {
 
 struct padding: Armor {
     let name = "Padding"
-    var owner: RPGCharacter
     let armorClass = 11
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter){
-        self.owner = owner
-    }
+    init() {}
     
-    init(owner: RPGCharacter, useCount: Int, condition: Int) {
-        self.owner = owner
+    init(useCount: Int) {
         self.useCount = useCount
-        self.condition = condition
+        self.condition = getConditionFromUseCount(useCount: useCount)
     }
     
     // Only Rogues and Bards can wear this armor
@@ -66,19 +57,15 @@ struct padding: Armor {
 
 struct studdedLeather: Armor {
     let name = "Studded Leather"
-    var owner: RPGCharacter
     let armorClass = 12
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter){
-        self.owner = owner
-    }
+    init() {}
     
-    init(owner: RPGCharacter, useCount: Int, condition: Int) {
-        self.owner = owner
+    init(useCount: Int) {
         self.useCount = useCount
-        self.condition = condition
+        self.condition = getConditionFromUseCount(useCount: useCount)
     }
     
     // Only Rogues and Bards can wear this armor
@@ -89,19 +76,15 @@ struct studdedLeather: Armor {
 
 struct chainMail: Armor {
     let name = "Chain Mail"
-    var owner: RPGCharacter
     let armorClass = 16
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter){
-        self.owner = owner
-    }
+    init() {}
     
-    init(owner: RPGCharacter, useCount: Int, condition: Int) {
-        self.owner = owner
+    init(useCount: Int) {
         self.useCount = useCount
-        self.condition = condition
+        self.condition = getConditionFromUseCount(useCount: useCount)
     }
     
     // Only Fighters can wear this armor
@@ -112,19 +95,15 @@ struct chainMail: Armor {
 
 struct shield: Armor {
     var name = "Shield"
-    var owner: RPGCharacter
     var armorClass = 2
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter){
-        self.owner = owner
-    }
+    init() {}
     
-    init(owner: RPGCharacter, useCount: Int, condition: Int) {
-        self.owner = owner
+    init(useCount: Int) {
         self.useCount = useCount
-        self.condition = condition
+        self.condition = getConditionFromUseCount(useCount: useCount)
     }
     
     // Only Fighters can wear this armor
@@ -135,19 +114,15 @@ struct shield: Armor {
 
 struct noArmor: Armor {
     var name = "No Armor"
-    var owner: RPGCharacter
     var armorClass = 0
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter){
-        self.owner = owner
-    }
+    init() {}
     
-    init(owner: RPGCharacter, useCount: Int, condition: Int) {
-        self.owner = owner
+    init(useCount: Int) {
         self.useCount = useCount
-        self.condition = condition
+        self.condition = getConditionFromUseCount(useCount: useCount)
     }
 
     func checkIfSuited(potentialWearer: RPGCharacter) -> Bool {
@@ -155,16 +130,7 @@ struct noArmor: Armor {
     }
 }
 
-// This function will return the modified armor class in case the wearer is ill-suited for their currArmor
-func calculateModifiedArmorClass(wearer: RPGCharacter) -> Int {
-    if(wearer.currArmor.checkIfSuited(potentialWearer: wearer)){
-        return wearer.currArmor.armorClass
-    } else {
-        return rollDie(quant: 1, sides: wearer.currArmor.armorClass)
-    }
-}
-
-func adjustCondition(armorUsed: inout Armor){
+func adjustArmorCondition(owner: inout RPGCharacter, armorUsed: inout Armor) -> Armor{
     armorUsed.useCount += 1
     let useCounter: Int = armorUsed.useCount
     // Condition of Fists is forever
@@ -172,23 +138,24 @@ func adjustCondition(armorUsed: inout Armor){
     if !(armorUsed is noArmor) {
         if conditionBoundary.contains(where: {$0.boundary == useCounter}) {
             // changingIndex holds the index in conditionBoundary with their previous condition of the weapon
-            let changingIndex = conditionBoundary.firstIndex(where: {$0.boundary == useCounter})
+            let targetIndex = conditionBoundary.firstIndex(where: {$0.boundary == useCounter})
             
             // new Condition is the new condition of weaponUsed
-            let newCondition: String = conditionBoundary[(changingIndex)!].condition
+            let oldCondition: String = conditionBoundary[(targetIndex)!].condition
             
             // Set the condition Int in weaponUsed to new Int associated with the newCondition
-            armorUsed.condition = conditionIntEquivalent[conditionIntEquivalent.firstIndex(where: {$0.condition == newCondition})!].intEquivalent
+            armorUsed.condition = (conditionIntEquivalent[conditionIntEquivalent.firstIndex(where: {$0.condition == oldCondition})!].intEquivalent) - 1
+            
         } else if (useCounter >= 20){
             // Take action when weapon is deteriorated
-            destroyArmor(armorToDestroy: armorUsed)
+            return destroyArmor(owner: &owner, armorToDestroy: armorUsed)
         }
     }
+    return armorUsed
 }
 
-//
-func destroyArmor(armorToDestroy: Armor){
-    let owner = armorToDestroy.owner
+// destroys all armor in inventory that have this name and leaves you with no armor
+func destroyArmor(owner: inout RPGCharacter, armorToDestroy: Armor) -> Armor{
     owner.armorInInventory.removeAll { armor in
         armor.name == armorToDestroy.name && armor.useCount == 20
     }
@@ -198,10 +165,11 @@ func destroyArmor(armorToDestroy: Armor){
     if let noArmorIndexToEquip: Int = owner.armorInInventory.firstIndex(where: { armor in
         armor.name == "No Armor"
     }) {
-        owner.currArmor = owner.armorInInventory[noArmorIndexToEquip]
+        return owner.armorInInventory[noArmorIndexToEquip]
+        
     } else {
-        let newNoArmor: Armor = noArmor(owner: owner)
-        owner.currArmor = newNoArmor
+        let newNoArmor: Armor = noArmor()
         owner.armorInInventory += [newNoArmor]
+        return newNoArmor
     }
 }
