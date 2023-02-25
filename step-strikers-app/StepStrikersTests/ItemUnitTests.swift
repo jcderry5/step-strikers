@@ -221,7 +221,11 @@ final class ItemUnitTests: XCTestCase {
     
     func testFourLeafClover() {
         // Arrange
+<<<<<<< HEAD
         var item = fourLeafClover(owner: playerOne)
+=======
+        let item = fourLeafClover(owner: playerOne)
+>>>>>>> Adding all unit tests for the classes.
         playerOne.addToInventory(itemObject: item)
         
         // Pre-Check
@@ -237,7 +241,11 @@ final class ItemUnitTests: XCTestCase {
     
     func testLeatherArmor() {
         // Arrange
+<<<<<<< HEAD
         var item = leatherArmorPad(owner: playerOne)
+=======
+        let item = leatherArmorPad(owner: playerOne)
+>>>>>>> Adding all unit tests for the classes.
         playerOne.addToInventory(itemObject: item)
         
         // Pre-Check
@@ -253,7 +261,11 @@ final class ItemUnitTests: XCTestCase {
     
     func testFeatherOfVigor() {
         // Arrange
+<<<<<<< HEAD
         var item = featherOfVigor(owner: playerOne)
+=======
+        let item = featherOfVigor(owner: playerOne)
+>>>>>>> Adding all unit tests for the classes.
         playerOne.addToInventory(itemObject: item)
         
         // Pre-Check
@@ -269,7 +281,11 @@ final class ItemUnitTests: XCTestCase {
     
     func testScrollOfResistance() {
         // Arrange
+<<<<<<< HEAD
         var item = scrollOfResistance(owner: playerOne)
+=======
+        let item = scrollOfResistance(owner: playerOne)
+>>>>>>> Adding all unit tests for the classes.
         playerOne.addToInventory(itemObject: item)
         
         // Pre-Check
@@ -285,7 +301,11 @@ final class ItemUnitTests: XCTestCase {
     
     func testPotionOfSuperiorHealing() {
         // Arrange
+<<<<<<< HEAD
         var item = potionOfSuperiorHealing(owner: playerOne)
+=======
+        let item = potionOfSuperiorHealing(owner: playerOne)
+>>>>>>> Adding all unit tests for the classes.
         playerOne.addToInventory(itemObject: item)
         playerOne.decreaseHealth(amtDamage: largeAmountOfRestoration)
         
@@ -302,7 +322,11 @@ final class ItemUnitTests: XCTestCase {
     
     func testElixirOfSuperiorMagic() {
         // Arrange
+<<<<<<< HEAD
         var item = elixirOfSuperiorMagic(owner: playerTwo)
+=======
+        let item = elixirOfSuperiorMagic(owner: playerTwo)
+>>>>>>> Adding all unit tests for the classes.
         playerTwo.addToInventory(itemObject: item)
         playerTwo.decreaseSpellPoints(amtDecrease: largeAmountOfRestoration)
         
@@ -319,7 +343,11 @@ final class ItemUnitTests: XCTestCase {
     
     func testEnergyRoot() {
         // Arrange
+<<<<<<< HEAD
         var item = energyRoot(owner: playerOne)
+=======
+        let item = energyRoot(owner: playerOne)
+>>>>>>> Adding all unit tests for the classes.
         playerOne.addToInventory(itemObject: item)
         playerOne.decreaseStamina(staminaCost: largeAmountOfRestoration)
         
@@ -340,7 +368,11 @@ final class ItemUnitTests: XCTestCase {
     
     func testFiveLeafClover() {
         // Arrange
+<<<<<<< HEAD
         var item = fiveLeafClover(owner: playerOne)
+=======
+        let item = fiveLeafClover(owner: playerOne)
+>>>>>>> Adding all unit tests for the classes.
         playerOne.addToInventory(itemObject: item)
         
         // Pre-Check
@@ -356,7 +388,11 @@ final class ItemUnitTests: XCTestCase {
     
     func testMetalArmorPad() {
         // Arrange
+<<<<<<< HEAD
         var item = metalArmorPad(owner: playerOne)
+=======
+        let item = metalArmorPad(owner: playerOne)
+>>>>>>> Adding all unit tests for the classes.
         playerOne.addToInventory(itemObject: item)
         
         // Pre-Check
@@ -372,7 +408,11 @@ final class ItemUnitTests: XCTestCase {
     
     func testVialOfVigor() {
         // Arrange
+<<<<<<< HEAD
         var item = vialOfVigor(owner: playerOne)
+=======
+        let item = vialOfVigor(owner: playerOne)
+>>>>>>> Adding all unit tests for the classes.
         playerOne.addToInventory(itemObject: item)
         
         // Pre-Check
@@ -388,7 +428,11 @@ final class ItemUnitTests: XCTestCase {
     
     func testScrollOfGreaterResistance() {
         // Arrange
+<<<<<<< HEAD
         var item = scrollOfGreaterResistance(owner: playerOne)
+=======
+        let item = scrollOfGreaterResistance(owner: playerOne)
+>>>>>>> Adding all unit tests for the classes.
         playerOne.addToInventory(itemObject: item)
         
         // Pre-Check
@@ -404,7 +448,11 @@ final class ItemUnitTests: XCTestCase {
     
     func testPotionOfVitality() {
         // Arrange
+<<<<<<< HEAD
         var item = potionOfVitality(owner: playerOne)
+=======
+        let item = potionOfVitality(owner: playerOne)
+>>>>>>> Adding all unit tests for the classes.
         playerOne.addToInventory(itemObject: item)
         playerOne.decreaseHealth(amtDamage: playerOne.maxHealth - 1)
         
@@ -422,7 +470,11 @@ final class ItemUnitTests: XCTestCase {
     
     func testElixirOfSorcery() {
         // Arrange
+<<<<<<< HEAD
         var item = elixirOfSorcery(owner: playerTwo)
+=======
+        let item = elixirOfSorcery(owner: playerTwo)
+>>>>>>> Adding all unit tests for the classes.
         playerTwo.addToInventory(itemObject: item)
         playerTwo.decreaseHealth(amtDamage: playerTwo.maxSpellPoints - 1)
         
@@ -439,7 +491,11 @@ final class ItemUnitTests: XCTestCase {
     
     func testEnergySap() {
         // Arrange
+<<<<<<< HEAD
         var item = energySap(owner: playerOne)
+=======
+        let item = energySap(owner: playerOne)
+>>>>>>> Adding all unit tests for the classes.
         playerOne.addToInventory(itemObject: item)
         playerOne.decreaseStamina(staminaCost: playerOne.maxStamina - 1)
         
@@ -460,7 +516,11 @@ final class ItemUnitTests: XCTestCase {
     
     func testSevenLeafClover() {
         // Arrange
+<<<<<<< HEAD
         var item = sevenLeafClover(owner: playerOne)
+=======
+        let item = sevenLeafClover(owner: playerOne)
+>>>>>>> Adding all unit tests for the classes.
         playerOne.addToInventory(itemObject: item)
         
         // Pre-Check
@@ -476,7 +536,11 @@ final class ItemUnitTests: XCTestCase {
     
     func testHeartOfIron() {
         // Arrange
+<<<<<<< HEAD
         var item = heartOfIron(owner: playerOne)
+=======
+        let item = heartOfIron(owner: playerOne)
+>>>>>>> Adding all unit tests for the classes.
         playerOne.addToInventory(itemObject: item)
         
         // Pre-Check
