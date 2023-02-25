@@ -92,11 +92,7 @@ final class ArmorUnitTests: XCTestCase {
         // Arrange
         var leather = leather() as Armor
         let noArmor = noArmor()
-<<<<<<< HEAD
-        var armorInventory: [Armor] = [noArmor, leather]
-=======
         let armorInventory: [Armor] = [noArmor, leather]
->>>>>>> Adding all unit tests for the classes.
         
         playerOne.wear(armorObject: leather)
         playerOne.armorInInventory = armorInventory
@@ -133,11 +129,7 @@ final class ArmorUnitTests: XCTestCase {
         // Arrange
         var myArmor = leather() as Armor
         let noArmor = noArmor()
-<<<<<<< HEAD
-        var armorInventory: [Armor] = [noArmor, myArmor]
-=======
         let armorInventory: [Armor] = [noArmor, myArmor]
->>>>>>> Adding all unit tests for the classes.
         playerOne.wear(armorObject: myArmor)
         playerOne.armorInInventory = armorInventory
         
@@ -155,11 +147,7 @@ final class ArmorUnitTests: XCTestCase {
         var myArmor = leather() as Armor
         myArmor.useCount = 20
         let noArmor = noArmor()
-<<<<<<< HEAD
-        var armorInventory: [Armor] = [noArmor, myArmor]
-=======
         let armorInventory: [Armor] = [noArmor, myArmor]
->>>>>>> Adding all unit tests for the classes.
         playerOne.wear(armorObject: myArmor)
         playerOne.armorInInventory = armorInventory
         

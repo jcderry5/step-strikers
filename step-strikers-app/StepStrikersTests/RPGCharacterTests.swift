@@ -130,13 +130,8 @@ final class RPGCharacterTests: XCTestCase {
     
     func testRemoveOnlyOneItem() {
         // Arrange
-<<<<<<< HEAD
-        var firstItem = potionOfHealing(owner: playerOne)
-        var secondItem = potionOfHealing(owner: playerOne)
-=======
         let firstItem = potionOfHealing(owner: playerOne)
         let secondItem = potionOfHealing(owner: playerOne)
->>>>>>> Adding all unit tests for the classes.
         playerOne.addToInventory(itemObject: firstItem)
         playerOne.addToInventory(itemObject: secondItem)
         
