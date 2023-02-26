@@ -204,8 +204,8 @@
                     </view>
                     <connections>
                         <outlet property="displayInitiativeLabel" destination="CXd-fH-WPH" id="JOm-zQ-krM"/>
-                        <segue destination="t9c-bg-LaA" kind="presentation" identifier="WaitSegue" id="ywc-Bt-yOE"/>
-                        <segue destination="Qui-tt-beH" kind="presentation" identifier="ActionSegue" id="FdC-KR-x3P"/>
+                        <segue destination="t9c-bg-LaA" kind="presentation" identifier="WaitSegue" modalPresentationStyle="fullScreen" id="ywc-Bt-yOE"/>
+                        <segue destination="Qui-tt-beH" kind="presentation" identifier="ActionSegue" modalPresentationStyle="fullScreen" id="FdC-KR-x3P"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ege-WJ-o9u" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -217,7 +217,7 @@
             <objects>
                 <viewController id="t9c-bg-LaA" customClass="WaitViewController" customModule="step_strikers_app" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="w5P-9X-09t">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="It's not your turn! Wait..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="74R-5p-sea">
@@ -231,6 +231,10 @@
                         <viewLayoutGuide key="safeArea" id="7kZ-iw-x6U"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <navigationItem key="navigationItem" id="hyC-yJ-h4F"/>
+                    <connections>
+                        <segue destination="Qui-tt-beH" kind="presentation" identifier="WaitToBattleSegue" modalPresentationStyle="fullScreen" id="gzn-Cp-Y8V"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lHu-Ny-Cwa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -241,7 +245,7 @@
             <objects>
                 <viewController id="Qui-tt-beH" customClass="DamageViewController" customModule="step_strikers_app" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Vd2-cB-z1J">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Do some damage!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ACs-4f-18g">
@@ -264,6 +268,7 @@
                                 <buttonConfiguration key="configuration" style="plain" title="Attack!"/>
                                 <connections>
                                     <action selector="attackPressed:" destination="Qui-tt-beH" eventType="touchUpInside" id="FpF-O2-vMd"/>
+                                    <segue destination="t9c-bg-LaA" kind="presentation" identifier="AttackToWaitSegue" modalPresentationStyle="fullScreen" id="tI1-h3-jo8"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GH6-SL-YWb">
@@ -290,6 +295,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="gzn-Cp-Y8V"/>
+        <segue reference="tI1-h3-jo8"/>
         <segue reference="zkX-rv-h8j"/>
     </inferredMetricsTieBreakers>
     <resources>

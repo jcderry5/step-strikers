@@ -16,6 +16,7 @@ class DamageViewController: UIViewController {
     var nextVC: StatsViewController!
     var player = ""
     var opponent = ""
+    var game: String!
     
     var playerOneName: String!
     var playerOneHealth: String!
@@ -32,19 +33,33 @@ class DamageViewController: UIViewController {
     }
     
     @IBAction func attackPressed(_ sender: Any) {
+        // figure out opponent
+        // this will be replaced with tapping a certain opponent
+        if player == "Player 1" {
+            self.opponent = "Player 2"
+        } else {
+            self.opponent = "Player 1"
+        }
+        
         var currentHealth: Int = Int()
-        let playerRef = db.collection("players").document(opponent)
+        let playerRef = db.collection("players").document(self.opponent)
         playerRef.getDocument { (document, error) in
             if let document = document, document.exists {
                 // read opponent's current health
-                currentHealth = document.get("health_points") as! Int
+                currentHealth = document.get("health") as! Int
+                print("damage done text: \(self.damageField.text ?? "0")")
                 let damageDone = Int(self.damageField.text ?? "0") ?? 0
+                print("\(damageDone) damage done")
                 
                 // caluclate new health
                 let newHealth = currentHealth - damageDone
                 
                 // update on firebase
                 self.db.collection("players").document(self.opponent).setData([ "health_points": newHealth ], merge: true)
+                
+                // TODO: @kelly don't hardcode game ID
+                endTurn(game: "zIuUhRjKte6oUcvdrP4D")
+                self.performSegue(withIdentifier: "AttackToWaitSegue", sender:sender)
             }
         }
     }

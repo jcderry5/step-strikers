@@ -81,6 +81,7 @@ func setTeams(blueTeam: [RPGCharacter], redTeam: [RPGCharacter]) {
 // This will be called once the observer sees that hasStarted is true
 func startGame(player: String, game: String){
     var isLeader = Bool()
+    var doneListening = false
     let docRef = Firestore.firestore().collection("games").document(game)
     docRef.getDocument { (document, error) in
         if let document = document, document.exists {
@@ -98,8 +99,9 @@ func startGame(player: String, game: String){
                     var dict = [String:Int]()
                     dict = data?["initiative"] as! [String:Int]
                     
-                    if dict.count == data?["num_players"] as! Int {
+                    if dict.count == data?["num_players"] as! Int && !doneListening {
                         print("finished listening, calling setOrder()")
+                        doneListening = true
                         setOrder(initiative: dict, game: game)
                         return
                     }
@@ -160,21 +162,21 @@ func refreshStats(character: String, game: String) {
         }
     }
     
-    var order: Array<String> = Array()
-    let gameRef = Firestore.firestore().collection("games").document(game)
-    gameRef.getDocument { (document, error) in
-        if let document = document, document.exists {
-            // check if it's your turn now
-            order = document.get("order") as! [String]
-            
-            // check other game stats
-            
-        }
-    }
+//    var order: Array<String> = Array()
+//    let gameRef = Firestore.firestore().collection("games").document(game)
+//    gameRef.getDocument { (document, error) in
+//        if let document = document, document.exists {
+//            // check if it's your turn now
+//            order = document.get("order") as! [String]
+//
+//            // check other game stats
+//
+//        }
+//    }
     
-    if order[0] == character {
-        takeTurn(game: game)
-    }
+//    if order[0] == character {
+//        takeTurn(game: game)
+//    }
 }
 
     /*
@@ -185,9 +187,11 @@ func refreshStats(character: String, game: String) {
         if false: restart listener for change in order
      */
 
-func takeTurn(game: String) {
+func endTurn(game: String) {
     // wait for button click action
     // read and write to firebase as necessary
+    
+    // TODO: @kelly other cleanup stuff probably
     
     // put yourself at the end of the order list
     var order: Array<String> = Array()
@@ -195,15 +199,18 @@ func takeTurn(game: String) {
     gameRef.getDocument { (document, error) in
         if let document = document, document.exists {
             order = document.get("order") as! [String]
+//            let me = order[0]
+//            for i in 0..<order.count - 1 {
+//                order[i] = order[i + 1]
+//            }
+//            order[order.count - 1] = me
+            let element = order.remove(at: 0)
+            order.append(element)
+            
+            // Write the new order to firebase
+            Firestore.firestore().collection("games").document(game).setData([ "order": order ], merge: true)
+            
+            print("new order written!")
         }
     }
-    
-    let me = order[0]
-    for i in 0..<order.count - 1 {
-        order[i] = order[i + 1]
-    }
-    order[order.count - 1] = me
-    
-    // Write the new order to firebase
-    Firestore.firestore().collection("games").document(game).setData([ "order": order ], merge: true)
 }

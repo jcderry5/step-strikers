@@ -22,12 +22,11 @@ class InitiativeViewController: UIViewController {
     }
     
     @IBAction func rollButtonPressed(_ sender: Any) {
-        startGame(player: player, game: "zIuUhRjKte6oUcvdrP4D")
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "DisplaySegue", let nextVC = segue.destination as? DisplayInitiativeViewController {
-            
+            startGame(player: player, game: "zIuUhRjKte6oUcvdrP4D")
             self.initiative = rollInitiative(player: player, game:
                             "zIuUhRjKte6oUcvdrP4D")
             
