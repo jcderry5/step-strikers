@@ -8,31 +8,28 @@
 import UIKit
 
 class RegistrationViewController: UIViewController {
-
+    
+    @IBOutlet weak var userLabel: UILabel!
+    @IBOutlet weak var passLabel: UILabel!
+    @IBOutlet weak var confirmLabel: UILabel!
+    
+    @IBOutlet weak var registerButton: UIButton!
+    @IBOutlet weak var signInButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        assignBackground()
-//        displayTitle()
-    }
-}
-
-extension UIViewController {
-    func assignBackground() {
-        let background = UIImage(named: "Background")
-        var imageView: UIImageView!
-        imageView = UIImageView(frame: self.view.frame)
-        imageView.clipsToBounds = true
-        imageView.image = background
-        imageView.center = view.center
-        view.addSubview(imageView)
-        self.view.sendSubviewToBack(imageView)
+        userLabel.font = UIFont(name: "munro", size: 22)
+        passLabel.font = UIFont(name: "munro", size: 22)
+        confirmLabel.font = UIFont(name: "munro", size: 22)
+        registerButton.titleLabel!.font = UIFont(name: "munro", size: 24)
+        signInButton.titleLabel!.font = UIFont(name: "munro", size: 24)
     }
     
-    func displayTitle() {
-        let title = UIImage(named: "Title")
-        var imageView: UIImageView!
-        imageView = UIImageView(frame: CGRect(x: self.view.safeAreaInsets.left+10, y: self.view.safeAreaInsets.top+100, width: 375, height: 200))
-        imageView.image = title
-        view.addSubview(imageView)
+    @IBAction func registerPressed(_ sender: Any) {
+        
+    }
+    
+    @IBAction func signInPressed(_ sender: Any) {
+        
     }
 }

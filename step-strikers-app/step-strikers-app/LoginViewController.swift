@@ -9,8 +9,24 @@ import UIKit
 
 class LoginViewController: UIViewController {
 
+    @IBOutlet weak var userLabel: UILabel!
+    @IBOutlet weak var passLabel: UILabel!
+    @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var signupButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        userLabel.font = UIFont(name: "munro", size: 22)
+        passLabel.font = UIFont(name: "munro", size: 22)
+        loginButton.titleLabel!.font = UIFont(name: "munro", size: 24)
+        signupButton.titleLabel!.font = UIFont(name: "munro", size: 24)
     }
 
+    @IBAction func loginPressed(_ sender: Any) {
+        
+    }
+    
+    @IBAction func signupPressed(_ sender: Any) {
+        
+    }
 }
