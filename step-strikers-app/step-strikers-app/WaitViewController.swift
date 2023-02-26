@@ -37,16 +37,20 @@ class WaitViewController: UIViewController {
                     
                     if order[0] == self.player {
                         print("Woohoo it's your turn!")
-                        self.performSegue(withIdentifier: "waitToBattleSegue", sender:sender)
+                        self.performSegue(withIdentifier: "WaitToBattleSegue", sender:sender)
                         return
                     }
                 }
             }
         }
-        // validate login
-//        if validLogin {
-//            self.performSegueWithIdentifier("mySegue", sender:sender)
-//        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "WaitToBattleSegue", let nextVC = segue.destination as? DamageViewController {
+            nextVC.delegate = self
+            nextVC.player = self.player
+            nextVC.opponent = self.opponent
+        }
     }
     
 }
