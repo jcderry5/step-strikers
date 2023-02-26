@@ -30,6 +30,11 @@ class RegistrationViewController: UIViewController {
     }
     
     @IBAction func signInPressed(_ sender: Any) {
+        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "loginVC") as! LoginViewController
         
+        self.modalPresentationStyle = .fullScreen
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false)
     }
 }
