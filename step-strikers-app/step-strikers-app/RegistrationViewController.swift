@@ -11,14 +11,13 @@ class RegistrationViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        assignBackground()
+//        assignBackground()
+//        displayTitle()
     }
 }
 
 extension UIViewController {
     func assignBackground() {
-        print("Background created!")
         let background = UIImage(named: "Background")
         var imageView: UIImageView!
         imageView = UIImageView(frame: self.view.frame)
@@ -27,5 +26,13 @@ extension UIViewController {
         imageView.center = view.center
         view.addSubview(imageView)
         self.view.sendSubviewToBack(imageView)
+    }
+    
+    func displayTitle() {
+        let title = UIImage(named: "Title")
+        var imageView: UIImageView!
+        imageView = UIImageView(frame: CGRect(x: self.view.safeAreaInsets.left+10, y: self.view.safeAreaInsets.top+100, width: 375, height: 200))
+        imageView.image = title
+        view.addSubview(imageView)
     }
 }
