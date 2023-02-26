@@ -27,6 +27,10 @@ class DisplayInitiativeViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "WaitSegue", let nextVC = segue.identifier as? WaitViewController {
+            nextVC.delegate = self
+            nextVC.player = self.player
+        }
     }
 
     @IBAction func battleButtonPressed(_ sender: Any) {

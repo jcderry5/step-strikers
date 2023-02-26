@@ -13,7 +13,7 @@ import FirebaseFirestoreSwift
 class DamageViewController: UIViewController {
     var db: Firestore!
     var delegate: UIViewController!
-    var nextVC: StatsViewController!
+    var nextVC: UIViewController!
     var player = ""
     var opponent = ""
     var game: String!
@@ -64,10 +64,23 @@ class DamageViewController: UIViewController {
         }
     }
 
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "StatsSegue" {
+//            nextVC = segue.destination as? StatsViewController
+//            nextVC.delegate = self
+//        } else if segue.identifier == "WaitToBattleSegue" {
+//            nextVC = segue.destination as? WaitViewController
+//            nextVC.delegate = self
+//            nextVC.player = self.player
+//        }
+//    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "StatsSegue" {
-            nextVC = segue.destination as? StatsViewController
+        if segue.identifier == "StatsSegue", let nextVC = segue.destination as? StatsViewController {
             nextVC.delegate = self
+        } else if segue.identifier == "WaitToBattleSegue", let nextVC = segue.destination as? WaitViewController {
+            nextVC.delegate = self
+            nextVC.player = self.player
         }
     }
     

@@ -17,11 +17,12 @@ class WaitViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        segueWhenTurn(sender: self)
         // Do any additional setup after loading the view.
     }
     
-    @IBAction func segueWhenTurn(sender: UIButton) {
+    @IBAction func segueWhenTurn(sender: AnyObject) {
+        print("calling segue when turn")
         // TODO: @kelly don't hardcode game
         let docRef = Firestore.firestore().collection("games").document("zIuUhRjKte6oUcvdrP4D")
         docRef.getDocument { (document, error) in
@@ -34,7 +35,7 @@ class WaitViewController: UIViewController {
                     
                     let data = document.data()
                     let order = data?["order"] as! [String]
-                    
+                    print("order[0] is \(order[0]) and I am \(self.player!)")
                     if order[0] == self.player {
                         print("Woohoo it's your turn!")
                         self.performSegue(withIdentifier: "WaitToBattleSegue", sender:sender)
