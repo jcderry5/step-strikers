@@ -32,7 +32,7 @@ class RegistrationViewController: UIViewController {
     }
     
     @IBAction func registerPressed(_ sender: Any) {
-        
+        // TODO: Register credentials to Firebase and navigate to Stats screen
     }
     
     @IBAction func signInPressed(_ sender: Any) {

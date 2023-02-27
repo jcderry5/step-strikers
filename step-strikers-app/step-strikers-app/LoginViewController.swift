@@ -29,7 +29,7 @@ class LoginViewController: UIViewController {
     }
 
     @IBAction func loginPressed(_ sender: Any) {
-        
+        // TODO: Validate user credentials and navigate to the Stats screen
     }
     
     @IBAction func signupPressed(_ sender: Any) {
