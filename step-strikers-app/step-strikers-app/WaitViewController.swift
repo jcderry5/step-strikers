@@ -32,6 +32,8 @@ class WaitViewController: UIViewController {
                         return
                     }
                     
+                    print("change triggered!")
+                   
                     let data = document.data()
                     let order = data?["order"] as! [String]
                     
@@ -39,8 +41,8 @@ class WaitViewController: UIViewController {
                     if order[0] == self.player {
                         print("Woohoo it's your turn!")
                         self.performSegue(withIdentifier: "WaitToBattleSegue", sender:sender)
-                        return
                     }
+                    
                 }
             }
         }

@@ -141,6 +141,7 @@ func setOrder(initiative: [String:Int], game: String){
     // write array to database and signal that game is ready to start
     Firestore.firestore().collection("games").document(game).setData(["combat_start": true], merge: true)
     Firestore.firestore().collection("orders").document(game).setData(["order": order], merge: true)
+    print("Initial order written")
 }
 
 func rollDie(quant: Int, sides: Int) -> Int {
@@ -186,25 +187,26 @@ func refreshStats(character: String, game: String) {
         if false: restart listener for change in order
      */
 
-func endTurn(game: String) {
+func endTurn(game: String, player: String) {
     // wait for button click action
     // read and write to firebase as necessary
     
     // TODO: @kelly other cleanup stuff probably
     
     // put yourself at the end of the order list
-    var order: Array<String> = Array()
-    let gameRef = Firestore.firestore().collection("orders").document(game)
-    gameRef.getDocument {(document, error) in
-        if let document = document, document.exists {
-            order = document.get("order") as! [String]
-
-            let element = order.remove(at: 0)
-            order.append(element)
-            
-            // Write the new order to firebase
-            Firestore.firestore().collection("orders").document(game).setData([ "order": order ], merge: true)
-            print("new order written")
-        }
-    }
+    Firestore.firestore().collection("last_players").document(game).setData(["last_player": player], merge: true)
+//    var order: Array<String> = Array()
+//    let gameRef = Firestore.firestore().collection("orders").document(game)
+//    gameRef.getDocument {(document, error) in
+//        if let document = document, document.exists {
+//            order = document.get("order") as! [String]
+//
+//            let element = order.remove(at: 0)
+//            order.append(element)
+//
+//            // Write the new order to firebase
+//            Firestore.firestore().collection("orders").document(game).setData([ "order": order ], merge: true)
+//            print("new order written")
+//        }
+//    }
 }
