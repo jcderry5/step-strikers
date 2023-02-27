@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseFirestore
+import UIKit
 
 // This is called when ONE person decides they want to form a team.
 func makeTeam(){
@@ -138,10 +139,8 @@ func setOrder(initiative: [String:Int], game: String){
     }
     
     // write array to database and signal that game is ready to start
-    Firestore.firestore().collection("games").document(game).setData([
-        "order": order,
-        "combat_start": true
-    ], merge: true)
+    Firestore.firestore().collection("games").document(game).setData(["combat_start": true], merge: true)
+    Firestore.firestore().collection("orders").document(game).setData(["order": order], merge: true)
 }
 
 func rollDie(quant: Int, sides: Int) -> Int {
@@ -195,22 +194,17 @@ func endTurn(game: String) {
     
     // put yourself at the end of the order list
     var order: Array<String> = Array()
-    let gameRef = Firestore.firestore().collection("games").document(game)
-    gameRef.getDocument { (document, error) in
+    let gameRef = Firestore.firestore().collection("orders").document(game)
+    gameRef.getDocument {(document, error) in
         if let document = document, document.exists {
             order = document.get("order") as! [String]
-//            let me = order[0]
-//            for i in 0..<order.count - 1 {
-//                order[i] = order[i + 1]
-//            }
-//            order[order.count - 1] = me
+
             let element = order.remove(at: 0)
             order.append(element)
             
             // Write the new order to firebase
-            Firestore.firestore().collection("games").document(game).setData([ "order": order ], merge: true)
-            
-            print("new order written!")
+            Firestore.firestore().collection("orders").document(game).setData([ "order": order ], merge: true)
+            print("new order written")
         }
     }
 }

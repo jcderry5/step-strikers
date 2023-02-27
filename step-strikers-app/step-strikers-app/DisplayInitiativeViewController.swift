@@ -25,14 +25,19 @@ class DisplayInitiativeViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "InitiativeToWaitSegue", let nextVC = segue.identifier as? WaitViewController {
+        if segue.identifier == "InitiativeToWaitSegue", let nextVC = segue.destination as? WaitViewController {
             nextVC.delegate = self
             nextVC.player = self.player
+            nextVC.opponent = self.opponent
+        } else if segue.identifier == actionSegueIdentifier, let nextVC = segue.destination as? DamageViewController {
+            nextVC.delegate = self
+            nextVC.player = self.player
+            nextVC.opponent = self.opponent
         }
     }
 
     @IBAction func battleButtonPressed(_ sender: Any) {
-        let docRef = Firestore.firestore().collection("games").document("zIuUhRjKte6oUcvdrP4D")
+        let docRef = Firestore.firestore().collection("orders").document("zIuUhRjKte6oUcvdrP4D")
         docRef.getDocument { [self] (document, error) in
             if let document = document, document.exists {
                 let order = document.get("order") as! [String]
@@ -40,7 +45,7 @@ class DisplayInitiativeViewController: UIViewController {
                 if self.player == order[0] {
                     performSegue(withIdentifier: actionSegueIdentifier, sender: self)
                 } else if self.player != order[0] {
-                    performSegue(withIdentifier: "AttackToWaitSegue", sender: self)
+                    performSegue(withIdentifier: "InitiativeToWaitSegue", sender: self)
                 } else {
                     print("Whoops, something bad happened. local character's username is \(localCharacter.userName)")
                 }

@@ -22,9 +22,8 @@ class WaitViewController: UIViewController {
     }
     
     @IBAction func segueWhenTurn(sender: AnyObject) {
-        print("calling segue when turn")
         // TODO: @kelly don't hardcode game
-        let docRef = Firestore.firestore().collection("games").document("zIuUhRjKte6oUcvdrP4D")
+        let docRef = Firestore.firestore().collection("orders").document("zIuUhRjKte6oUcvdrP4D")
         docRef.getDocument { (document, error) in
             if let document = document, document.exists {
                 docRef.addSnapshotListener {
@@ -35,6 +34,7 @@ class WaitViewController: UIViewController {
                     
                     let data = document.data()
                     let order = data?["order"] as! [String]
+                    
                     print("order[0] is \(order[0]) and I am \(self.player!)")
                     if order[0] == self.player {
                         print("Woohoo it's your turn!")

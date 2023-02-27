@@ -47,7 +47,6 @@ class DamageViewController: UIViewController {
             if let document = document, document.exists {
                 // read opponent's current health
                 currentHealth = document.get("health") as! Int
-                print("damage done text: \(self.damageField.text ?? "0")")
                 let damageDone = Int(self.damageField.text ?? "0") ?? 0
                 print("\(damageDone) damage done")
                 
@@ -81,6 +80,7 @@ class DamageViewController: UIViewController {
         } else if segue.identifier == "AttackToWaitSegue", let nextVC = segue.destination as? WaitViewController {
             nextVC.delegate = self
             nextVC.player = self.player
+            nextVC.opponent = self.opponent
         }
     }
     
