@@ -14,8 +14,6 @@ class DisplayInitiativeViewController: UIViewController {
     var opponent: String!
     var initiative: Int!
     let actionSegueIdentifier: String = "ActionSegue"
-    let waitSegueIdentifier: String = "WaitSegue"
-    
     
     @IBOutlet weak var displayInitiativeLabel: UILabel!
     
@@ -42,7 +40,7 @@ class DisplayInitiativeViewController: UIViewController {
                 if self.player == order[0] {
                     performSegue(withIdentifier: actionSegueIdentifier, sender: self)
                 } else if self.player != order[0] {
-                    performSegue(withIdentifier: waitSegueIdentifier, sender: self)
+                    performSegue(withIdentifier: "AttackToWaitSegue", sender: self)
                 } else {
                     print("Whoops, something bad happened. local character's username is \(localCharacter.userName)")
                 }
