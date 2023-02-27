@@ -78,7 +78,7 @@ class DamageViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "StatsSegue", let nextVC = segue.destination as? StatsViewController {
             nextVC.delegate = self
-        } else if segue.identifier == "WaitToBattleSegue", let nextVC = segue.destination as? WaitViewController {
+        } else if segue.identifier == "AttackToWaitSegue", let nextVC = segue.destination as? WaitViewController {
             nextVC.delegate = self
             nextVC.player = self.player
         }

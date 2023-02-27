@@ -27,7 +27,7 @@ class DisplayInitiativeViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "WaitSegue", let nextVC = segue.identifier as? WaitViewController {
+        if segue.identifier == "InitiativeToWaitSegue", let nextVC = segue.identifier as? WaitViewController {
             nextVC.delegate = self
             nextVC.player = self.player
         }
