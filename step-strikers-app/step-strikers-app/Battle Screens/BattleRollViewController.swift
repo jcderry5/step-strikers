@@ -17,6 +17,8 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
     var header: [StatsHeaderRow] = [StatsHeaderRow]()
     var actionDisplay:UITableView = UITableView()
     var statsDisplay:UITableView = UITableView()
+    var selectTargetInfo :(String, String, String, String, Action)?
+    var selectTargetInfoItem :(String, String, String, String, Items)?
 
     override func viewDidLoad() {
         super.viewDidLoad()

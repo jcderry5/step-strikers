@@ -34,3 +34,22 @@ struct StatsRow {
 struct StatsHeaderRow {
     let names:[String]
 }
+
+struct enemyData {
+    let userName:String
+    let name:String
+    let character_class:String
+    let health:Int
+    let isBlind:Bool
+    let isInvisible:Bool
+    let imageView:UIImageView
+}
+
+struct teamData {
+    let userName:String
+    let name:String
+    let character_class:String
+    let health:Int
+    let isBlind:Bool
+    let isInvisible:Bool
+}

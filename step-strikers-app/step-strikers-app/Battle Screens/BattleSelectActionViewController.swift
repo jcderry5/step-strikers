@@ -7,10 +7,14 @@
 
 import UIKit
 
+var boxArrow: [AnyObject] = [AnyObject]()
+var rowSelected:Action?
+var actions: [Action] = [Action]()
+
 class BattleSelectActionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     // array of all the actions a player can take
-    var actions: [Action] = [Action]()
+    
     let cellId = "actionCell"
     let statsCellID = "statsCell"
     let statsHeaderID = "statsHeader"
@@ -18,9 +22,14 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     var header: [StatsHeaderRow] = [StatsHeaderRow]()
     var actionDisplay:UITableView = UITableView()
     var statsDisplay:UITableView = UITableView()
+    var characters: [UIImageView] = [UIImageView]()
+    var characterButtons: [UIButton] = [UIButton]()
+    var recentlyTapped:Int = 1000
+    var selected:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        renderEnemies(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
         // puts full screen image as background of view controller
         // sets up the background images of the view controller
         // THESE NEED TO HAPPEN IN ORDER!!!!
@@ -35,11 +44,13 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         // create characters
         // will need to change "name" based on what the enemy players are
         // TODO: update to take what the enemies character type are
-        drawEnemies(enemy1: "Fighter", enemy2: "Bard", enemy3: "Rogue", enemy4: "Wizard")
+//        characters = drawEnemies(enemy1: "Fighter", enemy2: "Bard", enemy3: "Rogue", enemy4: "Wizard")
         
         // create a Table View that displays the action menu, and when pressed does something
         // TODO: set up the transfer to the select target screen when a action is selected
         // the array of all the action a player can do
+        selected = false
+        recentlyTapped = 1000
         createActionArray()
         // the frame of where the table will appear
         actionDisplay = UITableView(frame: CGRect(x: self.view.safeAreaInsets.left+40, y: 640, width: 320, height: 150))
@@ -47,6 +58,7 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         actionDisplay.dataSource = self
         // register the table since it was not created with the storyboard
         actionDisplay.register(ActionTableViewCell.self, forCellReuseIdentifier: cellId)
+        actionDisplay.delegate = self
         actionDisplay.backgroundColor = UIColor.clear
         self.view.addSubview(actionDisplay)
         
@@ -114,23 +126,49 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     // TODO: update with segue to select target view controller when pressed
     // TODO: update with real information about the action selected
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath:IndexPath) {
-        tableView.deselectRow(at: indexPath, animated:true)
-        let rowValue = actions[indexPath.row]
-        if tableView == actionDisplay {
-            let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "BattleSelectTargetViewController") as! BattleSelectTargetViewController
-            self.modalPresentationStyle = .fullScreen
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc,animated: false)
+        print(enemiesList[0].name)
+        if recentlyTapped == indexPath.row && selected == true {
+            selected = false
+            characterButtons[0].removeFromSuperview()
+            characterButtons[1].removeFromSuperview()
+            characterButtons[2].removeFromSuperview()
+            characterButtons[3].removeFromSuperview()
+            boxArrow[0].removeFromSuperview()
+            boxArrow[1].removeFromSuperview()
+            tableView.deselectRow(at: indexPath, animated:false)
+            self.view.addSubview(enemiesList[0].imageView)
+            self.view.addSubview(enemiesList[1].imageView)
+            self.view.addSubview(enemiesList[2].imageView)
+            self.view.addSubview(enemiesList[3].imageView)
+        } else {
+            selected = true
+            rowSelected = actions[indexPath.row]
+            recentlyTapped = indexPath.row
+            if tableView == actionDisplay {
+                
+                print("selected row")
+                enemiesList[0].imageView.removeFromSuperview()
+                enemiesList[1].imageView.removeFromSuperview()
+                enemiesList[2].imageView.removeFromSuperview()
+                enemiesList[3].imageView.removeFromSuperview()
+                if boxArrow.isEmpty == false {
+                    boxArrow[0].removeFromSuperview()
+                    boxArrow[1].removeFromSuperview()
+                }
+                
+                characterButtons = drawEnemiesButton(enemy1: enemiesList[0].character_class, enemy2: enemiesList[1].character_class, enemy3: enemiesList[2].character_class, enemy4: enemiesList[3].character_class)
+                boxArrow = drawSelectBoxButtonArrow(x: 10, y: 400, width: 100, height: 100)
+            }
         }
     }
+    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath:IndexPath) -> CGFloat {
         if tableView == statsDisplay {
             return 30
         } else {
             if indexPath.row == 0 {
-                return 80
+                return UITableView.automaticDimension
             }
         }
         
@@ -160,18 +198,22 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points:[1,2,3,4] , totalPoints: [1,2,3,4]))
     }
     
+
+    
+    
 }
 
 // TODO: remove these functions to the UIViewController extension and use the information set from Game.swift (?)
 struct characterSprites {
     var name:String
     
-    func drawCharacter(view:UIView, x:Int, y:Int, width:Int, height:Int) {
+    func drawCharacter(view:UIView, x:Int, y:Int, width:Int, height:Int) -> UIImageView!{
         let image = UIImage(named:name)
         var imageView: UIImageView!
         imageView = UIImageView(frame: CGRect(x:x, y: y, width: width, height: height))
         imageView.image = image
         view.addSubview(imageView)
+        return imageView
     }
     
     func drawButtonCharacter(controller:UIViewController, x:Int, y:Int, width:Int, height:Int) -> UIButton {

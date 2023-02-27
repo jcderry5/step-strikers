@@ -7,6 +7,8 @@
 
 import UIKit
 
+var rowItemSelected:Items?
+
 class BattleSelectItemViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     // array of the items to be displayed in the items menu in battle
@@ -18,10 +20,15 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
     var header: [StatsHeaderRow] = [StatsHeaderRow]()
     var statsDisplay:UITableView = UITableView()
     var itemDisplay:UITableView = UITableView()
+    var recentlyTapped:Int = 1000
+    var selected:Bool = false
+    var characters: [UIImageView] = [UIImageView]()
+    var playerButtons: [UIButton] = [UIButton]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        renderTeam(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
+        renderEnemies(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
         // Do any additional setup after loading the view.
         // background images and view set up
         assignBackground()
@@ -35,7 +42,7 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
         // create characters
         // will need to change "name" based on what the enemy players are
         // TODO: change based to reflect the actual classes that enemies have
-        drawEnemies(enemy1: "Fighter", enemy2: "Bard", enemy3: "Rogue", enemy4: "Wizard")
+//        drawEnemies(enemy1: "Fighter", enemy2: "Bard", enemy3: "Rogue", enemy4: "Wizard")
         
         // create a Table View that displays the item menu, and when pressed does something
         // TODO: set up the transfer to the select target screen when a item is selected
@@ -49,6 +56,7 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
         itemDisplay.register(ItemTableViewCell.self, forCellReuseIdentifier: itemCellId)
         // sets the background of the table to transparent
         itemDisplay.backgroundColor = UIColor.clear
+        itemDisplay.delegate = self
         self.view.addSubview(itemDisplay)
         
         // stats menu
@@ -112,8 +120,32 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
     
     // TODO: complete for when a row is selected to segue to Battle Item Select target screen
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath:IndexPath) {
-        tableView.deselectRow(at: indexPath, animated:true)
-        let rowValue = items[indexPath.row]
+        print(enemiesList[0].name)
+        if recentlyTapped == indexPath.row && selected == true {
+            selected = false
+            playerButtons[0].removeFromSuperview()
+            playerButtons[1].removeFromSuperview()
+            playerButtons[2].removeFromSuperview()
+            playerButtons[3].removeFromSuperview()
+            boxArrow[0].removeFromSuperview()
+            boxArrow[1].removeFromSuperview()
+            tableView.deselectRow(at: indexPath, animated:false)
+        } else {
+        selected = true
+        rowItemSelected = items[indexPath.row]
+        recentlyTapped = indexPath.row
+            if tableView == itemDisplay {
+                
+                print("selected row")
+                if boxArrow.isEmpty == false {
+                    boxArrow[0].removeFromSuperview()
+                    boxArrow[1].removeFromSuperview()
+                }
+                
+                playerButtons = drawPlayerButtons(player1: teamList[0].character_class, player2: teamList[1].character_class, player3: teamList[2].character_class, player4: teamList[3].character_class)
+                boxArrow = drawSelectBoxButtonArrowItem(x: 40, y: 130, width: 70, height: 150)
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath:IndexPath) -> CGFloat {
@@ -121,7 +153,7 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
             return 30
         } else {
             if indexPath.row == 0 {
-                return 80
+                return UITableView.automaticDimension
             }
         }
         
