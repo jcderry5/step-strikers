@@ -57,7 +57,7 @@ class DamageViewController: UIViewController {
                 self.db.collection("players").document(self.opponent).setData([ "health_points": newHealth ], merge: true)
                 
                 // TODO: @kelly don't hardcode game ID
-                endTurn(game: "zIuUhRjKte6oUcvdrP4D")
+                endTurn(game: "zIuUhRjKte6oUcvdrP4D", player: self.player)
                 self.performSegue(withIdentifier: "AttackToWaitSegue", sender:sender)
             }
         }
