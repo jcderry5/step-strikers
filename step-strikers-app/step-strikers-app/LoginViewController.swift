@@ -18,8 +18,14 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         userLabel.font = UIFont(name: "munro", size: 22)
         passLabel.font = UIFont(name: "munro", size: 22)
+        
+        // Login button design
         loginButton.titleLabel!.font = UIFont(name: "munro", size: 24)
+        loginButton.setBackgroundImage(UIImage(named: "Selected Menu Button"), for: UIControl.State.highlighted)
+        
+        // Signup button design
         signupButton.titleLabel!.font = UIFont(name: "munro", size: 24)
+        signupButton.setBackgroundImage(UIImage(named: "Selected Menu Button"), for: UIControl.State.highlighted)
     }
 
     @IBAction func loginPressed(_ sender: Any) {

@@ -21,8 +21,14 @@ class RegistrationViewController: UIViewController {
         userLabel.font = UIFont(name: "munro", size: 22)
         passLabel.font = UIFont(name: "munro", size: 22)
         confirmLabel.font = UIFont(name: "munro", size: 22)
+        
+        // Register button design
         registerButton.titleLabel!.font = UIFont(name: "munro", size: 24)
+        registerButton.setBackgroundImage(UIImage(named: "Selected Menu Button"), for: UIControl.State.highlighted)
+        
+        // Signin button design
         signInButton.titleLabel!.font = UIFont(name: "munro", size: 24)
+        signInButton.setBackgroundImage(UIImage(named: "Selected Menu Button"), for: UIControl.State.highlighted)
     }
     
     @IBAction func registerPressed(_ sender: Any) {
