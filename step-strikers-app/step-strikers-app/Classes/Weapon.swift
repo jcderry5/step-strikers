@@ -7,6 +7,12 @@
 
 import Foundation
 
+// [0-5) uses = Perfect Condition
+// [5-10) uses = Good Condition
+// [10-15) uses = Fair Condition
+// [15-20) uses = Poor Condition
+// On their 20th use, the weapon vanishes
+
 let conditionBoundary = [
     (condition: "Perfect", boundary: 5),
     (condition: "Good", boundary: 10),
@@ -15,324 +21,278 @@ let conditionBoundary = [
 let conditionIntEquivalent = [
     (condition: "Perfect", intEquivalent: 4),
     (condition: "Good", intEquivalent: 3),
-    (condition: "Fair", intEquivalent: 2)]
+    (condition: "Fair", intEquivalent: 2),
+    (condition: "Poor", intEquivalent: 1)]
+
 let maxWeaponUses = 20
 
 protocol Weapon {
     var name: String {get}
-    var owner: RPGCharacter {get set}
     var damage: Int {get}
     var staminaCost: Int {get}
     var condition: Int {get set}
     var useCount: Int {get set}
     
-    init(owner: RPGCharacter)
-    init(owner:RPGCharacter, useCount: Int, condition: Int)
-    func checkIfProficient(wearer: RPGCharacter) -> Bool
+    init()
+    init(useCount: Int)
+    func checkIfProficient(wielderClass: String) -> Bool
+}
+
+func getConditionFromUseCount(useCount: Int) -> Int {
+    if(useCount >= 0 && useCount < 5) {
+        return 4
+    } else if (useCount >= 5 && useCount < 10) {
+        return 3
+    } else if (useCount >= 10 && useCount < 15) {
+        return 2
+    } else if (useCount >= 15 && useCount < 20) {
+        return 1
+    } else {
+        return -1
+    }
 }
 
 struct fists: Weapon {
     let name = "Fists"
-    var owner: RPGCharacter
     let damage = 2
     let staminaCost = 1
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter){
-        self.owner = owner
-    }
+    init() {}
     
-    init(owner: RPGCharacter, useCount: Int, condition: Int) {
-        self.owner = owner
+    init(useCount: Int) {
         self.useCount = useCount
-        self.condition = condition
+        self.condition = getConditionFromUseCount(useCount: useCount)
     }
     
-    func checkIfProficient(wearer: RPGCharacter) -> Bool {
+    func checkIfProficient(wielderClass: String) -> Bool {
         return true
     }
 }
 
 struct dagger: Weapon {
     let name = "Dagger"
-    var owner: RPGCharacter
     let damage = 4
     let staminaCost = 3
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter){
-        self.owner = owner
-    }
+    init() {}
     
-    init(owner: RPGCharacter, useCount: Int, condition: Int) {
-        self.owner = owner
+    init(useCount: Int) {
         self.useCount = useCount
-        self.condition = condition
+        self.condition = getConditionFromUseCount(useCount: useCount)
     }
     
-    func checkIfProficient(wearer: RPGCharacter) -> Bool {
-        return wearer is Wizard
+    // Only Wizards can wield daggers
+    func checkIfProficient(wielderClass: String) -> Bool {
+        return wielderClass == "Wizard"
     }
 }
 
 struct darts: Weapon {
     let name = "Darts"
-    var owner: RPGCharacter
     let damage = 5
     let staminaCost = 4
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter){
-        self.owner = owner
-    }
+    init() {}
     
-    init(owner: RPGCharacter, useCount: Int, condition: Int) {
-        self.owner = owner
+    init(useCount: Int) {
         self.useCount = useCount
-        self.condition = condition
+        self.condition = getConditionFromUseCount(useCount: useCount)
     }
     
-    func checkIfProficient(wearer: RPGCharacter) -> Bool {
-        return wearer is Wizard
+    // Only Wizards can wield darts
+    func checkIfProficient(wielderClass: String) -> Bool {
+        return wielderClass == "Wizard"
     }
 }
 
 struct crossBow: Weapon {
     let name = "Cross Bow"
-    var owner: RPGCharacter
     let damage = 8
     let staminaCost = 5
     var condition = 4
     var useCount = 0
-
-    init(owner: RPGCharacter){
-        self.owner = owner
-    }
     
-    init(owner: RPGCharacter, useCount: Int, condition: Int) {
-        self.owner = owner
+    init() {}
+    
+    init(useCount: Int) {
         self.useCount = useCount
-        self.condition = condition
+        self.condition = getConditionFromUseCount(useCount: useCount)
     }
     
     // Anyone can equip a crossbow
-    func checkIfProficient(wearer: RPGCharacter) -> Bool {
+    func checkIfProficient(wielderClass: String) -> Bool {
         return true
     }
 }
 
 struct rapier: Weapon {
     let name = "Rapier"
-    var owner: RPGCharacter
     let damage = 8
     let staminaCost = 5
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter){
-        self.owner = owner
-    }
+    init() {}
     
-    init(owner: RPGCharacter, useCount: Int, condition: Int) {
-        self.owner = owner
+    init(useCount: Int) {
         self.useCount = useCount
-        self.condition = condition
+        self.condition = getConditionFromUseCount(useCount: useCount)
     }
     
-    func checkIfProficient(wearer: RPGCharacter) -> Bool {
-        return wearer is Rogue || wearer is Bard
+    // Only Rogues and Bards are proficient
+    func checkIfProficient(wielderClass: String) -> Bool {
+        return wielderClass == "Rogue" || wielderClass == "Bard"
     }
 }
 
 struct shortSword: Weapon {
     let name = "Short Sword"
-    var owner: RPGCharacter
     let damage = 6
     let staminaCost = 4
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter){
-        self.owner = owner
-    }
+    init() {}
     
-    init(owner: RPGCharacter, useCount: Int, condition: Int) {
-        self.owner = owner
+    init(useCount: Int) {
         self.useCount = useCount
-        self.condition = condition
+        self.condition = getConditionFromUseCount(useCount: useCount)
     }
     
-    func checkIfProficient(wearer: RPGCharacter) -> Bool {
-        return wearer is Rogue
+    // Only Rogues can wield short sword
+    func checkIfProficient(wielderClass: String) -> Bool {
+        return wielderClass == "Rogue"
     }
 }
 
 struct longBow: Weapon {
     let name = "Long Bow"
-    var owner: RPGCharacter
     let damage = 8
     let staminaCost = 6
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter){
-        self.owner = owner
-    }
+    init() {}
     
-    init(owner: RPGCharacter, useCount: Int, condition: Int) {
-        self.owner = owner
+    init(useCount: Int) {
         self.useCount = useCount
-        self.condition = condition
+        self.condition = getConditionFromUseCount(useCount: useCount)
     }
 
-    func checkIfProficient(wearer: RPGCharacter) -> Bool {
-        return wearer is Fighter
+    // Only Fighters can wield long bow
+    func checkIfProficient(wielderClass: String) -> Bool {
+        return wielderClass == "Fighter"
     }
 }
 
 struct handAxe: Weapon {
     let name = "Hand Axe"
-    var owner: RPGCharacter
     let damage = 6
     let staminaCost = 5
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter){
-        self.owner = owner
-    }
+    init() {}
     
-    init(owner: RPGCharacter, useCount: Int, condition: Int) {
-        self.owner = owner
+    init(useCount: Int) {
         self.useCount = useCount
-        self.condition = condition
+        self.condition = getConditionFromUseCount(useCount: useCount)
     }
     
-    func checkIfProficient(wearer: RPGCharacter) -> Bool {
-        return wearer is Fighter
+    // Only Fighters can wield hand axe
+    func checkIfProficient(wielderClass: String) -> Bool {
+        return wielderClass == "Fighter"
     }
 }
 
 struct battleAxe: Weapon {
     let name = "Battle Axe"
-    var owner: RPGCharacter
     let damage = 10
     let staminaCost = 8
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter){
-        self.owner = owner
-    }
+    init() {}
     
-    init(owner: RPGCharacter, useCount: Int, condition: Int) {
-        self.owner = owner
+    init(useCount: Int) {
         self.useCount = useCount
-        self.condition = condition
+        self.condition = getConditionFromUseCount(useCount: useCount)
     }
     
-    func checkIfProficient(wearer: RPGCharacter) -> Bool {
-        return wearer is Fighter
+    // Only fighters can wield battle axe
+    func checkIfProficient(wielderClass: String) -> Bool {
+        return wielderClass == "Fighter"
     }
 }
 
 struct longSword: Weapon {
     let name = "Long Sword"
-    var owner: RPGCharacter
     let damage = 8
     let staminaCost = 5
     var condition = 4
     var useCount = 0
     
-    init(owner: RPGCharacter){
-        self.owner = owner
-    }
+    init() {}
     
-    init(owner: RPGCharacter, useCount: Int, condition: Int) {
-        self.owner = owner
+    init(useCount: Int) {
         self.useCount = useCount
-        self.condition = condition
+        self.condition = getConditionFromUseCount(useCount: useCount)
     }
     
-    func checkIfProficient(wearer: RPGCharacter) -> Bool {
-        return wearer is Bard
-    }
-}
-
-// This function will calculate the damage that the wielder imposes on their target, given their proficiency in their currWeapon and the target's currArmor suitability.
-// proficient wielder def: The weapon is assigned to their class, they roll with the weapon's damage
-func calculateDamage(wielder: RPGCharacter, target: RPGCharacter, damage: Int) -> Int {
-    let damage: Int
-    var armorClassToBeat = calculateModifiedArmorClass(wearer: target)
-    
-    // D20 + wielders attackModifer vs target's armorClass + target's defenseModifier
-    if(rollDie(quant: 1, sides: 20) + wielder.attackModifier >= armorClassToBeat + target.defenseModifier) {
-        // check if wielder is proficient in their weapon
-        damage = calculateModifiedDamage(wielder: wielder)
-    } else {
-        damage = 0 // if wielder does not beat the character's AC, they do not inflict damage upon them
-    }
-    // reset attack and defense modifier after interaction
-    wielder.attackModifier = 0
-    target.defenseModifier = 0
-    
-    // adjust the condition of the wielder's weapon and the target's armor
-    adjustCondition(armorUsed: &target.currArmor)
-    adjustCondition(weaponUsed: &wielder.currWeapon)
-    
-    return damage
-}
-
-// Returns the amount of damage wielder imposes with their weapon taking into account their proficiency in the weapon
-func calculateModifiedDamage(wielder: RPGCharacter) -> Int{
-    if(wielder.currWeapon.checkIfProficient(wearer: wielder)){
-        return wielder.currWeapon.damage
-    } else {
-        return rollDie(quant: 1, sides: wielder.currWeapon.damage)
+    // Only bards can wield long sword
+    func checkIfProficient(wielderClass: String) -> Bool {
+        return wielderClass == "Bard"
     }
 }
 
-func adjustCondition(weaponUsed: inout Weapon){
-    weaponUsed.useCount += 1
-    let useCounter: Int = weaponUsed.useCount
+func adjustWeaponCondition(ownerWeaponsInventory: inout [Weapon], currWeaponPointer: UnsafePointer<Weapon>) -> Weapon {
+    
+    var currWeapon = currWeaponPointer.pointee
+    currWeapon.useCount += 1
+    
+    let useCounter: Int = currWeapon.useCount
+    
     // Condition of Fists is forever
         // checks if conditionBoundary contains the useCount, if so change condition
-    if !(weaponUsed is fists) {
+    if !(currWeapon is fists) {
         if conditionBoundary.contains(where: {$0.boundary == useCounter}) {
             // changingIndex holds the index in conditionBoundary with their previous condition of the weapon
-            let changingIndex = conditionBoundary.firstIndex(where: {$0.boundary == useCounter})
+            let targetIndex = (conditionBoundary.firstIndex(where: {$0.boundary == useCounter}) ?? 0)
             
             // new Condition is the new condition of weaponUsed
-            let newCondition: String = conditionBoundary[(changingIndex)!].condition
+            let oldCondition: String = conditionBoundary[(targetIndex)].condition
             
             // Set the condition Int in weaponUsed to new Int associated with the newCondition
-            weaponUsed.condition = conditionIntEquivalent[conditionIntEquivalent.firstIndex(where: {$0.condition == newCondition})!].intEquivalent
+            currWeapon.condition = (conditionIntEquivalent[conditionIntEquivalent.firstIndex(where: {$0.condition == oldCondition})!].intEquivalent) - 1
         } else if (useCounter >= 20){
-            // Take action when weapon is deteriorated
-            destroyWeapon(weaponToDestroy: weaponUsed)
+            // Take action when weapon is deteriorated and return your fists
+            return destroyWeapon(ownerWeaponsInventory: &ownerWeaponsInventory, weaponToDestroy: currWeapon)
         }
     }
+    return currWeapon
 }
 
 // destroys all weapons in inventory that have this name and disarms you
-func destroyWeapon(weaponToDestroy: Weapon){
-    let owner = weaponToDestroy.owner
-    owner.weaponsInInventory.removeAll { weapon in
+func destroyWeapon(ownerWeaponsInventory: inout [Weapon], weaponToDestroy: Weapon) -> Weapon {
+    ownerWeaponsInventory.removeAll { weapon in
         weapon.name == weaponToDestroy.name && weapon.useCount == 20
     }
     
     // if they already have fists in their weapons inventory, equip it
     // if not, make them a new fists and put it in inventory
-    if let fistIndexToEquip: Int = owner.weaponsInInventory.firstIndex(where: { weapon in
+    if let fistIndexToEquip: Int = ownerWeaponsInventory.firstIndex(where: { weapon in
         weapon.name == "Fists"
     }) {
-        owner.currWeapon = owner.weaponsInInventory[fistIndexToEquip]
+        return ownerWeaponsInventory[fistIndexToEquip]
     } else {
-        let newFists: Weapon = fists(owner: owner)
-        owner.currWeapon = newFists
-        owner.weaponsInInventory += [newFists]
+        let newFists: Weapon = fists()
+        ownerWeaponsInventory += [newFists]
+        return newFists
     }
 }

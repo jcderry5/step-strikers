@@ -40,7 +40,7 @@ struct potionOfHealing: Item {
     
     func use(target: RPGCharacter) {
         target.increaseHealth(amtIncrease: smallAmountOfRestoration)
-        removeItemFromInventory(itemToRemove: self)
+        _ = self.owner.removeFromInventory(itemObject: self)
     }
 }
 
@@ -64,7 +64,7 @@ struct elixirOfMagic: Item {
         } else {
             print("\(target.characterName) cannot take \(self.name) because they are not a Caster")
         }
-        removeItemFromInventory(itemToRemove: self)
+        _ = self.owner.removeFromInventory(itemObject: self)
     }
 }
 
@@ -84,7 +84,7 @@ struct energyPill: Item {
     
     func use(target: RPGCharacter) {
         target.increaseStamina(amtIncrease: smallAmountOfRestoration)
-        removeItemFromInventory(itemToRemove: self)
+        _ = self.owner.removeFromInventory(itemObject: self)
     }
 }
 
@@ -107,7 +107,7 @@ struct antidote: Item {
     // TODO: Define ailment
     func use(target: RPGCharacter) {
         // dependent on blind list
-        removeItemFromInventory(itemToRemove: self)
+        _ = self.owner.removeFromInventory(itemObject: self)
     }
 }
 
@@ -129,7 +129,7 @@ struct awakening: Item {
     
     func use(target: RPGCharacter) {
         // remove them from sleep list
-        removeItemFromInventory(itemToRemove: self)
+        _ = self.owner.removeFromInventory(itemObject: self)
     }
 }
 
@@ -149,7 +149,7 @@ struct potionOfGreaterHealing: Item {
     
     func use(target: RPGCharacter) {
         target.increaseHealth(amtIncrease: moderateAmountOfRestoration)
-        removeItemFromInventory(itemToRemove: self)
+        _ = self.owner.removeFromInventory(itemObject: self)
     }
 }
 
@@ -173,7 +173,7 @@ struct elixirOfGreaterMagic: Item {
         } else {
             print("\(target.characterName) cannot take \(self.name) because they are not a Caster")
         }
-        removeItemFromInventory(itemToRemove: self)
+        _ = self.owner.removeFromInventory(itemObject: self)
     }
 }
 
@@ -193,7 +193,7 @@ struct energyPowder: Item {
     
     func use(target: RPGCharacter) {
         target.increaseStamina(amtIncrease: moderateAmountOfRestoration)
-        removeItemFromInventory(itemToRemove: self)
+        _ = self.owner.removeFromInventory(itemObject: self)
     }
 }
 
@@ -215,7 +215,7 @@ struct resurrectionStone: Item {
     
     func use(target: RPGCharacter){
         // TODO: Remove target from the dead list
-        removeItemFromInventory(itemToRemove: self)
+        _ = self.owner.removeFromInventory(itemObject: self)
     }
 }
 
@@ -235,7 +235,7 @@ struct fourLeafClover: Item {
     
     func use(target: RPGCharacter) {
         target.attackModifier += 2
-        removeItemFromInventory(itemToRemove: self)
+        _ = self.owner.removeFromInventory(itemObject: self)
     }
 }
 
@@ -255,7 +255,7 @@ struct leatherArmorPad: Item {
     
     func use(target: RPGCharacter) {
         target.defenseModifier += smallAmountOfModification
-        removeItemFromInventory(itemToRemove: self)
+        _ = self.owner.removeFromInventory(itemObject: self)
     }
 }
 
@@ -275,7 +275,7 @@ struct featherOfVigor: Item {
     
     func use(target: RPGCharacter) {
         target.attackModifier += smallAmountOfModification
-        removeItemFromInventory(itemToRemove: self)
+        _ = self.owner.removeFromInventory(itemObject: self)
     }
 }
 
@@ -296,7 +296,7 @@ struct scrollOfResistance: Item {
     
     func use(target: RPGCharacter) {
         target.magicResistanceModifier += smallAmountOfModification
-        removeItemFromInventory(itemToRemove: self)
+        _ = self.owner.removeFromInventory(itemObject: self)
     }
 }
 
@@ -316,7 +316,7 @@ struct potionOfSuperiorHealing: Item {
     
     func use(target: RPGCharacter) {
         target.increaseHealth(amtIncrease: largeAmountOfRestoration)
-        removeItemFromInventory(itemToRemove: self)
+        _ = self.owner.removeFromInventory(itemObject: self)
     }
 }
 
@@ -340,7 +340,7 @@ struct elixirOfSuperiorMagic: Item {
         } else {
             print("\(target.characterName) cannot take \(self.name) because they are not a Caster")
         }
-        removeItemFromInventory(itemToRemove: self)
+        _ = self.owner.removeFromInventory(itemObject: self)
     }
 }
 
@@ -360,7 +360,7 @@ struct energyRoot: Item {
     
     func use(target: RPGCharacter) {
         target.increaseStamina(amtIncrease: largeAmountOfRestoration)
-        removeItemFromInventory(itemToRemove: self)
+        _ = self.owner.removeFromInventory(itemObject: self)
     }
 }
 
@@ -381,7 +381,7 @@ struct revivalCrystal: Item {
     
     func use(target: RPGCharacter) {
         // finish when done w death
-        removeItemFromInventory(itemToRemove: self)
+        _ = self.owner.removeFromInventory(itemObject: self)
     }
 }
 
@@ -401,7 +401,7 @@ struct fiveLeafClover: Item {
     
     func use(target: RPGCharacter) {
         owner.attackModifier += 5
-        removeItemFromInventory(itemToRemove: self)
+        _ = self.owner.removeFromInventory(itemObject: self)
     }
 }
 
@@ -421,7 +421,7 @@ struct metalArmorPad: Item {
     
     func use(target: RPGCharacter) {
         target.defenseModifier += moderateAmountOfModification
-        removeItemFromInventory(itemToRemove: self)
+        _ = self.owner.removeFromInventory(itemObject: self)
     }
 }
 
@@ -441,7 +441,7 @@ struct vialOfVigor: Item {
     
     func use(target: RPGCharacter) {
         target.attackModifier += moderateAmountOfModification
-        removeItemFromInventory(itemToRemove: self)
+        _ = self.owner.removeFromInventory(itemObject: self)
     }
 }
 
@@ -461,7 +461,7 @@ struct scrollOfGreaterResistance: Item {
     
     func use(target: RPGCharacter) {
         target.magicResistanceModifier += moderateAmountOfModification
-        removeItemFromInventory(itemToRemove: self)
+        _ = self.owner.removeFromInventory(itemObject: self)
     }
 }
 
@@ -480,9 +480,9 @@ struct potionOfVitality: Item {
     }
     
     func use(target: RPGCharacter) {
-        var difference = target.maxHealth - target.currHealth
+        let difference = target.maxHealth - target.currHealth
         target.increaseHealth(amtIncrease: difference)
-        removeItemFromInventory(itemToRemove: self)
+        _ = self.owner.removeFromInventory(itemObject: self)
     }
 }
 
@@ -503,13 +503,13 @@ struct elixirOfSorcery: Item {
     
     func use(target: RPGCharacter) {
         if(target is Caster){
-            var tempTarget = target as! Caster
-            var difference = tempTarget.maxSpellPoints - tempTarget.currSpellPoints
+            let tempTarget = target as! Caster
+            let difference = tempTarget.maxSpellPoints - tempTarget.currSpellPoints
             tempTarget.increaseSpellPoints(amtIncrease: difference)
         } else {
             print("\(target.characterName) cannot take \(self.name) because they are not a Caster")
         }
-        removeItemFromInventory(itemToRemove: self)
+        _ = self.owner.removeFromInventory(itemObject: self)
     }
 }
 
@@ -530,7 +530,7 @@ struct energySap: Item {
     func use(target: RPGCharacter) {
         let difference = target.maxStamina - target.currStamina
         target.increaseStamina(amtIncrease: difference)
-        removeItemFromInventory(itemToRemove: self)
+        _ = self.owner.removeFromInventory(itemObject: self)
     }
 }
 
@@ -551,7 +551,7 @@ struct miracleOfLife: Item {
     
     func use(target: RPGCharacter) {
         // TODO: Fix when deathe functionality is working
-        removeItemFromInventory(itemToRemove: self)
+        _ = self.owner.removeFromInventory(itemObject: self)
     }
 }
 
@@ -571,6 +571,7 @@ struct sevenLeafClover: Item {
     
     func use(target: RPGCharacter) {
         target.attackModifier = 20
+        _ = self.owner.removeFromInventory(itemObject: self)
     }
 }
 
@@ -590,14 +591,6 @@ struct heartOfIron: Item {
     
     func use(target: RPGCharacter) {
         target.defenseModifier = 20
-        removeItemFromInventory(itemToRemove: self)
-    }
-}
-
-
-func removeItemFromInventory(itemToRemove: Item){
-    let owner = itemToRemove.owner
-    if let indexOfItemToRemove: Int = owner.itemsInInventory.firstIndex(where: {item in item.name == itemToRemove.name}) {
-        owner.itemsInInventory.remove(at: indexOfItemToRemove)
+        _ = self.owner.removeFromInventory(itemObject: self)
     }
 }

@@ -18,6 +18,13 @@
 		646DD2BE29A6B6FC001FB2BB /* Weapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646DD2BD29A6B6FC001FB2BB /* Weapon.swift */; };
 		646DD2C029A6B70A001FB2BB /* Armor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646DD2BF29A6B70A001FB2BB /* Armor.swift */; };
 		646DD2C229A6B721001FB2BB /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646DD2C129A6B721001FB2BB /* Item.swift */; };
+		649A4B2629A972BF00377575 /* StepStrikersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649A4B2529A972BF00377575 /* StepStrikersTests.swift */; };
+		649A4B2D29A9731D00377575 /* RPGCharacterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649A4B2C29A9731D00377575 /* RPGCharacterTests.swift */; };
+		649A4B3029A98D9100377575 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 649A4B2F29A98D9100377575 /* FirebaseFirestore */; };
+		649A4B3429A9B39A00377575 /* WeaponUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649A4B3329A9B39A00377575 /* WeaponUnitTests.swift */; };
+		649A4B3629A9C34300377575 /* ArmorUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649A4B3529A9C34300377575 /* ArmorUnitTests.swift */; };
+		649A4B3829A9D53B00377575 /* ItemUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649A4B3729A9D53B00377575 /* ItemUnitTests.swift */; };
+		649A4B3A29A9E93100377575 /* GameUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649A4B3929A9E93100377575 /* GameUnitTests.swift */; };
 		64A2876029A4211D00922509 /* Adventurer.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64A2875D29A4211D00922509 /* Adventurer.ttf */; };
 		64A2876129A4211D00922509 /* munro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64A2875E29A4211D00922509 /* munro.ttf */; };
 		64A2876229A4211D00922509 /* iso8.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64A2875F29A4211D00922509 /* iso8.ttf */; };
@@ -34,6 +41,16 @@
 		EBCBEEA4299C0C43005009D7 /* InitiativeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBCBEEA3299C0C43005009D7 /* InitiativeViewController.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		649A4B2729A972BF00377575 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 643650FC2991AA260017AA0E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 643651032991AA260017AA0E;
+			remoteInfo = "step-strikers-app";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		643651042991AA260017AA0E /* step-strikers-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "step-strikers-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		643651072991AA260017AA0E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -48,6 +65,13 @@
 		646DD2BD29A6B6FC001FB2BB /* Weapon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weapon.swift; sourceTree = "<group>"; };
 		646DD2BF29A6B70A001FB2BB /* Armor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Armor.swift; sourceTree = "<group>"; };
 		646DD2C129A6B721001FB2BB /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		649A4B2329A972BF00377575 /* StepStrikersTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StepStrikersTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		649A4B2529A972BF00377575 /* StepStrikersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepStrikersTests.swift; sourceTree = "<group>"; };
+		649A4B2C29A9731D00377575 /* RPGCharacterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPGCharacterTests.swift; sourceTree = "<group>"; };
+		649A4B3329A9B39A00377575 /* WeaponUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponUnitTests.swift; sourceTree = "<group>"; };
+		649A4B3529A9C34300377575 /* ArmorUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArmorUnitTests.swift; sourceTree = "<group>"; };
+		649A4B3729A9D53B00377575 /* ItemUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemUnitTests.swift; sourceTree = "<group>"; };
+		649A4B3929A9E93100377575 /* GameUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameUnitTests.swift; sourceTree = "<group>"; };
 		64A2875D29A4211D00922509 /* Adventurer.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Adventurer.ttf; sourceTree = "<group>"; };
 		64A2875E29A4211D00922509 /* munro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = munro.ttf; sourceTree = "<group>"; };
 		64A2875F29A4211D00922509 /* iso8.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = iso8.ttf; sourceTree = "<group>"; };
@@ -72,6 +96,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		649A4B2029A972BF00377575 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				649A4B3029A98D9100377575 /* FirebaseFirestore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -79,7 +111,9 @@
 			isa = PBXGroup;
 			children = (
 				643651062991AA260017AA0E /* step-strikers-app */,
+				649A4B2429A972BF00377575 /* StepStrikersTests */,
 				643651052991AA260017AA0E /* Products */,
+				649A4B2E29A98D9100377575 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -87,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				643651042991AA260017AA0E /* step-strikers-app.app */,
+				649A4B2329A972BF00377575 /* StepStrikersTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -117,13 +152,33 @@
 		646DD2B829A6B68C001FB2BB /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				646DD2B929A6B6DB001FB2BB /* Game.swift */,
 				646DD2BB29A6B6F2001FB2BB /* RPGCharacter.swift */,
+				646DD2B929A6B6DB001FB2BB /* Game.swift */,
 				646DD2BD29A6B6FC001FB2BB /* Weapon.swift */,
 				646DD2BF29A6B70A001FB2BB /* Armor.swift */,
 				646DD2C129A6B721001FB2BB /* Item.swift */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		649A4B2429A972BF00377575 /* StepStrikersTests */ = {
+			isa = PBXGroup;
+			children = (
+				649A4B2529A972BF00377575 /* StepStrikersTests.swift */,
+				649A4B2C29A9731D00377575 /* RPGCharacterTests.swift */,
+				649A4B3929A9E93100377575 /* GameUnitTests.swift */,
+				649A4B3329A9B39A00377575 /* WeaponUnitTests.swift */,
+				649A4B3529A9C34300377575 /* ArmorUnitTests.swift */,
+				649A4B3729A9D53B00377575 /* ItemUnitTests.swift */,
+			);
+			path = StepStrikersTests;
+			sourceTree = "<group>";
+		};
+		649A4B2E29A98D9100377575 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		64A2876329A4262900922509 /* custom fonts */ = {
@@ -162,6 +217,28 @@
 			productReference = 643651042991AA260017AA0E /* step-strikers-app.app */;
 			productType = "com.apple.product-type.application";
 		};
+		649A4B2229A972BF00377575 /* StepStrikersTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 649A4B2929A972BF00377575 /* Build configuration list for PBXNativeTarget "StepStrikersTests" */;
+			buildPhases = (
+				649A4B1F29A972BF00377575 /* Sources */,
+				649A4B2029A972BF00377575 /* Frameworks */,
+				649A4B2129A972BF00377575 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				649A4B3229A98DA800377575 /* PBXTargetDependency */,
+				649A4B2829A972BF00377575 /* PBXTargetDependency */,
+			);
+			name = StepStrikersTests;
+			packageProductDependencies = (
+				649A4B2F29A98D9100377575 /* FirebaseFirestore */,
+			);
+			productName = StepStrikersTests;
+			productReference = 649A4B2329A972BF00377575 /* StepStrikersTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -174,6 +251,10 @@
 				TargetAttributes = {
 					643651032991AA260017AA0E = {
 						CreatedOnToolsVersion = 14.2;
+					};
+					649A4B2229A972BF00377575 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = 643651032991AA260017AA0E;
 					};
 				};
 			};
@@ -194,6 +275,7 @@
 			projectRoot = "";
 			targets = (
 				643651032991AA260017AA0E /* step-strikers-app */,
+				649A4B2229A972BF00377575 /* StepStrikersTests */,
 			);
 		};
 /* End PBXProject section */
@@ -210,6 +292,13 @@
 				643651112991AA280017AA0E /* Assets.xcassets in Resources */,
 				64A2876029A4211D00922509 /* Adventurer.ttf in Resources */,
 				6436510F2991AA270017AA0E /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		649A4B2129A972BF00377575 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,7 +326,32 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		649A4B1F29A972BF00377575 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				649A4B3429A9B39A00377575 /* WeaponUnitTests.swift in Sources */,
+				649A4B2629A972BF00377575 /* StepStrikersTests.swift in Sources */,
+				649A4B3829A9D53B00377575 /* ItemUnitTests.swift in Sources */,
+				649A4B2D29A9731D00377575 /* RPGCharacterTests.swift in Sources */,
+				649A4B3629A9C34300377575 /* ArmorUnitTests.swift in Sources */,
+				649A4B3A29A9E93100377575 /* GameUnitTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		649A4B2829A972BF00377575 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 643651032991AA260017AA0E /* step-strikers-app */;
+			targetProxy = 649A4B2729A972BF00377575 /* PBXContainerItemProxy */;
+		};
+		649A4B3229A98DA800377575 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 649A4B3129A98DA800377575 /* FirebaseFirestore */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		6436510D2991AA270017AA0E /* Main.storyboard */ = {
@@ -429,6 +543,46 @@
 			};
 			name = Release;
 		};
+		649A4B2A29A972BF00377575 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GZKR6345ZK;
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = "${PODS_ROOT}/Firebase/CoreOnly/Sources";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = UTCS.StepStrikersTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_ENFORCE_EXCLUSIVE_ACCESS = off;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/step-strikers-app.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/step-strikers-app";
+			};
+			name = Debug;
+		};
+		649A4B2B29A972BF00377575 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GZKR6345ZK;
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = "${PODS_ROOT}/Firebase/CoreOnly/Sources";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = UTCS.StepStrikersTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_ENFORCE_EXCLUSIVE_ACCESS = off;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/step-strikers-app.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/step-strikers-app";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -450,6 +604,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		649A4B2929A972BF00377575 /* Build configuration list for PBXNativeTarget "StepStrikersTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				649A4B2A29A972BF00377575 /* Debug */,
+				649A4B2B29A972BF00377575 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -464,6 +627,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		649A4B2F29A98D9100377575 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EB66578C2992ECAE00CAEAEC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		649A4B3129A98DA800377575 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EB66578C2992ECAE00CAEAEC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
 		EB66578D2992ECAE00CAEAEC /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = EB66578C2992ECAE00CAEAEC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
