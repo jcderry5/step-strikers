@@ -48,9 +48,8 @@ class Caster: RPGCharacter {
             if let document = document, document.exists {
                 // get info about target's current weapon
                 let weaponName = document.get("current_weapon") as! String
-                let weaponMap = document.get("weapon_inventory") as! [String:[String:Int]]
-                let condition = weaponMap[weaponName]!["condition"]
-                let useCount = weaponMap[weaponName]!["use_count"]
+                let weaponMap = document.get("weapon_inventory") as! [String:Int]
+                let useCount = weaponMap[weaponName]
                 
                 // update target info on firebase
                 Firestore.firestore().collection("players").document(target).updateData([

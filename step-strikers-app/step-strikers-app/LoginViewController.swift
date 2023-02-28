@@ -62,36 +62,28 @@ class LoginViewController: UIViewController {
                 let currStamina = document.get("stamina") as! Int
                 print("currStamina: \(currStamina)")
                 
-                let weaponInventory = document.get("weapon_inventory") as! [String:[String:Int]]
+                let weaponInventory = document.get("weapon_inventory") as! [String:Int]
                 for weapon in weaponInventory {
-                    let condition = weaponInventory[weapon.key]!["condition"]
-                    print("\(weapon.key) condition: \(condition!)")
-                    let useCount = weaponInventory[weapon.key]!["use_count"]
-                    print("\(weapon.key) useCount: \(useCount!)")
+                    let condition = weapon.value
+                    print("\(weapon.key) condition: \(condition)")
 
                     // TODO: @jalyn create weapon objects and add each weapon to the local inventory one by one
                 }
                 let currWeaponName = document.get("current_weapon") as! String
                 print("currWeaponName: \(currWeaponName)")
-                let currWeaponCondition = weaponInventory[currWeaponName]!["condition"]
-                print("currWeaponCondition: \(currWeaponCondition!)")
-                let currWeaponUseCount = weaponInventory[currWeaponName]!["use_count"]
+                let currWeaponUseCount = weaponInventory[currWeaponName]
                 print("currWeaponUseCount: \(currWeaponUseCount!)")
                 
-                let armorInventory = document.get("armor_inventory") as! [String:[String:Int]]
+                let armorInventory = document.get("armor_inventory") as! [String:Int]
                 for armor in armorInventory {
-                    let condition = armorInventory[armor.key]!["condition"]
-                    print("\(armor.key) condition: \(condition!)")
-                    let useCount = armorInventory[armor.key]!["use_count"]
-                    print("\(armor.key) useCount: \(useCount!)")
+                    let condition = armor.value
+                    print("\(armor.key) condition: \(condition)")
 
-                    // TODO: @jalyn create armor objects and add each armor to the local inventory one by one
+                    // TODO: @jalyn create armor objects and add each weapon to the local inventory one by one
                 }
                 let currArmorName = document.get("current_armor") as! String
                 print("currArmorName: \(currArmorName)")
-                let currArmorCondition = armorInventory[currArmorName]!["condition"]
-                print("currArmorCondition: \(currArmorCondition!)")
-                let currArmorUseCount = armorInventory[currArmorName]!["use_count"]
+                let currArmorUseCount = armorInventory[currArmorName]
                 print("currArmorUseCount: \(currArmorUseCount!)")
                 
                 let itemInventory = document.get("item_inventory") as! [String]
