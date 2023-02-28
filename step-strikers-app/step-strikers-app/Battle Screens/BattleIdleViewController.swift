@@ -1,38 +1,31 @@
 //
-//  BattleRollViewController.swift
+//  BattleIdleViewController.swift
 //  step-strikers-app
 //
-//  Created by Alekhya Kuchimanchi on 2/24/23.
+//  Created by Alekhya Kuchimanchi on 2/27/23.
 //
 
 import UIKit
+var messages:[String] = [String]()
+class BattleIdleViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-class BattleRollViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
-    var actions: [Action] = [Action]()
-    let cellId = "actionCell"
+    var selectTargetInfoItem :(String, String, String, String, Items)?
     let statsCellID = "statsCell"
     let statsHeaderID = "statsHeader"
-    var stats: [StatsRow] = [StatsRow]()
     var header: [StatsHeaderRow] = [StatsHeaderRow]()
-    var actionDisplay:UITableView = UITableView()
-    var statsDisplay:UITableView = UITableView()
-    var selectTargetInfo :(String, String, String, String, Action)?
-
+    var stats: [StatsRow] = [StatsRow]()
+    var scrollView: UIScrollView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // puts full screen image as background of view controller
-        // sets up the background images of the view controller
-        // THESE NEED TO HAPPEN IN ORDER!!!!
+        renderTeam(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
+        renderEnemies(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
+        // Do any additional setup after loading the view.
+        // background images and view set up
         assignBackground()
         createBattleActionMenu()
         createBattleStatsDisplay()
         createSettingsButton(x: 10, y: 50, width: 40, height: 40)
-        
-        // create characters
-        // will need to change "name" based on what the enemy players are
-        // TODO: update to take what the enemies character type are
-        drawEnemies(enemy1: "Fighter", enemy2: "Bard", enemy3: "Rogue", enemy4: "Wizard")
         
         // stats menu
         createStatsArray()
@@ -51,15 +44,53 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         // get rid of grey separator line in between rows
         statsDisplay.separatorColor = UIColor.clear
         self.view.addSubview(statsDisplay)
+        
+        // scroll view
+        // Set the scrollView's frame to be the size of the screen
+        createMessageArray()
+        scrollView = UIScrollView(frame: CGRect(x: view.safeAreaInsets.left+40, y: 640, width: 320, height: 150))
+        scrollView.backgroundColor = UIColor.clear
+        // Set the contentSize to 100 times the height of the phone's screen so that we can add 100 images in the next step
+        scrollView.contentSize = CGSize(width: scrollView.contentSize.width, height: UIScreen.main.bounds.height*50)
+        view.addSubview(scrollView!)
+        var labels = [UILabel]()
+        for i in 0...(messages.count-1) {
+            labels.append(UILabel())
+            labels[i].text = messages[i]
+            labels[i].textColor = UIColor.black
+            labels[i].font = UIFont(name: "munro", size: 20)
+            labels[i].frame = CGRect(x: 0, y: 25*CGFloat(i), width: view.frame.width, height: 25)
+            labels[i].contentMode = .scaleAspectFill
+            scrollView.addSubview(labels[i])
+        }
+    }
+    
+    func createMessageArray() {
+        messages.append("this is 1")
+        messages.append("this is 2")
+        messages.append("this is 3")
+        messages.append("this is 4")
+        messages.append("this is 5")
+        messages.append("this is 6")
+        messages.append("this is 7")
+        messages.append("this is 8")
+        messages.append("this is 9")
+        messages.append("this is 10")
+        messages.append("this is 11")
+        messages.append("this is 12")
+        messages.append("this is 13")
+        messages.append("this is 14")
+        messages.append("this is 15")
+        messages.append("this is 16")
+        messages.append("this is 17")
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return stats.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // top stats display
-        if tableView == statsDisplay {
+        if tableView == statsDisplay { // top stats display
             if indexPath.row == 0 {
                 // if its the first row then it just should be the header
                 // of team member names
@@ -83,16 +114,10 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         return UITableViewCell()
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath:IndexPath) -> CGFloat {
-        if tableView == statsDisplay {
-            return 30
-        } else {
-            if indexPath.row == 0 {
-                return 80
-            }
-        }
-        
-        return UITableView.automaticDimension
+    @objc func tableView(_ tableView: UITableView, didSelectRowAt indexPath:IndexPath) {}
+    
+    @objc func tableView(_ tableView: UITableView, heightForRowAt indexPath:IndexPath) -> CGFloat {
+        return 30
     }
     
     func createStatsArray() {

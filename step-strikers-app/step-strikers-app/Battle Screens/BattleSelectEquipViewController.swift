@@ -140,10 +140,6 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
         }
     }
     
-    func reloadView() {
-        
-    }
-    
     @objc func tableView(_ tableView: UITableView, heightForRowAt indexPath:IndexPath) -> CGFloat {
         if tableView == statsDisplay {
             return 30
