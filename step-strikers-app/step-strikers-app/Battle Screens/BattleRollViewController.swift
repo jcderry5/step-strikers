@@ -33,7 +33,9 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         // create characters
         // will need to change "name" based on what the enemy players are
         // TODO: update to take what the enemies character type are
-        drawEnemies(enemy1: "Fighter", enemy2: "Bard", enemy3: "Rogue", enemy4: "Wizard")
+//        drawEnemies(enemy1: "Fighter", enemy2: "Bard", enemy3: "Rogue", enemy4: "Wizard")
+        
+        displayRollingScreen()
         
         // stats menu
         createStatsArray()
@@ -103,6 +105,40 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         stats.append(StatsRow(imageName: UIImage(named: "health"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
         stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
         stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points:[1,2,3,4] , totalPoints: [1,2,3,4]))
+    }
+    
+    func displayRollingScreen() {
+        let diceButton = UIButton()
+        diceButton.frame = CGRect(x:125, y:625, width:150, height:150)
+        diceButton.setBackgroundImage(UIImage(named: "d20"), for:.normal)
+        view.addSubview(diceButton)
+        diceButton.addTarget(self, action:#selector(rollPressed), for:.touchUpInside)
+        
+        let label = UILabel(frame: CGRect(x:100, y:790, width:250, height:25))
+        label.center.x = view.center.x
+        label.text = "Number to Beat: __"
+        label.textAlignment = .center
+        label.font = UIFont(name:"munro", size:22)
+        view.addSubview(label)
+    }
+    
+    @objc func rollPressed(sender: UIButton!) {
+        sender.isHidden = true
+        let rollLabel = UILabel(frame: CGRect(x:165, y:625, width:250, height:125))
+        rollLabel.textAlignment = .center
+        rollLabel.center.x = view.center.x
+        rollLabel.numberOfLines = 2
+        rollLabel.text = "You rolled a\n__!"
+        rollLabel.font = UIFont(name:"munro", size:40)
+        view.addSubview(rollLabel)
+        
+        let dice1 = UIImageView(frame: CGRect(x: 35, y:700, width: 50, height:50))
+        dice1.image = UIImage(named:"d20")
+        view.addSubview(dice1)
+        
+        let dice2 = UIImageView(frame: CGRect(x: 315, y:700, width: 50, height:50))
+        dice2.image = UIImage(named:"d20")
+        view.addSubview(dice2)
     }
 
 }
