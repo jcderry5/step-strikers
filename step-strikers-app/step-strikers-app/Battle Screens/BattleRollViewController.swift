@@ -32,7 +32,7 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         // create characters
         // will need to change "name" based on what the enemy players are
         // TODO: update to take what the enemies character type are
-//        drawEnemies(enemy1: "Fighter", enemy2: "Bard", enemy3: "Rogue", enemy4: "Wizard")
+        drawEnemies(enemy1: "Fighter", enemy2: "Bard", enemy3: "Rogue", enemy4: "Wizard")
         
         displayRollingScreen()
         
