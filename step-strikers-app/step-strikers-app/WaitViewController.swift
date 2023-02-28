@@ -23,6 +23,7 @@ class WaitViewController: UIViewController {
     
     @IBAction func segueWhenTurn(sender: AnyObject) {
         // TODO: @kelly don't hardcode game
+        var first = true
         let docRef = Firestore.firestore().collection("orders").document("zIuUhRjKte6oUcvdrP4D")
         docRef.getDocument { (document, error) in
             if let document = document, document.exists {
@@ -32,17 +33,20 @@ class WaitViewController: UIViewController {
                         return
                     }
                     
-                    print("change triggered!")
-                   
-                    let data = document.data()
-                    let order = data?["order"] as! [String]
-                    
-                    print("order[0] is \(order[0]) and I am \(self.player!)")
-                    if order[0] == self.player {
-                        print("Woohoo it's your turn!")
-                        self.performSegue(withIdentifier: "WaitToBattleSegue", sender:sender)
+                    if !first {
+                        print("change triggered!")
+                       
+                        let data = document.data()
+                        let order = data?["order"] as! [String]
+                        
+                        print("order[0] is \(order[0]) and I am \(self.player!)")
+                        if order[0] == self.player {
+                            print("Woohoo it's your turn!")
+                            self.performSegue(withIdentifier: "WaitToBattleSegue", sender:sender)
+                        }
+                    } else {
+                        first = false
                     }
-                    
                 }
             }
         }
