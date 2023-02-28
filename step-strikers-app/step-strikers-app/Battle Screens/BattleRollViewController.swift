@@ -123,6 +123,12 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
     
     @objc func rollPressed(sender: UIButton!) {
         sender.isHidden = true
+        
+        let continueButton = UIButton()
+        continueButton.frame = CGRect(x: self.view.safeAreaInsets.left+10, y:600, width:375, height:240)
+        continueButton.addTarget(self, action:#selector(continuePressed), for:.touchUpInside)
+        view.addSubview(continueButton)
+        
         let rollLabel = UILabel(frame: CGRect(x:165, y:625, width:250, height:125))
         rollLabel.textAlignment = .center
         rollLabel.center.x = view.center.x
@@ -138,6 +144,15 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         let dice2 = UIImageView(frame: CGRect(x: 315, y:700, width: 50, height:50))
         dice2.image = UIImage(named:"d20")
         view.addSubview(dice2)
+    }
+    
+    @objc func continuePressed(sender: UIButton!) {
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
+        
+        self.modalPresentationStyle = .fullScreen
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated:false)
     }
 
 }
