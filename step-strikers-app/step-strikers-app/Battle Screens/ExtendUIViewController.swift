@@ -388,7 +388,7 @@ extension UIViewController {
         let touch: UITouch = event.allTouches!.first!
         if (touch.tapCount == 2) {
             let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "BattleRollViewController") as! BattleRollViewController
+            let vc = storyboard.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
             vc.selectTargetInfoItem = (teamList[0].userName, teamList[1].userName, teamList[2].userName, teamList[3].userName, rowItemSelected!)
             print(vc.selectTargetInfoItem!.0)
             self.modalPresentationStyle = .fullScreen
