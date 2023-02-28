@@ -25,6 +25,9 @@
 		649A4B3629A9C34300377575 /* ArmorUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649A4B3529A9C34300377575 /* ArmorUnitTests.swift */; };
 		649A4B3829A9D53B00377575 /* ItemUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649A4B3729A9D53B00377575 /* ItemUnitTests.swift */; };
 		649A4B3A29A9E93100377575 /* GameUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649A4B3929A9E93100377575 /* GameUnitTests.swift */; };
+		649A4B3C29AACB4100377575 /* Caster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649A4B3B29AACB4100377575 /* Caster.swift */; };
+		649A4B3E29AACBEA00377575 /* CharacterClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649A4B3D29AACBEA00377575 /* CharacterClasses.swift */; };
+		649A4B4029AAD36B00377575 /* CharacterClassUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649A4B3F29AAD36B00377575 /* CharacterClassUnitTests.swift */; };
 		64A2876029A4211D00922509 /* Adventurer.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64A2875D29A4211D00922509 /* Adventurer.ttf */; };
 		64A2876129A4211D00922509 /* munro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64A2875E29A4211D00922509 /* munro.ttf */; };
 		64A2876229A4211D00922509 /* iso8.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64A2875F29A4211D00922509 /* iso8.ttf */; };
@@ -70,6 +73,9 @@
 		649A4B3529A9C34300377575 /* ArmorUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArmorUnitTests.swift; sourceTree = "<group>"; };
 		649A4B3729A9D53B00377575 /* ItemUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemUnitTests.swift; sourceTree = "<group>"; };
 		649A4B3929A9E93100377575 /* GameUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameUnitTests.swift; sourceTree = "<group>"; };
+		649A4B3B29AACB4100377575 /* Caster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Caster.swift; sourceTree = "<group>"; };
+		649A4B3D29AACBEA00377575 /* CharacterClasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterClasses.swift; sourceTree = "<group>"; };
+		649A4B3F29AAD36B00377575 /* CharacterClassUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterClassUnitTests.swift; sourceTree = "<group>"; };
 		64A2875D29A4211D00922509 /* Adventurer.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Adventurer.ttf; sourceTree = "<group>"; };
 		64A2875E29A4211D00922509 /* munro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = munro.ttf; sourceTree = "<group>"; };
 		64A2875F29A4211D00922509 /* iso8.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = iso8.ttf; sourceTree = "<group>"; };
@@ -151,6 +157,8 @@
 				646DD2BD29A6B6FC001FB2BB /* Weapon.swift */,
 				646DD2BF29A6B70A001FB2BB /* Armor.swift */,
 				646DD2C129A6B721001FB2BB /* Item.swift */,
+				649A4B3B29AACB4100377575 /* Caster.swift */,
+				649A4B3D29AACBEA00377575 /* CharacterClasses.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -164,6 +172,7 @@
 				649A4B3329A9B39A00377575 /* WeaponUnitTests.swift */,
 				649A4B3529A9C34300377575 /* ArmorUnitTests.swift */,
 				649A4B3729A9D53B00377575 /* ItemUnitTests.swift */,
+				649A4B3F29AAD36B00377575 /* CharacterClassUnitTests.swift */,
 			);
 			path = StepStrikersTests;
 			sourceTree = "<group>";
@@ -305,9 +314,11 @@
 			files = (
 				6436510C2991AA270017AA0E /* ViewController.swift in Sources */,
 				646DD2BC29A6B6F2001FB2BB /* RPGCharacter.swift in Sources */,
+				649A4B3C29AACB4100377575 /* Caster.swift in Sources */,
 				646DD2BA29A6B6DB001FB2BB /* Game.swift in Sources */,
 				646DD2C029A6B70A001FB2BB /* Armor.swift in Sources */,
 				646DD2C229A6B721001FB2BB /* Item.swift in Sources */,
+				649A4B3E29AACBEA00377575 /* CharacterClasses.swift in Sources */,
 				EBCBEEA2299C0BDF005009D7 /* DisplayInitiativeViewController.swift in Sources */,
 				643651082991AA260017AA0E /* AppDelegate.swift in Sources */,
 				646DD2BE29A6B6FC001FB2BB /* Weapon.swift in Sources */,
@@ -327,6 +338,7 @@
 				649A4B3829A9D53B00377575 /* ItemUnitTests.swift in Sources */,
 				649A4B2D29A9731D00377575 /* RPGCharacterTests.swift in Sources */,
 				649A4B3629A9C34300377575 /* ArmorUnitTests.swift in Sources */,
+				649A4B4029AAD36B00377575 /* CharacterClassUnitTests.swift in Sources */,
 				649A4B3A29A9E93100377575 /* GameUnitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
