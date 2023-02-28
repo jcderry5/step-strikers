@@ -120,6 +120,14 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
         if recentlyTapped == indexPath.row && selected == true {
             selected = false
             tableView.deselectRow(at: indexPath, animated: false)
+            let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "BattleSelectEquipViewController") as! BattleSelectEquipViewController
+            // add code to save the new weapon or armor equipped here
+            // make text in cell red here once selected (tbh I have no idea how to do that, custom cell tings)
+            print("reloading equip")
+            self.modalPresentationStyle = .fullScreen
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc,animated: false)
         } else {
             selected = true
             rowEquipSelected = equips[indexPath.row]
@@ -130,6 +138,10 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
             }
             
         }
+    }
+    
+    func reloadView() {
+        
     }
     
     @objc func tableView(_ tableView: UITableView, heightForRowAt indexPath:IndexPath) -> CGFloat {

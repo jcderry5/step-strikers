@@ -23,11 +23,9 @@
 		6474D72629A919E600AAA169 /* ItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6474D72529A919E600AAA169 /* ItemTableViewCell.swift */; };
 		6474D72829A91A1000AAA169 /* EquipTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6474D72729A91A1000AAA169 /* EquipTableViewCell.swift */; };
 		6474D72A29A91A6200AAA169 /* BattleTableStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6474D72929A91A6200AAA169 /* BattleTableStructs.swift */; };
-		6474D72C29A91A9900AAA169 /* BattleSelectTargetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6474D72B29A91A9900AAA169 /* BattleSelectTargetViewController.swift */; };
 		6474D72E29A91AF500AAA169 /* BattleSelectItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6474D72D29A91AF500AAA169 /* BattleSelectItemViewController.swift */; };
 		6474D73029A91B0E00AAA169 /* BattleSelectEquipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6474D72F29A91B0E00AAA169 /* BattleSelectEquipViewController.swift */; };
 		6474D73229A91B3900AAA169 /* BattleSelectActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6474D73129A91B3900AAA169 /* BattleSelectActionViewController.swift */; };
-		6474D73429A91B5300AAA169 /* BattleItemSelectTargetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6474D73329A91B5300AAA169 /* BattleItemSelectTargetViewController.swift */; };
 		6474D73629A91B7100AAA169 /* ActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6474D73529A91B7100AAA169 /* ActionTableViewCell.swift */; };
 		6474D73829A91D6D00AAA169 /* BattleRollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6474D73729A91D6D00AAA169 /* BattleRollViewController.swift */; };
 		6474D73A29A91F8E00AAA169 /* ExtendUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6474D73929A91F8E00AAA169 /* ExtendUIViewController.swift */; };
@@ -64,11 +62,9 @@
 		6474D72529A919E600AAA169 /* ItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTableViewCell.swift; sourceTree = "<group>"; };
 		6474D72729A91A1000AAA169 /* EquipTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquipTableViewCell.swift; sourceTree = "<group>"; };
 		6474D72929A91A6200AAA169 /* BattleTableStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BattleTableStructs.swift; path = TableViewCells/BattleTableStructs.swift; sourceTree = "<group>"; };
-		6474D72B29A91A9900AAA169 /* BattleSelectTargetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleSelectTargetViewController.swift; sourceTree = "<group>"; };
 		6474D72D29A91AF500AAA169 /* BattleSelectItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleSelectItemViewController.swift; sourceTree = "<group>"; };
 		6474D72F29A91B0E00AAA169 /* BattleSelectEquipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleSelectEquipViewController.swift; sourceTree = "<group>"; };
 		6474D73129A91B3900AAA169 /* BattleSelectActionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleSelectActionViewController.swift; sourceTree = "<group>"; };
-		6474D73329A91B5300AAA169 /* BattleItemSelectTargetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleItemSelectTargetViewController.swift; sourceTree = "<group>"; };
 		6474D73529A91B7100AAA169 /* ActionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionTableViewCell.swift; sourceTree = "<group>"; };
 		6474D73729A91D6D00AAA169 /* BattleRollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleRollViewController.swift; sourceTree = "<group>"; };
 		6474D73929A91F8E00AAA169 /* ExtendUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendUIViewController.swift; sourceTree = "<group>"; };
@@ -154,8 +150,6 @@
 				6474D73129A91B3900AAA169 /* BattleSelectActionViewController.swift */,
 				6474D72D29A91AF500AAA169 /* BattleSelectItemViewController.swift */,
 				6474D72F29A91B0E00AAA169 /* BattleSelectEquipViewController.swift */,
-				6474D72B29A91A9900AAA169 /* BattleSelectTargetViewController.swift */,
-				6474D73329A91B5300AAA169 /* BattleItemSelectTargetViewController.swift */,
 				6474D72929A91A6200AAA169 /* BattleTableStructs.swift */,
 				6474D71E29A9187F00AAA169 /* TableViewCells */,
 				6474D73729A91D6D00AAA169 /* BattleRollViewController.swift */,
@@ -274,7 +268,6 @@
 				6474D73A29A91F8E00AAA169 /* ExtendUIViewController.swift in Sources */,
 				6474D72E29A91AF500AAA169 /* BattleSelectItemViewController.swift in Sources */,
 				646DD2BA29A6B6DB001FB2BB /* Game.swift in Sources */,
-				6474D72C29A91A9900AAA169 /* BattleSelectTargetViewController.swift in Sources */,
 				646DD2C029A6B70A001FB2BB /* Armor.swift in Sources */,
 				646DD2C229A6B721001FB2BB /* Item.swift in Sources */,
 				6474D73229A91B3900AAA169 /* BattleSelectActionViewController.swift in Sources */,
@@ -291,7 +284,6 @@
 				EBC06380299A9D5900B00110 /* StatsViewController.swift in Sources */,
 				EB69AF3F299AA16A00FB5D25 /* DamageViewController.swift in Sources */,
 				6436510A2991AA260017AA0E /* SceneDelegate.swift in Sources */,
-				6474D73429A91B5300AAA169 /* BattleItemSelectTargetViewController.swift in Sources */,
 				6474D73629A91B7100AAA169 /* ActionTableViewCell.swift in Sources */,
 				EBCBEEA4299C0C43005009D7 /* InitiativeViewController.swift in Sources */,
 			);
