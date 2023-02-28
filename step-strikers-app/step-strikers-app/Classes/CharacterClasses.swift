@@ -68,11 +68,12 @@ class Rogue: RPGCharacter {
     // Insight allows user to know the stats of one player, stamina cost is 6
     func insight(target: RPGCharacter) {
         // TODO: @Alekhya add code to display the stats of target
+        // TODO: @kelly to add code to get the target's info for alekhya to display
         self.decreaseStamina(staminaCost: 6)
     }
     
     // Allsight will allow you to know all of your enemies' stats
     func allSight() {
-        // TODO: @Alekhya add code to display the stats of all anemies
+        // TODO: @Alekhya + @Kelly add code to display the stats of all anemies
     }
 }
