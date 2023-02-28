@@ -31,6 +31,8 @@
 		64A2876029A4211D00922509 /* Adventurer.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64A2875D29A4211D00922509 /* Adventurer.ttf */; };
 		64A2876129A4211D00922509 /* munro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64A2875E29A4211D00922509 /* munro.ttf */; };
 		64A2876229A4211D00922509 /* iso8.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64A2875F29A4211D00922509 /* iso8.ttf */; };
+		82490AF129A81F5800ECBFD7 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82490AF029A81F5800ECBFD7 /* RegistrationViewController.swift */; };
+		82490AF329A81F6500ECBFD7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82490AF229A81F6500ECBFD7 /* LoginViewController.swift */; };
 		EB66578E2992ECAE00CAEAEC /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = EB66578D2992ECAE00CAEAEC /* FirebaseAnalytics */; };
 		EB6657902992ECAE00CAEAEC /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EB66578F2992ECAE00CAEAEC /* FirebaseAnalyticsSwift */; };
 		EB6657922992ECAE00CAEAEC /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = EB6657912992ECAE00CAEAEC /* FirebaseFirestore */; };
@@ -79,6 +81,8 @@
 		64A2875D29A4211D00922509 /* Adventurer.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Adventurer.ttf; sourceTree = "<group>"; };
 		64A2875E29A4211D00922509 /* munro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = munro.ttf; sourceTree = "<group>"; };
 		64A2875F29A4211D00922509 /* iso8.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = iso8.ttf; sourceTree = "<group>"; };
+		82490AF029A81F5800ECBFD7 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
+		82490AF229A81F6500ECBFD7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		EB69AF3E299AA16A00FB5D25 /* DamageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DamageViewController.swift; sourceTree = "<group>"; };
 		EBC0637F299A9D5900B00110 /* StatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
 		EBC206842995777D00DEB48C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -138,6 +142,8 @@
 				EBCBEEA1299C0BDF005009D7 /* DisplayInitiativeViewController.swift */,
 				EBCBEEA3299C0C43005009D7 /* InitiativeViewController.swift */,
 				6436510D2991AA270017AA0E /* Main.storyboard */,
+				82490AF029A81F5800ECBFD7 /* RegistrationViewController.swift */,
+				82490AF229A81F6500ECBFD7 /* LoginViewController.swift */,
 				64A2876329A4262900922509 /* custom fonts */,
 				EBC0637F299A9D5900B00110 /* StatsViewController.swift */,
 				643651102991AA280017AA0E /* Assets.xcassets */,
@@ -312,11 +318,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82490AF329A81F6500ECBFD7 /* LoginViewController.swift in Sources */,
 				6436510C2991AA270017AA0E /* ViewController.swift in Sources */,
 				646DD2BC29A6B6F2001FB2BB /* RPGCharacter.swift in Sources */,
 				649A4B3C29AACB4100377575 /* Caster.swift in Sources */,
 				646DD2BA29A6B6DB001FB2BB /* Game.swift in Sources */,
 				646DD2C029A6B70A001FB2BB /* Armor.swift in Sources */,
+				82490AF129A81F5800ECBFD7 /* RegistrationViewController.swift in Sources */,
 				646DD2C229A6B721001FB2BB /* Item.swift in Sources */,
 				649A4B3E29AACBEA00377575 /* CharacterClasses.swift in Sources */,
 				EBCBEEA2299C0BDF005009D7 /* DisplayInitiativeViewController.swift in Sources */,
