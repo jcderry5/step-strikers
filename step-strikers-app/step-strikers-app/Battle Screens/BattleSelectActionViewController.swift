@@ -172,16 +172,24 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     
     // TODO: update array with actual actions player can do
     func createActionArray() {
-        actions.append(Action(name: "one", staminaCost: "5 STA"))
-        actions.append(Action(name: "two", staminaCost: "5 STA"))
-        actions.append(Action(name: "three", staminaCost: "5 STA"))
-        actions.append(Action(name: "four", staminaCost: "5 STA"))
-        actions.append(Action(name: "five", staminaCost: "5 STA"))
-        actions.append(Action(name: "six", staminaCost: "5 STA"))
-        actions.append(Action(name: "seven", staminaCost: "5 STA"))
-        actions.append(Action(name: "eight", staminaCost: "5 STA"))
-        actions.append(Action(name: "nine", staminaCost: "5 STA"))
-        actions.append(Action(name: "ten", staminaCost: "5 STA"))
+        let characterClass = getCharacterClass()
+        if characterClass == "Fighter" {
+            for index in 0 ... (FighterActions.count-1) {
+                actions.append(Action(name:FighterActions[index].actionName, staminaCost: FighterActions[index].cost))
+            }
+        } else if characterClass == "Wizard" {
+            for index in 0 ... (WizardActions.count-1) {
+                actions.append(Action(name:WizardActions[index].actionName, staminaCost: WizardActions[index].cost))
+            }
+        } else if characterClass == "Rogue" {
+            for index in 0 ... (RogueActions.count-1) {
+                actions.append(Action(name:WizardActions[index].actionName, staminaCost: RogueActions[index].cost))
+            }
+        } else if characterClass == "Bard" {
+            for index in 0 ... (BardActions.count-1) {
+                actions.append(Action(name:BardActions[index].actionName, staminaCost: BardActions[index].cost))
+            }
+        }
     }
     
     func createStatsArray() {

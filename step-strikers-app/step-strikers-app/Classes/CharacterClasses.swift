@@ -8,38 +8,38 @@
 // These are for front-end, do not need to write to firebase
 
 let FighterActions: [(actionName: String, cost: String)] = [
-    (actionName: "Fight", cost: "??STA"), // TODO: Ask Kelly if displaying the cost is feasible
-    (actionName: "Second Wind", cost: "08STA"),
-    (actionName: "Action Surge", cost: "10STA"),
-    (actionName: "Sharpen Weapon", cost: "07STA")
+    (actionName: "Fight", cost: "?? STA"), // TODO: Ask Kelly if displaying the cost is feasible
+    (actionName: "Second Wind", cost: "08 STA"),
+    (actionName: "Action Surge", cost: "10 STA"),
+    (actionName: "Sharpen Weapon", cost: "07S TA")
 ]
 
 let RogueActions: [(actionName: String, cost: String)] = [
-    (actionName: "Fight", cost: "??STA"),
-    (actionName: "Uncanny Dodge", cost: "05STA"),
-    (actionName: "Hone Skill", cost: "03STA"),
-    (actionName: "Insight", cost: "06STA"),
-    (actionName: "Allsight", cost: "12STA")
+    (actionName: "Fight", cost: "?? STA"),
+    (actionName: "Uncanny Dodge", cost: "05 STA"),
+    (actionName: "Hone Skill", cost: "03 STA"),
+    (actionName: "Insight", cost: "06 STA"),
+    (actionName: "Allsight", cost: "12 STA")
 ]
 
 let WizardActions: [(actionName: String, cost: String)] = [
-    (actionName: "Fight", cost: "??STA"),
-    (actionName: "Frost Bite", cost: "03MAG"),
-    (actionName: "Mage Hand", cost: "20MAG"),
-    (actionName: "Shield", cost: "04MAG"),
-    (actionName: "Sleep", cost: "12MAG"),
-    (actionName: "Animate the Dead", cost: "17MAG"),
-    (actionName: "Heal", cost: "05MAG")
+    (actionName: "Fight", cost: "?? STA"),
+    (actionName: "Frost Bite", cost: "03 MAG"),
+    (actionName: "Mage Hand", cost: "20 MAG"),
+    (actionName: "Shield", cost: "04 MAG"),
+    (actionName: "Sleep", cost: "12 MAG"),
+    (actionName: "Animate the Dead", cost: "17 MAG"),
+    (actionName: "Heal", cost: "05 MAG")
 ]
 
 let BardActions: [(actionName: String, cost: String)] = [
-    (actionName: "Fight", cost: "??STA"),
-    (actionName: "Mage Hand", cost: "20MAG"),
-    (actionName: "Bardic Inspiration", cost: "07MAG"),
-    (actionName: "Vicious Mockery", cost: "07MAG"),
-    (actionName: "Blindness", cost: "08MAG"),
-    (actionName: "Invisibility", cost: "10MAG"),
-    (actionName: "Motivational Speech", cost: "12MAG")
+    (actionName: "Fight", cost: "?? STA"),
+    (actionName: "Mage Hand", cost: "20 MAG"),
+    (actionName: "Bardic Inspiration", cost: "07 MAG"),
+    (actionName: "Vicious Mockery", cost: "07 MAG"),
+    (actionName: "Blindness", cost: "08 MAG"),
+    (actionName: "Invisibility", cost: "10 MAG"),
+    (actionName: "Motivational Speech", cost: "12 MAG")
 ]
 
 class Fighter: RPGCharacter {
