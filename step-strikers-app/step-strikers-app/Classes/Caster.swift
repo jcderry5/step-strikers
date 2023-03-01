@@ -38,8 +38,8 @@ class Caster: RPGCharacter {
         damageOpponent(target: target, damage: 1)
         decreaseSpellPoints(amtDecrease: 3)
         
-        // @Jalyn probably replace this with the logging strings you were talking about?
-        print("\(caster) cast frosbite on \(target)")
+        let message = "\(self.characterName) cast frosbite on \(target)"
+        messageLog.addToMessageLog(message: message)
     }
     
     func castMageHand(caster: String, target: String) {
@@ -47,27 +47,29 @@ class Caster: RPGCharacter {
         targetRef.getDocument { (document, error) in
             if let document = document, document.exists {
                 // get info about target's current weapon
-                let weapon = document.get("current_weapon") as! String
+                let weaponWithUseCount = document.get("current_weapon") as! String
                 
                 // update target info on firebase
                 Firestore.firestore().collection("players").document(target).updateData([
-                    "weapon_inventory": FieldValue.arrayRemove([weapon])])
+                    "weapon_inventory": FieldValue.arrayRemove([weaponWithUseCount])])
                 Firestore.firestore().collection("players").document(target).setData(["current_weapon": "fists"], merge: true)
                 
-                // update own info locally
-                    // TODO: @Jalyn
-                    // split weapon into weaponName and useCount
-                    // initialize new weapon
-                    // set self.currWeapon to that
-                    // put weapon in their inventory
+                // Splitting Weapon + UseCount from a single string
+                let weaponUseCountTuple = splitObjAndUseCount(objWithUseCount: weaponWithUseCount)
+                let weaponName = weaponUseCountTuple.objectName
+                let useCount: Int = weaponUseCountTuple.useCount
                 
+                // update own info locally -> initialize new weapon, add to self's inventory, equip it
+                let newWeapon = rebuildWeapon(weaponName: weaponName, useCount: useCount)
+                self.addToInventory(weaponObject: newWeapon)
+                self.wield(weaponObject: newWeapon)
+
             }
         }
         decreaseSpellPoints(amtDecrease: 20)
         
-        // @Jalyn probably replace this with the logging strings you were talking about?
-        print("\(caster) cast mage hand on \(target)")
-        
+        let message = "\(self.characterName) cast mage hand on \(target)"
+        messageLog.addToMessageLog(message: message)
     }
     
     func castShield(caster: String, target: String) {
@@ -81,8 +83,8 @@ class Caster: RPGCharacter {
         
         decreaseSpellPoints(amtDecrease: 4)
         
-        // @Jalyn probably replace this with the logging strings you were talking about?
-        print("\(caster) cast shield on \(target)")
+        let message = "\(self.characterName) cast shield on \(target)"
+        messageLog.addToMessageLog(message: message)
     }
     
     func castBardicInspiration(caster: String, target: String) {
@@ -90,8 +92,8 @@ class Caster: RPGCharacter {
         
         decreaseSpellPoints(amtDecrease: 7)
         
-        // @Jalyn probably replace this with the logging strings you were talking about?
-        print("\(caster) cast bardic inspiration on \(target)")
+        let message = "\(self.characterName) cast bardic inspiration on \(target)"
+        messageLog.addToMessageLog(message: message)
     }
     
     func castViciousMockery(caster: String, target: String) {
@@ -99,8 +101,8 @@ class Caster: RPGCharacter {
         
         decreaseSpellPoints(amtDecrease: 7)
         
-        // @Jalyn probably replace this with the logging strings you were talking about?
-        print("\(caster) cast vicious mockery on \(target)")
+        let message = "\(self.characterName) cast vicious mockery on \(target)"
+        messageLog.addToMessageLog(message: message)
     }
     
     func castBlindness(caster: String, target: String, game: String) {
@@ -110,8 +112,8 @@ class Caster: RPGCharacter {
         
         decreaseSpellPoints(amtDecrease: 8)
         
-        // @Jalyn probably replace this with the logging strings you were talking about?
-        print("\(caster) cast blindness on \(target)")
+        let message = "\(self.characterName) cast blindness on \(target)"
+        messageLog.addToMessageLog(message: message)
     }
     
     func castInvisibility(caster: String, target: String, game: String) {
@@ -120,8 +122,8 @@ class Caster: RPGCharacter {
      
         decreaseSpellPoints(amtDecrease: 10)
         
-        // @Jalyn probably replace this with the logging strings you were talking about?
-        print("\(caster) cast invisibility on \(target)")
+        let message = "\(self.characterName) cast invisibility on \(target)"
+        messageLog.addToMessageLog(message: message)
     }
     
     func castMotivationalSpeech(caster: String, team: String) {
@@ -138,8 +140,8 @@ class Caster: RPGCharacter {
         
         decreaseSpellPoints(amtDecrease: 15)
         
-        // @Jalyn probably replace this with the logging strings you were talking about?
-        print("\(caster) cast motivational speech on their team")
+        let message = "\(self.characterName) cast motivational speech on their team"
+        messageLog.addToMessageLog(message: message)
     }
     
     func castAnimateDead(caster: String, target: String) {
@@ -147,8 +149,8 @@ class Caster: RPGCharacter {
         
         decreaseSpellPoints(amtDecrease: 17)
         
-        // @Jalyn probably replace this with the logging strings you were talking about?
-        print("\(caster) cast animate dead on \(target)")
+        let message = "\(self.characterName) cast animate dead on \(target)"
+        messageLog.addToMessageLog(message: message)
     }
     
     func heal(caster: String, target: String) {
@@ -167,8 +169,8 @@ class Caster: RPGCharacter {
         
         decreaseSpellPoints(amtDecrease: 5)
         
-        // @Jalyn probably replace this with the logging strings you were talking about?
-        print("\(caster) cast heal on \(target)")
+        let message = "\(caster) cast heal on \(target)"
+        messageLog.addToMessageLog(message: message)
     }
     
     func sleep(caster: String, target: String) {
@@ -176,8 +178,17 @@ class Caster: RPGCharacter {
         
         decreaseSpellPoints(amtDecrease: 12)
         
-        // @Jalyn probably replace this with the logging strings you were talking about?
-        print("\(caster) cast sleep on \(target)")
+        let message = "\(caster) cast sleep on \(target)"
+        messageLog.addToMessageLog(message: message)
     }
+}
 
+func splitObjAndUseCount(objWithUseCount: String) -> (useCount: Int, objectName: String) {
+    // Get useCount
+    let useCountAsString = objWithUseCount.prefix(2)
+    let useCountInt: Int = Int(useCountAsString)!
+    
+    // Get the object name
+    let object: String = String(objWithUseCount.dropFirst(2))
+    return (useCount: useCountInt, objectName: object)
 }

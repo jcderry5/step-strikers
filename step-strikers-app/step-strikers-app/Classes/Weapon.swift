@@ -38,6 +38,7 @@ protocol Weapon {
     func checkIfProficient(wielderClass: String) -> Bool
 }
 
+// MARK: - Initialization Helper Functions
 func getConditionFromUseCount(useCount: Int) -> Int {
     if(useCount >= 0 && useCount < 5) {
         return 4
@@ -52,6 +53,35 @@ func getConditionFromUseCount(useCount: Int) -> Int {
     }
 }
 
+func rebuildWeapon(weaponName: String, useCount: Int) -> Weapon {
+    switch weaponName {
+    case "Fists":
+        return fists(useCount: useCount)
+    case "Dagger":
+        return dagger(useCount: useCount)
+    case "Darts":
+        return dagger(useCount: useCount)
+    case "Cross Bow":
+        return crossBow(useCount: useCount)
+    case "Rapier":
+        return rapier(useCount: useCount)
+    case "Short Sword":
+        return shortSword(useCount: useCount)
+    case "Long Bow":
+        return longBow(useCount: useCount)
+    case "Hand Axe":
+        return handAxe(useCount: useCount)
+    case "Battle Axe":
+        return battleAxe(useCount: useCount)
+    case "Long Sword":
+        return longSword(useCount: useCount)
+    default:
+        return fists()
+    }
+}
+
+
+// MARK: - Weapon structs
 struct fists: Weapon {
     let name = "Fists"
     let damage = 2
@@ -251,6 +281,7 @@ struct longSword: Weapon {
     }
 }
 
+// MARK: - Condition functions
 func adjustWeaponCondition(ownerWeaponsInventory: inout [Weapon], currWeaponPointer: UnsafePointer<Weapon>) -> Weapon {
     
     var currWeapon = currWeaponPointer.pointee
@@ -296,3 +327,5 @@ func destroyWeapon(ownerWeaponsInventory: inout [Weapon], weaponToDestroy: Weapo
         return newFists
     }
 }
+
+
