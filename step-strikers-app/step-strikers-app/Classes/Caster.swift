@@ -60,7 +60,7 @@ class Caster: RPGCharacter {
                 let useCount: Int = weaponUseCountTuple.useCount
                 
                 // update own info locally -> initialize new weapon, add to self's inventory, equip it
-                var newWeapon = rebuildWeapon(weaponName: weaponName, useCount: useCount)
+                let newWeapon = rebuildWeapon(weaponName: weaponName, useCount: useCount)
                 self.addToInventory(weaponObject: newWeapon)
                 self.wield(weaponObject: newWeapon)
 

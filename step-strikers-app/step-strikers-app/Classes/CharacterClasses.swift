@@ -5,7 +5,42 @@
 //  Created by Jalyn Derry on 2/25/23.
 //
 
-import Foundation
+// These are for front-end, do not need to write to firebase
+
+let FighterActions: [(actionName: String, cost: String)] = [
+    (actionName: "Fight", cost: "??STA"), // TODO: Ask Kelly if displaying the cost is feasible
+    (actionName: "Second Wind", cost: "08STA"),
+    (actionName: "Action Surge", cost: "10STA"),
+    (actionName: "Sharpen Weapon", cost: "07STA")
+]
+
+let RogueActions: [(actionName: String, cost: String)] = [
+    (actionName: "Fight", cost: "??STA"),
+    (actionName: "Uncanny Dodge", cost: "05STA"),
+    (actionName: "Hone Skill", cost: "03STA"),
+    (actionName: "Insight", cost: "06STA"),
+    (actionName: "Allsight", cost: "12STA")
+]
+
+let WizardActions: [(actionName: String, cost: String)] = [
+    (actionName: "Fight", cost: "??STA"),
+    (actionName: "Frost Bite", cost: "03MAG"),
+    (actionName: "Mage Hand", cost: "20MAG"),
+    (actionName: "Shield", cost: "04MAG"),
+    (actionName: "Sleep", cost: "12MAG"),
+    (actionName: "Animate the Dead", cost: "17MAG"),
+    (actionName: "Heal", cost: "05MAG")
+]
+
+let BardActions: [(actionName: String, cost: String)] = [
+    (actionName: "Fight", cost: "??STA"),
+    (actionName: "Mage Hand", cost: "20MAG"),
+    (actionName: "Bardic Inspiration", cost: "07MAG"),
+    (actionName: "Vicious Mockery", cost: "07MAG"),
+    (actionName: "Blindness", cost: "08MAG"),
+    (actionName: "Invisibility", cost: "10MAG"),
+    (actionName: "Motivational Speech", cost: "12MAG")
+]
 
 class Fighter: RPGCharacter {
     override init(characterName: String, userName: String, health: Int,
@@ -93,6 +128,7 @@ class Rogue: RPGCharacter {
     // Allsight will allow you to know all of your enemies' stats
     func allSight() {
         // TODO: @Alekhya + @Kelly add code to display the stats of all enemies
+        self.decreaseStamina(staminaCost: 12)
         
         let message = "\(self.characterName) now knows all the opposing team's stats through All Sight"
         messageLog.addToMessageLog(message: message)
