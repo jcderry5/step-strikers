@@ -97,7 +97,28 @@ class LoginViewController: UIViewController {
                 
                 
                 // TODO: @Nick transition to the right screen
-                
+                if username == "Player 1" {
+                    let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                    let vc = sb.instantiateViewController(withIdentifier: "BattleSelectActionViewController") as! BattleSelectActionViewController
+                    
+                    print("set game and player!")
+                    game = "zIuUhRjKte6oUcvdrP4D"
+                    player = "Player 1"
+                    
+                    self.modalPresentationStyle = .fullScreen
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: false)
+                } else {
+                    let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                    let vc = sb.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
+                    
+                    game = "zIuUhRjKte6oUcvdrP4D"
+                    player = "Player 2"
+                    
+                    self.modalPresentationStyle = .fullScreen
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: false)
+                }
             } else {
                 // TODO: @Nick display this on screen instead of printing
                 print("Incorrect username or password")

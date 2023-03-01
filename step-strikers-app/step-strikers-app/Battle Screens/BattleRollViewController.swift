@@ -146,6 +146,10 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         let dice2 = UIImageView(frame: CGRect(x: 315, y:700, width: 50, height:50))
         dice2.image = UIImage(named:"d20")
         view.addSubview(dice2)
+        
+        // TODO: take action if the roll hits
+        
+        endTurn(game: game, player: player)
     }
     
     @objc func continuePressed(sender: UIButton!) {
