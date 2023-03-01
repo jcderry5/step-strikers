@@ -55,12 +55,20 @@ class LoginViewController: UIViewController {
                 // TODO: @jalyn you can remove all these prints after you're done. I used them to test and left them in case they're helpful!
                 let characterName = document.get("character_name") as! String
                 print("characterName: \(characterName)")
+                let characterClass = document.get("class") as! String
+                print("characterClass: \(characterClass)")
                 let username = self.usernameTextField!.text!
                 print("username: \(username)")
                 let currHealth = document.get("health") as! Int
                 print("currHealth: \(currHealth)")
                 let currStamina = document.get("stamina") as! Int
                 print("currStamina: \(currStamina)")
+                let attackModifier = document.get("attack_modifier") as! Int
+                print("attackModifier: \(attackModifier)")
+                let defenseModifier = document.get("defense_modifier") as! Int
+                print("defenseModifier: \(defenseModifier)")
+                let magicResistanceModifier = document.get("magic_resistance_modifier") as! Int
+                print("magicResistanceModifier: \(magicResistanceModifier)")
                 
                 let weaponInventory = document.get("weapon_inventory") as! [String]
                 for weapon in weaponInventory {
