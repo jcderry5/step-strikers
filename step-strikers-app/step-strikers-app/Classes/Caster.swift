@@ -54,14 +54,13 @@ class Caster: RPGCharacter {
                     "weapon_inventory": FieldValue.arrayRemove([weaponWithUseCount])])
                 Firestore.firestore().collection("players").document(target).setData(["current_weapon": "fists"], merge: true)
                 
-                
                 // Splitting Weapon + UseCount from a single string
                 let weaponUseCountTuple = splitObjAndUseCount(objWithUseCount: weaponWithUseCount)
                 let weaponName = weaponUseCountTuple.objectName
                 let useCount: Int = weaponUseCountTuple.useCount
                 
                 // update own info locally -> initialize new weapon, add to self's inventory, equip it
-                let newWeapon = rebuildWeapon(weaponName: weaponName, useCount: useCount)
+                var newWeapon = rebuildWeapon(weaponName: weaponName, useCount: useCount)
                 self.addToInventory(weaponObject: newWeapon)
                 self.wield(weaponObject: newWeapon)
 
