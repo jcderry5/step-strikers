@@ -74,7 +74,7 @@ class RegistrationViewController: UIViewController {
 }
 
 // TODO: Figure out the best way to organize UIViewController
-extension UIViewController: UITextFieldDelegate {
+extension UIViewController {
     func assignBackground() {
         let background = UIImage(named: "Background")
         var imageView: UIImageView!
@@ -100,7 +100,6 @@ extension UIViewController: UITextFieldDelegate {
         field.borderStyle = UITextField.BorderStyle.roundedRect
         field.isSecureTextEntry = secured
         field.autocapitalizationType = .none
-        field.delegate = self
         view.addSubview(field)
         return field
     }
