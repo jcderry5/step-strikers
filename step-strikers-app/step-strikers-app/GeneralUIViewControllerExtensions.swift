@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseFirestore
 
-extension UIViewController: UITextFieldDelegate {
+extension UIViewController {
     
     func assignBackground() {
         let background = UIImage(named: "Background")
@@ -35,7 +35,6 @@ extension UIViewController: UITextFieldDelegate {
         field.borderStyle = UITextField.BorderStyle.roundedRect
         field.isSecureTextEntry = secured
         field.autocapitalizationType = .none
-        field.delegate = self
         view.addSubview(field)
         return field
     }
