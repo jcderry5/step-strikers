@@ -14,6 +14,67 @@ let smallAmountOfModification: Int = 3
 let moderateAmountOfModification: Int = 5
 let largeAmountOfModification: Int = 7
 
+func rebuildItem(itemName: String, owner: RPGCharacter) -> Item {
+    switch itemName {
+        case "Potion of Healing":
+            return potionOfHealing(owner: owner)
+        case "Elixir of Magic":
+            return elixirOfMagic(owner: owner)
+        case "Energy Pill":
+            return energyPill(owner: owner)
+        case "Antidote":
+            return antidote(owner: owner)
+        case "Awakening":
+                return awakening(owner: owner)
+        case "Potion of Greater Healing":
+            return potionOfGreaterHealing(owner: owner)
+        case "Elixir of Greater Magic":
+            return elixirOfGreaterMagic(owner: owner)
+        case "Energy Powder":
+            return energyPowder(owner: owner)
+        case "Resurrection Stone":
+            return resurrectionStone(owner: owner)
+        case "Four Leaf Clover":
+                return fourLeafClover(owner: owner)
+        case "Leather Armor Pad":
+            return leatherArmorPad(owner: owner)
+        case "Feather of Vigor":
+            return featherOfVigor(owner: owner)
+        case "Scroll of Resistance":
+            return scrollOfResistance(owner: owner)
+        case "Potion of Superior Healing":
+            return potionOfSuperiorHealing(owner: owner)
+        case "Elixir of Superior Magic":
+            return elixirOfSuperiorMagic(owner: owner)
+        case "Energy Root":
+            return energyRoot(owner: owner)
+        case "Revival Crystal":
+            return revivalCrystal(owner: owner)
+        case "Five-Leaf Clover":
+            return fiveLeafClover(owner: owner)
+        case "Metal Armor Pad":
+            return metalArmorPad(owner: owner)
+        case "Vial of Vigor":
+            return vialOfVigor(owner: owner)
+        case "Scroll of Greater Resistance":
+            return scrollOfGreaterResistance(owner: owner)
+        case "Potion of Vitality":
+            return potionOfVitality(owner: owner)
+        case "Elixir of Sorcery":
+            return elixirOfSorcery(owner: owner)
+        case "Energy Sap":
+            return energySap(owner: owner)
+        case "Miracle of Life":
+            return miracleOfLife(owner: owner)
+        case "Seven-leaf Clover":
+            return sevenLeafClover(owner: owner)
+        case "Heart of Iron":
+            return heartOfIron(owner: owner)
+        default:
+            return potionOfHealing(owner: owner)
+    }
+}
+
 protocol Item {
     var name: String { get }
     var owner: RPGCharacter { get set }
