@@ -6,15 +6,19 @@
 //
 
 import UIKit
+import FirebaseFirestore
+
 var messages:[String] = [String]()
 class BattleIdleViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
+    
     var selectTargetInfoItem :(String, String, String, String, Items)?
     let statsCellID = "statsCell"
     let statsHeaderID = "statsHeader"
     var header: [StatsHeaderRow] = [StatsHeaderRow]()
     var stats: [StatsRow] = [StatsRow]()
     var scrollView: UIScrollView!
+    var game: String!
+    var player: String! // TODO: make this an RPGCharacter
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,10 +67,12 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
             labels[i].contentMode = .scaleAspectFill
             scrollView.addSubview(labels[i])
         }
+        
+        segueWhenTurn()
     }
     
     func createMessageArray() {
-        // TODO: append messages passed in through message functionality here 
+        // TODO: append messages passed in through message functionality here
         messages.append("this is 1")
         messages.append("this is 2")
         messages.append("this is 3")
@@ -89,7 +95,7 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return stats.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == statsDisplay { // top stats display
             if indexPath.row == 0 {
@@ -129,5 +135,36 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
         stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
         stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points:[1,2,3,4] , totalPoints: [1,2,3,4]))
     }
-
+    
+    func segueWhenTurn() {
+        var first = true
+        let docRef = Firestore.firestore().collection("orders").document(game)
+        docRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                docRef.addSnapshotListener {
+                    documentSnapshot, error in guard let document = documentSnapshot else {
+                        print("Error fetching document: \(error!)")
+                        return
+                    }
+                    
+                    if !first {
+                        print("change triggered!")
+                        
+                        let data = document.data()
+                        let order = data?["order"] as! [String]
+                        
+                        print("order[0] is \(order[0]) and I am \(self.player)")
+                        if order[0] == self.player {
+                            print("Woohoo it's your turn!")
+                            
+                            // bring up battle VC
+                            
+                        }
+                    } else {
+                        first = false
+                    }
+                }
+            }
+        }
+    }
 }

@@ -382,6 +382,11 @@ extension UIViewController {
             let vc = storyboard.instantiateViewController(withIdentifier: "BattleRollViewController") as! BattleRollViewController
             vc.selectTargetInfo = (enemiesList[0].userName, enemiesList[1].userName, enemiesList[2].userName, enemiesList[3].userName, rowSelected!)
             print(vc.selectTargetInfo!.0)
+            
+            // TODO: don't hardcode game and player
+            vc.player = "Player 1"
+            vc.game = "zIuUhRjKte6oUcvdrP4D"
+
             self.modalPresentationStyle = .fullScreen
             vc.modalPresentationStyle = .fullScreen
             self.present(vc,animated: false)
