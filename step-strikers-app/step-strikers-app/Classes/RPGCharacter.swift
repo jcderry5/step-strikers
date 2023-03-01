@@ -46,7 +46,6 @@ class RPGCharacter {
         self.armorInInventory = armorInInventory
         self.currArmor = currArmor
         self.itemsInInventory = itemsInInventory
-        print(self is Fighter)
     }
     
     // Returns a string of the class of the current character

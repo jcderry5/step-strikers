@@ -188,6 +188,7 @@ func splitObjAndUseCount(objWithUseCount: String) -> (useCount: Int, objectName:
     let useCountAsString = objWithUseCount.prefix(2)
     let useCountInt: Int = Int(useCountAsString)!
     
+    // Get the object name
     let object: String = String(objWithUseCount.dropFirst(2))
     return (useCount: useCountInt, objectName: object)
 }
