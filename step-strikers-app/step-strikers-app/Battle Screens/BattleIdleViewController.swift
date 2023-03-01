@@ -138,7 +138,7 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
     
     func segueWhenTurn() {
         var first = true
-        let docRef = Firestore.firestore().collection("orders").document(game)
+        let docRef = Firestore.firestore().collection("orders").document(self.game)
         docRef.getDocument { (document, error) in
             if let document = document, document.exists {
                 docRef.addSnapshotListener {
