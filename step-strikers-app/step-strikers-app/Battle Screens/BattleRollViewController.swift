@@ -18,8 +18,6 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
     var actionDisplay:UITableView = UITableView()
     var statsDisplay:UITableView = UITableView()
     var selectTargetInfo :(String, String, String, String, Action)?
-    var player: String!  // TODO: make this and RPGCharacter
-    var game: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -151,15 +149,12 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         
         // TODO: take action if the roll hits
         
-        endTurn(game: self.game, player: self.player)
+        endTurn(game: game, player: player)
     }
     
     @objc func continuePressed(sender: UIButton!) {
         let sb = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
-        
-        vc.player = self.player
-        vc.game = self.game
         
         self.modalPresentationStyle = .fullScreen
         vc.modalPresentationStyle = .fullScreen

@@ -101,6 +101,10 @@ class LoginViewController: UIViewController {
                     let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                     let vc = sb.instantiateViewController(withIdentifier: "BattleSelectActionViewController") as! BattleSelectActionViewController
                     
+                    print("set game and player!")
+                    game = "zIuUhRjKte6oUcvdrP4D"
+                    player = "Player 1"
+                    
                     self.modalPresentationStyle = .fullScreen
                     vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: false)
@@ -108,7 +112,8 @@ class LoginViewController: UIViewController {
                     let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                     let vc = sb.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
                     
-                    vc.game = "zIuUhRjKte6oUcvdrP4D"
+                    game = "zIuUhRjKte6oUcvdrP4D"
+                    player = "Player 2"
                     
                     self.modalPresentationStyle = .fullScreen
                     vc.modalPresentationStyle = .fullScreen

@@ -17,8 +17,6 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
     var header: [StatsHeaderRow] = [StatsHeaderRow]()
     var stats: [StatsRow] = [StatsRow]()
     var scrollView: UIScrollView!
-    var game: String!
-    var player: String! // TODO: make this an RPGCharacter
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,6 +66,7 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
             scrollView.addSubview(labels[i])
         }
         
+        print("I am \(player)")
         segueWhenTurn()
     }
     
@@ -138,7 +137,7 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
     
     func segueWhenTurn() {
         var first = true
-        let docRef = Firestore.firestore().collection("orders").document(self.game)
+        let docRef = Firestore.firestore().collection("orders").document(game)
         docRef.getDocument { (document, error) in
             if let document = document, document.exists {
                 docRef.addSnapshotListener {
@@ -153,11 +152,17 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
                         let data = document.data()
                         let order = data?["order"] as! [String]
                         
-                        print("order[0] is \(order[0]) and I am \(self.player)")
-                        if order[0] == self.player {
+                        print("order[0] is \(order[0]) and I am \(player)")
+                        if order[0] == player {
                             print("Woohoo it's your turn!")
                             
                             // bring up battle VC
+                            let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                            let vc = sb.instantiateViewController(withIdentifier: "BattleSelectActionViewController") as! BattleSelectActionViewController
+                            
+                            self.modalPresentationStyle = .fullScreen
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: false)
                             
                         }
                     } else {

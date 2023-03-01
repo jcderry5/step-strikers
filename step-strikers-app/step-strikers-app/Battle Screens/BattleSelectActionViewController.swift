@@ -10,6 +10,8 @@ import UIKit
 var boxArrow: [AnyObject] = [AnyObject]()
 var rowSelected:Action?
 var actions: [Action] = [Action]()
+var player: String = ""
+var game: String = ""
 
 class BattleSelectActionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
