@@ -62,29 +62,23 @@ class LoginViewController: UIViewController {
                 let currStamina = document.get("stamina") as! Int
                 print("currStamina: \(currStamina)")
                 
-                let weaponInventory = document.get("weapon_inventory") as! [String:Int]
+                let weaponInventory = document.get("weapon_inventory") as! [String]
                 for weapon in weaponInventory {
-                    let condition = weapon.value
-                    print("\(weapon.key) condition: \(condition)")
+                    print("disgusting weapon string: \(weapon)")
 
                     // TODO: @jalyn create weapon objects and add each weapon to the local inventory one by one
                 }
-                let currWeaponName = document.get("current_weapon") as! String
-                print("currWeaponName: \(currWeaponName)")
-                let currWeaponUseCount = weaponInventory[currWeaponName]
-                print("currWeaponUseCount: \(currWeaponUseCount!)")
+                let currWeapon = document.get("current_weapon") as! String
+                print("disgusting currWeapon string: \(currWeapon)")
                 
-                let armorInventory = document.get("armor_inventory") as! [String:Int]
+                let armorInventory = document.get("armor_inventory") as! [String]
                 for armor in armorInventory {
-                    let condition = armor.value
-                    print("\(armor.key) condition: \(condition)")
+                    print("disgusting armor string: \(armor)")
 
                     // TODO: @jalyn create armor objects and add each weapon to the local inventory one by one
                 }
-                let currArmorName = document.get("current_armor") as! String
-                print("currArmorName: \(currArmorName)")
-                let currArmorUseCount = armorInventory[currArmorName]
-                print("currArmorUseCount: \(currArmorUseCount!)")
+                let currArmor = document.get("current_armor") as! String
+                print("disgusting currArmor string: \(currArmor)")
                 
                 let itemInventory = document.get("item_inventory") as! [String]
                 print("itemInventory: \(itemInventory)")
