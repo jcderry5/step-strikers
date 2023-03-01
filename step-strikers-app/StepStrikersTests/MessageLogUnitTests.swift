@@ -14,8 +14,8 @@ final class MessageLogUnitTests: XCTestCase {
     var fistsForPlayerTwo: Weapon!
     var noArmorForPlayerOne: Armor!
     var noArmorForPlayerTwo: Armor!
-    var playerOne: RPGCharacter!
-    var playerTwo: RPGCharacter!
+    var playerOne: Fighter!
+    var playerTwo: Wizard!
     
     override func setUpWithError() throws {
         fistsForPlayerOne = fists()
@@ -55,6 +55,7 @@ final class MessageLogUnitTests: XCTestCase {
         }
     }
     
+    // MARK: - Testing functionality of MessageList class
     func testAddMessage() {
         // Act
         playerOne.wield(weaponObject: fistsForPlayerOne)
@@ -64,5 +65,30 @@ final class MessageLogUnitTests: XCTestCase {
         XCTAssertTrue(messageLog.getMessageLog() == expectedMessageLog)
     }
 
+    func messageLogLengthCheck() {
+        // Act
+        for _ in 1...12 {
+            playerOne.wield(weaponObject: fistsForPlayerOne)
+        }
+        
+        // Assert
+        XCTAssertTrue(messageLog.getCount() == messageLog.MAX_MESSAGES)
+    }
+    
+    func checkMessageLogOrder() {
+        // Act
+        playerOne.wield(weaponObject: fistsForPlayerOne)
+        playerTwo.wear(armorObject: noArmorForPlayerTwo)
+        
+        // Assert
+        let expectedMessageLog = ["\(playerOne.characterName) is now wielding \(fistsForPlayerOne.name)", "\(playerTwo.characterName) is now wearing \(noArmorForPlayerTwo.name)"]
+        XCTAssertTrue(expectedMessageLog == messageLog.getMessageLog())
+    }
+    
+    // MARK: - Spells message logging Tests
+    
+    // TODO: @Kelly add tests for spell casting
+    
+    // MARK: - Abilities message logging tests
     
 }

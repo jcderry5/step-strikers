@@ -7,8 +7,10 @@
 
 import Foundation
 
+// Order of MessageLog: [index 0: oldest message, ... , index 9: most recent message]
 class MessageLog {
-    var messageLogs: [String] = []
+    // This is file private so that classes are only messing with global version of their messageLog
+    fileprivate var messageLogs: [String] = []
     let MAX_MESSAGES: Int = 10
     
     func addToMessageLog(message: String) {
@@ -18,11 +20,12 @@ class MessageLog {
         messageLogs.append(message)
     }
     
-    func printMessageLog() {
-        print(messageLogs)
+    func getCount() -> Int{
+        return messageLogs.count
     }
     
     func getMessageLog() -> [String] {
+        // So this way they aren't manipulating messageLogs on their side in any way
         let dummyMessageLog = messageLogs
         return dummyMessageLog
     }
