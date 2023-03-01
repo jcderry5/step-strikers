@@ -55,7 +55,8 @@ class Caster: RPGCharacter {
                 Firestore.firestore().collection("players").document(target).setData(["current_weapon": "fists"], merge: true)
                 
                 // update own info locally
-                    // TODO: @Jalyn when you figure out Weapon/RPGCharacter init
+                    // TODO: @Jalyn
+                    // split weapon into weaponName and useCount
                     // initialize new weapon
                     // set self.currWeapon to that
                     // put weapon in their inventory
