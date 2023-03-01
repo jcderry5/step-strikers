@@ -62,22 +62,18 @@ class DamageViewController: UIViewController {
             }
         }
     }
-
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "StatsSegue" {
-//            nextVC = segue.destination as? StatsViewController
-//            nextVC.delegate = self
-//        } else if segue.identifier == "WaitToBattleSegue" {
-//            nextVC = segue.destination as? WaitViewController
-//            nextVC.delegate = self
-//            nextVC.player = self.player
-//        }
-//    }
+    
+    @IBAction func skipButtonPressed(_ sender: Any) {
+        // don't take any action
+        
+        // end turn
+        endTurn(game: "zIuUhRjKte6oUcvdrP4D", player: self.player)
+        self.performSegue(withIdentifier: "AttackToWaitSegue", sender:sender)
+    }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "StatsSegue", let nextVC = segue.destination as? StatsViewController {
-            nextVC.delegate = self
-        } else if segue.identifier == "AttackToWaitSegue", let nextVC = segue.destination as? WaitViewController {
+        if segue.identifier == "AttackToWaitSegue", let nextVC = segue.destination as? WaitViewController {
             nextVC.delegate = self
             nextVC.player = self.player
             nextVC.opponent = self.opponent
