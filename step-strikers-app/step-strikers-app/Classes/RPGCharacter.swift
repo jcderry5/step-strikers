@@ -7,6 +7,8 @@
 
 import FirebaseFirestore
 
+var messageLog: MessageLog = MessageLog();
+
 class RPGCharacter {
     var characterName: String
     var userName: String
@@ -44,7 +46,6 @@ class RPGCharacter {
         self.armorInInventory = armorInInventory
         self.currArmor = currArmor
         self.itemsInInventory = itemsInInventory
-        print(self is Fighter)
     }
     
     // Returns a string of the class of the current character
@@ -65,7 +66,7 @@ class RPGCharacter {
     
     // Universal Functions
     
-    // Weapon Functions
+    // MARK: - Weapon Functions
     func wield(weaponObject: Weapon){
         if (self.checkInventory(weaponName: weaponObject.name)) {
             if(weaponObject.checkIfProficient(wielderClass: self.getCharacterClass())){
@@ -77,7 +78,8 @@ class RPGCharacter {
         } else {
             print ("You cannot wield this weapon. It is not in your inventory")
         }
-        
+        let message = "\(self.characterName) is now wielding \(weaponObject.name)"
+        messageLog.addToMessageLog(message: message)
     }
     
     // Add weapon to inventory
@@ -106,7 +108,7 @@ class RPGCharacter {
         }
     }
     
-    // Armor Functions
+    // MARK: - Armor Functions
     func wear(armorObject: Armor){
         if(armorObject.checkIfSuited(potentialWearer: self)){
             self.currArmor = armorObject
@@ -114,6 +116,8 @@ class RPGCharacter {
             print("\(armorObject.name) is not properly suited for \(self.characterName). Their armor class will be at a disadvantage")
             self.currArmor = armorObject
         }
+        let message = "\(self.characterName) is now wearing \(armorObject.name)"
+        messageLog.addToMessageLog(message: message)
     }
     
     // Add Armor to inventory
@@ -142,7 +146,7 @@ class RPGCharacter {
         }
     }
     
-    // Item Functions
+    // MARK: - Item Functions
     // Add item to inventory
     func addToInventory(itemObject: Item) {
         if(itemObject.owner.characterName == self.characterName) {
@@ -172,6 +176,7 @@ class RPGCharacter {
         }
     }
 
+    // MARK: - Stat Modification Functions
     func decreaseStamina(staminaCost: Int){
         self.currStamina -= staminaCost
         
@@ -203,15 +208,20 @@ class RPGCharacter {
         }
     }
     
-    // Damage Functions
+    // MARK: - Damage Functions
     func fight(target: inout RPGCharacter){
         let damageDealt = calculateDamage(wielderAttackModifier: self.attackModifier, wielderCurrWeapon: self.currWeapon, wielderClass: self.getCharacterClass(), target: &target)
         
+        self.damageOpponent(target: target.characterName, damage: damageDealt)
+        
         doConsequencesOfFight(target: &target, damageDealt: damageDealt)
+        let message = "\(self.characterName) just attacked \(target.characterName) for \(damageDealt) points of damage"
+        messageLog.addToMessageLog(message: message)
     }
     
     func doConsequencesOfFight(target: inout RPGCharacter, damageDealt: Int) {
         // reset attack and defense modifier after interaction
+        // TODO: @Kelly, change this code to be sent to fb as a write at end of turn
         self.attackModifier = 0
         target.defenseModifier = 0
         
