@@ -6,9 +6,12 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class RegistrationViewController: UIViewController {
     let munro = "munro"
+    var usernameTextField:UITextField?
+    var passwordTextField:UITextField?
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,11 +22,15 @@ class RegistrationViewController: UIViewController {
         
         // Username
         createLabel(x:9, y:321, w:137, h:25, font:munro, size:22, text:"Username:")
-        createTextField(x:154, y:321, w:202, h:34, secured:false)
+        var username = createTextField(x:154, y:321, w:202, h:34, secured:false)
+        self.usernameTextField = username!
+        username?.text = ""
         
         // Password
         createLabel(x:9, y:372, w:137, h:25, font:munro, size:22, text:"Password:")
-        createTextField(x:154, y:372, w:202, h:34, secured:true)
+        var password = createTextField(x:154, y:372, w:202, h:34, secured:true)
+        self.passwordTextField = password!
+        password?.text = ""
         
         // Confirm password
         createLabel(x:9, y:423, w:137, h:25, font:munro, size:22, text:"Confirm Pwd:")
@@ -40,6 +47,20 @@ class RegistrationViewController: UIViewController {
     
     @objc func registerPressed() {
         // TODO: Register credentials to Firebase and navigate to Stats screen
+        if self.usernameTextField!.text == "" {
+            // TODO: @Nick don't print this, display it on the screen
+            print("username not entered")
+        } else if passwordTextField!.text == "" {
+            // TODO: @Nick don't print this, display it on the screen
+            print("password not entered")
+        } else {
+            Firestore.firestore().collection("players").document(self.usernameTextField!.text!).setData(["password": self.passwordTextField!.text!]) { err in if let err = err {
+                    print("Error writing document: \(err)")
+                }
+            }
+        }
+        
+        // TODO: @Nick for beta go to character creation screen
     }
     
     @objc func signInPressed() {
@@ -73,7 +94,7 @@ extension UIViewController: UITextFieldDelegate {
         view.addSubview(label)
     }
     
-    func createTextField(x:Int, y:Int, w:Int, h:Int, secured:Bool) {
+    func createTextField(x:Int, y:Int, w:Int, h:Int, secured:Bool) -> UITextField! {
         let field = UITextField(frame: CGRect(x:x, y:y, width:w, height:h))
         field.backgroundColor = UIColor.white
         field.borderStyle = UITextField.BorderStyle.roundedRect
@@ -81,6 +102,7 @@ extension UIViewController: UITextFieldDelegate {
         field.autocapitalizationType = .none
         field.delegate = self
         view.addSubview(field)
+        return field
     }
     
     func createButton(x:Int, y:Int, w:Int, h:Int, text:String, fontSize:CGFloat) -> UIButton {
