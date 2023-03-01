@@ -47,17 +47,24 @@ class Caster: RPGCharacter {
         targetRef.getDocument { (document, error) in
             if let document = document, document.exists {
                 // get info about target's current weapon
-                let weapon = document.get("current_weapon") as! String
+                let weaponWithUseCount = document.get("current_weapon") as! String
                 
                 // update target info on firebase
                 Firestore.firestore().collection("players").document(target).updateData([
-                    "weapon_inventory": FieldValue.arrayRemove([weapon])])
+                    "weapon_inventory": FieldValue.arrayRemove([weaponWithUseCount])])
                 Firestore.firestore().collection("players").document(target).setData(["current_weapon": "fists"], merge: true)
                 
+                
+                // Splitting Weapon + UseCount from a single string
+                let weaponUseCountTuple = splitObjAndUseCount(objWithUseCount: weaponWithUseCount)
+                let weaponName = weaponUseCountTuple.objectName
+                let useCount: Int = weaponUseCountTuple.useCount
+                
                 // update own info locally -> initialize new weapon, add to self's inventory, equip it
-                var newWeapon = rebuildWeapon(weaponName: weaponName, useCount: useCount!)
+                let newWeapon = rebuildWeapon(weaponName: weaponName, useCount: useCount)
                 self.addToInventory(weaponObject: newWeapon)
                 self.wield(weaponObject: newWeapon)
+
             }
         }
         decreaseSpellPoints(amtDecrease: 20)
@@ -175,4 +182,13 @@ class Caster: RPGCharacter {
         let message = "\(caster) cast sleep on \(target)"
         messageLog.addToMessageLog(message: message)
     }
+}
+
+func splitObjAndUseCount(objWithUseCount: String) -> (useCount: Int, objectName: String) {
+    // Get useCount
+    let useCountAsString = objWithUseCount.prefix(2)
+    let useCountInt: Int = Int(useCountAsString)!
+    
+    let object: String = String(objWithUseCount.dropFirst(2))
+    return (useCount: useCountInt, objectName: object)
 }
