@@ -139,6 +139,9 @@ class LoginViewController: UIViewController {
                 LocalCharacter.defenseModifier = defenseModifier
                 LocalCharacter.magicResistanceModifier = magicResistanceModifier
                 
+                // For Testing:
+                // LocalCharacter.printLocalCharacterDetailsToConsole()
+                
                 // TODO: @Nick transition to the right screen
                 
             } else {
