@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dnh-k6-cpH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hf4-VU-eV9">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
@@ -174,6 +174,21 @@
             </objects>
             <point key="canvasLocation" x="204" y="18"/>
         </scene>
+        <!--Battle Select Action View Controller-->
+        <scene sceneID="eh7-7S-EeG">
+            <objects>
+                <viewController storyboardIdentifier="BattleSelectActionViewController" id="hf4-VU-eV9" customClass="BattleSelectActionViewController" customModule="step_strikers_app" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hpI-ky-gHK">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="0n2-LH-DNv"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="b8z-Qf-ZnL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2579" y="853"/>
+        </scene>
         <!--Display Initiative View Controller-->
         <scene sceneID="m46-wJ-gNE">
             <objects>
@@ -291,6 +306,66 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dYe-C0-3aj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1753.4351145038167" y="3.5211267605633805"/>
+        </scene>
+        <!--Battle Idle View Controller-->
+        <scene sceneID="8hf-Fv-Par">
+            <objects>
+                <viewController storyboardIdentifier="BattleIdleViewController" id="j4I-Fn-FGu" customClass="BattleIdleViewController" customModule="step_strikers_app" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dVe-nP-CRZ">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="jTD-tP-Ag5"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="928-py-DBf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1753" y="853"/>
+        </scene>
+        <!--Battle Select Item View Controller-->
+        <scene sceneID="VTG-OQ-QoU">
+            <objects>
+                <viewController storyboardIdentifier="BattleSelectItemViewController" id="Scb-Ih-ESf" customClass="BattleSelectItemViewController" customModule="step_strikers_app" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0pk-18-Y5I">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="Cix-wd-2Mu"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5GI-kl-6PU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2579" y="2223"/>
+        </scene>
+        <!--Battle Roll View Controller-->
+        <scene sceneID="oEP-p5-C14">
+            <objects>
+                <viewController storyboardIdentifier="BattleRollViewController" id="uOY-UI-2X6" customClass="BattleRollViewController" customModule="step_strikers_app" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="IT4-Ah-JhK">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="mMY-Ii-RpI"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CWU-fL-6O0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1753" y="1548"/>
+        </scene>
+        <!--Battle Select Equip View Controller-->
+        <scene sceneID="4A3-LG-bhE">
+            <objects>
+                <viewController storyboardIdentifier="BattleSelectEquipViewController" id="gmu-wU-xCJ" customClass="BattleSelectEquipViewController" customModule="step_strikers_app" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="voJ-yd-H7D">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="seW-1H-7M0"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dfh-as-GFu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2579" y="1532"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
