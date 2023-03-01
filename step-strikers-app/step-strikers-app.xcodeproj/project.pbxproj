@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6428618429AF0AAB00C4B0CF /* MessageLogUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6428618329AF0AAB00C4B0CF /* MessageLogUnitTests.swift */; };
 		643651082991AA260017AA0E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643651072991AA260017AA0E /* AppDelegate.swift */; };
 		6436510A2991AA260017AA0E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643651092991AA260017AA0E /* SceneDelegate.swift */; };
 		6436510C2991AA270017AA0E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6436510B2991AA260017AA0E /* ViewController.swift */; };
@@ -14,7 +15,6 @@
 		643651112991AA280017AA0E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 643651102991AA280017AA0E /* Assets.xcassets */; };
 		643651142991AA280017AA0E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 643651122991AA280017AA0E /* LaunchScreen.storyboard */; };
 		6449AEE129AE70F800C46B46 /* MessageLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6449AEE029AE70F800C46B46 /* MessageLog.swift */; };
-		6449AEE329AE734C00C46B46 /* MessageLogUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6449AEE229AE734C00C46B46 /* MessageLogUnitTests.swift */; };
 		646DD2BA29A6B6DB001FB2BB /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646DD2B929A6B6DB001FB2BB /* Game.swift */; };
 		646DD2BC29A6B6F2001FB2BB /* RPGCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646DD2BB29A6B6F2001FB2BB /* RPGCharacter.swift */; };
 		646DD2BE29A6B6FC001FB2BB /* Weapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646DD2BD29A6B6FC001FB2BB /* Weapon.swift */; };
@@ -57,6 +57,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6428618329AF0AAB00C4B0CF /* MessageLogUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageLogUnitTests.swift; sourceTree = "<group>"; };
 		643651042991AA260017AA0E /* step-strikers-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "step-strikers-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		643651072991AA260017AA0E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		643651092991AA260017AA0E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -66,7 +67,6 @@
 		643651132991AA280017AA0E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		643651152991AA280017AA0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6449AEE029AE70F800C46B46 /* MessageLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageLog.swift; sourceTree = "<group>"; };
-		6449AEE229AE734C00C46B46 /* MessageLogUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageLogUnitTests.swift; sourceTree = "<group>"; };
 		646DD2B929A6B6DB001FB2BB /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		646DD2BB29A6B6F2001FB2BB /* RPGCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPGCharacter.swift; sourceTree = "<group>"; };
 		646DD2BD29A6B6FC001FB2BB /* Weapon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weapon.swift; sourceTree = "<group>"; };
@@ -184,7 +184,7 @@
 				649A4B3529A9C34300377575 /* ArmorUnitTests.swift */,
 				649A4B3729A9D53B00377575 /* ItemUnitTests.swift */,
 				649A4B3F29AAD36B00377575 /* CharacterClassUnitTests.swift */,
-				6449AEE229AE734C00C46B46 /* MessageLogUnitTests.swift */,
+				6428618329AF0AAB00C4B0CF /* MessageLogUnitTests.swift */,
 			);
 			path = StepStrikersTests;
 			sourceTree = "<group>";
@@ -354,7 +354,7 @@
 				649A4B2D29A9731D00377575 /* RPGCharacterTests.swift in Sources */,
 				649A4B3629A9C34300377575 /* ArmorUnitTests.swift in Sources */,
 				649A4B4029AAD36B00377575 /* CharacterClassUnitTests.swift in Sources */,
-				6449AEE329AE734C00C46B46 /* MessageLogUnitTests.swift in Sources */,
+				6428618429AF0AAB00C4B0CF /* MessageLogUnitTests.swift in Sources */,
 				649A4B3A29A9E93100377575 /* GameUnitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
