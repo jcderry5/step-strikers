@@ -19,15 +19,15 @@ class LoginViewController: UIViewController {
         assignBackground()
         
         // Create title image
-        createImage(x:6, y:75, w:380, h:200, name:"Title")
+        _ = createImage(x:6, y:75, w:380, h:200, name:"Title")
         
         // Username
-        createLabel(x:9, y:333, w:137, h:25, font:munro, size:22, text:"Username:")
+        _ = createLabel(x:9, y:333, w:137, h:25, font:munro, size:22, text:"Username:", align:.right)
         let username = createTextField(x:154, y:333, w:202, h:34, secured:false)
         self.usernameTextField = username!
         username?.text = ""
         // Password
-        createLabel(x:9, y:403, w:137, h:25, font:munro, size:22, text:"Password:")
+        _ = createLabel(x:9, y:403, w:137, h:25, font:munro, size:22, text:"Password:", align:.right)
         let password = createTextField(x:154, y:403, w:202, h:34, secured:true)
         self.passwordTextField = password!
         password?.text = ""

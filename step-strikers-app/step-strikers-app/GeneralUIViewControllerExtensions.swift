@@ -21,12 +21,13 @@ extension UIViewController {
         view.sendSubviewToBack(imageView)
     }
     
-    func createLabel(x:Int, y:Int, w:Int, h:Int, font:String, size:CGFloat, text:String) {
+    func createLabel(x:Int, y:Int, w:Int, h:Int, font:String, size:CGFloat, text:String, align:NSTextAlignment) -> UILabel {
         let label = UILabel(frame: CGRect(x:x, y:y, width:w, height:h))
-        label.textAlignment = .right
+        label.textAlignment = align
         label.text = text
         label.font = UIFont(name:font, size:size)
         view.addSubview(label)
+        return label
     }
     
     func createTextField(x:Int, y:Int, w:Int, h:Int, secured:Bool) -> UITextField! {
@@ -51,11 +52,12 @@ extension UIViewController {
         return button
     }
     
-    func createImage(x:Int, y:Int, w:Int, h:Int, name:String) {
+    func createImage(x:Int, y:Int, w:Int, h:Int, name:String) -> UIImageView {
         var imageView: UIImageView!
         imageView = UIImageView(frame: CGRect(x:x, y:y, width:w, height:h))
         imageView.image = UIImage(named:name)
         view.addSubview(imageView)
+        return imageView
     }
     
 }
