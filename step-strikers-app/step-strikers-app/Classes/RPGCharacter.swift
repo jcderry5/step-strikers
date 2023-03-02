@@ -64,6 +64,27 @@ class RPGCharacter {
         }
     }
     
+    func printLocalCharacterDetailsToConsole(){
+        print("Character Name: \(LocalCharacter.characterName)")
+        print("Character Name: \(LocalCharacter.userName)")
+        
+        // Character Stats Variables
+        print("Curr Health: \(LocalCharacter.currHealth)")
+        print("Curr Stamina: \(LocalCharacter.currStamina)")
+        
+        // Inventory Variables
+        print("Weapon Inventory Count: \(LocalCharacter.weaponsInInventory.count)")
+        print("Curr Weapon: \(LocalCharacter.currWeapon.name)")
+        print("Armor Inventory Count: \(LocalCharacter.armorInInventory.count)")
+        print("CurrArmor: \(LocalCharacter.currArmor.name)")
+        print("Item Inventory Count: \(LocalCharacter.itemsInInventory.count)")
+        
+        // Rolling modifiers
+        print("Attack Modifier: \(LocalCharacter.attackModifier)")
+        print("Defense Modifer: \(LocalCharacter.defenseModifier)")
+        print("Magic Resistance Modifier: \(LocalCharacter.magicResistanceModifier)")
+    }
+    
     // Universal Functions
     
     // MARK: - Weapon Functions

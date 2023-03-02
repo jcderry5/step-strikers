@@ -17,6 +17,25 @@ protocol Armor {
     func checkIfSuited(potentialWearer: RPGCharacter) -> Bool
 }
 
+func rebuildArmor(armorName: String, useCount: Int) -> Armor{
+    switch armorName {
+    case "Leather":
+        return leather(useCount: useCount)
+    case "Padding":
+        return padding(useCount: useCount)
+    case "Studded Leather":
+        return studdedLeather(useCount: useCount)
+    case "Chain Mail":
+        return chainMail(useCount: useCount)
+    case "Shield":
+        return shield(useCount: useCount)
+    case "No Armor":
+        return noArmor(useCount: useCount)
+    default:
+        return noArmor()
+    }
+}
+
 struct leather: Armor {
     let name = "Leather"
     let armorClass = 11
