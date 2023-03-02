@@ -141,7 +141,7 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
             rowSelected = actions[indexPath.row]
             recentlyTapped = indexPath.row
             if tableView == actionDisplay {
-                
+                // TODO: @Jalyn rowSelected (global) holds the action object/struct of the row selected, rowSelected.name is the string itself
                 print("selected row")
                 enemiesList[0].imageView.removeFromSuperview()
                 enemiesList[1].imageView.removeFromSuperview()
@@ -172,7 +172,6 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         return UITableView.automaticDimension
     }
     
-    // TODO: update array with actual actions player can do
     func createActionArray() {
         let characterClass = LocalCharacter.getCharacterClass()
         print(characterClass)
