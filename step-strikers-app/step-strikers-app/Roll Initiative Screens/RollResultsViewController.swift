@@ -6,8 +6,10 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class RollResultsViewController: UIViewController {
+    var listener: ListenerRegistration!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,30 +34,64 @@ class RollResultsViewController: UIViewController {
     }
     
     func displayIntiative() {
-        let mutableString = NSMutableAttributedString(string: "Turn Order:\n 1. Host\n 2. Player 1\n 3. Enemy 2\n 4. Player 3\n 5. Player2\n 6. Enemy 1\n 7. Enemy 3\n 8. Enemy 4\n", attributes: [NSAttributedString.Key.font: UIFont(name: "munro", size: 35)!])
-        // 1. Host length 7
-        mutableString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.red, range: NSRange(location: 13, length: 7))
-        print(mutableString.length)
-        
-        let label = UILabel(frame: CGRect(x: 110, y: 375, width: 250, height: 500))
-        label.backgroundColor = UIColor.clear
-        label.attributedText = mutableString
-//        label.text = "Turn Order:\n 1. Host\n 2. Player 1\n 3. Enemy 2\n 4. Player 3\n 5. Player2\n 6. Enemy 1\n 7. Enemy 3\n 8. Enemy 4\n"
-//        label.textAlignment = NSTextAlignment.center
-//        label.textColor = UIColor.black
-//        label.font = UIFont(name: "munro", size: 35)
-        label.numberOfLines = 0
-        label.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
-        self.view.addSubview(label)
-        
+        let docRef = Firestore.firestore().collection("games").document(game)
+        docRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                self.listener = docRef.addSnapshotListener {
+                    documentSnapshot, error in guard let document = documentSnapshot else {
+                        print("Error fetching document: \(error!)")
+                        return
+                    }
+                    
+                    if document.get("combat_start") as! Bool {
+                        // display order
+                        let order = document.get("initial_order") as! [String]
+                        let attributes = [NSAttributedString.Key.font: UIFont(name: "munro", size: 35)!]
+                        let mutableString = NSMutableAttributedString(string: "Turn Order:\n ", attributes: attributes)
+                        for i in 0...order.count - 1 {
+                            let anotherString = NSMutableAttributedString(string: "\(i+1). \(order[i])\n ", attributes: attributes)
+                            mutableString.append(anotherString)
+                        }
+                        
+                        let label = UILabel(frame: CGRect(x: 110, y: 375, width: 250, height: 500))
+                        label.backgroundColor = UIColor.clear
+                        label.attributedText = mutableString
+                        label.numberOfLines = 0
+                        label.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
+                        self.view.addSubview(label)
+                    }
+                }
+            }
+        }
     }
+        
+        
+        
+
     
     @objc func rollDicePressed(_ sender:UIButton) {
         let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "BattleSelectActionViewController") as! BattleSelectActionViewController
-        self.modalPresentationStyle = .fullScreen
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc,animated: false)
+        let docRef = Firestore.firestore().collection("orders").document(game)
+        docRef.getDocument {(document, error) in
+            if let document = document, document.exists {
+                let order = document.get("order") as! [String]
+
+                if player == order[0] {
+                    let vc = storyboard.instantiateViewController(withIdentifier: "BattleSelectActionViewController") as! BattleSelectActionViewController
+                    self.modalPresentationStyle = .fullScreen
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc,animated: false)
+                } else if player != order[0] {
+                    let vc = storyboard.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
+                    self.modalPresentationStyle = .fullScreen
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc,animated: false)
+                } else {
+                    print("Whoops, something bad happened.")
+                }
+            }
+        }
+        
     }
 
 }
