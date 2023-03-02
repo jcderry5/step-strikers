@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		641220E629B0228400561860 /* DiceSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641220E329B0228400561860 /* DiceSprite.swift */; };
 		641220E729B0228400561860 /* RollInitiativeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641220E429B0228400561860 /* RollInitiativeViewController.swift */; };
 		641220E829B0228400561860 /* RollResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641220E529B0228400561860 /* RollResultsViewController.swift */; };
 		643651082991AA260017AA0E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643651072991AA260017AA0E /* AppDelegate.swift */; };
@@ -69,7 +68,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		641220E329B0228400561860 /* DiceSprite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiceSprite.swift; sourceTree = "<group>"; };
 		641220E429B0228400561860 /* RollInitiativeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RollInitiativeViewController.swift; sourceTree = "<group>"; };
 		641220E529B0228400561860 /* RollResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RollResultsViewController.swift; sourceTree = "<group>"; };
 		643651042991AA260017AA0E /* step-strikers-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "step-strikers-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -144,7 +142,6 @@
 		641220E229B0228400561860 /* Roll Initiative Screens */ = {
 			isa = PBXGroup;
 			children = (
-				641220E329B0228400561860 /* DiceSprite.swift */,
 				641220E429B0228400561860 /* RollInitiativeViewController.swift */,
 				641220E529B0228400561860 /* RollResultsViewController.swift */,
 			);
@@ -401,7 +398,6 @@
 				82490AF129A81F5800ECBFD7 /* RegistrationViewController.swift in Sources */,
 				64CD580529AFBD69002F4F5A /* BattleTableStructs.swift in Sources */,
 				641220E829B0228400561860 /* RollResultsViewController.swift in Sources */,
-				641220E629B0228400561860 /* DiceSprite.swift in Sources */,
 				646DD2C229A6B721001FB2BB /* Item.swift in Sources */,
 				64CD580429AFBD69002F4F5A /* EquipTableViewCell.swift in Sources */,
 				64CD580B29AFBD6A002F4F5A /* BattleSelectItemViewController.swift in Sources */,

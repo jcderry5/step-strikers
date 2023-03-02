@@ -131,14 +131,11 @@ func rollInitiative(player:String, game: String) -> Int{
      on click, call rollDie(quant: 1, sides: 20) it displays returned number
      send name and initiative order to the server
      */
-    
+
     let initiative = rollDie(quant: 1, sides: 20)
-    
+        
     // send initiative to firebase
-    let data: [String:Int] = [player:initiative]
-    Firestore.firestore().collection("games").document(game).updateData([
-        "initiative": FieldValue.arrayUnion([data])])
-    
+    Firestore.firestore().collection("games").document(game).updateData(["initiative.\(player)": initiative])
     return initiative
 }
 
@@ -155,7 +152,10 @@ func setOrder(initiative: [String:Int], game: String){
     }
     
     // write array to database and signal that game is ready to start
-    Firestore.firestore().collection("games").document(game).setData(["combat_start": true], merge: true)
+    Firestore.firestore().collection("games").document(game).setData([
+        "initial_order": order,
+        "combat_start": true
+    ], merge: true)
     Firestore.firestore().collection("orders").document(game).setData(["order": order], merge: true)
     print("Initial order written")
 }
