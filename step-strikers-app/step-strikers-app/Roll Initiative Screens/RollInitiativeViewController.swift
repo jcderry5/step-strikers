@@ -42,6 +42,8 @@ class RollInitiativeViewController: UIViewController {
     }
     
     func rollD20() {
+        startGame(player: player, game: game)
+        let initiative = rollInitiative(player: player, game: game)
         let d20  = SKSpriteNode(imageNamed: "d20")
 //        image.position = CGPoint(x:100, y: 200)
         let skView = SKView(frame: CGRect(x: 75, y: 300, width: 250, height: 250))
@@ -65,14 +67,14 @@ class RollInitiativeViewController: UIViewController {
             staticDice.backgroundColor = UIColor.clear
             staticDice.addTarget(self, action:#selector(self.rollDicePressed(_:)), for: .touchUpInside)
             self.view.addSubview(staticDice)
-            // TODO: insert actual number of roll to hit here
-            self.displayRoll(number: 5)
+            self.displayRoll(number: initiative)
         })
     }
     
     @objc func rollDicePressed(_ sender:UIButton) {
         let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "RollResultsViewController") as! RollResultsViewController
+        
         self.modalPresentationStyle = .fullScreen
         vc.modalPresentationStyle = .fullScreen
         self.present(vc,animated: false)

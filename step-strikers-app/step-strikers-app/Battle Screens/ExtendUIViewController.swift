@@ -122,7 +122,7 @@ extension UIViewController {
                             // or don't save info and do UI stuff here one enemy at a time
                             let player1 = characterSprites(name: character_class)
                             let player1Image = player1.drawCharacter(view: self.view, x: xValues[count], y: 400, width: 100, height: 100)
-                            
+                            // TODO: @Jalyn change append with the enemyData struct to include the variables you add
                             enemiesList.append(enemyData(userName: userName, name: name, character_class: character_class, health: health, isBlind: isBlind, isInvisible: isInvisible,imageView: player1Image!))
                             
                             count = count + 1
@@ -327,6 +327,8 @@ extension UIViewController {
     }
     
     @objc func enemy1Selected(_ sender:UIButton!) {
+        // TODO: @Jalyn save which enemy was selected here with a global variable
+        // if enemy 1 is selected use enemiesList[0].variableName
         boxArrow[0].removeFromSuperview()
         boxArrow[1].removeFromSuperview()
         boxArrow = drawSelectBoxButtonArrow(x: 10, y: 400, width: 100, height: 100)
@@ -378,6 +380,7 @@ extension UIViewController {
         // TODO: if you want to save things before transferring view controllers do it here From action -> roll to hit
         let touch: UITouch = event.allTouches!.first!
         if (touch.tapCount == 2) {
+            // save the variables after you know its a double tap
             let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "BattleRollViewController") as! BattleRollViewController
             vc.selectTargetInfo = (enemiesList[0].userName, enemiesList[1].userName, enemiesList[2].userName, enemiesList[3].userName, rowSelected!)
