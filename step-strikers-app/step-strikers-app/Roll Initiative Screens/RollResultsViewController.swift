@@ -56,10 +56,6 @@ class RollResultsViewController: UIViewController {
                         let label = UILabel(frame: CGRect(x: 110, y: 375, width: 250, height: 500))
                         label.backgroundColor = UIColor.clear
                         label.attributedText = mutableString
-                //        label.text = "Turn Order:\n 1. Host\n 2. Player 1\n 3. Enemy 2\n 4. Player 3\n 5. Player2\n 6. Enemy 1\n 7. Enemy 3\n 8. Enemy 4\n"
-                //        label.textAlignment = NSTextAlignment.center
-                //        label.textColor = UIColor.black
-                //        label.font = UIFont(name: "munro", size: 35)
                         label.numberOfLines = 0
                         label.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
                         self.view.addSubview(label)
