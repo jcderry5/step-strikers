@@ -174,7 +174,8 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     
     // TODO: update array with actual actions player can do
     func createActionArray() {
-        let characterClass = getCharacterClass()
+        let characterClass = LocalCharacter.getCharacterClass()
+        print(characterClass)
         if characterClass == "Fighter" {
             for index in 0 ... (FighterActions.count-1) {
                 actions.append(Action(name:FighterActions[index].actionName, staminaCost: FighterActions[index].cost))
