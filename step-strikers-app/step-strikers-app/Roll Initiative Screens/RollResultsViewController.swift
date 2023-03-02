@@ -75,10 +75,27 @@ class RollResultsViewController: UIViewController {
     
     @objc func rollDicePressed(_ sender:UIButton) {
         let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "BattleSelectActionViewController") as! BattleSelectActionViewController
-        self.modalPresentationStyle = .fullScreen
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc,animated: false)
+        let docRef = Firestore.firestore().collection("orders").document(game)
+        docRef.getDocument {(document, error) in
+            if let document = document, document.exists {
+                let order = document.get("order") as! [String]
+
+                if player == order[0] {
+                    let vc = storyboard.instantiateViewController(withIdentifier: "BattleSelectActionViewController") as! BattleSelectActionViewController
+                    self.modalPresentationStyle = .fullScreen
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc,animated: false)
+                } else if player != order[0] {
+                    let vc = storyboard.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
+                    self.modalPresentationStyle = .fullScreen
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc,animated: false)
+                } else {
+                    print("Whoops, something bad happened.")
+                }
+            }
+        }
+        
     }
 
 }
