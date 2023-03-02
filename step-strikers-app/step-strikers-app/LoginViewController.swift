@@ -13,6 +13,9 @@ class LoginViewController: UIViewController {
     let munro = "munro"
     var usernameTextField:UITextField?
     var passwordTextField:UITextField?
+    
+    let buttonImg = UIImage(named:"Menu Button")
+    let selectedImg = UIImage(named:"Selected Menu Button")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,11 +36,11 @@ class LoginViewController: UIViewController {
         password?.text = ""
         
         // Register button design
-        let loginButton = createButton(x:116, y:560, w:160, h:100, text:"LOG IN", fontSize:24)
+        let loginButton = createButton(x:116, y:560, w:160, h:100, text:"LOG IN", fontSize:24, normalImage:buttonImg!, highlightedImage:selectedImg!)
         loginButton.addTarget(self, action:#selector(loginPressed), for:.touchUpInside)
         
         // Signin button design
-        let signupButton = createButton(x:116, y:668, w:160, h:100, text:"SIGN UP", fontSize:24)
+        let signupButton = createButton(x:116, y:668, w:160, h:100, text:"SIGN UP", fontSize:24, normalImage:buttonImg!, highlightedImage:selectedImg!)
         signupButton.addTarget(self, action:#selector(signupPressed), for:.touchUpInside)
     }
 

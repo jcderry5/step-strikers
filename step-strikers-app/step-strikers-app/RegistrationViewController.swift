@@ -12,6 +12,9 @@ class RegistrationViewController: UIViewController {
     let munro = "munro"
     var usernameTextField:UITextField?
     var passwordTextField:UITextField?
+    
+    let buttonImg = UIImage(named:"Menu Button")
+    let selectedImg = UIImage(named:"Selected Menu Button")
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,11 +40,11 @@ class RegistrationViewController: UIViewController {
         _ = createTextField(x:154, y:423, w:202, h:34, secured:true)
                 
         // Register button design
-        let registerButton = createButton(x:116, y:560, w:160, h:100, text:"REGISTER", fontSize:24)
+        let registerButton = createButton(x:116, y:560, w:160, h:100, text:"REGISTER", fontSize:24, normalImage:buttonImg!, highlightedImage:selectedImg!)
         registerButton.addTarget(self, action:#selector(registerPressed), for:.touchUpInside)
         
         // Signin button design
-        let signInButton = createButton(x:116, y:668, w:160, h:100, text:"SIGN IN", fontSize:24)
+        let signInButton = createButton(x:116, y:668, w:160, h:100, text:"SIGN IN", fontSize:24, normalImage:buttonImg!, highlightedImage:selectedImg!)
         signInButton.addTarget(self, action:#selector(signInPressed), for:.touchUpInside)
     }
     

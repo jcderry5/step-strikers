@@ -40,14 +40,14 @@ extension UIViewController {
         return field
     }
     
-    func createButton(x:Int, y:Int, w:Int, h:Int, text:String, fontSize:CGFloat) -> UIButton {
+    func createButton(x:Int, y:Int, w:Int, h:Int, text:String, fontSize:CGFloat, normalImage:UIImage, highlightedImage:UIImage) -> UIButton {
         let button = UIButton()
         button.frame = CGRect(x:x, y:y, width:w, height:h)
         button.setTitle(text, for:UIControl.State.normal)
         button.titleLabel!.font = UIFont(name: "munro", size: fontSize)
         button.setTitleColor(.black, for:.normal)
-        button.setBackgroundImage(UIImage(named:"Menu Button"), for:UIControl.State.normal)
-        button.setBackgroundImage(UIImage(named:"Selected Menu Button"), for:UIControl.State.highlighted)
+        button.setBackgroundImage(normalImage, for:UIControl.State.normal)
+        button.setBackgroundImage(highlightedImage, for:UIControl.State.highlighted)
         view.addSubview(button)
         return button
     }
