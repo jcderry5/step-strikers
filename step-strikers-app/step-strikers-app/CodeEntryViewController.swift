@@ -1,0 +1,135 @@
+//
+//  CodeEntryViewController.swift
+//  step-strikers-app
+//
+//  Created by Alekhya Kuchimanchi on 3/1/23.
+//
+
+import UIKit
+
+class CodeEntryViewController: UIViewController {
+    
+    var popUp:UIView?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // Do any additional setup after loading the view.
+        assignBackground()
+        
+        createImage(x: 0, y: 250, w: 375, h: 375, name: "Faded Emblem")
+        
+        createLabel(x: 50, y: 200, w: 300, h: 200, font: "iso8", size: 45, text: "ENTER CODE:")
+        
+        let textField = UITextField(frame: CGRect(x: 100, y: 350, width: 200, height: 40))
+        textField.backgroundColor = UIColor.white
+        textField.layer.borderColor = UIColor.brown.cgColor
+        textField.layer.borderWidth = 2.0
+        
+        self.view.addSubview(textField)
+        createSettingsButton(x: 325, y: 775, width: 40, height: 40)
+        
+        let backButton = createButton(x: 160, y: 700, w: 75, h: 60, text: "BACK", fontSize: 20)
+        backButton.setTitleColor(.brown, for:.normal)
+        backButton.addTarget(self, action:#selector(backButtonPressed), for:.touchUpInside)
+        
+        let confirmButton = UIButton(frame: CGRect(x: 125, y: 600, width: 150, height: 75))
+        confirmButton.setTitle("Confirm", for: UIControl.State.normal)
+        confirmButton.titleLabel!.font = UIFont(name: "munro", size: 30)
+        confirmButton.setBackgroundImage(UIImage(named:"Big choice Button"), for:UIControl.State.normal)
+        confirmButton.setTitleColor(.brown, for:.normal)
+        confirmButton.addTarget(self, action:#selector(confirmButtonPressed), for:.touchUpInside)
+        self.view.addSubview(confirmButton)
+    }
+    
+    @objc func backButtonPressed(_ sender:UIButton!) {
+        print("Back button pressed")
+        // set to battle menu here
+        // TODO: set battle menu view controller as vc to switch to
+        /*
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
+
+        self.modalPresentationStyle = .fullScreen
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated:false)
+         */
+    }
+    
+    @objc func confirmButtonPressed(_ sender:UIButton!) {
+        popUp = createPopUp()
+        self.view.addSubview(popUp!)
+    }
+    
+    func createAlert() {
+        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+        
+        let title  = NSMutableAttributedString(string: "PARTY NOT FOUND", attributes: [NSAttributedString.Key.font: UIFont(name: "munro", size: 25)!])
+//        title.addAttributes(NSAttributedString.Key.font, value: UIFont(name: "munro", size 25))
+        
+        let message  = NSMutableAttributedString(string: "Invalid party code", attributes: [NSAttributedString.Key.font: UIFont(name: "munro", size: 15)!])
+        
+        controller.setValue(title, forKey: "attributedTitle")
+        controller.setValue(message, forKey: "attributedMessage")
+        
+        let okText  = NSMutableAttributedString(string: "OK", attributes: [NSAttributedString.Key.font: UIFont(name: "munro", size: 25)!])
+        
+        controller.addAction(UIAlertAction(title: "OK", style: .default))
+        controller.view.backgroundColor = UIColor.brown
+//        controller.view.tintColor = UIColor(cgColor: CGColor(red: 240, green: 217, blue: 176, alpha: 1.0))
+        present(controller, animated:true)
+    }
+    
+    func createPopUp() -> UIView {
+        
+        let popView = UIView(frame: CGRect(x: 50, y: 300, width: 300, height: 200))
+        popView.backgroundColor = UIColor(red: 0.941, green: 0.851, blue: 0.690, alpha: 1.0)
+        let label = UILabel(frame: CGRect(x: 50, y: 5, width: 250, height: 100))
+        label.text = "PARTY CODE INCORRECT"
+        label.font = UIFont(name: "munro", size: 25)
+        label.textColor = UIColor.black
+        label.backgroundColor = UIColor.clear
+        popView.addSubview(label)
+        
+        let okButton = UIButton(frame: CGRect(x: 25, y: 125, width: 250, height: 50))
+        okButton.setTitle("OKAY", for: UIControl.State.normal)
+        okButton.titleLabel!.font = UIFont(name: "munro", size: 25)
+        okButton.backgroundColor = UIColor(red: 0.941, green: 0.651, blue: 0.157, alpha: 1.0)
+        okButton.setTitleColor(.brown, for:.normal)
+        okButton.layer.borderWidth = 3.0
+        okButton.layer.borderColor = UIColor.brown.cgColor
+        okButton.addTarget(self, action:#selector(okPressed), for:.touchUpInside)
+        popView.addSubview(okButton)
+        
+        
+        let xButton = UIButton(frame: CGRect(x: 270, y: 10, width: 20, height: 15))
+        xButton.setTitle("x", for: UIControl.State.normal)
+        xButton.backgroundColor = UIColor.clear
+        xButton.titleLabel!.font = UIFont(name: "American Typewriter", size: 20)
+        xButton.setTitleColor(UIColor.black, for: UIControl.State.normal)
+        xButton.addTarget(self, action: #selector(xPressed), for: .touchUpInside)
+        popView.addSubview(xButton)
+        
+        popView.layer.borderWidth = 1.0
+        popView.layer.borderColor = UIColor.black.cgColor
+        
+        return popView
+    }
+    
+    @objc func okPressed(_ sender:UIButton!) {
+        print("Ok button pressed")
+        // TODO: Route to next screen
+        /*
+         let sb = UIStoryboard(name: "Main", bundle: nil)
+         let vc = sb.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
+
+         self.modalPresentationStyle = .fullScreen
+         vc.modalPresentationStyle = .fullScreen
+         self.present(vc, animated:false)
+         */
+    }
+    
+    @objc func xPressed(_ sender:UIButton!) {
+        popUp?.removeFromSuperview()
+    }
+}
