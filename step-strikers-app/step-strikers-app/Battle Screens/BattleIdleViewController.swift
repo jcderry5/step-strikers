@@ -52,34 +52,55 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
 //        createMessageArray()
         // Get messages from firebase every time game doc is written to
         let docRef = Firestore.firestore().collection("games").document(game)
-        docRef.getDocument { (document, error) in
+        docRef.getDocument { [self] (document, error) in
             if let document = document, document.exists {
-                self.listener = docRef.addSnapshotListener {
+                docRef.addSnapshotListener {
                     documentSnapshot, error in guard let document = documentSnapshot else {
                         print("Error fetching document: \(error!)")
                         return
                     }
+                    
                     messages = document.get("messages") as! [String]
+                    messageLog.replaceMessageLog(newMessages: messages)
+//                    scrollView.dele
+                    
+//                    scrollView.addSubview(labels[i])
+                    
+                    self.scrollView = UIScrollView(frame: CGRect(x: view.safeAreaInsets.left+40, y: 640, width: 320, height: 150))
+                    self.scrollView.backgroundColor = UIColor.clear
+                    // Set the contentSize to 100 times the height of the phone's screen so that we can add 100 images in the next step
+                    self.scrollView.contentSize = CGSize(width: scrollView.contentSize.width, height: self.scrollView.bounds.size.height*25*CGFloat(messages.count))
+                    view.addSubview(self.scrollView!)
+                    var labels = [UILabel]()
+                    for i in 0..<messages.count {
+                        labels.append(UILabel())
+                        labels[i].text = messages[i]
+                        labels[i].textColor = UIColor.black
+                        labels[i].font = UIFont(name: "munro", size: 20)
+                        labels[i].frame = CGRect(x: 0, y: 25*CGFloat(i), width: view.frame.width, height: 25)
+                        labels[i].contentMode = .scaleAspectFill
+                        self.scrollView.addSubview(labels[i])
+                    }
                 }
             }
         }
         
-        scrollView = UIScrollView(frame: CGRect(x: view.safeAreaInsets.left+40, y: 640, width: 320, height: 150))
-        scrollView.backgroundColor = UIColor.clear
-        // Set the contentSize to 100 times the height of the phone's screen so that we can add 100 images in the next step
-        scrollView.contentSize = CGSize(width: scrollView.contentSize.width, height: scrollView.bounds.size.height*25*CGFloat(messages.count))
-        view.addSubview(scrollView!)
-        var labels = [UILabel]()
-        for i in 0...(messages.count-1) {
-            labels.append(UILabel())
-            labels[i].text = messages[i]
-            labels[i].textColor = UIColor.black
-            labels[i].font = UIFont(name: "munro", size: 20)
-            labels[i].frame = CGRect(x: 0, y: 25*CGFloat(i), width: view.frame.width, height: 25)
-            labels[i].contentMode = .scaleAspectFill
-            scrollView.addSubview(labels[i])
-        }
-        
+//        scrollView = UIScrollView(frame: CGRect(x: view.safeAreaInsets.left+40, y: 640, width: 320, height: 150))
+//        scrollView.backgroundColor = UIColor.clear
+//        // Set the contentSize to 100 times the height of the phone's screen so that we can add 100 images in the next step
+//        scrollView.contentSize = CGSize(width: scrollView.contentSize.width, height: scrollView.bounds.size.height*25*CGFloat(messages.count))
+//        view.addSubview(scrollView!)
+//        var labels = [UILabel]()
+//        for i in 0..<messages.count {
+//            labels.append(UILabel())
+//            labels[i].text = messages[i]
+//            labels[i].textColor = UIColor.black
+//            labels[i].font = UIFont(name: "munro", size: 20)
+//            labels[i].frame = CGRect(x: 0, y: 25*CGFloat(i), width: view.frame.width, height: 25)
+//            labels[i].contentMode = .scaleAspectFill
+//            scrollView.addSubview(labels[i])
+//        }
+
         segueWhenTurn()
     }
     
@@ -168,6 +189,9 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
                         print("order[0] is \(order[0]) and I am \(player)")
                         if order[0] == player {
                             print("Woohoo it's your turn!")
+                            
+                            // wait a little to see previous player's last move
+                            sleep(2)
                             
                             // bring up battle VC
                             let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)

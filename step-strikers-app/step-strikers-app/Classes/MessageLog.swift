@@ -20,7 +20,8 @@ class MessageLog {
         }
         messageLogs.append(message)
         
-        putMessagesOnFirebase()
+        // write messages to firebase
+        Firestore.firestore().collection("games").document(game).setData(["messages": messageLogs], merge: true)
     }
     
     func getCount() -> Int{
@@ -33,7 +34,9 @@ class MessageLog {
         return dummyMessageLog
     }
     
-    func putMessagesOnFirebase() {
-        Firestore.firestore().collection("games").document(game).setData(["messages": messageLogs], merge: true)
+    // replaces the current message log with a batch of messages
+    // use to update local messageLog from firebase
+    func replaceMessageLog(newMessages:[String]) {
+        messageLogs = newMessages
     }
 }
