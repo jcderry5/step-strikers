@@ -37,13 +37,18 @@ struct StatsHeaderRow {
 
 // TODO: @Jalyn edit this struct to add the variables you need
 struct enemyData {
-    let userName:String
-    let name:String
-    let character_class:String
-    let health:Int
-    let isBlind:Bool
-    let isInvisible:Bool
-    let imageView:UIImageView
+    var userName:String
+    var name:String
+    var character_class:String
+    var health:Int
+    var isBlind:Bool
+    var isInvisible:Bool
+    var imageView:UIImageView
+    
+    // New attributes
+    var armor: Armor
+    var defenseModifier: Int
+    var armorInInventory: [Armor] // For potentially destroying poor armor
 }
 
 struct teamData {

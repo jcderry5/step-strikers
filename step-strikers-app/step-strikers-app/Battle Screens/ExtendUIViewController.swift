@@ -109,12 +109,20 @@ extension UIViewController {
                     gameRef.getDocument { (document2, error) in
                         if let document2 = document2, document2.exists {
                             let data = document2.data()
+                            let userName = enemy
                             let name = data!["character_name"] as! String
                             let character_class = data!["class"] as! String
                             let health = data!["health"] as! Int
                             let isBlind = data!["is_blind"] as! Bool
                             let isInvisible = data!["is_invisible"] as! Bool
-                            let userName = enemy
+                            let defenseModifier = document.get("defense_modifier") as! Int
+                            // Rebuild all armor and add them to inventory
+                            let armorInventory = document.get("armor_inventory") as! [String]
+                            let armorInventoryToStore = rebuildArmorInventory(armorInventory: armorInventory)
+                            let armor = document.get("current_armor") as! String
+                            
+                            let currArmorToStore: Armor = rebuildArmorToStore(armorToStore: armor)
+                            
                             
                             // replace this with whatever data structure you want
                             let newTuple = (name, character_class, health, isBlind, isInvisible)
@@ -122,8 +130,8 @@ extension UIViewController {
                             // or don't save info and do UI stuff here one enemy at a time
                             let player1 = characterSprites(name: character_class)
                             let player1Image = player1.drawCharacter(view: self.view, x: xValues[count], y: 400, width: 100, height: 100)
-                            // TODO: @Jalyn change append with the enemyData struct to include the variables you add
-                            enemiesList.append(enemyData(userName: userName, name: name, character_class: character_class, health: health, isBlind: isBlind, isInvisible: isInvisible,imageView: player1Image!))
+                            
+                            enemiesList.append(enemyData(userName: userName, name: name, character_class: character_class, health: health, isBlind: isBlind, isInvisible: isInvisible,imageView: player1Image!, armor: currArmorToStore, defenseModifier: defenseModifier, armorInInventory: armorInventoryToStore))
                             
                             count = count + 1
                         } else {
@@ -378,6 +386,7 @@ extension UIViewController {
     
     @objc func enemyBoxSelected(_ sender:UIButton, event: UIEvent) {
         // TODO: if you want to save things before transferring view controllers do it here From action -> roll to hit
+        // TODO: @Jalyn call performBattleActions
         let touch: UITouch = event.allTouches!.first!
         if (touch.tapCount == 2) {
             // save the variables after you know its a double tap
