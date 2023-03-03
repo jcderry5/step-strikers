@@ -13,6 +13,8 @@ class BattleMenuViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.isUserInteractionEnabled = true
+        
         assignBackground()
         createSettingsButton(x: 325, y: 800, width: 40, height: 40)
         let icon = createImage(x: -4, y: 226, w: 400, h: 400, name: "icon")
@@ -32,6 +34,13 @@ class BattleMenuViewController: UIViewController {
         
         _ = createImage(x: 140, y: 716, w: 112, h: 102, name: "Battle Menu icon")
         _ = createImage(x: 16, y: 734, w: 92, h: 67, name: "left arrow")
+        
+        // Swipe right handler
+        let swipeView = UIView(frame: CGRect(x: 0, y: 650, width: 393, height: 142))
+        view.addSubview(swipeView)
+        let swipeRight = UISwipeGestureRecognizer(target:self, action: #selector(swipeRight))
+        swipeRight.direction = .right
+        swipeView.addGestureRecognizer(swipeRight)
     }
     
     @objc func createPressed() {
@@ -40,6 +49,16 @@ class BattleMenuViewController: UIViewController {
     
     @objc func joinPressed() {
         // TODO: navigate to the CODE ENTRY page
+    }
+    
+    @objc func swipeRight() {
+        // TODO: Set destination to inventory screen
+        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "StatsViewController") as! StatsViewController
+
+        self.modalPresentationStyle = .fullScreen
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false)
     }
 
 }
