@@ -55,7 +55,7 @@ class LoginViewController: UIViewController {
         } else {
             // TODO: @Kelly validate password
             let docRef = Firestore.firestore().collection("players").document(self.usernameTextField!.text!)
-            docRef.getDocument { (document, error) in if let document = document, document.exists {
+            docRef.getDocument { (document, error) in if let document = document, document.exists, self.passwordTextField!.text == document.get("password") as! String {
                 let characterName = document.get("character_name") as! String
                 let characterClass = document.get("class") as! String
                 let username = self.usernameTextField!.text!
@@ -147,7 +147,6 @@ class LoginViewController: UIViewController {
                 
                 // TODO: @Nick transition to the right screen
                 if username == "Player 1" {
-                    print("set game and player!")
                     game = "zIuUhRjKte6oUcvdrP4D"
                     player = "Player 1"
                 } else {
