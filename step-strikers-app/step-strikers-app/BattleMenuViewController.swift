@@ -14,7 +14,9 @@ class BattleMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         assignBackground()
-        createSettingsButton(x: 325, y: 778, width: 40, height: 40)
+        createSettingsButton(x: 325, y: 800, width: 40, height: 40)
+        let icon = createImage(x: -4, y: 226, w: 400, h: 400, name: "icon")
+        icon.alpha = 0.25
         
         // Create menu title label
         _ = createImage(x:27, y:0, w:338, h:200, name:"Menu Title Board")
@@ -25,8 +27,11 @@ class BattleMenuViewController: UIViewController {
         createTeamButton.addTarget(self, action:#selector(createPressed), for:.touchUpInside)
         
         // JOIN TEAM button
-        let joinTeamButton = createButton(x: 78, y: 469, w: 240, h: 102, text: "JOIN TEAM", fontSize: 32, normalImage: buttonImg!, highlightedImage: buttonImg!)
+        let joinTeamButton = createButton(x: 78, y: 480, w: 240, h: 102, text: "JOIN TEAM", fontSize: 32, normalImage: buttonImg!, highlightedImage: buttonImg!)
         joinTeamButton.addTarget(self, action:#selector(joinPressed), for:.touchUpInside)
+        
+        _ = createImage(x: 140, y: 716, w: 112, h: 102, name: "Battle Menu icon")
+        _ = createImage(x: 16, y: 734, w: 92, h: 67, name: "left arrow")
     }
     
     @objc func createPressed() {

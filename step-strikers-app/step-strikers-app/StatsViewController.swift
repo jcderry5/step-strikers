@@ -12,7 +12,7 @@ class StatsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         assignBackground()
-        createSettingsButton(x: 325, y: 778, width: 40, height: 40)
+        createSettingsButton(x: 325, y: 800, width: 40, height: 40)
         
         // Create menu title label
         _ = createImage(x:27, y:0, w:338, h:200, name:"Menu Title Board")
