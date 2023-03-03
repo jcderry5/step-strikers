@@ -35,7 +35,6 @@ struct StatsHeaderRow {
     let names:[String]
 }
 
-// TODO: @Jalyn edit this struct to add the variables you need
 struct enemyData {
     var userName:String
     var name:String
@@ -45,7 +44,6 @@ struct enemyData {
     var isInvisible:Bool
     var imageView:UIImageView
     
-<<<<<<< refs/remotes/origin/add-action-functionality
     // Data needed about the enemies for fighting them
     var armor: Armor
     var defenseModifier: Int
@@ -61,9 +59,12 @@ struct currTargetData {
     var armorInInventory: [Armor] // For potentially destroying poor armor
     
     func printEnemyData() {
+        print("currTarget username is: \(userName)")
         print("currTarget name is: \(name)")
         print("currTarget character class is: \(character_class)")
         print("currTarget health is: \(health)")
+        print("currTarget isBlind (T/F): \(isBlind)")
+        print("currTarget isInvisible (T/F): \(userName)")
         print("currTarget armor name is: \(armor.name)")
         print("currTarget defense modifier is: \(defenseModifier)")
         print("currTarget armor inventory count is: \(armorInInventory.count)")
