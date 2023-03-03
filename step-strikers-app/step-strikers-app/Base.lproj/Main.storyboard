@@ -23,6 +23,21 @@
             </objects>
             <point key="canvasLocation" x="-2579" y="853"/>
         </scene>
+        <!--Inventory View Controller-->
+        <scene sceneID="4Yu-ae-LIF">
+            <objects>
+                <viewController storyboardIdentifier="InventoryViewController" id="98O-uv-BzJ" customClass="InventoryViewController" customModule="step_strikers_app" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sLu-zD-yNQ">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="GU0-uk-Chl"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sBN-3Y-SWd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-4326" y="853"/>
+        </scene>
         <!--Registration View Controller-->
         <scene sceneID="dVs-kO-OYG">
             <objects>
