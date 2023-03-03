@@ -49,7 +49,21 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
         
         // scroll view
         // Set the scrollView's frame to be the size of the screen
-        createMessageArray()
+//        createMessageArray()
+        // Get messages from firebase every time game doc is written to
+        let docRef = Firestore.firestore().collection("games").document(game)
+        docRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                self.listener = docRef.addSnapshotListener {
+                    documentSnapshot, error in guard let document = documentSnapshot else {
+                        print("Error fetching document: \(error!)")
+                        return
+                    }
+                    messages = document.get("messages") as! [String]
+                }
+            }
+        }
+        
         scrollView = UIScrollView(frame: CGRect(x: view.safeAreaInsets.left+40, y: 640, width: 320, height: 150))
         scrollView.backgroundColor = UIColor.clear
         // Set the contentSize to 100 times the height of the phone's screen so that we can add 100 images in the next step
@@ -66,30 +80,29 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
             scrollView.addSubview(labels[i])
         }
         
-        print("I am \(player)")
         segueWhenTurn()
     }
     
-    func createMessageArray() {
-        // TODO: append messages passed in through message functionality here
-        messages.append("this is 1")
-        messages.append("this is 2")
-        messages.append("this is 3")
-        messages.append("this is 4")
-        messages.append("this is 5")
-        messages.append("this is 6")
-        messages.append("this is 7")
-        messages.append("this is 8")
-        messages.append("this is 9")
-        messages.append("this is 10")
-        messages.append("this is 11")
-        messages.append("this is 12")
-        messages.append("this is 13")
-        messages.append("this is 14")
-        messages.append("this is 15")
-        messages.append("this is 16")
-        messages.append("this is 17")
-    }
+//    func createMessageArray() {
+//        // TODO: append messages passed in through message functionality here
+//        messages.append("this is 1")
+//        messages.append("this is 2")
+//        messages.append("this is 3")
+//        messages.append("this is 4")
+//        messages.append("this is 5")
+//        messages.append("this is 6")
+//        messages.append("this is 7")
+//        messages.append("this is 8")
+//        messages.append("this is 9")
+//        messages.append("this is 10")
+//        messages.append("this is 11")
+//        messages.append("this is 12")
+//        messages.append("this is 13")
+//        messages.append("this is 14")
+//        messages.append("this is 15")
+//        messages.append("this is 16")
+//        messages.append("this is 17")
+//    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return stats.count

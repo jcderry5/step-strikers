@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 // Order of MessageLog: [index 0: oldest message, ... , index 9: most recent message]
 class MessageLog {
@@ -18,6 +19,8 @@ class MessageLog {
             messageLogs.remove(at: 0)
         }
         messageLogs.append(message)
+        
+        putMessagesOnFirebase()
     }
     
     func getCount() -> Int{
@@ -31,6 +34,6 @@ class MessageLog {
     }
     
     func putMessagesOnFirebase() {
-        // TODO: @Kelly Complete this function
+        Firestore.firestore().collection("games").document(game).setData(["messages": messageLogs], merge: true)
     }
 }
