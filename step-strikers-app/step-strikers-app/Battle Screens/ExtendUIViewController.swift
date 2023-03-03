@@ -335,26 +335,36 @@ extension UIViewController {
     }
     
     @objc func enemy1Selected(_ sender:UIButton!) {
-        // TODO: @Jalyn save which enemy was selected here with a global variable
-        // if enemy 1 is selected use enemiesList[0].variableName
+        // Update currTarget for action modification (performBattleAction)
+        updateCurrTargetData(enemyIndex: 0)
+        
         boxArrow[0].removeFromSuperview()
         boxArrow[1].removeFromSuperview()
         boxArrow = drawSelectBoxButtonArrow(x: 10, y: 400, width: 100, height: 100)
     }
     
     @objc func enemy2Selected(_ sender:UIButton!) {
+        // Update currTarget for action modification  (performBattleAction)
+        updateCurrTargetData(enemyIndex: 1)
+        
         boxArrow[0].removeFromSuperview()
         boxArrow[1].removeFromSuperview()
         boxArrow = drawSelectBoxButtonArrow(x: 100, y: 400, width: 100, height: 100)
     }
     
     @objc func enemy3Selected(_ sender:UIButton!) {
+        // Update currTarget for action modification  (performBattleAction)
+        updateCurrTargetData(enemyIndex: 2)
+        
         boxArrow[0].removeFromSuperview()
         boxArrow[1].removeFromSuperview()
         boxArrow = drawSelectBoxButtonArrow(x: 200, y: 400, width: 100, height: 100)
     }
     
     @objc func enemy4Selected(_ sender:UIButton!) {
+        // Update currTarget for action modification  (performBattleAction)
+        updateCurrTargetData(enemyIndex: 3)
+        
         boxArrow[0].removeFromSuperview()
         boxArrow[1].removeFromSuperview()
         boxArrow = drawSelectBoxButtonArrow(x: 290, y: 400, width: 100, height: 100)
@@ -387,6 +397,8 @@ extension UIViewController {
     @objc func enemyBoxSelected(_ sender:UIButton, event: UIEvent) {
         // TODO: if you want to save things before transferring view controllers do it here From action -> roll to hit
         // TODO: @Jalyn call performBattleActions
+        print("perform Battle Action has just been called")
+        performBattleAction()
         let touch: UITouch = event.allTouches!.first!
         if (touch.tapCount == 2) {
             // save the variables after you know its a double tap
@@ -413,5 +425,22 @@ extension UIViewController {
             vc.modalPresentationStyle = .fullScreen
             self.present(vc,animated: false)
         }
+    }
+    
+    func updateCurrTargetData(enemyIndex: Int) {
+        currTarget.userName = enemiesList[enemyIndex].userName
+        currTarget.name = enemiesList[enemyIndex].name
+        currTarget.character_class = enemiesList[enemyIndex].character_class
+        currTarget.health = enemiesList[enemyIndex].health
+        currTarget.isBlind = enemiesList[enemyIndex].isBlind
+        currTarget.isInvisible = enemiesList[enemyIndex].isInvisible
+        currTarget.imageView = enemiesList[enemyIndex].imageView
+        
+        currTarget.armor = enemiesList[enemyIndex].armor
+        currTarget.defenseModifier = enemiesList[enemyIndex].defenseModifier
+        currTarget.armorInInventory = enemiesList[enemyIndex].armorInInventory
+        
+        print("Just updated currTarget. Here are the results:")
+        currTarget.printEnemyData()
     }
 }

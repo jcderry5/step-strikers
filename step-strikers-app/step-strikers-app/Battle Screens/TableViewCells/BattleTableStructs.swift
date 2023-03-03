@@ -49,6 +49,18 @@ struct enemyData {
     var armor: Armor
     var defenseModifier: Int
     var armorInInventory: [Armor] // For potentially destroying poor armor
+    
+    func printEnemyData() {
+        print("currTarget username is: \(userName)")
+        print("currTarget name is: \(name)")
+        print("currTarget character class is: \(character_class)")
+        print("currTarget health is: \(health)")
+        print("currTarget isBlind (T/F): \(isBlind)")
+        print("currTarget isInvisible (T/F): \(userName)")
+        print("currTarget armor name is: \(armor.name)")
+        print("currTarget defense modifier is: \(defenseModifier)")
+        print("currTarget armor inventory count is: \(armorInInventory.count)")
+    }
 }
 
 struct teamData {

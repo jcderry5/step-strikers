@@ -302,5 +302,7 @@ func performBattleAction() {
             print("A bard is trying to do a non-bard action")
             LocalCharacter.fight()
         }
+        print("Just finished perform battle action. Here are new enemy stats")
+        currTarget.printEnemyData()
     }
 }

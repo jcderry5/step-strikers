@@ -311,6 +311,7 @@ func decreaseTargetHealth(amtDamage: Int){
     }
 }
 
+
 // May not need?
 //func decreaseTargetStamina(amtDecrease: Int) {
 //    currTarget.stamina += amtDecrease
