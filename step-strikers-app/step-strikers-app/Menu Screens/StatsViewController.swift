@@ -49,8 +49,8 @@ class StatsViewController: UIViewController {
         _ = createLabel(x: 130, y: 624, w: 253, h: 41, font: "munro", size: 28, text: "__ steps until boost", align: .left)
         _ = createLabel(x: 130, y: 653, w: 253, h: 41, font: "munro", size: 28, text: "__ taken today", align: .left)
         
-        // TODO: Display the player's class pixel art below
-        _ = createImage(x: 140, y: 716, w: 112, h: 112, name: "Fighter")
+        let characterClass = LocalCharacter.getCharacterClass()
+        _ = createImage(x: 140, y: 716, w: 112, h: 112, name: characterClass)
         _ = createImage(x: 275, y: 739, w: 112, h: 62, name: "right arrow")
         
         // Swipe left handler
