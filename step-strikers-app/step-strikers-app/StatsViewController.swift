@@ -8,6 +8,8 @@
 import UIKit
 
 class StatsViewController: UIViewController {
+    
+    let cellId = "statsCell"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +22,17 @@ class StatsViewController: UIViewController {
         
         // Create the display board and its contents
         _ = createImage(x:0, y:219, w:393, h:374, name:"Display Board")
+        
+        // Display steps info
+        _ = createImage(x: 25, y: 618, w: 75, h: 75, name: "brown boots")
+        // TODO: Pull steps info from firebase and display it here
+        _ = createLabel(x: 130, y: 624, w: 253, h: 41, font: "munro", size: 28, text: "__ steps until boost", align: .left)
+        _ = createLabel(x: 130, y: 653, w: 253, h: 41, font: "munro", size: 28, text: "__ taken today", align: .left)
+        
+        // TODO: Display the player's class pixel art below
+        _ = createImage(x: 140, y: 716, w: 112, h: 112, name: "Fighter")
+        _ = createImage(x: 16, y: 734, w: 92, h: 67, name: "left arrow")
+        _ = createImage(x: 275, y: 739, w: 112, h: 62, name: "right arrow")
     }
 
 }
