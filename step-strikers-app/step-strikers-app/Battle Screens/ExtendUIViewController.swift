@@ -98,6 +98,7 @@ extension UIViewController {
     
     // For now, pass in "4bDfA6dWfv8fRSdebjWI"
     func renderEnemies(enemyTeam: String) {
+        print("Rendering enemiess....")
         var count:Int = 0
         let xValues = [10,100,200,290]
         let enemiesRef = Firestore.firestore().collection("teams").document(enemyTeam)
@@ -111,22 +112,19 @@ extension UIViewController {
                             let data = document2.data()
                             let userName = enemy
                             let name = data!["character_name"] as! String
+                            print("name is= \(name)")
                             let character_class = data!["class"] as! String
                             let health = data!["health"] as! Int
                             let isBlind = data!["is_blind"] as! Bool
                             let isInvisible = data!["is_invisible"] as! Bool
-                            let defenseModifier = document.get("defense_modifier") as! Int
+                            let defenseModifier = data!["defense_modifier"] as! Int
                             // Rebuild all armor and add them to inventory
-                            let armorInventory = document.get("armor_inventory") as! [String]
+                            let armorInventory = data!["armor_inventory"] as! [String]
                             let armorInventoryToStore = rebuildArmorInventory(armorInventory: armorInventory)
-                            let armor = document.get("current_armor") as! String
-                            
+                            let armor = data!["current_armor"] as! String
+
                             let currArmorToStore: Armor = rebuildArmorToStore(armorToStore: armor)
                             
-                            
-                            // replace this with whatever data structure you want
-                            let newTuple = (name, character_class, health, isBlind, isInvisible)
-                            print(newTuple)
                             // or don't save info and do UI stuff here one enemy at a time
                             let player1 = characterSprites(name: character_class)
                             let player1Image = player1.drawCharacter(view: self.view, x: xValues[count], y: 400, width: 100, height: 100)
@@ -143,6 +141,7 @@ extension UIViewController {
                 print("This team does not exist")
             }
         }
+        print("The number of enemies are \(enemiesList.count)")
     }
     
     func renderTeam(enemyTeam: String) {
@@ -428,14 +427,10 @@ extension UIViewController {
     }
     
     func updateCurrTargetData(enemyIndex: Int) {
-        currTarget.userName = enemiesList[enemyIndex].userName
+        print("We got inside updateCurrTargetData.... Which is good?")
         currTarget.name = enemiesList[enemyIndex].name
         currTarget.character_class = enemiesList[enemyIndex].character_class
         currTarget.health = enemiesList[enemyIndex].health
-        currTarget.isBlind = enemiesList[enemyIndex].isBlind
-        currTarget.isInvisible = enemiesList[enemyIndex].isInvisible
-        currTarget.imageView = enemiesList[enemyIndex].imageView
-        
         currTarget.armor = enemiesList[enemyIndex].armor
         currTarget.defenseModifier = enemiesList[enemyIndex].defenseModifier
         currTarget.armorInInventory = enemiesList[enemyIndex].armorInInventory

@@ -7,7 +7,8 @@
 
 import UIKit
 import FirebaseFirestore
-var LocalCharacter: RPGCharacter!
+// CHANGE BEFORE PUSH TO MAIN
+var LocalCharacter: RPGCharacter! = Fighter(characterName: "Roywyn the Ruthless", userName: "jazzyjalyn", health: 30, stamina: 30, currWeapon: fists(), weaponsInInventory: [fists()], currArmor: noArmor(), armorInInventory: [noArmor()], itemsInInventory: [])
 
 class LoginViewController: UIViewController {
     let munro = "munro"

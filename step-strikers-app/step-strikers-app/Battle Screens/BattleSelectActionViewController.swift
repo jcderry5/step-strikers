@@ -9,7 +9,7 @@ import UIKit
 
 var boxArrow: [AnyObject] = [AnyObject]()
 var rowSelected:Action?
-var currTarget: enemyData!
+var currTarget: currTargetData = currTargetData(name: "", character_class: "", health: 30, armor: noArmor(), defenseModifier: 0, armorInInventory: [noArmor()]) //TODO: @jalyn fix later...need to initialize it to something
 var actions: [Action] = [Action]()
 var player: String = ""
 var game: String = ""
@@ -232,13 +232,13 @@ struct characterSprites {
 }
 
 func performBattleAction() {
-    // TODO: @??? Validate the per
     let actionPerformed: String = rowSelected?.name! ?? "Fight"
     // rowSelected holds your action struct
     
     // Generic action all players can do
     if actionPerformed == "Fight" {LocalCharacter.fight()}
     
+    print("The action performed= \(actionPerformed)")
     // Validating character name with actions they can doo
     if (LocalCharacter.getCharacterClass() == "Fighter"){
         switch actionPerformed {
@@ -302,7 +302,9 @@ func performBattleAction() {
             print("A bard is trying to do a non-bard action")
             LocalCharacter.fight()
         }
-        print("Just finished perform battle action. Here are new enemy stats")
-        currTarget.printEnemyData()
     }
+    print("Just finished perform battle action. Here are new enemy stats")
+    currTarget.printEnemyData()
+    print("Here are the stats of Local Character")
+    LocalCharacter.printLocalCharacterDetailsToConsole()
 }

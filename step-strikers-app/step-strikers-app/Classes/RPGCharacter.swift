@@ -283,6 +283,8 @@ class RPGCharacter {
     
     // This function will return the modified armor class in case the wearer is ill-suited for their currArmor
     func calculateModifiedArmorClass() -> Int {
+        print("inside calculate modified armor class")
+        currTarget.printEnemyData()
         if(currTarget.armor.checkIfSuited(wearerCharacterType: currTarget.character_class)){
             return currTarget.armor.armorClass
         } else {
