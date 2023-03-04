@@ -21,7 +21,7 @@ class CodeEntryViewController: UIViewController {
         createImage(x: 0, y: 250, w: 375, h: 375, name: "Faded Emblem")
         
         // giant enter code text
-        createLabel(x: 50, y: 200, w: 300, h: 200, font: "iso8", size: 45, text: "ENTER CODE:")
+        createLabel(x: 50, y: 200, w: 300, h: 200, font: "iso8", size: 45, text: "ENTER CODE:", align: .center)
         
         // textfield for people to enter code
         // TODO: save this to check later
@@ -33,9 +33,9 @@ class CodeEntryViewController: UIViewController {
         
         // add settings button to bottom right corner
         createSettingsButton(x: 325, y: 775, width: 40, height: 40)
-        
+        let fakeImage = UIImage(named: "")
         // create the back button to go to battle meny again
-        let backButton = createButton(x: 160, y: 700, w: 75, h: 60, text: "BACK", fontSize: 20)
+        let backButton = createButton(x: 160, y: 700, w: 75, h: 60, text: "BACK", fontSize: 20, normalImage: fakeImage!, highlightedImage: fakeImage!)
         backButton.setTitleColor(.brown, for:.normal)
         backButton.addTarget(self, action:#selector(backButtonPressed), for:.touchUpInside)
         

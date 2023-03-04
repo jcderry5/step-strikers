@@ -21,17 +21,17 @@ extension UIViewController {
     // shouldn't matter if this one is done last
     // I'm going to leave this here for now in case. duplicate function with Nick's PR
     /*
-    func assignBackground() {
-        let background = UIImage(named: "Background")
-        var imageView: UIImageView!
-        imageView = UIImageView(frame: self.view.frame)
-        imageView.clipsToBounds = true
-        imageView.image = background
-        imageView.center = view.center
-        view.addSubview(imageView)
-        self.view.sendSubviewToBack(imageView)
-    }
-      */
+     func assignBackground() {
+     let background = UIImage(named: "Background")
+     var imageView: UIImageView!
+     imageView = UIImageView(frame: self.view.frame)
+     imageView.clipsToBounds = true
+     imageView.image = background
+     imageView.center = view.center
+     view.addSubview(imageView)
+     self.view.sendSubviewToBack(imageView)
+     }
+     */
     
     // creates the initial top board, without the table
     func createBattleStatsDisplay() {
@@ -66,12 +66,12 @@ extension UIViewController {
         let itemButton:UIButton = createButton(x:137, y:785, width:126, height:50, fontName: fontNamed, imageName: itemSelected, fontColor: UIColor.black, buttonTitle: "ITEM")
         itemButton.addTarget(self, action:#selector(self.itemButtonPressed(_:)), for: .touchUpInside)
         self.view.addSubview(itemButton)
-
+        
         // equip button
         let equipButton:UIButton = createButton(x:254, y:785, width:126, height:50, fontName: fontNamed, imageName: equipSelected, fontColor: UIColor.black, buttonTitle: "EQUIP")
         equipButton.addTarget(self, action:#selector(self.equipButtonPressed(_:)), for: .touchUpInside)
         self.view.addSubview(equipButton)
-
+        
     }
     
     // generic function to create a button
@@ -186,7 +186,7 @@ extension UIViewController {
         // do not change the x y width and height for any of the characters
         // will need to change "name" based on what the enemy players are
         // but that should be dealt with before you call the methods and use the names as the parameter
-//        print(enemiesList[0].name)
+        //        print(enemiesList[0].name)
         // player 1
         let player1 = characterSprites(name: enemiesList[0].character_class)
         let player1Image = player1.drawCharacter(view: self.view, x: 10, y: 400, width: 100, height: 100)
@@ -225,7 +225,7 @@ extension UIViewController {
         
         // player 2
         let player2 = characterSprites(name: enemy2)
-//        player2.drawCharacter(view: self.view, x: 100, y: 400, width: 100, height: 100)
+        //        player2.drawCharacter(view: self.view, x: 100, y: 400, width: 100, height: 100)
         let player2Button = player2.drawButtonCharacter(controller: self, x: 100, y: 400, width: 100, height: 100)
         player2Button.addTarget(self, action:#selector(self.enemy2Selected(_:)), for: .touchUpInside)
         self.view.addSubview(player2Button)
@@ -361,8 +361,6 @@ extension UIViewController {
         if boxArrow.isEmpty == false {
             boxArrow[0].removeFromSuperview()
             boxArrow[1].removeFromSuperview()
-            boxArrow[2].removeFromSuperview()
-        }
             boxArrow[2].removeFromSuperview()
         }
         boxArrow = drawSelectBoxButtonArrow(x: 10, y: 400, width: 100, height: 100)
