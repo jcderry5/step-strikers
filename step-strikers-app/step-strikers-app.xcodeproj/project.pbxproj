@@ -47,6 +47,7 @@
 		64ECD37C29AFD5F300E28D13 /* MessageLogUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64ECD37B29AFD5F300E28D13 /* MessageLogUnitTests.swift */; };
 		64ECD37E29AFD61300E28D13 /* CasterUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64ECD37D29AFD61300E28D13 /* CasterUnitTests.swift */; };
 		64ECD38029AFD69100E28D13 /* MessageLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64ECD37F29AFD69100E28D13 /* MessageLog.swift */; };
+		64FD704E29B3EF7F00A4B39F /* TeamMatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FD704D29B3EF7F00A4B39F /* TeamMatchViewController.swift */; };
 		82490AF129A81F5800ECBFD7 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82490AF029A81F5800ECBFD7 /* RegistrationViewController.swift */; };
 		82490AF329A81F6500ECBFD7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82490AF229A81F6500ECBFD7 /* LoginViewController.swift */; };
 		82E457B629AEFB5E006A8DB5 /* GeneralUIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E457B529AEFB5E006A8DB5 /* GeneralUIViewControllerExtensions.swift */; };
@@ -110,6 +111,7 @@
 		64ECD37B29AFD5F300E28D13 /* MessageLogUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageLogUnitTests.swift; sourceTree = "<group>"; };
 		64ECD37D29AFD61300E28D13 /* CasterUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasterUnitTests.swift; sourceTree = "<group>"; };
 		64ECD37F29AFD69100E28D13 /* MessageLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageLog.swift; sourceTree = "<group>"; };
+		64FD704D29B3EF7F00A4B39F /* TeamMatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMatchViewController.swift; sourceTree = "<group>"; };
 		82490AF029A81F5800ECBFD7 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
 		82490AF229A81F6500ECBFD7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		82E457B529AEFB5E006A8DB5 /* GeneralUIViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralUIViewControllerExtensions.swift; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 				82490AF229A81F6500ECBFD7 /* LoginViewController.swift */,
 				64A2876329A4262900922509 /* custom fonts */,
 				643651102991AA280017AA0E /* Assets.xcassets */,
+				64FD704D29B3EF7F00A4B39F /* TeamMatchViewController.swift */,
 				643651122991AA280017AA0E /* LaunchScreen.storyboard */,
 				643651152991AA280017AA0E /* Info.plist */,
 				EBC206842995777D00DEB48C /* GoogleService-Info.plist */,
@@ -404,6 +407,7 @@
 				649A4B3E29AACBEA00377575 /* CharacterClasses.swift in Sources */,
 				643651082991AA260017AA0E /* AppDelegate.swift in Sources */,
 				646DD2BE29A6B6FC001FB2BB /* Weapon.swift in Sources */,
+				64FD704E29B3EF7F00A4B39F /* TeamMatchViewController.swift in Sources */,
 				64CD580129AFBD69002F4F5A /* BattleIdleViewController.swift in Sources */,
 				6436510A2991AA260017AA0E /* SceneDelegate.swift in Sources */,
 				82E457B629AEFB5E006A8DB5 /* GeneralUIViewControllerExtensions.swift in Sources */,
