@@ -131,6 +131,7 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
             characterButtons[3].removeFromSuperview()
             boxArrow[0].removeFromSuperview()
             boxArrow[1].removeFromSuperview()
+            boxArrow[2].removeFromSuperview()
             tableView.deselectRow(at: indexPath, animated:false)
             self.view.addSubview(enemiesList[0].imageView)
             self.view.addSubview(enemiesList[1].imageView)
@@ -150,11 +151,11 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
                 if boxArrow.isEmpty == false {
                     boxArrow[0].removeFromSuperview()
                     boxArrow[1].removeFromSuperview()
+                    boxArrow[2].removeFromSuperview()
                 }
                 // TODO: save the function clicked here
                 // will need to resave if the player deselects, but if you do it here it'll override
                 characterButtons = drawEnemiesButton(enemy1: enemiesList[0].character_class, enemy2: enemiesList[1].character_class, enemy3: enemiesList[2].character_class, enemy4: enemiesList[3].character_class)
-                boxArrow = drawSelectBoxButtonArrow(x: 10, y: 400, width: 100, height: 100)
             }
         }
     }

@@ -129,6 +129,7 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
             playerButtons[3].removeFromSuperview()
             boxArrow[0].removeFromSuperview()
             boxArrow[1].removeFromSuperview()
+            boxArrow[2].removeFromSuperview()
             tableView.deselectRow(at: indexPath, animated:false)
         } else {
         selected = true
@@ -140,10 +141,11 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
                 if boxArrow.isEmpty == false {
                     boxArrow[0].removeFromSuperview()
                     boxArrow[1].removeFromSuperview()
+                    boxArrow[2].removeFromSuperview()
                 }
                 
                 playerButtons = drawPlayerButtons(player1: teamList[0].character_class, player2: teamList[1].character_class, player3: teamList[2].character_class, player4: teamList[3].character_class)
-                boxArrow = drawSelectBoxButtonArrowItem(x: 40, y: 130, width: 70, height: 150)
+//                boxArrow = drawSelectBoxButtonArrowItem(x: 40, y: 130, width: 70, height: 150)
             }
         }
     }
