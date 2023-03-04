@@ -21,12 +21,13 @@ extension UIViewController {
         view.sendSubviewToBack(imageView)
     }
     
-    func createLabel(x:Int, y:Int, w:Int, h:Int, font:String, size:CGFloat, text:String) {
+    func createLabel(x:Int, y:Int, w:Int, h:Int, font:String, size:CGFloat, text:String, align:NSTextAlignment) -> UILabel {
         let label = UILabel(frame: CGRect(x:x, y:y, width:w, height:h))
-        label.textAlignment = .right
+        label.textAlignment = align
         label.text = text
         label.font = UIFont(name:font, size:size)
         view.addSubview(label)
+        return label
     }
     
     func createTextField(x:Int, y:Int, w:Int, h:Int, secured:Bool) -> UITextField! {
@@ -39,23 +40,24 @@ extension UIViewController {
         return field
     }
     
-    func createButton(x:Int, y:Int, w:Int, h:Int, text:String, fontSize:CGFloat) -> UIButton {
+    func createButton(x:Int, y:Int, w:Int, h:Int, text:String, fontSize:CGFloat, normalImage:UIImage, highlightedImage:UIImage) -> UIButton {
         let button = UIButton()
         button.frame = CGRect(x:x, y:y, width:w, height:h)
         button.setTitle(text, for:UIControl.State.normal)
         button.titleLabel!.font = UIFont(name: "munro", size: fontSize)
         button.setTitleColor(.black, for:.normal)
-        button.setBackgroundImage(UIImage(named:"Menu Button"), for:UIControl.State.normal)
-        button.setBackgroundImage(UIImage(named:"Selected Menu Button"), for:UIControl.State.highlighted)
+        button.setBackgroundImage(normalImage, for:UIControl.State.normal)
+        button.setBackgroundImage(highlightedImage, for:UIControl.State.highlighted)
         view.addSubview(button)
         return button
     }
     
-    func createImage(x:Int, y:Int, w:Int, h:Int, name:String) {
+    func createImage(x:Int, y:Int, w:Int, h:Int, name:String) -> UIImageView {
         var imageView: UIImageView!
         imageView = UIImageView(frame: CGRect(x:x, y:y, width:w, height:h))
         imageView.image = UIImage(named:name)
         view.addSubview(imageView)
+        return imageView
     }
     
 }

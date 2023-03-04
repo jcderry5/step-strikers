@@ -35,6 +35,7 @@ struct StatsHeaderRow {
     let names:[String]
 }
 
+// TODO: @Jalyn edit this struct to add the variables you need
 struct enemyData {
     let userName:String
     let name:String

@@ -13,31 +13,34 @@ class LoginViewController: UIViewController {
     let munro = "munro"
     var usernameTextField:UITextField?
     var passwordTextField:UITextField?
+    
+    let buttonImg = UIImage(named:"Menu Button")
+    let selectedImg = UIImage(named:"Selected Menu Button")
 
     override func viewDidLoad() {
         super.viewDidLoad()
         assignBackground()
         
         // Create title image
-        createImage(x:6, y:75, w:380, h:200, name:"Title")
+        _ = createImage(x:6, y:75, w:380, h:200, name:"Title")
         
         // Username
-        createLabel(x:9, y:333, w:137, h:25, font:munro, size:22, text:"Username:")
+        _ = createLabel(x:9, y:333, w:137, h:25, font:munro, size:22, text:"Username:", align:.right)
         let username = createTextField(x:154, y:333, w:202, h:34, secured:false)
         self.usernameTextField = username!
         username?.text = ""
         // Password
-        createLabel(x:9, y:403, w:137, h:25, font:munro, size:22, text:"Password:")
+        _ = createLabel(x:9, y:403, w:137, h:25, font:munro, size:22, text:"Password:", align:.right)
         let password = createTextField(x:154, y:403, w:202, h:34, secured:true)
         self.passwordTextField = password!
         password?.text = ""
         
         // Register button design
-        let loginButton = createButton(x:116, y:560, w:160, h:100, text:"LOG IN", fontSize:24)
+        let loginButton = createButton(x:116, y:560, w:160, h:100, text:"LOG IN", fontSize:24, normalImage:buttonImg!, highlightedImage:selectedImg!)
         loginButton.addTarget(self, action:#selector(loginPressed), for:.touchUpInside)
         
         // Signin button design
-        let signupButton = createButton(x:116, y:668, w:160, h:100, text:"SIGN UP", fontSize:24)
+        let signupButton = createButton(x:116, y:668, w:160, h:100, text:"SIGN UP", fontSize:24, normalImage:buttonImg!, highlightedImage:selectedImg!)
         signupButton.addTarget(self, action:#selector(signupPressed), for:.touchUpInside)
     }
 
@@ -144,27 +147,18 @@ class LoginViewController: UIViewController {
                 
                 // TODO: @Nick transition to the right screen
                 if username == "Player 1" {
-                    let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                    let vc = sb.instantiateViewController(withIdentifier: "BattleSelectActionViewController") as! BattleSelectActionViewController
-                    
                     print("set game and player!")
                     game = "zIuUhRjKte6oUcvdrP4D"
                     player = "Player 1"
-                    
-                    self.modalPresentationStyle = .fullScreen
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: false)
                 } else {
-                    let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                    let vc = sb.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
-                    
                     game = "zIuUhRjKte6oUcvdrP4D"
                     player = "Player 2"
-                    
-                    self.modalPresentationStyle = .fullScreen
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: false)
                 }
+                let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = sb.instantiateViewController(withIdentifier: "RollInitiativeViewController") as! RollInitiativeViewController
+                self.modalPresentationStyle = .fullScreen
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: false)
             } else {
                 // TODO: @Nick display this on screen instead of printing
                 print("Incorrect username or password")
