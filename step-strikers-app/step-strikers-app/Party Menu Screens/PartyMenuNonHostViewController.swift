@@ -20,8 +20,17 @@ class PartyMenuNonHostViewController: UIViewController {
         createImage(x: 0, y: 250, w: 375, h: 375, name: "Faded Emblem")
         
         // giant party code text
-        var partyCodeLabel = createLabel(x: 10, y: 50, w: 375, h: 200, font: "Adventurer", size: 55, text: "PARTY CODE:\n xxxxx", align: .center)
+        let attributes = [NSAttributedString.Key.font: UIFont(name: "Adventurer", size: 55)!, .underlineStyle: 0] as [NSAttributedString.Key : Any]
+        var partyCodeText = NSMutableAttributedString(attributedString: NSMutableAttributedString(string: "PARTY CODE:\n", attributes: attributes))
+        let otherAttributes = [NSAttributedString.Key.font: UIFont(name: "munro", size: 20)!, .underlineStyle: 0] as [NSAttributedString.Key : Any]
+        // TODO: replace with actual code
+        let anotherString = NSMutableAttributedString(string: "\nxxxxx", attributes: otherAttributes)
+        partyCodeText.append(anotherString)
+        var partyCodeLabel = UILabel(frame: CGRect(x:10, y: 50, width: 375, height: 200))
+        partyCodeLabel.textAlignment = .center
+        partyCodeLabel.attributedText = partyCodeText
         partyCodeLabel.numberOfLines = 0
+        self.view.addSubview(partyCodeLabel)
         
         // add settings button to bottom right corner
         createSettingsButton(x: 325, y: 775, width: 40, height: 40)
