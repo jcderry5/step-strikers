@@ -33,10 +33,15 @@ class CodeEntryViewController: UIViewController {
         
         // add settings button to bottom right corner
         createSettingsButton(x: 325, y: 775, width: 40, height: 40)
-        let fakeImage = UIImage(named: "")
         // create the back button to go to battle meny again
-        let backButton = createButton(x: 160, y: 700, w: 75, h: 60, text: "BACK", fontSize: 20, normalImage: fakeImage!, highlightedImage: fakeImage!)
+        let backButton = UIButton()
+        backButton.frame = CGRect(x: 160, y:700, width:75, height:60)
+        backButton.setTitle("BACK", for:UIControl.State.normal)
+        backButton.titleLabel!.font = UIFont(name: "munro", size: 20)
+        backButton.setTitleColor(.black, for:.normal)
         backButton.setTitleColor(.brown, for:.normal)
+        backButton.setBackgroundImage(UIImage(named: "Menu Button"), for: .normal)
+        self.view.addSubview(backButton)
         backButton.addTarget(self, action:#selector(backButtonPressed), for:.touchUpInside)
         
         // confirm button for entering code in text field
