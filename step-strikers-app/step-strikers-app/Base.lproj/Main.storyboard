@@ -128,6 +128,36 @@
             </objects>
             <point key="canvasLocation" x="-863" y="6"/>
         </scene>
+        <!--Party Menu Host View Controller-->
+        <scene sceneID="WIS-dL-Bst">
+            <objects>
+                <viewController storyboardIdentifier="PartyMenuHostViewController" id="k0q-FY-d0Y" customClass="PartyMenuHostViewController" customModule="step_strikers_app" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="SRd-lm-Cba">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="N8Z-eE-wEf"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uD9-B7-7cP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="39" y="4"/>
+        </scene>
+        <!--Party Menu Non Host View Controller-->
+        <scene sceneID="i66-FX-kdL">
+            <objects>
+                <viewController storyboardIdentifier="PartyMenuNonHostViewController" id="71r-ZF-Oap" customClass="PartyMenuNonHostViewController" customModule="step_strikers_app" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="YMc-ha-hNA">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="4aa-6Q-K5Q"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0ko-zg-lWz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="775" y="6"/>
+        </scene>
         <!--Battle Idle View Controller-->
         <scene sceneID="8hf-Fv-Par">
             <objects>
@@ -142,6 +172,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="928-py-DBf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1753" y="853"/>
+        </scene>
+        <!--Code Entry View Controller-->
+        <scene sceneID="tMb-eO-kvi">
+            <objects>
+                <viewController storyboardIdentifier="CodeEntryViewController" id="c15-KD-j6J" customClass="CodeEntryViewController" customModule="step_strikers_app" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sdi-Nj-ItY">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="hXT-GC-juS"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mzx-nY-rla" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="106" y="1303"/>
         </scene>
         <!--Battle Select Item View Controller-->
         <scene sceneID="VTG-OQ-QoU">
