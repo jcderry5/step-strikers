@@ -52,9 +52,9 @@
 		64ECD37C29AFD5F300E28D13 /* MessageLogUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64ECD37B29AFD5F300E28D13 /* MessageLogUnitTests.swift */; };
 		64ECD37E29AFD61300E28D13 /* CasterUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64ECD37D29AFD61300E28D13 /* CasterUnitTests.swift */; };
 		64ECD38029AFD69100E28D13 /* MessageLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64ECD37F29AFD69100E28D13 /* MessageLog.swift */; };
+		64FD704E29B3EF7F00A4B39F /* TeamMatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FD704D29B3EF7F00A4B39F /* TeamMatchViewController.swift */; };
 		823A17AB29B2818400B92BCB /* InventoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823A17AA29B2818400B92BCB /* InventoryViewController.swift */; };
 		823A17AE29B31C7900B92BCB /* InventoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823A17AD29B31C7900B92BCB /* InventoryTableViewCell.swift */; };
-		64FD704E29B3EF7F00A4B39F /* TeamMatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FD704D29B3EF7F00A4B39F /* TeamMatchViewController.swift */; };
 		82490AF129A81F5800ECBFD7 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82490AF029A81F5800ECBFD7 /* RegistrationViewController.swift */; };
 		82490AF329A81F6500ECBFD7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82490AF229A81F6500ECBFD7 /* LoginViewController.swift */; };
 		82E457B629AEFB5E006A8DB5 /* GeneralUIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E457B529AEFB5E006A8DB5 /* GeneralUIViewControllerExtensions.swift */; };
@@ -125,9 +125,9 @@
 		64ECD37B29AFD5F300E28D13 /* MessageLogUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageLogUnitTests.swift; sourceTree = "<group>"; };
 		64ECD37D29AFD61300E28D13 /* CasterUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasterUnitTests.swift; sourceTree = "<group>"; };
 		64ECD37F29AFD69100E28D13 /* MessageLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageLog.swift; sourceTree = "<group>"; };
+		64FD704D29B3EF7F00A4B39F /* TeamMatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMatchViewController.swift; sourceTree = "<group>"; };
 		823A17AA29B2818400B92BCB /* InventoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryViewController.swift; sourceTree = "<group>"; };
 		823A17AD29B31C7900B92BCB /* InventoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryTableViewCell.swift; sourceTree = "<group>"; };
-		64FD704D29B3EF7F00A4B39F /* TeamMatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMatchViewController.swift; sourceTree = "<group>"; };
 		82490AF029A81F5800ECBFD7 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
 		82490AF229A81F6500ECBFD7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		82E457B529AEFB5E006A8DB5 /* GeneralUIViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralUIViewControllerExtensions.swift; sourceTree = "<group>"; };
@@ -204,8 +204,6 @@
 				82E457B529AEFB5E006A8DB5 /* GeneralUIViewControllerExtensions.swift */,
 				643651092991AA260017AA0E /* SceneDelegate.swift */,
 				6436510D2991AA270017AA0E /* Main.storyboard */,
-				823A17AA29B2818400B92BCB /* InventoryViewController.swift */,
-				823A17AD29B31C7900B92BCB /* InventoryTableViewCell.swift */,
 				640BCE0A29B52A5100035CBC /* BattleResultsLossViewController.swift */,
 				640BCE0C29B52A5F00035CBC /* BattleResultsVictoryViewController.swift */,
 				640BCE0929B5288200035CBC /* Party Menu Screens */,
@@ -303,6 +301,8 @@
 		823A17AC29B2833D00B92BCB /* Menu Screens */ = {
 			isa = PBXGroup;
 			children = (
+				823A17AA29B2818400B92BCB /* InventoryViewController.swift */,
+				823A17AD29B31C7900B92BCB /* InventoryTableViewCell.swift */,
 				82E457C329B17377006A8DB5 /* BattleMenuViewController.swift */,
 				82E457C129B1730B006A8DB5 /* StatsViewController.swift */,
 			);
