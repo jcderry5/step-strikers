@@ -7,8 +7,11 @@
 
 import UIKit
 
-class InventoryViewController: UIViewController {
-
+class InventoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    var inventoryTable:UITableView = UITableView()
+    let cellId = "inventoryCell"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.isUserInteractionEnabled = true
@@ -22,6 +25,16 @@ class InventoryViewController: UIViewController {
         
         // Create the display board and its contents
         _ = createImage(x: 0, y: 219, w: 393, h: 374, name: "Display Board")
+        inventoryTable = UITableView(frame: CGRect(x:15, y:234, width:363, height:344))
+        inventoryTable.translatesAutoresizingMaskIntoConstraints = false
+        inventoryTable.dataSource = self
+        
+        // Register tableview
+        inventoryTable.register(InventoryTableViewCell.self, forCellReuseIdentifier: cellId)
+        inventoryTable.delegate = self
+        inventoryTable.backgroundColor = UIColor.clear
+        inventoryTable.layer.borderWidth = 2
+        view.addSubview(inventoryTable)
         
         // Swipe display
         _ = createImage(x: 140, y: 716, w: 112, h: 112, name: "backpack")
@@ -40,6 +53,18 @@ class InventoryViewController: UIViewController {
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight))
         swipeRight.direction = .left
         swipeView.addGestureRecognizer(swipeRight)
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // TODO: Implement
+        return 10
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // TODO: Implement
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
+        cell.backgroundColor = UIColor.clear
+        return cell
     }
     
     @objc func swipeLeft() {
