@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		640BCE0B29B52A5100035CBC /* BattleResultsLossViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640BCE0A29B52A5100035CBC /* BattleResultsLossViewController.swift */; };
+		640BCE0D29B52A5F00035CBC /* BattleResultsVictoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640BCE0C29B52A5F00035CBC /* BattleResultsVictoryViewController.swift */; };
 		641220E729B0228400561860 /* RollInitiativeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641220E429B0228400561860 /* RollInitiativeViewController.swift */; };
 		641220E829B0228400561860 /* RollResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641220E529B0228400561860 /* RollResultsViewController.swift */; };
 		643651082991AA260017AA0E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643651072991AA260017AA0E /* AppDelegate.swift */; };
@@ -71,6 +73,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		640BCE0A29B52A5100035CBC /* BattleResultsLossViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleResultsLossViewController.swift; sourceTree = "<group>"; };
+		640BCE0C29B52A5F00035CBC /* BattleResultsVictoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleResultsVictoryViewController.swift; sourceTree = "<group>"; };
 		641220E429B0228400561860 /* RollInitiativeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RollInitiativeViewController.swift; sourceTree = "<group>"; };
 		641220E529B0228400561860 /* RollResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RollResultsViewController.swift; sourceTree = "<group>"; };
 		643651042991AA260017AA0E /* step-strikers-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "step-strikers-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -181,6 +185,8 @@
 				82E457B529AEFB5E006A8DB5 /* GeneralUIViewControllerExtensions.swift */,
 				643651092991AA260017AA0E /* SceneDelegate.swift */,
 				6436510D2991AA270017AA0E /* Main.storyboard */,
+				640BCE0A29B52A5100035CBC /* BattleResultsLossViewController.swift */,
+				640BCE0C29B52A5F00035CBC /* BattleResultsVictoryViewController.swift */,
 				823A17AC29B2833D00B92BCB /* Menu Screens */,
 				641220E229B0228400561860 /* Roll Initiative Screens */,
 				64CD57F229AFBD69002F4F5A /* Battle Screens */,
@@ -398,6 +404,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				640BCE0D29B52A5F00035CBC /* BattleResultsVictoryViewController.swift in Sources */,
 				64CD580A29AFBD6A002F4F5A /* ExtendUIViewController.swift in Sources */,
 				64CD580029AFBD69002F4F5A /* BattleRollViewController.swift in Sources */,
 				82E457C429B17377006A8DB5 /* BattleMenuViewController.swift in Sources */,
@@ -410,6 +417,7 @@
 				641220E729B0228400561860 /* RollInitiativeViewController.swift in Sources */,
 				646DD2BC29A6B6F2001FB2BB /* RPGCharacter.swift in Sources */,
 				649A4B3C29AACB4100377575 /* Caster.swift in Sources */,
+				640BCE0B29B52A5100035CBC /* BattleResultsLossViewController.swift in Sources */,
 				646DD2BA29A6B6DB001FB2BB /* Game.swift in Sources */,
 				64CD580629AFBD69002F4F5A /* StatsHeaderTableViewCell.swift in Sources */,
 				646DD2C029A6B70A001FB2BB /* Armor.swift in Sources */,
