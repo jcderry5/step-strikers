@@ -44,7 +44,7 @@ class BattleMenuViewController: UIViewController {
         swipeView.addGestureRecognizer(swipeRight)
     }
     
-    @objc func createPressed() {
+    @objc func createPressed(_ sender:UIButton!) {
         // TODO: Navigate to the PARTY SETUP page
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "BattleSelectActionViewController") as! BattleSelectActionViewController
@@ -54,7 +54,7 @@ class BattleMenuViewController: UIViewController {
         self.present(vc, animated: false)
     }
     
-    @objc func joinPressed() {
+    @objc func joinPressed(_ sender:UIButton!) {
         // TODO: Navigate to the CODE ENTRY page
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "BattleSelectActionViewController") as! BattleSelectActionViewController
