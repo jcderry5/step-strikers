@@ -54,17 +54,13 @@ class CodeEntryViewController: UIViewController {
     }
     
     @objc func backButtonPressed(_ sender:UIButton!) {
-        print("Back button pressed")
-        // set to battle menu here
-        // TODO: set battle menu view controller as vc to switch to
-        /*
+        // Return to battle menu
         let sb = UIStoryboard(name: "Main", bundle: nil)
-        let vc = sb.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
+        let vc = sb.instantiateViewController(withIdentifier: "BattleMenuViewController") as! BattleMenuViewController
 
         self.modalPresentationStyle = .fullScreen
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated:false)
-         */
     }
     
     @objc func confirmButtonPressed(_ sender:UIButton!) {
