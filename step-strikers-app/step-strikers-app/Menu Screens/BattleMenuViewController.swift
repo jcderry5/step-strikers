@@ -33,6 +33,7 @@ class BattleMenuViewController: UIViewController {
         joinTeamButton.addTarget(self, action:#selector(joinPressed), for:.touchUpInside)
         
         _ = createImage(x: 140, y: 716, w: 112, h: 102, name: "Battle Menu icon")
+        _ = createLabel(x: 16, y: 690, w: 92, h: 67, font: "munro", size: 20, text: "SWIPE", align: .center)
         _ = createImage(x: 16, y: 734, w: 92, h: 67, name: "left arrow")
         
         // Swipe right handler
