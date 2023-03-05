@@ -45,10 +45,8 @@ class RollInitiativeViewController: UIViewController {
     }
     
     func rollD20() {
-        startGame(player: player, game: game)
         let initiative = rollInitiative(player: player, game: game)
         let d20  = SKSpriteNode(imageNamed: "d20")
-//        image.position = CGPoint(x:100, y: 200)
         let skView = SKView(frame: CGRect(x: 75, y: 300, width: 250, height: 250))
         let skScene = SKScene(size: skView.bounds.size)
         d20.size.width = 250
