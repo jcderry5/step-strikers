@@ -381,7 +381,6 @@ extension UIViewController {
             boxArrow[1].removeFromSuperview()
             boxArrow[2].removeFromSuperview()
         }
-        }
         boxArrow = drawSelectBoxButtonArrow(x: 100, y: 400, width: 100, height: 100)
     }
 
