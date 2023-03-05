@@ -33,6 +33,7 @@ class BattleMenuViewController: UIViewController {
         joinTeamButton.addTarget(self, action:#selector(joinPressed), for:.touchUpInside)
         
         _ = createImage(x: 140, y: 716, w: 112, h: 102, name: "Battle Menu icon")
+        _ = createLabel(x: 16, y: 690, w: 92, h: 67, font: "munro", size: 20, text: "SWIPE", align: .center)
         _ = createImage(x: 16, y: 734, w: 92, h: 67, name: "left arrow")
         
         // Swipe right handler
@@ -43,12 +44,24 @@ class BattleMenuViewController: UIViewController {
         swipeView.addGestureRecognizer(swipeRight)
     }
     
-    @objc func createPressed() {
-        // TODO: navigate to the PARTY SETUP page
+    @objc func createPressed(_ sender:UIButton!) {
+        // TODO: Navigate to the PARTY SETUP page
+        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "BattleSelectActionViewController") as! BattleSelectActionViewController
+
+        self.modalPresentationStyle = .fullScreen
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false)
     }
     
-    @objc func joinPressed() {
-        // TODO: navigate to the CODE ENTRY page
+    @objc func joinPressed(_ sender:UIButton!) {
+        // TODO: Navigate to the CODE ENTRY page
+        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "BattleSelectActionViewController") as! BattleSelectActionViewController
+
+        self.modalPresentationStyle = .fullScreen
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false)
     }
     
     @objc func swipeRight() {
