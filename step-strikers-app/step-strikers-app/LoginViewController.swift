@@ -148,14 +148,8 @@ class LoginViewController: UIViewController {
                 
                 // For Testing:
                 // localCharacter.printlocalCharacterDetailsToConsole()
-                
-                if username == "Player 1" {
-                    game = "zIuUhRjKte6oUcvdrP4D"
-                    player = "Player 1"
-                } else {
-                    game = "zIuUhRjKte6oUcvdrP4D"
-                    player = "Player 2"
-                }
+                game = "zIuUhRjKte6oUcvdrP4D"
+                player = localCharacter.userName
                 let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let vc = sb.instantiateViewController(withIdentifier: "StatsViewController") as! StatsViewController
                 self.modalPresentationStyle = .fullScreen
