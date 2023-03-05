@@ -83,6 +83,21 @@
             </objects>
             <point key="canvasLocation" x="-1753.4351145038167" y="3.5211267605633805"/>
         </scene>
+        <!--Team Match View Controller-->
+        <scene sceneID="iBX-im-0de">
+            <objects>
+                <viewController storyboardIdentifier="TeamMatchViewController" id="b6R-27-mwf" customClass="TeamMatchViewController" customModule="step_strikers_app" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GkA-mr-xdy">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="aSa-C1-5T2"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8Km-gb-aRc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-863" y="6"/>
+        </scene>
         <!--Battle Idle View Controller-->
         <scene sceneID="8hf-Fv-Par">
             <objects>
