@@ -363,6 +363,7 @@ extension UIViewController {
     @objc func enemy1Selected(_ sender:UIButton!) {
         updateCurrTargetData(enemyIndex: 0)
         // if enemy 1 is selected use enemiesList[0].variableName
+        updateCurrTargetData(enemyIndex: 0)
         selectEnemyLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
             boxArrow[0].removeFromSuperview()
@@ -384,7 +385,7 @@ extension UIViewController {
         boxArrow = drawSelectBoxButtonArrow(x: 100, y: 400, width: 100, height: 100)
     }
 
-@objc func enemy3Selected(_sender:UIButton!){
+    @objc func enemy3Selected(_ sender:UIButton!) {
         updateCurrTargetData(enemyIndex: 2)
         selectEnemyLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
@@ -393,8 +394,10 @@ extension UIViewController {
             boxArrow[2].removeFromSuperview()
         }
         boxArrow = drawSelectBoxButtonArrow(x: 200, y: 400, width: 100, height: 100)
-    @objc func enemy4Selected(_sender:UIButton!){
-            updateCurrTargetData(enemyIndex: 3)
+    }
+    
+    @objc func enemy4Selected(_ sender:UIButton!) {
+        updateCurrTargetData(enemyIndex: 3)
         selectEnemyLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
             boxArrow[0].removeFromSuperview()
