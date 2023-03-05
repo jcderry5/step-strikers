@@ -174,7 +174,7 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     }
     
     func createActionArray() {
-        let characterClass = LocalCharacter.getCharacterClass()
+        let characterClass = localCharacter.getCharacterClass()
         print(characterClass)
         if characterClass == "Fighter" {
             for index in 0 ... (FighterActions.count-1) {
