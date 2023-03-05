@@ -38,7 +38,6 @@ class CodeEntryViewController: UIViewController {
         backButton.frame = CGRect(x: 160, y:700, width:75, height:60)
         backButton.setTitle("BACK", for:UIControl.State.normal)
         backButton.titleLabel!.font = UIFont(name: "munro", size: 20)
-        backButton.setTitleColor(.black, for:.normal)
         backButton.setTitleColor(.brown, for:.normal)
         backButton.setBackgroundImage(UIImage(named: "Menu Button"), for: .normal)
         self.view.addSubview(backButton)
