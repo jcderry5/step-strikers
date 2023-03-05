@@ -37,7 +37,7 @@ class StatsViewController: UIViewController {
         // Magic stats
         var currMagic = 0
         var maxMagic = 0
-        if let caster = LocalCharacter as? Caster {
+        if let caster = localCharacter as? Caster {
             currMagic = caster.currSpellPoints
             maxMagic = caster.maxSpellPoints
         }

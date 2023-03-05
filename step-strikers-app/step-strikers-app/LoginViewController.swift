@@ -120,13 +120,13 @@ class LoginViewController: UIViewController {
                 // Build the Global Character (Does not include item inventory yet)
                 switch characterClass {
                     case "Fighter":
-                        LocalCharacter = Fighter(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [])
+                        localCharacter = Fighter(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [])
                     case "Wizard":
-                        LocalCharacter = Wizard(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, spellPoints: currSpellPoints, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [])
+                        localCharacter = Wizard(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, spellPoints: currSpellPoints, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [])
                     case "Rogue":
-                        LocalCharacter = Rogue(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [])
+                        localCharacter = Rogue(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [])
                     case "Bard":
-                        LocalCharacter = Bard(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, spellPoints: currSpellPoints, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [])
+                        localCharacter = Bard(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, spellPoints: currSpellPoints, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [])
                     default:
                         print("Getting a characterClass not from the main 4... should not happen.")
                 }
@@ -135,7 +135,7 @@ class LoginViewController: UIViewController {
                 var itemInventoryToStore: [Item] = []
                 for item in itemInventory {
                     // Store rebuilt item in inventory
-                    let currItemToStore: Item = rebuildItem(itemName: item, owner: LocalCharacter)
+                    let currItemToStore: Item = rebuildItem(itemName: item, owner: localCharacter)
                     itemInventoryToStore += [currItemToStore]
                 }
                 
@@ -147,7 +147,7 @@ class LoginViewController: UIViewController {
                 localCharacter.magicResistanceModifier = magicResistanceModifier
                 
                 // For Testing:
-                // localCharacter.printLocalCharacterDetailsToConsole()
+                // localCharacter.printlocalCharacterDetailsToConsole()
                 
                 if username == "Player 1" {
                     game = "zIuUhRjKte6oUcvdrP4D"
