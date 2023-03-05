@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		641220EA29B02C2300561860 /* CodeEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641220E929B02C2300561860 /* CodeEntryViewController.swift */; };
 		641220E729B0228400561860 /* RollInitiativeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641220E429B0228400561860 /* RollInitiativeViewController.swift */; };
 		641220E829B0228400561860 /* RollResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641220E529B0228400561860 /* RollResultsViewController.swift */; };
 		643651082991AA260017AA0E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643651072991AA260017AA0E /* AppDelegate.swift */; };
@@ -71,6 +72,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		641220E929B02C2300561860 /* CodeEntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeEntryViewController.swift; sourceTree = "<group>"; };
 		641220E429B0228400561860 /* RollInitiativeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RollInitiativeViewController.swift; sourceTree = "<group>"; };
 		641220E529B0228400561860 /* RollResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RollResultsViewController.swift; sourceTree = "<group>"; };
 		643651042991AA260017AA0E /* step-strikers-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "step-strikers-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -185,6 +187,7 @@
 				641220E229B0228400561860 /* Roll Initiative Screens */,
 				64CD57F229AFBD69002F4F5A /* Battle Screens */,
 				82490AF029A81F5800ECBFD7 /* RegistrationViewController.swift */,
+				641220E929B02C2300561860 /* CodeEntryViewController.swift */,
 				82490AF229A81F6500ECBFD7 /* LoginViewController.swift */,
 				64A2876329A4262900922509 /* custom fonts */,
 				643651102991AA280017AA0E /* Assets.xcassets */,
@@ -398,6 +401,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				641220EA29B02C2300561860 /* CodeEntryViewController.swift in Sources */,
 				64CD580A29AFBD6A002F4F5A /* ExtendUIViewController.swift in Sources */,
 				64CD580029AFBD69002F4F5A /* BattleRollViewController.swift in Sources */,
 				82E457C429B17377006A8DB5 /* BattleMenuViewController.swift in Sources */,
