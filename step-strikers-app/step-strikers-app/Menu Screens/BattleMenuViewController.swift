@@ -44,9 +44,9 @@ class BattleMenuViewController: UIViewController {
     }
     
     @objc func createPressed() {
-        // Navigate to the PARTY SETUP page
+        // TODO: Navigate to the PARTY SETUP page
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = sb.instantiateViewController(withIdentifier: "PartyMenuHostViewController") as! PartyMenuHostViewController
+        let vc = sb.instantiateViewController(withIdentifier: "BattleSelectActionViewController") as! BattleSelectActionViewController
 
         self.modalPresentationStyle = .fullScreen
         vc.modalPresentationStyle = .fullScreen
@@ -54,9 +54,9 @@ class BattleMenuViewController: UIViewController {
     }
     
     @objc func joinPressed() {
-        // Navigate to the CODE ENTRY page
+        // TODO: Navigate to the CODE ENTRY page
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = sb.instantiateViewController(withIdentifier: "CodeEntryViewController") as! CodeEntryViewController
+        let vc = sb.instantiateViewController(withIdentifier: "BattleSelectActionViewController") as! BattleSelectActionViewController
 
         self.modalPresentationStyle = .fullScreen
         vc.modalPresentationStyle = .fullScreen
