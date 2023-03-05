@@ -13,6 +13,7 @@ class LoginViewController: UIViewController {
     let munro = "munro"
     var usernameTextField:UITextField?
     var passwordTextField:UITextField?
+    var message:UILabel = UILabel()
     
     let buttonImg = UIImage(named:"Menu Button")
     let selectedImg = UIImage(named:"Selected Menu Button")
@@ -29,11 +30,16 @@ class LoginViewController: UIViewController {
         let username = createTextField(x:154, y:333, w:202, h:34, secured:false)
         self.usernameTextField = username!
         username?.text = ""
+        
         // Password
         _ = createLabel(x:9, y:403, w:137, h:25, font:munro, size:22, text:"Password:", align:.right)
         let password = createTextField(x:154, y:403, w:202, h:34, secured:true)
         self.passwordTextField = password!
         password?.text = ""
+        
+        // Invalid credentials label
+        self.message = createLabel(x: 55, y: 482, w: 297, h: 20, font:munro, size:18, text:"", align:.center)
+        self.message.textColor = .red
         
         // Register button design
         let loginButton = createButton(x:116, y:560, w:160, h:100, text:"LOG IN", fontSize:24, normalImage:buttonImg!, highlightedImage:selectedImg!)
@@ -47,11 +53,9 @@ class LoginViewController: UIViewController {
     // when testing this use username: jazzyjalyn, password: doesn't matter yet but can't be empty
     @objc func loginPressed(_ sender: Any) {
         if self.usernameTextField!.text == "" {
-            // TODO: @Nick don't print this, display it on the screen
-            print("username not entered")
+            self.message.text = "Username not entered"
         } else if passwordTextField!.text == "" {
-            // TODO: @Nick don't print this, display it on the screen
-            print("password not entered")
+            self.message.text = "Password not entered"
         } else {
             // TODO: @Kelly validate password
             let docRef = Firestore.firestore().collection("players").document(self.usernameTextField!.text!)
@@ -145,7 +149,6 @@ class LoginViewController: UIViewController {
                 // For Testing:
                 // LocalCharacter.printLocalCharacterDetailsToConsole()
                 
-                // TODO: @Nick transition to the right screen
                 if username == "Player 1" {
                     game = "zIuUhRjKte6oUcvdrP4D"
                     player = "Player 1"
@@ -154,13 +157,13 @@ class LoginViewController: UIViewController {
                     player = "Player 2"
                 }
                 let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                let vc = sb.instantiateViewController(withIdentifier: "RollInitiativeViewController") as! RollInitiativeViewController
+                let vc = sb.instantiateViewController(withIdentifier: "StatsViewController") as! StatsViewController
                 self.modalPresentationStyle = .fullScreen
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: false)
             } else {
                 // TODO: @Nick display this on screen instead of printing
-                print("Incorrect username or password")
+                self.message.text = "Incorrect username or password"
             }
             
         }
