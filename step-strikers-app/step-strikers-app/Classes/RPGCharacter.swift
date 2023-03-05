@@ -283,8 +283,6 @@ class RPGCharacter {
     
     // This function will return the modified armor class in case the wearer is ill-suited for their currArmor
     func calculateModifiedArmorClass() -> Int {
-        print("inside calculate modified armor class")
-        currTarget.printEnemyData()
         if(currTarget.armor.checkIfSuited(wearerCharacterType: currTarget.character_class)){
             return currTarget.armor.armorClass
         } else {
@@ -312,13 +310,3 @@ func decreaseTargetHealth(amtDamage: Int){
         // TODO: Add functionality for when a person dies
     }
 }
-
-
-// May not need?
-//func decreaseTargetStamina(amtDecrease: Int) {
-//    currTarget.stamina += amtDecrease
-//    if(currTarget.stamina < 0){
-//        currTarget.stamina = 0
-//        // TODO: Add functionality for when a person loses all stamina
-//    }
-//}

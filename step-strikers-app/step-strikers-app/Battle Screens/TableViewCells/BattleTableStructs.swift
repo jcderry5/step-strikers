@@ -45,6 +45,7 @@ struct enemyData {
     var isInvisible:Bool
     var imageView:UIImageView
     
+<<<<<<< refs/remotes/origin/add-action-functionality
     // Data needed about the enemies for fighting them
     var armor: Armor
     var defenseModifier: Int
