@@ -113,6 +113,21 @@
             </objects>
             <point key="canvasLocation" x="-1753" y="853"/>
         </scene>
+        <!--Code Entry View Controller-->
+        <scene sceneID="tMb-eO-kvi">
+            <objects>
+                <viewController storyboardIdentifier="CodeEntryViewController" id="c15-KD-j6J" customClass="CodeEntryViewController" customModule="step_strikers_app" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sdi-Nj-ItY">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="hXT-GC-juS"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mzx-nY-rla" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="106" y="1303"/>
+        </scene>
         <!--Battle Select Item View Controller-->
         <scene sceneID="VTG-OQ-QoU">
             <objects>

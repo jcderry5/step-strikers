@@ -11,6 +11,9 @@ import FirebaseFirestore
 var enemiesList: [enemyData] = [enemyData]()
 var teamList: [teamData] = [teamData]()
 
+var selectEnemyLabel:UILabel = UILabel()
+var selectPlayerLabel:UILabel = UILabel()
+
 // these methods are now part of the UIViewController class as more than one view controller needs them
 // i.e. all the battle menus
 extension UIViewController {
@@ -18,17 +21,17 @@ extension UIViewController {
     // shouldn't matter if this one is done last
     // I'm going to leave this here for now in case. duplicate function with Nick's PR
     /*
-    func assignBackground() {
-        let background = UIImage(named: "Background")
-        var imageView: UIImageView!
-        imageView = UIImageView(frame: self.view.frame)
-        imageView.clipsToBounds = true
-        imageView.image = background
-        imageView.center = view.center
-        view.addSubview(imageView)
-        self.view.sendSubviewToBack(imageView)
-    }
-      */
+     func assignBackground() {
+     let background = UIImage(named: "Background")
+     var imageView: UIImageView!
+     imageView = UIImageView(frame: self.view.frame)
+     imageView.clipsToBounds = true
+     imageView.image = background
+     imageView.center = view.center
+     view.addSubview(imageView)
+     self.view.sendSubviewToBack(imageView)
+     }
+     */
     
     // creates the initial top board, without the table
     func createBattleStatsDisplay() {
@@ -63,12 +66,12 @@ extension UIViewController {
         let itemButton:UIButton = createButton(x:137, y:785, width:126, height:50, fontName: fontNamed, imageName: itemSelected, fontColor: UIColor.black, buttonTitle: "ITEM")
         itemButton.addTarget(self, action:#selector(self.itemButtonPressed(_:)), for: .touchUpInside)
         self.view.addSubview(itemButton)
-
+        
         // equip button
         let equipButton:UIButton = createButton(x:254, y:785, width:126, height:50, fontName: fontNamed, imageName: equipSelected, fontColor: UIColor.black, buttonTitle: "EQUIP")
         equipButton.addTarget(self, action:#selector(self.equipButtonPressed(_:)), for: .touchUpInside)
         self.view.addSubview(equipButton)
-
+        
     }
     
     // generic function to create a button
@@ -183,7 +186,7 @@ extension UIViewController {
         // do not change the x y width and height for any of the characters
         // will need to change "name" based on what the enemy players are
         // but that should be dealt with before you call the methods and use the names as the parameter
-//        print(enemiesList[0].name)
+        //        print(enemiesList[0].name)
         // player 1
         let player1 = characterSprites(name: enemiesList[0].character_class)
         let player1Image = player1.drawCharacter(view: self.view, x: 10, y: 400, width: 100, height: 100)
@@ -207,6 +210,11 @@ extension UIViewController {
     // still need to work out the corresponding button methods and what they need as parameters
     // TODO: figure out when to put the red arrow
     func drawEnemiesButton(enemy1:String, enemy2:String, enemy3:String, enemy4:String) -> [UIButton] {
+        // select character label
+        selectEnemyLabel = UILabel(frame: CGRect(x:100, y: 300, width:200, height:100))
+        selectEnemyLabel.text = ("Select an Enemy")
+        selectEnemyLabel.font = UIFont(name: "munro", size: 30)
+        self.view.addSubview(selectEnemyLabel)
         // will need to change "name" based on what the enemy players are
         // player 1
         let player1 = characterSprites(name: enemy1)
@@ -217,7 +225,7 @@ extension UIViewController {
         
         // player 2
         let player2 = characterSprites(name: enemy2)
-//        player2.drawCharacter(view: self.view, x: 100, y: 400, width: 100, height: 100)
+        //        player2.drawCharacter(view: self.view, x: 100, y: 400, width: 100, height: 100)
         let player2Button = player2.drawButtonCharacter(controller: self, x: 100, y: 400, width: 100, height: 100)
         player2Button.addTarget(self, action:#selector(self.enemy2Selected(_:)), for: .touchUpInside)
         self.view.addSubview(player2Button)
@@ -238,6 +246,12 @@ extension UIViewController {
     }
     
     func drawPlayerButtons(player1:String, player2:String, player3:String, player4:String) -> [UIButton] {
+        // label indicating to pick a player to give item to
+        selectPlayerLabel = UILabel(frame: CGRect(x: 50, y: 80, width: 300, height: 75))
+        selectPlayerLabel.text = "Select a team member to give item to"
+        selectPlayerLabel.font = UIFont(name: "munro", size: 18)
+        selectPlayerLabel.textAlignment = .center
+        self.view.addSubview(selectPlayerLabel)
         // self.view.safeAreaInsets.left+40, y: 140, width: 300, height: 300
         let player1Button = createButton(x: 40, y: 140, width: 70, height: 150, fontName: "munro", imageName: "", fontColor: UIColor.clear, buttonTitle: "player1")
         player1Button.backgroundColor = UIColor.clear
@@ -263,6 +277,13 @@ extension UIViewController {
     }
     
     func drawSelectBoxButtonArrowItem(x:Int, y:Int, width:Int, height:Int) -> [AnyObject] {
+        let doubleTapTarget:UILabel = UILabel(frame: CGRect(x:x, y:y - 100, width:110, height:100))
+        doubleTapTarget.text = "Double Tap to Choose Target"
+        doubleTapTarget.numberOfLines = 0
+        doubleTapTarget.lineBreakMode = .byWordWrapping
+        doubleTapTarget.textAlignment = .center
+        doubleTapTarget.font = UIFont(name: "munro", size: 15)
+        self.view.addSubview(doubleTapTarget)
         let selectRectangle = createButton(x: x, y: y, width: width, height: height, fontName: "munro", imageName: "Select Rectangle", fontColor: UIColor.black, buttonTitle: "")
         selectRectangle.addTarget(self, action: #selector(playerBoxSelected(_:event:)), for: UIControl.Event.touchDownRepeat)
         self.view.addSubview(selectRectangle)
@@ -271,10 +292,17 @@ extension UIViewController {
         imageView = UIImageView(frame: CGRect(x:x+10, y: y-30, width: 50, height: 30))
         imageView.image = image
         view.addSubview(imageView)
-        return [selectRectangle, imageView]
+        return [selectRectangle, imageView,doubleTapTarget]
     }
     
     func drawSelectBoxButtonArrow(x:Int, y:Int, width:Int, height:Int) -> [AnyObject] {
+        let doubleTapTarget:UILabel = UILabel(frame: CGRect(x:x, y:y - 100, width:110, height:100))
+        doubleTapTarget.text = "Double Tap to Choose Target"
+        doubleTapTarget.numberOfLines = 0
+        doubleTapTarget.lineBreakMode = .byWordWrapping
+        doubleTapTarget.textAlignment = .center
+        doubleTapTarget.font = UIFont(name: "munro", size: 15)
+        self.view.addSubview(doubleTapTarget)
         let selectRectangle = createButton(x: x, y: y, width: width, height: height, fontName: "munro", imageName: "Select Rectangle", fontColor: UIColor.black, buttonTitle: "")
         selectRectangle.addTarget(self, action: #selector(enemyBoxSelected(_:event:)), for: UIControl.Event.touchDownRepeat)
         self.view.addSubview(selectRectangle)
@@ -283,7 +311,7 @@ extension UIViewController {
         imageView = UIImageView(frame: CGRect(x:x+30, y: y-30, width: 50, height: 30))
         imageView.image = image
         view.addSubview(imageView)
-        return [selectRectangle, imageView]
+        return [selectRectangle, imageView, doubleTapTarget]
     }
     
     // will transder to BattleSelectActionViewController
@@ -329,50 +357,80 @@ extension UIViewController {
     @objc func enemy1Selected(_ sender:UIButton!) {
         // TODO: @Jalyn save which enemy was selected here with a global variable
         // if enemy 1 is selected use enemiesList[0].variableName
-        boxArrow[0].removeFromSuperview()
-        boxArrow[1].removeFromSuperview()
+        selectEnemyLabel.removeFromSuperview()
+        if boxArrow.isEmpty == false {
+            boxArrow[0].removeFromSuperview()
+            boxArrow[1].removeFromSuperview()
+            boxArrow[2].removeFromSuperview()
+        }
         boxArrow = drawSelectBoxButtonArrow(x: 10, y: 400, width: 100, height: 100)
     }
     
     @objc func enemy2Selected(_ sender:UIButton!) {
-        boxArrow[0].removeFromSuperview()
-        boxArrow[1].removeFromSuperview()
+        selectEnemyLabel.removeFromSuperview()
+        if boxArrow.isEmpty == false {
+            boxArrow[0].removeFromSuperview()
+            boxArrow[1].removeFromSuperview()
+            boxArrow[2].removeFromSuperview()
+        }
         boxArrow = drawSelectBoxButtonArrow(x: 100, y: 400, width: 100, height: 100)
     }
     
     @objc func enemy3Selected(_ sender:UIButton!) {
-        boxArrow[0].removeFromSuperview()
-        boxArrow[1].removeFromSuperview()
+        selectEnemyLabel.removeFromSuperview()
+        if boxArrow.isEmpty == false {
+            boxArrow[0].removeFromSuperview()
+            boxArrow[1].removeFromSuperview()
+            boxArrow[2].removeFromSuperview()
+        }
         boxArrow = drawSelectBoxButtonArrow(x: 200, y: 400, width: 100, height: 100)
     }
     
     @objc func enemy4Selected(_ sender:UIButton!) {
-        boxArrow[0].removeFromSuperview()
-        boxArrow[1].removeFromSuperview()
+        selectEnemyLabel.removeFromSuperview()
+        if boxArrow.isEmpty == false {
+            boxArrow[0].removeFromSuperview()
+            boxArrow[1].removeFromSuperview()
+            boxArrow[2].removeFromSuperview()
+        }
         boxArrow = drawSelectBoxButtonArrow(x: 290, y: 400, width: 100, height: 100)
     }
     
     @objc func player1Selected(_ sender:UIButton!) {
-        boxArrow[0].removeFromSuperview()
-        boxArrow[1].removeFromSuperview()
+        selectPlayerLabel.removeFromSuperview()
+        if boxArrow.isEmpty == false {
+            boxArrow[0].removeFromSuperview()
+            boxArrow[1].removeFromSuperview()
+            boxArrow[2].removeFromSuperview()
+        }
         boxArrow = drawSelectBoxButtonArrowItem(x: 40, y: 130, width: 70, height: 150)
     }
     
     @objc func player2Selected(_ sender:UIButton!) {
-        boxArrow[0].removeFromSuperview()
-        boxArrow[1].removeFromSuperview()
+        selectPlayerLabel.removeFromSuperview()
+        if boxArrow.isEmpty == false {
+            boxArrow[0].removeFromSuperview()
+            boxArrow[1].removeFromSuperview()
+            boxArrow[2].removeFromSuperview()
+        }
         boxArrow = drawSelectBoxButtonArrowItem(x: 120, y: 130, width: 70, height: 150)
     }
     
-    @objc func player3Selected(_ sender:UIButton!) {
-        boxArrow[0].removeFromSuperview()
-        boxArrow[1].removeFromSuperview()
+    @objc func player3Selected(_ sender:UIButton!) {        selectPlayerLabel.removeFromSuperview()
+        if boxArrow.isEmpty == false {
+            boxArrow[0].removeFromSuperview()
+            boxArrow[1].removeFromSuperview()
+            boxArrow[2].removeFromSuperview()
+        }
         boxArrow = drawSelectBoxButtonArrowItem(x: 200, y: 130, width: 70, height: 150)
     }
     
-    @objc func player4Selected(_ sender:UIButton!) {
-        boxArrow[0].removeFromSuperview()
-        boxArrow[1].removeFromSuperview()
+    @objc func player4Selected(_ sender:UIButton!) {        selectPlayerLabel.removeFromSuperview()
+        if boxArrow.isEmpty == false {
+            boxArrow[0].removeFromSuperview()
+            boxArrow[1].removeFromSuperview()
+            boxArrow[2].removeFromSuperview()
+        }
         boxArrow = drawSelectBoxButtonArrowItem(x: 270, y: 130, width: 70, height: 150)
     }
     

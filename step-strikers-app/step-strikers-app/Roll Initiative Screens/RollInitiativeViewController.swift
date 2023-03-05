@@ -9,17 +9,20 @@ import UIKit
 import SpriteKit
 
 class RollInitiativeViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
        assignBackground()
-//        let dice = rollDice()
-//        self.view.addSubview(dice)
         rollD20()
     }
     
     func createDiceButton() -> UIButton {
+        var pressToContinueLabel = UILabel(frame: CGRect(x: 75, y: 100, width: 250, height: 100))
+        pressToContinueLabel.text = "Tap dice to continue"
+        pressToContinueLabel.font = UIFont(name: "munro", size: 30)
+        pressToContinueLabel.textAlignment = .center
+        self.view.addSubview(pressToContinueLabel)
         let imageName = "d20"
         let image = UIImage(named: imageName)
         let diceButton = UIButton(frame: CGRect(x: 75, y: 150, width: 250, height: 250))
