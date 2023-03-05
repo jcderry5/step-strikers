@@ -26,11 +26,11 @@ class StatsViewController: UIViewController {
         _ = createImage(x:0, y:219, w:393, h:374, name:"Display Board")
         
         // Pull stats data from LocalCharacter and use as label text
-        let characterClass = LocalCharacter.getCharacterClass()
+        let characterClass = localCharacter.getCharacterClass()
         
         // Health stats
-        let currHealth = LocalCharacter.currHealth
-        let maxHealth = LocalCharacter.maxHealth
+        let currHealth = localCharacter.currHealth
+        let maxHealth = localCharacter.maxHealth
         _ = createImage(x: 25, y: 251, w: 75, h: 75, name: "health")
         _ = createLabel(x: 116, y: 251, w: 150, h: 65, font: "munro", size: 33, text: "\(currHealth)/\(maxHealth)", align: .left)
         
@@ -45,13 +45,13 @@ class StatsViewController: UIViewController {
         _ = createLabel(x: 116, y: 326, w: 150, h: 65, font: "munro", size: 33, text: "\(currMagic)/\(maxMagic)", align: .left)
         
         // Stamina stats
-        let currStamina = LocalCharacter.currStamina
-        let maxStamina = LocalCharacter.maxStamina
+        let currStamina = localCharacter.currStamina
+        let maxStamina = localCharacter.maxStamina
         _ = createImage(x: 45, y: 411, w: 45, h: 65, name: "lightningbolt")
-        _ = createLabel(x: 116, y: 411, w: 150, h: 65, font: "munro", size: 33, text: "\(LocalCharacter.currStamina)/\(LocalCharacter.maxStamina)", align: .left)
+        _ = createLabel(x: 116, y: 411, w: 150, h: 65, font: "munro", size: 33, text: "\(localCharacter.currStamina)/\(localCharacter.maxStamina)", align: .left)
         
         // Armor class
-        let ac = LocalCharacter.currArmor.armorClass
+        let ac = localCharacter.currArmor.armorClass
         _ = createImage(x: 35, y: 486, w: 65, h: 75, name: "Shield")
         _ = createLabel(x: 116, y: 496, w: 150, h: 65, font: "munro", size: 33, text: "\(ac)", align: .left)
 

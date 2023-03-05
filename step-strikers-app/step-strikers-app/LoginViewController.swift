@@ -7,7 +7,7 @@
 
 import UIKit
 import FirebaseFirestore
-var LocalCharacter: RPGCharacter!
+var localCharacter: RPGCharacter!
 
 class LoginViewController: UIViewController {
     let munro = "munro"
@@ -139,15 +139,15 @@ class LoginViewController: UIViewController {
                     itemInventoryToStore += [currItemToStore]
                 }
                 
-                LocalCharacter.itemsInInventory = itemInventoryToStore
+                localCharacter.itemsInInventory = itemInventoryToStore
                 
                 // Add modifiers
-                LocalCharacter.attackModifier = attackModifier
-                LocalCharacter.defenseModifier = defenseModifier
-                LocalCharacter.magicResistanceModifier = magicResistanceModifier
+                localCharacter.attackModifier = attackModifier
+                localCharacter.defenseModifier = defenseModifier
+                localCharacter.magicResistanceModifier = magicResistanceModifier
                 
                 // For Testing:
-                // LocalCharacter.printLocalCharacterDetailsToConsole()
+                // localCharacter.printLocalCharacterDetailsToConsole()
                 
                 if username == "Player 1" {
                     game = "zIuUhRjKte6oUcvdrP4D"
