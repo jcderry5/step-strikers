@@ -12,6 +12,7 @@ class RegistrationViewController: UIViewController {
     let munro = "munro"
     var usernameTextField:UITextField?
     var passwordTextField:UITextField?
+    var confirmPasswordTextField:UITextField?
     
     let buttonImg = UIImage(named:"Menu Button")
     let selectedImg = UIImage(named:"Selected Menu Button")
@@ -25,19 +26,21 @@ class RegistrationViewController: UIViewController {
         
         // Username
         _ = createLabel(x:9, y:321, w:137, h:25, font:munro, size:22, text:"Username:", align:.right)
-        var username = createTextField(x:154, y:321, w:202, h:34, secured:false)
+        let username = createTextField(x:154, y:321, w:202, h:34, secured:false)
         self.usernameTextField = username!
         username?.text = ""
         
         // Password
         _ = createLabel(x:9, y:372, w:137, h:25, font:munro, size:22, text:"Password:", align:.right)
-        var password = createTextField(x:154, y:372, w:202, h:34, secured:true)
+        let password = createTextField(x:154, y:372, w:202, h:34, secured:true)
         self.passwordTextField = password!
         password?.text = ""
         
         // Confirm password
         _ = createLabel(x:9, y:423, w:137, h:25, font:munro, size:22, text:"Confirm Pwd:", align:.right)
-        _ = createTextField(x:154, y:423, w:202, h:34, secured:true)
+        let confirmPassword = createTextField(x:154, y:423, w:202, h:34, secured:true)
+        self.confirmPasswordTextField = confirmPassword!
+        confirmPassword?.text = ""
                 
         // Register button design
         let registerButton = createButton(x:116, y:560, w:160, h:100, text:"REGISTER", fontSize:24, normalImage:buttonImg!, highlightedImage:selectedImg!)
@@ -52,18 +55,50 @@ class RegistrationViewController: UIViewController {
         // TODO: Register credentials to Firebase and navigate to Stats screen
         if self.usernameTextField!.text == "" {
             // TODO: @Nick don't print this, display it on the screen
-            print("username not entered")
+            print("Username not entered")
         } else if passwordTextField!.text == "" {
             // TODO: @Nick don't print this, display it on the screen
-            print("password not entered")
+            print("Password not entered")
+        } else if passwordTextField!.text != confirmPasswordTextField!.text {
+            // TODO: @Nick don't print this, display it on the screen
+            print("Passwords are not matching")
         } else {
-            Firestore.firestore().collection("players").document(self.usernameTextField!.text!).setData(["password": self.passwordTextField!.text!]) { err in if let err = err {
+            // This is just dummy data. In beta most of this will be populated by the character creation screen
+            Firestore.firestore().collection("players").document(self.usernameTextField!.text!).setData([
+                "password": self.passwordTextField!.text!,
+                "armor_inventory": [],
+                "attack_modifier": 0,
+                "character_name": "New character",
+                "class": "Bard",
+                "current_armor": "00No Armor",
+                "current_weapon": "00Fists",
+                "defense_modifier": 0,
+                "has_advantage": false,
+                "health": 20,
+                "is_blind": false,
+                "is_invisible": false,
+                "item_inventory": [],
+                "magic_resistance_modifier": 0,
+                "spell_points": 10,
+                "stamina": 20,
+                "weapon_inventory": []
+            ]) { err in if let err = err {
                     print("Error writing document: \(err)")
                 }
             }
+            
+            // Temporarily hardcoded
+            game = "zIuUhRjKte6oUcvdrP4D"
+            player = self.usernameTextField!.text!
+            
+            // TODO: For beta go to character creation screen
+            let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = sb.instantiateViewController(withIdentifier: "RollInitiativeViewController") as! RollInitiativeViewController
+
+            self.modalPresentationStyle = .fullScreen
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: false)
         }
-        
-        // TODO: @Nick for beta go to character creation screen
     }
     
     @objc func signInPressed() {
