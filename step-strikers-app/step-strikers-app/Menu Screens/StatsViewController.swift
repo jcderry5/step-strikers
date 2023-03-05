@@ -84,6 +84,7 @@ class StatsViewController: UIViewController {
         
         // Swipe area
         _ = createImage(x: 140, y: 716, w: 112, h: 112, name: characterClass)
+        _ = createLabel(x: 285, y: 690, w: 92, h: 67, font: "munro", size: 20, text: "SWIPE", align: .center)
         _ = createImage(x: 275, y: 739, w: 112, h: 62, name: "right arrow")
         
         // Swipe left handler
