@@ -67,6 +67,11 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
         return cell
     }
     
+    // Adjust size of each cell
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 75
+    }
+    
     @objc func swipeLeft() {
         // TODO: Navigate to BATTLE MENU
     }

@@ -22,7 +22,7 @@ class InventoryTableViewCell: UITableViewCell {
     private let name : UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = UIFont(name: "munro", size: 15)
+        label.font = UIFont(name: "munro", size: 35)
         label.text = "HELLO THERE"
         return label
     }()
@@ -30,7 +30,7 @@ class InventoryTableViewCell: UITableViewCell {
     private let quantity : UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = UIFont(name: "munro", size: 15)
+        label.font = UIFont(name: "munro", size: 35)
         label.text = "x10"
         return label
     }()
@@ -52,8 +52,8 @@ class InventoryTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         // TODO: Fix these awful configurations
         super.layoutSubviews()
-        image.frame = CGRect(x: 5, y: 5, width: 100, height: contentView.frame.size.height - 10)
-        name.frame = CGRect(x: 10+image.frame.size.width, y: 0, width: 100, height: contentView.frame.size.height - 10)
-        quantity.frame = CGRect(x: 10+name.frame.size.width, y: 3, width: 100, height: contentView.frame.size.height - 10)
+        image.frame = CGRect(x: 10, y: 5, width: contentView.frame.size.height - 10, height: contentView.frame.size.height - 10)
+        name.frame = CGRect(x: 30+image.frame.size.width, y: 3, width: 200, height: contentView.frame.size.height - 10)
+        quantity.frame = CGRect(x: 30+image.frame.size.width+name.frame.size.width, y: 3, width: 100, height: contentView.frame.size.height - 10)
     }
 }
