@@ -92,51 +92,6 @@ func resetPlayerStats(player:String) {
     ], merge: true)
 }
 
-// This will be called once the observer sees that hasStarted is true
-func startGame(player: String, game: String){
-    // temporary until team matching is done in beta
-    // reset database so I don't have to keep doing it manually between every test
-    Firestore.firestore().collection("games").document(game).setData([
-        "combat_started": false,
-        "initiative": [],
-        "messages": [],
-        ], merge: true)
-    Firestore.firestore().collection("last_players").document(game).setData([
-        "last_player": ""], merge: true)
-    // end of temp code
-    
-    
-//    var isLeader = Bool()
-//    var doneListening = false
-//    let docRef = Firestore.firestore().collection("games").document(game)
-//    docRef.getDocument { (document, error) in
-//        if let document = document, document.exists {
-//            isLeader = (document.get("game_leader") as! String == player)
-//
-//            if isLeader {
-//                // wait for everyone to finish rolling initiative and send info to server
-//                docRef.addSnapshotListener {
-//                    documentSnapshot, error in guard let document = documentSnapshot else {
-//                        print("Error fetching document: \(error!)")
-//                        return
-//                    }
-//
-//                    let data = document.data()
-//                    var dict = [String:Int]()
-//                    dict = data?["initiative"] as! [String:Int]
-//
-//                    if dict.count == data?["num_players"] as! Int && !doneListening {
-//                        print("finished listening, calling setOrder()")
-//                        doneListening = true
-//                        setOrder(initiative: dict, game: game)
-//                        return
-//                    }
-//                }
-//            }
-//        }
-//    }
-}
-
 func rollInitiative(player:String, game: String) -> Int{
     let initiative = rollDie(quant: 1, sides: 20)
         
@@ -144,27 +99,6 @@ func rollInitiative(player:String, game: String) -> Int{
     Firestore.firestore().collection("games").document(game).updateData(["initiative.\(player)": initiative])
     return initiative
 }
-
-//func setOrder(initiative: [String:Int], game: String){
-//    // sort initiative
-//    let sorted = initiative.sorted { (first, second) -> Bool in
-//        return first.value > second.value
-//    }
-//
-//    // get ordered usernames into an array
-//    var order : Array<String> = Array()
-//    for elem in sorted {
-//        order.append(elem.key)
-//    }
-//
-//    // write array to database and signal that game is ready to start
-//    Firestore.firestore().collection("games").document(game).setData([
-//        "initial_order": order,
-//        "combat_start": true
-//    ], merge: true)
-//    Firestore.firestore().collection("orders").document(game).setData(["order": order], merge: true)
-//    print("Initial order written")
-//}
 
 func rollDie(quant: Int, sides: Int) -> Int {
     var sum = 0

@@ -131,7 +131,7 @@ class LoginViewController: UIViewController {
                 var itemInventoryToStore: [Item] = []
                 for item in itemInventory {
                     // Store rebuilt item in inventory
-                    let currItemToStore: Item = rebuildItem(itemName: item, owner: LocalCharacter)
+                    let currItemToStore: Item = rebuildItem(itemName: item, owner: localCharacter)
                     itemInventoryToStore += [currItemToStore]
                 }
                 

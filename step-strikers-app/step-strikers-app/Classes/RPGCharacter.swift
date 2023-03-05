@@ -65,24 +65,24 @@ class RPGCharacter {
     }
     
     func printLocalCharacterDetailsToConsole(){
-        print("Character Name: \(LocalCharacter.characterName)")
-        print("Character Name: \(LocalCharacter.userName)")
+        print("Character Name: \(localCharacter.characterName)")
+        print("Character Name: \(localCharacter.userName)")
         
         // Character Stats Variables
-        print("Curr Health: \(LocalCharacter.currHealth)")
-        print("Curr Stamina: \(LocalCharacter.currStamina)")
+        print("Curr Health: \(localCharacter.currHealth)")
+        print("Curr Stamina: \(localCharacter.currStamina)")
         
         // Inventory Variables
-        print("Weapon Inventory Count: \(LocalCharacter.weaponsInInventory.count)")
-        print("Curr Weapon: \(LocalCharacter.currWeapon.name)")
-        print("Armor Inventory Count: \(LocalCharacter.armorInInventory.count)")
-        print("CurrArmor: \(LocalCharacter.currArmor.name)")
-        print("Item Inventory Count: \(LocalCharacter.itemsInInventory.count)")
+        print("Weapon Inventory Count: \(localCharacter.weaponsInInventory.count)")
+        print("Curr Weapon: \(localCharacter.currWeapon.name)")
+        print("Armor Inventory Count: \(localCharacter.armorInInventory.count)")
+        print("CurrArmor: \(localCharacter.currArmor.name)")
+        print("Item Inventory Count: \(localCharacter.itemsInInventory.count)")
         
         // Rolling modifiers
-        print("Attack Modifier: \(LocalCharacter.attackModifier)")
-        print("Defense Modifer: \(LocalCharacter.defenseModifier)")
-        print("Magic Resistance Modifier: \(LocalCharacter.magicResistanceModifier)")
+        print("Attack Modifier: \(localCharacter.attackModifier)")
+        print("Defense Modifer: \(localCharacter.defenseModifier)")
+        print("Magic Resistance Modifier: \(localCharacter.magicResistanceModifier)")
     }
     
     // Universal Functions

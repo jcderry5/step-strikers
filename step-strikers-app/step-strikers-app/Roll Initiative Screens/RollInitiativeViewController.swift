@@ -45,7 +45,7 @@ class RollInitiativeViewController: UIViewController {
     }
     
     func rollD20() {
-        startGame(player: player, game: game)
+//        startGame(player: player, game: game)
         let initiative = rollInitiative(player: player, game: game)
         let d20  = SKSpriteNode(imageNamed: "d20")
 //        image.position = CGPoint(x:100, y: 200)
