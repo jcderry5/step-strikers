@@ -131,9 +131,11 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
             characterButtons[1].removeFromSuperview()
             characterButtons[2].removeFromSuperview()
             characterButtons[3].removeFromSuperview()
-            boxArrow[0].removeFromSuperview()
-            boxArrow[1].removeFromSuperview()
-            boxArrow[2].removeFromSuperview()
+            if boxArrow.isEmpty == false {
+                boxArrow[0].removeFromSuperview()
+                boxArrow[1].removeFromSuperview()
+                boxArrow[2].removeFromSuperview()
+            }
             tableView.deselectRow(at: indexPath, animated:false)
             self.view.addSubview(enemiesList[0].imageView)
             self.view.addSubview(enemiesList[1].imageView)
@@ -237,75 +239,75 @@ func performBattleAction() {
     // rowSelected holds your action struct
     
     // Generic action all players can do
-    if actionPerformed == "Fight" {LocalCharacter.fight()}
+    if actionPerformed == "Fight" {localCharacter.fight()}
 
     print("The action performed= \(actionPerformed)")
     // Validating character name with actions they can doo
-    if (LocalCharacter.getCharacterClass() == "Fighter"){
+    if (localCharacter.getCharacterClass() == "Fighter"){
         switch actionPerformed {
         case "Second Wind":
-            (LocalCharacter as! Fighter).secondWind()
+            (localCharacter as! Fighter).secondWind()
         case "Action Surge":
-            (LocalCharacter as! Fighter).actionSurge()
+            (localCharacter as! Fighter).actionSurge()
         case "Sharpen Weapon":
-            (LocalCharacter as! Fighter).sharpenWeapon()
+            (localCharacter as! Fighter).sharpenWeapon()
         default:
             print("A fighter is trying to do a non-fighter action")
-            LocalCharacter.fight()
+            localCharacter.fight()
         }
-    } else if (LocalCharacter.getCharacterClass() == "Rogue") {
+    } else if (localCharacter.getCharacterClass() == "Rogue") {
         switch actionPerformed {
         case "Uncanny Dodge":
-            (LocalCharacter as! Rogue).uncannyDodge()
+            (localCharacter as! Rogue).uncannyDodge()
         case "Hone Skill":
-            (LocalCharacter as! Rogue).honeSkill()
+            (localCharacter as! Rogue).honeSkill()
         case "Insight":
-            (LocalCharacter as! Rogue).insight()
+            (localCharacter as! Rogue).insight()
         case "Allsight":
-            (LocalCharacter as! Rogue).allSight()
+            (localCharacter as! Rogue).allSight()
         default:
             print("A Rogue is trying to do a non-rogue action")
-            LocalCharacter.fight()
+            localCharacter.fight()
         }
-    } else if (LocalCharacter.getCharacterClass() == "Wizard") {
+    } else if (localCharacter.getCharacterClass() == "Wizard") {
         switch actionPerformed {
         case "Frost Bite":
-            (LocalCharacter as! Wizard).castFrostbite(caster: LocalCharacter.characterName, target: currTarget.name)
+            (localCharacter as! Wizard).castFrostbite(caster: localCharacter.characterName, target: currTarget.name)
         case "Mage Hand":
-            (LocalCharacter as! Wizard).castMageHand(caster: LocalCharacter.characterName, target: currTarget.name)
+            (localCharacter as! Wizard).castMageHand(caster: localCharacter.characterName, target: currTarget.name)
         case "Shield":
-            (LocalCharacter as! Wizard).castShield(caster: LocalCharacter.characterName, target: currTarget.name)
+            (localCharacter as! Wizard).castShield(caster: localCharacter.characterName, target: currTarget.name)
         case "Sleep":
-            (LocalCharacter as! Wizard).sleep(caster: LocalCharacter.characterName, target: currTarget.name)
+            (localCharacter as! Wizard).sleep(caster: localCharacter.characterName, target: currTarget.name)
         case "Animate the Dead":
-            (LocalCharacter as! Wizard).castAnimateDead(caster: LocalCharacter.characterName, target: currTarget.name)
+            (localCharacter as! Wizard).castAnimateDead(caster: localCharacter.characterName, target: currTarget.name)
         case "Heal":
-            (LocalCharacter as! Wizard).heal(caster: LocalCharacter.characterName, target: currTarget.name)
+            (localCharacter as! Wizard).heal(caster: localCharacter.characterName, target: currTarget.name)
         default:
             print("A wizard is trying to do a non-wizard action")
-            LocalCharacter.fight()
+            localCharacter.fight()
         }
-    } else if (LocalCharacter.getCharacterClass() == "Bard") {
+    } else if (localCharacter.getCharacterClass() == "Bard") {
         switch actionPerformed {
         case "Mage Hand":
-            (LocalCharacter as! Bard).castMageHand(caster: LocalCharacter.characterName, target: currTarget.name)
+            (localCharacter as! Bard).castMageHand(caster: localCharacter.characterName, target: currTarget.name)
         case "Bardic Inspiration":
-            (LocalCharacter as! Bard).castBardicInspiration(caster: LocalCharacter.characterName, target: currTarget.name)
+            (localCharacter as! Bard).castBardicInspiration(caster: localCharacter.characterName, target: currTarget.name)
         case "Vicious Mockery":
-            (LocalCharacter as! Bard).castViciousMockery(caster: LocalCharacter.characterName, target: currTarget.name)
+            (localCharacter as! Bard).castViciousMockery(caster: localCharacter.characterName, target: currTarget.name)
         case "Blindness":
-            (LocalCharacter as! Bard).castBlindness(caster: LocalCharacter.characterName, target: currTarget.name, game: game)
+            (localCharacter as! Bard).castBlindness(caster: localCharacter.characterName, target: currTarget.name, game: game)
         case "Invisibility":
-            (LocalCharacter as! Bard).castInvisibility(caster: LocalCharacter.characterName, target: currTarget.name, game: game)
+            (localCharacter as! Bard).castInvisibility(caster: localCharacter.characterName, target: currTarget.name, game: game)
         case "Motivational Speech":
-            (LocalCharacter as! Bard).castMotivationalSpeech(caster: LocalCharacter.characterName, team: team)
+            (localCharacter as! Bard).castMotivationalSpeech(caster: localCharacter.characterName, team: team)
         default:
             print("A bard is trying to do a non-bard action")
-            LocalCharacter.fight()
+            localCharacter.fight()
         }
     }
     print("Just finished perform battle action. Here are new enemy stats")
     currTarget.printEnemyData()
     print("Here are the stats of Local Character")
-    LocalCharacter.printLocalCharacterDetailsToConsole()
+    localCharacter.printLocalCharacterDetailsToConsole()
 }
