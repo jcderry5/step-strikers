@@ -363,7 +363,6 @@ extension UIViewController {
     @objc func enemy1Selected(_ sender:UIButton!) {
         updateCurrTargetData(enemyIndex: 0)
         // if enemy 1 is selected use enemiesList[0].variableName
-        updateCurrTargetData(enemyIndex: 0)
         selectEnemyLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
             boxArrow[0].removeFromSuperview()
