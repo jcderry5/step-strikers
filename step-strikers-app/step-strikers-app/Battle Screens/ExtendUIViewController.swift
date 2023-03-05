@@ -112,21 +112,26 @@ extension UIViewController {
                     gameRef.getDocument { (document2, error) in
                         if let document2 = document2, document2.exists {
                             let data = document2.data()
+                            let userName = enemy
                             let name = data!["character_name"] as! String
+                            print("name is= \(name)")
                             let character_class = data!["class"] as! String
                             let health = data!["health"] as! Int
                             let isBlind = data!["is_blind"] as! Bool
                             let isInvisible = data!["is_invisible"] as! Bool
-                            let userName = enemy
+                            let defenseModifier = data!["defense_modifier"] as! Int
+                            // Rebuild all armor and add them to inventory
+                            let armorInventory = data!["armor_inventory"] as! [String]
+                            let armorInventoryToStore = rebuildArmorInventory(armorInventory: armorInventory)
+                            let armor = data!["current_armor"] as! String
+
+                            let currArmorToStore: Armor = rebuildArmorToStore(armorToStore: armor)
                             
-                            // replace this with whatever data structure you want
-                            let newTuple = (name, character_class, health, isBlind, isInvisible)
-                            print(newTuple)
                             // or don't save info and do UI stuff here one enemy at a time
                             let player1 = characterSprites(name: character_class)
                             let player1Image = player1.drawCharacter(view: self.view, x: xValues[count], y: 400, width: 100, height: 100)
-                            // TODO: @Jalyn change append with the enemyData struct to include the variables you add
-                            enemiesList.append(enemyData(userName: userName, name: name, character_class: character_class, health: health, isBlind: isBlind, isInvisible: isInvisible,imageView: player1Image!))
+                            
+                            enemiesList.append(enemyData(userName: userName, name: name, character_class: character_class, health: health, isBlind: isBlind, isInvisible: isInvisible,imageView: player1Image!, armor: currArmorToStore, defenseModifier: defenseModifier, armorInInventory: armorInventoryToStore))
                             
                             count = count + 1
                         } else {
@@ -138,6 +143,7 @@ extension UIViewController {
                 print("This team does not exist")
             }
         }
+        print("The number of enemies are \(enemiesList.count)")
     }
     
     func renderTeam(enemyTeam: String) {
@@ -355,7 +361,7 @@ extension UIViewController {
     }
     
     @objc func enemy1Selected(_ sender:UIButton!) {
-        // TODO: @Jalyn save which enemy was selected here with a global variable
+        updateCurrTargetData(enemyIndex: 0)
         // if enemy 1 is selected use enemiesList[0].variableName
         selectEnemyLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
@@ -367,6 +373,7 @@ extension UIViewController {
     }
     
     @objc func enemy2Selected(_ sender:UIButton!) {
+        updateCurrTargetData(enemyIndex: 1)
         selectEnemyLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
             boxArrow[0].removeFromSuperview()
@@ -375,8 +382,9 @@ extension UIViewController {
         }
         boxArrow = drawSelectBoxButtonArrow(x: 100, y: 400, width: 100, height: 100)
     }
-    
+
     @objc func enemy3Selected(_ sender:UIButton!) {
+        updateCurrTargetData(enemyIndex: 2)
         selectEnemyLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
             boxArrow[0].removeFromSuperview()
@@ -387,6 +395,7 @@ extension UIViewController {
     }
     
     @objc func enemy4Selected(_ sender:UIButton!) {
+        updateCurrTargetData(enemyIndex: 3)
         selectEnemyLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
             boxArrow[0].removeFromSuperview()
@@ -436,6 +445,9 @@ extension UIViewController {
     
     @objc func enemyBoxSelected(_ sender:UIButton, event: UIEvent) {
         // TODO: if you want to save things before transferring view controllers do it here From action -> roll to hit
+        // TODO: @Jalyn call performBattleActions
+        print("perform Battle Action has just been called")
+        performBattleAction()
         let touch: UITouch = event.allTouches!.first!
         if (touch.tapCount == 2) {
             // save the variables after you know its a double tap
@@ -462,5 +474,18 @@ extension UIViewController {
             vc.modalPresentationStyle = .fullScreen
             self.present(vc,animated: false)
         }
+    }
+    
+    func updateCurrTargetData(enemyIndex: Int) {
+        print("We got inside updateCurrTargetData.... Which is good?")
+        currTarget.name = enemiesList[enemyIndex].name
+        currTarget.character_class = enemiesList[enemyIndex].character_class
+        currTarget.health = enemiesList[enemyIndex].health
+        currTarget.armor = enemiesList[enemyIndex].armor
+        currTarget.defenseModifier = enemiesList[enemyIndex].defenseModifier
+        currTarget.armorInInventory = enemiesList[enemyIndex].armorInInventory
+        
+        print("Just updated currTarget. Here are the results:")
+        currTarget.printEnemyData()
     }
 }

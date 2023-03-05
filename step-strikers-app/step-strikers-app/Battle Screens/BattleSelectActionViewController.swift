@@ -9,9 +9,11 @@ import UIKit
 
 var boxArrow: [AnyObject] = [AnyObject]()
 var rowSelected:Action?
+var currTarget: currTargetData = currTargetData(name: "", character_class: "", health: 30, armor: noArmor(), defenseModifier: 0, armorInInventory: [noArmor()]) //TODO: @jalyn fix later...need to initialize it to something
 var actions: [Action] = [Action]()
 var player: String = ""
 var game: String = ""
+var team:String = "" // TODO: @Kelly, Set this global var
 
 class BattleSelectActionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -129,9 +131,11 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
             characterButtons[1].removeFromSuperview()
             characterButtons[2].removeFromSuperview()
             characterButtons[3].removeFromSuperview()
-            boxArrow[0].removeFromSuperview()
-            boxArrow[1].removeFromSuperview()
-            boxArrow[2].removeFromSuperview()
+            if boxArrow.isEmpty == false {
+                boxArrow[0].removeFromSuperview()
+                boxArrow[1].removeFromSuperview()
+                boxArrow[2].removeFromSuperview()
+            }
             tableView.deselectRow(at: indexPath, animated:false)
             self.view.addSubview(enemiesList[0].imageView)
             self.view.addSubview(enemiesList[1].imageView)
@@ -139,7 +143,7 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
             self.view.addSubview(enemiesList[3].imageView)
         } else {
             selected = true
-            rowSelected = actions[indexPath.row]
+            rowSelected = actions[indexPath.row] // Actions stuct (holds
             recentlyTapped = indexPath.row
             if tableView == actionDisplay {
                 // TODO: @Jalyn rowSelected (global) holds the action object/struct of the row selected, rowSelected.name is the string itself
@@ -228,4 +232,82 @@ struct characterSprites {
         let characterButton = controller.createButton(x:x, y:y, width:width, height:height, fontName: "munro", imageName:imageName, fontColor: UIColor.black, buttonTitle:"")
         return characterButton
     }
+}
+
+func performBattleAction() {
+    let actionPerformed: String = rowSelected?.name! ?? "Fight"
+    // rowSelected holds your action struct
+    
+    // Generic action all players can do
+    if actionPerformed == "Fight" {localCharacter.fight()}
+
+    print("The action performed= \(actionPerformed)")
+    // Validating character name with actions they can doo
+    if (localCharacter.getCharacterClass() == "Fighter"){
+        switch actionPerformed {
+        case "Second Wind":
+            (localCharacter as! Fighter).secondWind()
+        case "Action Surge":
+            (localCharacter as! Fighter).actionSurge()
+        case "Sharpen Weapon":
+            (localCharacter as! Fighter).sharpenWeapon()
+        default:
+            print("A fighter is trying to do a non-fighter action")
+            localCharacter.fight()
+        }
+    } else if (localCharacter.getCharacterClass() == "Rogue") {
+        switch actionPerformed {
+        case "Uncanny Dodge":
+            (localCharacter as! Rogue).uncannyDodge()
+        case "Hone Skill":
+            (localCharacter as! Rogue).honeSkill()
+        case "Insight":
+            (localCharacter as! Rogue).insight()
+        case "Allsight":
+            (localCharacter as! Rogue).allSight()
+        default:
+            print("A Rogue is trying to do a non-rogue action")
+            localCharacter.fight()
+        }
+    } else if (localCharacter.getCharacterClass() == "Wizard") {
+        switch actionPerformed {
+        case "Frost Bite":
+            (localCharacter as! Wizard).castFrostbite(caster: localCharacter.characterName, target: currTarget.name)
+        case "Mage Hand":
+            (localCharacter as! Wizard).castMageHand(caster: localCharacter.characterName, target: currTarget.name)
+        case "Shield":
+            (localCharacter as! Wizard).castShield(caster: localCharacter.characterName, target: currTarget.name)
+        case "Sleep":
+            (localCharacter as! Wizard).sleep(caster: localCharacter.characterName, target: currTarget.name)
+        case "Animate the Dead":
+            (localCharacter as! Wizard).castAnimateDead(caster: localCharacter.characterName, target: currTarget.name)
+        case "Heal":
+            (localCharacter as! Wizard).heal(caster: localCharacter.characterName, target: currTarget.name)
+        default:
+            print("A wizard is trying to do a non-wizard action")
+            localCharacter.fight()
+        }
+    } else if (localCharacter.getCharacterClass() == "Bard") {
+        switch actionPerformed {
+        case "Mage Hand":
+            (localCharacter as! Bard).castMageHand(caster: localCharacter.characterName, target: currTarget.name)
+        case "Bardic Inspiration":
+            (localCharacter as! Bard).castBardicInspiration(caster: localCharacter.characterName, target: currTarget.name)
+        case "Vicious Mockery":
+            (localCharacter as! Bard).castViciousMockery(caster: localCharacter.characterName, target: currTarget.name)
+        case "Blindness":
+            (localCharacter as! Bard).castBlindness(caster: localCharacter.characterName, target: currTarget.name, game: game)
+        case "Invisibility":
+            (localCharacter as! Bard).castInvisibility(caster: localCharacter.characterName, target: currTarget.name, game: game)
+        case "Motivational Speech":
+            (localCharacter as! Bard).castMotivationalSpeech(caster: localCharacter.characterName, team: team)
+        default:
+            print("A bard is trying to do a non-bard action")
+            localCharacter.fight()
+        }
+    }
+    print("Just finished perform battle action. Here are new enemy stats")
+    currTarget.printEnemyData()
+    print("Here are the stats of Local Character")
+    localCharacter.printLocalCharacterDetailsToConsole()
 }

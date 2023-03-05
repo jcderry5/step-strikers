@@ -70,52 +70,17 @@ class LoginViewController: UIViewController {
                 let defenseModifier = document.get("defense_modifier") as! Int
                 let magicResistanceModifier = document.get("magic_resistance_modifier") as! Int
                 
+                // Rebuild weaponInventory and weapon to store
                 let weaponInventory = document.get("weapon_inventory") as! [String]
-                var weaponInventoryToStore: [Weapon] = []
-                // Rebuild all weapons and add them to inventory
-                for weapon in weaponInventory {
-                    // Splitting Weapon + UseCount from a single string
-                    let weaponUseCountTuple = splitObjAndUseCount(objWithUseCount: weapon)
-                    let weaponName = weaponUseCountTuple.objectName
-                    let weaponUseCount: Int = weaponUseCountTuple.useCount
-                    
-                    // Store rebuilt weapon in inventory
-                    let weaponToStore: Weapon = rebuildWeapon(weaponName: weaponName, useCount: weaponUseCount)
-                    weaponInventoryToStore += [weaponToStore]
-                }
-                
+                let weaponInventoryToStore: [Weapon] = rebuildWeaponInventory(weaponInventory: weaponInventory)
                 let currWeapon = document.get("current_weapon") as! String
+                let currWeaponToStore: Weapon = rebuildWeaponToStore(currWeapon: currWeapon)
                 
-                // Splitting currWeapon + UseCount from a single string
-                let currWeaponUseCountTuple = splitObjAndUseCount(objWithUseCount: currWeapon)
-                let currWeaponName = currWeaponUseCountTuple.objectName
-                let currWeaponUseCount: Int = currWeaponUseCountTuple.useCount
-                
-                // Store rebuilt currWeapon in inventory
-                let currWeaponToStore: Weapon = rebuildWeapon(weaponName: currWeaponName, useCount: currWeaponUseCount)
-                
-                // Rebuild all armor and add them to inventory
+                // Rebuild armorInventory and currArmor
                 let armorInventory = document.get("armor_inventory") as! [String]
-                var armorInventoryToStore: [Armor] = []
-                for armor in armorInventory {
-                    // Splitting Armor + UseCount from a single string
-                    let armorUseCountTuple = splitObjAndUseCount(objWithUseCount: armor)
-                    let armorName = armorUseCountTuple.objectName
-                    let armorUseCount: Int = armorUseCountTuple.useCount
-                    
-                    // Store rebuilt weapon in inventory
-                    let armorToStore: Armor = rebuildArmor(armorName: armorName, useCount: armorUseCount)
-                    armorInventoryToStore += [armorToStore]
-                }
+                var armorInventoryToStore: [Armor] = rebuildArmorInventory(armorInventory: armorInventory)
                 let currArmor = document.get("current_armor") as! String
-                
-                // Splitting currArmor + UseCount from a single string
-                let currArmorUseCountTuple = splitObjAndUseCount(objWithUseCount: currArmor)
-                let currArmorName = currArmorUseCountTuple.objectName
-                let currArmorUseCount: Int = currArmorUseCountTuple.useCount
-                
-                // Store rebuilt currWeapon in inventory
-                let currArmorToStore: Armor = rebuildArmor(armorName: currArmorName, useCount: currArmorUseCount)
+                let currArmorToStore: Armor = rebuildArmorToStore(armorToStore: currArmor)
                 
                 // Build the Global Character (Does not include item inventory yet)
                 switch characterClass {

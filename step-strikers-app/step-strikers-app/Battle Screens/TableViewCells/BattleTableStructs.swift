@@ -35,15 +35,37 @@ struct StatsHeaderRow {
     let names:[String]
 }
 
-// TODO: @Jalyn edit this struct to add the variables you need
 struct enemyData {
-    let userName:String
-    let name:String
-    let character_class:String
-    let health:Int
-    let isBlind:Bool
-    let isInvisible:Bool
-    let imageView:UIImageView
+    var userName:String
+    var name:String
+    var character_class:String
+    var health:Int
+    var isBlind:Bool
+    var isInvisible:Bool
+    var imageView:UIImageView
+    
+    // Data needed about the enemies for fighting them
+    var armor: Armor
+    var defenseModifier: Int
+    var armorInInventory: [Armor]
+}
+
+struct currTargetData {
+    var name:String
+    var character_class:String
+    var health:Int
+    var armor: Armor
+    var defenseModifier: Int
+    var armorInInventory: [Armor] // For potentially destroying poor armor
+    
+    func printEnemyData() {
+        print("currTarget name is: \(name)")
+        print("currTarget character class is: \(character_class)")
+        print("currTarget health is: \(health)")
+        print("currTarget armor name is: \(armor.name)")
+        print("currTarget defense modifier is: \(defenseModifier)")
+        print("currTarget armor inventory count is: \(armorInInventory.count)")
+    }
 }
 
 struct teamData {
