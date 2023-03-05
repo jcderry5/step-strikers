@@ -44,11 +44,23 @@ class BattleMenuViewController: UIViewController {
     }
     
     @objc func createPressed() {
-        // TODO: navigate to the PARTY SETUP page
+        // Navigate to the PARTY SETUP page
+        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "PartyMenuHostViewController") as! PartyMenuHostViewController
+
+        self.modalPresentationStyle = .fullScreen
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false)
     }
     
     @objc func joinPressed() {
-        // TODO: navigate to the CODE ENTRY page
+        // Navigate to the CODE ENTRY page
+        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "CodeEntryViewController") as! CodeEntryViewController
+
+        self.modalPresentationStyle = .fullScreen
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false)
     }
     
     @objc func swipeRight() {
