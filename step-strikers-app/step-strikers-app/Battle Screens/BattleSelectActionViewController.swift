@@ -238,6 +238,7 @@ func performBattleAction() {
     
     // Generic action all players can do
     if actionPerformed == "Fight" {LocalCharacter.fight()}
+
     print("The action performed= \(actionPerformed)")
     // Validating character name with actions they can doo
     if (LocalCharacter.getCharacterClass() == "Fighter"){
@@ -302,8 +303,6 @@ func performBattleAction() {
             print("A bard is trying to do a non-bard action")
             LocalCharacter.fight()
         }
-        print("Just finished perform battle action. Here are new enemy stats")
-        currTarget.printEnemyData()
     }
     print("Just finished perform battle action. Here are new enemy stats")
     currTarget.printEnemyData()

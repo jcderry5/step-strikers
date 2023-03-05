@@ -101,6 +101,7 @@ extension UIViewController {
     
     // For now, pass in "4bDfA6dWfv8fRSdebjWI"
     func renderEnemies(enemyTeam: String) {
+        print("Rendering enemiess....")
         var count:Int = 0
         let xValues = [10,100,200,290]
         let enemiesRef = Firestore.firestore().collection("teams").document(enemyTeam)
