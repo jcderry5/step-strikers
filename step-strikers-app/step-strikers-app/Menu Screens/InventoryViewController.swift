@@ -91,7 +91,7 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
         // Swipe right handler
         view.addSubview(swipeView)
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight))
-        swipeRight.direction = .left
+        swipeRight.direction = .right
         swipeView.addGestureRecognizer(swipeRight)
     }
     
@@ -100,7 +100,6 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // TODO: Implement
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! InventoryTableViewCell
         cell.backgroundColor = UIColor.clear
         cell.inventoryObj = inventoryArr[indexPath.row]
@@ -113,25 +112,21 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     @objc func onSegmentChanged(_ sender: UISegmentedControl!) {
-        // TODO: Replace tableview cells depending on selected index
-        print("CHANGE")
+        // Replace tableview cells depending on selected index
         inventoryArr.removeAll()
         switch segCtrl.selectedSegmentIndex {
         case 0:
-            print("WEAPONS")
             let weaponsArr = localCharacter.weaponsInInventory
             for weapon in weaponsArr {
                 inventoryArr.append(inventoryStruct(name: weapon.name, image: UIImage(named:weapon.name) ?? UIImage(named:"battle_axe")!, quantity: 1))
             }
         case 1:
-            print("ARMOR")
             let armorArr = localCharacter.armorInInventory
             for armor in armorArr {
                 inventoryArr.append(inventoryStruct(name: armor.name, image: UIImage(named:armor.name) ?? UIImage(named:"battle_axe")!, quantity: 1))
             }
         case 2:
-            print("ITEMS")
-            let itemsArr = localCharacter.weaponsInInventory
+            let itemsArr = localCharacter.itemsInInventory
             for item in itemsArr {
                 inventoryArr.append(inventoryStruct(name: item.name, image: UIImage(named:item.name) ?? UIImage(named:"battle_axe")!, quantity: 1))
             }
@@ -141,11 +136,23 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     @objc func swipeLeft() {
-        // TODO: Navigate to BATTLE MENU
+        // Navigate to BATTLE MENU
+        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "BattleMenuViewController") as! BattleMenuViewController
+
+        self.modalPresentationStyle = .fullScreen
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false)
     }
     
     @objc func swipeRight() {
-        // TODO: Navigate to STATS MENU
+        // Navigate to STATS MENU
+        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "StatsViewController") as! StatsViewController
+
+        self.modalPresentationStyle = .fullScreen
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false)
     }
 
 }

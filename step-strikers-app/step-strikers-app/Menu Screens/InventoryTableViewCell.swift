@@ -22,7 +22,6 @@ class InventoryTableViewCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleToFill
         imageView.clipsToBounds = true
-//        imageView.image = UIImage(named:"battle_axe")
         return imageView
     }()
     
@@ -30,7 +29,6 @@ class InventoryTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .black
         label.font = UIFont(name: "munro", size: 35)
-//        label.text = "HELLO THERE"
         return label
     }()
     
@@ -38,7 +36,6 @@ class InventoryTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .black
         label.font = UIFont(name: "munro", size: 35)
-//        label.text = "x10"
         return label
     }()
     
