@@ -12,6 +12,12 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
     var inventoryTable:UITableView = UITableView()
     let cellId = "inventoryCell"
     
+    let buttonImg = UIImage(named:"Menu Button")
+    let selectedImg = UIImage(named:"Selected Menu Button")
+    var weaponsButton:UIButton = UIButton()
+    var armorButton:UIButton = UIButton()
+    var itemsButton:UIButton = UIButton()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.isUserInteractionEnabled = true
@@ -36,13 +42,37 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
         inventoryTable.layer.borderWidth = 2
         view.addSubview(inventoryTable)
         
+        // Inventory segmented controller
+        let segments = UISegmentedControl(items:["WEAPONS", "ARMOR", "ITEMS"])
+        // Set attributes for each segment
+        segments.frame = CGRect(x: 15, y: 620, width: Int(view.frame.maxX)-30, height: 70)
+        segments.selectedSegmentIndex = 0
+        segments.setBackgroundImage(buttonImg, for: .normal, barMetrics: .default)
+        segments.setBackgroundImage(selectedImg, for: .selected, barMetrics: .default)
+        segments.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name:"munro", size:24)!], for: .normal)
+        segments.setWidth(115, forSegmentAt: 0)
+        segments.setWidth(115, forSegmentAt: 1)
+        segments.setWidth(115, forSegmentAt: 2)
+        // Format divider image between each segment
+        // Side note: doesn't seem like you can add space b/w segments
+        var divider = UIImage(named:"segment_divider")
+        UIGraphicsBeginImageContext(CGSizeMake(9, 70))
+        divider!.draw(in: CGRectMake(0, 0, 9, 70))
+        divider = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        segments.setDividerImage(divider, forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
+        
+        view.addSubview(segments)
+        
         // Swipe display
         _ = createImage(x: 140, y: 716, w: 112, h: 112, name: "backpack")
-        _ = createImage(x: 275, y: 739, w: 112, h: 62, name: "right arriw")
+        _ = createLabel(x: 285, y: 690, w: 92, h: 67, font: "munro", size: 20, text: "SWIPE", align: .center)
+        _ = createImage(x: 275, y: 739, w: 112, h: 62, name: "right arrow")
+        _ = createLabel(x: 16, y: 690, w: 92, h: 67, font: "munro", size: 20, text: "SWIPE", align: .center)
         _ = createImage(x: 16, y: 734, w: 92, h: 67, name: "left arrow")
         
         // Swipe left handler
-        let swipeView = UIView(frame: CGRect(x: 0, y: 650, width: 393, height: 142))
+        let swipeView = UIView(frame: CGRect(x: 0, y: 677, width: 393, height: 120))
         view.addSubview(swipeView)
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(swipeLeft))
         swipeLeft.direction = .left
@@ -70,6 +100,24 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
     // Adjust size of each cell
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 75
+    }
+    
+    @objc func weaponsPressed(_ sender:UIButton!) {
+        // TODO: Fill tableview with weapon cells
+        print("WEAPONS PRESSED")
+        weaponsButton.isHighlighted = true
+    }
+    
+    @objc func armorPressed(_ sender:UIButton!) {
+        // TODO: Fill tableview with armor cells
+        print("ARMOR PRESSED")
+        armorButton.isHighlighted = true
+    }
+    
+    @objc func itemsPressed(_ sender:UIButton!) {
+        // TODO: FIll tableview with item cells
+        print("ITEMS PRESSED")
+        itemsButton.isHighlighted = true
     }
     
     @objc func swipeLeft() {
