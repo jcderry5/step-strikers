@@ -49,13 +49,37 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
         
         // scroll view
         // Set the scrollView's frame to be the size of the screen
-        createMessageArray()
         scrollView = UIScrollView(frame: CGRect(x: view.safeAreaInsets.left+40, y: 640, width: 320, height: 150))
         scrollView.backgroundColor = UIColor.clear
         // Set the contentSize to 100 times the height of the phone's screen so that we can add 100 images in the next step
         scrollView.contentSize = CGSize(width: scrollView.contentSize.width, height: scrollView.bounds.size.height*25*CGFloat(messages.count))
         view.addSubview(scrollView!)
         var labels = [UILabel]()
+        
+        let docRef = Firestore.firestore().collection("games").document(game)
+        docRef.getDocument { [self] (document, error) in
+            if let document = document, document.exists {
+                docRef.addSnapshotListener {
+                    documentSnapshot, error in guard let document = documentSnapshot else {
+                        print("Error fetching document: \(error!)")
+                        return
+                    }
+                    
+                    messages = document.get("messages") as! [String]
+                    messageLog.replaceMessageLog(newMessages: messages)
+                    for i in 0..<messages.count {
+                        labels.append(UILabel())
+                        labels[i].text = messages[i]
+                        labels[i].textColor = UIColor.black
+                        labels[i].font = UIFont(name: "munro", size: 20)
+                        labels[i].frame = CGRect(x: 0, y: 25*CGFloat(i), width: view.frame.width, height: 25)
+                        labels[i].contentMode = .scaleAspectFill
+                        self.scrollView.addSubview(labels[i])
+                    }
+                }
+            }
+        }
+
         for i in 0...(messages.count-1) {
             labels.append(UILabel())
             labels[i].text = messages[i]
@@ -66,29 +90,7 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
             scrollView.addSubview(labels[i])
         }
         
-        print("I am \(player)")
         segueWhenTurn()
-    }
-    
-    func createMessageArray() {
-        // TODO: append messages passed in through message functionality here
-        messages.append("this is 1")
-        messages.append("this is 2")
-        messages.append("this is 3")
-        messages.append("this is 4")
-        messages.append("this is 5")
-        messages.append("this is 6")
-        messages.append("this is 7")
-        messages.append("this is 8")
-        messages.append("this is 9")
-        messages.append("this is 10")
-        messages.append("this is 11")
-        messages.append("this is 12")
-        messages.append("this is 13")
-        messages.append("this is 14")
-        messages.append("this is 15")
-        messages.append("this is 16")
-        messages.append("this is 17")
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -154,7 +156,8 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
                         
                         print("order[0] is \(order[0]) and I am \(player)")
                         if order[0] == player {
-                            print("Woohoo it's your turn!")
+                            // wait a little to see previous player's last move
+                            sleep(2)
                             
                             // bring up battle VC
                             let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)

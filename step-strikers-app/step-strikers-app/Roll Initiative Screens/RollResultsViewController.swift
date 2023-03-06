@@ -53,7 +53,7 @@ class RollResultsViewController: UIViewController {
                         let order = document.get("initial_order") as! [String]
                         let attributes = [NSAttributedString.Key.font: UIFont(name: "munro", size: 35)!]
                         let mutableString = NSMutableAttributedString(string: "Turn Order:\n ", attributes: attributes)
-                        for i in 0...order.count - 1 {
+                        for i in 0..<order.count {
                             let anotherString = NSMutableAttributedString(string: "\(i+1). \(order[i])\n ", attributes: attributes)
                             mutableString.append(anotherString)
                         }
