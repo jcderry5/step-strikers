@@ -238,8 +238,6 @@ func performBattleAction() {
     let actionPerformed: String = rowSelected?.name! ?? "Fight"
     // rowSelected holds your action struct
     
-    // Generic action all players can do
-    if actionPerformed == "Fight" {localCharacter.fight()}
 
     print("The action performed= \(actionPerformed)")
     // Validating character name with actions they can doo
@@ -252,7 +250,6 @@ func performBattleAction() {
         case "Sharpen Weapon":
             (localCharacter as! Fighter).sharpenWeapon()
         default:
-            print("A fighter is trying to do a non-fighter action")
             localCharacter.fight()
         }
     } else if (localCharacter.getCharacterClass() == "Rogue") {
@@ -266,7 +263,6 @@ func performBattleAction() {
         case "Allsight":
             (localCharacter as! Rogue).allSight()
         default:
-            print("A Rogue is trying to do a non-rogue action")
             localCharacter.fight()
         }
     } else if (localCharacter.getCharacterClass() == "Wizard") {
@@ -284,7 +280,6 @@ func performBattleAction() {
         case "Heal":
             (localCharacter as! Wizard).heal(caster: localCharacter.characterName, target: currTarget.name)
         default:
-            print("A wizard is trying to do a non-wizard action")
             localCharacter.fight()
         }
     } else if (localCharacter.getCharacterClass() == "Bard") {
@@ -302,7 +297,6 @@ func performBattleAction() {
         case "Motivational Speech":
             (localCharacter as! Bard).castMotivationalSpeech(caster: localCharacter.characterName, team: team)
         default:
-            print("A bard is trying to do a non-bard action")
             localCharacter.fight()
         }
     }

@@ -69,7 +69,9 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
                     messageLog.replaceMessageLog(newMessages: messages)
                     for i in 0..<messages.count {
                         labels.append(UILabel())
-                        labels[i].text = messages[i]
+                        labels[i].text = "\(messages[i])\n"
+                        labels[i].numberOfLines = 0
+                        labels[i].lineBreakMode = .byWordWrapping
                         labels[i].textColor = UIColor.black
                         labels[i].font = UIFont(name: "munro", size: 20)
                         labels[i].frame = CGRect(x: 0, y: 25*CGFloat(i), width: view.frame.width, height: 25)
@@ -80,16 +82,6 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
             }
         }
 
-        for i in 0...(messages.count-1) {
-            labels.append(UILabel())
-            labels[i].text = messages[i]
-            labels[i].textColor = UIColor.black
-            labels[i].font = UIFont(name: "munro", size: 20)
-            labels[i].frame = CGRect(x: 0, y: 25*CGFloat(i), width: view.frame.width, height: 25)
-            labels[i].contentMode = .scaleAspectFill
-            scrollView.addSubview(labels[i])
-        }
-        
         segueWhenTurn()
     }
     
@@ -156,7 +148,7 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
                         
                         print("order[0] is \(order[0]) and I am \(player)")
                         if order[0] == player {
-                            // wait a little to see previous player's last move
+                            
                             sleep(2)
                             
                             // bring up battle VC

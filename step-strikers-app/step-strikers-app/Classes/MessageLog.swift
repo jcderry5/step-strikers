@@ -18,6 +18,7 @@ class MessageLog {
         if(messageLogs.count >= MAX_MESSAGES){
             messageLogs.remove(at: 0)
         }
+        print("Added to messageLog")
         messageLogs.append(message)
         
         // write messages to firebase
