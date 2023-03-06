@@ -75,7 +75,7 @@ func rebuildItem(itemName: String, owner: RPGCharacter) -> Item {
     }
 }
 
-func getStringArray (items:[Item]) -> [String] {
+func getItemStrings (items:[Item]) -> [String] {
     var itemStrings = [String]()
     
     for item in items {

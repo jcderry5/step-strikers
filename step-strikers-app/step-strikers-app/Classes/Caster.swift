@@ -35,7 +35,7 @@ class Caster: RPGCharacter {
     }
     
     func castFrostbite(caster: String, target: String) {
-        damageOpponent(target: target, damage: 1)
+//        damageOpponent(target: target, damage: 1)
         decreaseSpellPoints(amtDecrease: 3)
         
         let message = "\(self.characterName) cast frosbite on \(target)"

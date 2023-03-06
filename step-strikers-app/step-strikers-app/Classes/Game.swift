@@ -137,19 +137,19 @@ func endTurn(game: String, player: String) {
     
     Firestore.firestore().collection("players").document(currTarget.userName).setData([
         "health": currTarget.health,
-        "armor": currTarget.armor,
+        "armor": getConstructedName(armor:currTarget.armor),
         "defense_modifier": currTarget.defenseModifier,
-        "armor_inventory": currTarget.armorInInventory
+        "armor_inventory": getArmorStrings(armors: currTarget.armorInInventory)
     ], merge: true)
     
     Firestore.firestore().collection("players").document(localCharacter.userName).setData([
         "health": localCharacter.currHealth,
         "stamina": localCharacter.currStamina,
-        "weapon_inventory": localCharacter.weaponsInInventory,
-        "current_weapon": localCharacter.currWeapon,
-        "armor_inventory": localCharacter.armorInInventory,
-        "current_armor": localCharacter.currArmor,
-        "item_inventory": getStringArray(items: localCharacter.itemsInInventory),
+        "weapon_inventory": getWeaponStrings(weapons: localCharacter.weaponsInInventory),
+        "current_weapon": getConstructedName(weapon:localCharacter.currWeapon),
+        "armor_inventory": getArmorStrings(armors: localCharacter.armorInInventory),
+        "current_armor": getConstructedName(armor:localCharacter.currArmor),
+        "item_inventory": getItemStrings(items: localCharacter.itemsInInventory),
         "attack_modifier": localCharacter.attackModifier,
         "defense_modifier": localCharacter.defenseModifier,
         "magic_resistance_modifier": localCharacter.magicResistanceModifier

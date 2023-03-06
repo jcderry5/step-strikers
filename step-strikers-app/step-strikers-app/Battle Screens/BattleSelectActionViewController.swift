@@ -9,7 +9,7 @@ import UIKit
 
 var boxArrow: [AnyObject] = [AnyObject]()
 var rowSelected:Action?
-var currTarget: currTargetData = currTargetData(name: "", character_class: "", health: 30, armor: noArmor(), defenseModifier: 0, armorInInventory: [noArmor()]) //TODO: @jalyn fix later...need to initialize it to something
+var currTarget: currTargetData = currTargetData(name: "", userName: "", character_class: "", health: 30, armor: noArmor(), defenseModifier: 0, armorInInventory: [noArmor()]) //TODO: @jalyn fix later...need to initialize it to something
 var actions: [Action] = [Action]()
 var player: String = ""
 var game: String = ""
