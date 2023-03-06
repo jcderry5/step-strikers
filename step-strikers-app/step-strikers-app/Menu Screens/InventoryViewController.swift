@@ -112,6 +112,7 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     @objc func onSegmentChanged(_ sender: UISegmentedControl!) {
+        // TODO: Combine duplicate weapons/armor/items into one inventoryObj (quantity counter)
         // Replace tableview cells depending on selected index
         inventoryArr.removeAll()
         switch segCtrl.selectedSegmentIndex {
@@ -139,7 +140,7 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
                 print("onSegmentChange Size = \(inventoryArr.count)")
             }
         default:
-            return
+            print("Selecting an invalid inventory genre")
         }
         
         inventoryTable.reloadData()
