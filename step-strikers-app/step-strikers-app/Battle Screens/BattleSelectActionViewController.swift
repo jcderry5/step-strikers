@@ -9,7 +9,7 @@ import UIKit
 
 var boxArrow: [AnyObject] = [AnyObject]()
 var rowSelected:Action?
-var currTarget: currTargetData = currTargetData(name: "", character_class: "", health: 30, armor: noArmor(), defenseModifier: 0, armorInInventory: [noArmor()]) //TODO: @jalyn fix later...need to initialize it to something
+var currTarget: currTargetData = currTargetData(name: "", userName: "", character_class: "", health: 30, armor: noArmor(), defenseModifier: 0, armorInInventory: [noArmor()]) //TODO: @jalyn fix later...need to initialize it to something
 var actions: [Action] = [Action]()
 var player: String = ""
 var game: String = ""
@@ -245,11 +245,7 @@ struct characterSprites {
 func performBattleAction(rollValue: Int? = nil, rollValueToBeat: Int? = nil) {
     let actionPerformed: String = rowSelected?.name! ?? "Fight"
     // rowSelected holds your action struct
-    
-    // Generic action all players can do
-    if actionPerformed == "Fight" {localCharacter.fight(rollValue: rollValue!, rollValueToBeat: rollValueToBeat!)}
 
-    print("The action performed= \(actionPerformed)")
     // Validating character name with actions they can doo
     if (localCharacter.getCharacterClass() == "Fighter"){
         switch actionPerformed {
@@ -260,7 +256,7 @@ func performBattleAction(rollValue: Int? = nil, rollValueToBeat: Int? = nil) {
         case "Sharpen Weapon":
             (localCharacter as! Fighter).sharpenWeapon()
         default:
-            print("A fighter is trying to do a non-fighter action")
+            localCharacter.fight(rollValue: rollValue!, rollValueToBeat: rollValueToBeat!)
         }
     } else if (localCharacter.getCharacterClass() == "Rogue") {
         switch actionPerformed {
@@ -273,7 +269,7 @@ func performBattleAction(rollValue: Int? = nil, rollValueToBeat: Int? = nil) {
         case "Allsight":
             (localCharacter as! Rogue).allSight()
         default:
-            print("A Rogue is trying to do a non-rogue action")
+            localCharacter.fight(rollValue: rollValue!, rollValueToBeat: rollValueToBeat!)
         }
     } else if (localCharacter.getCharacterClass() == "Wizard") {
         switch actionPerformed {
@@ -290,7 +286,7 @@ func performBattleAction(rollValue: Int? = nil, rollValueToBeat: Int? = nil) {
         case "Heal":
             (localCharacter as! Wizard).heal(caster: localCharacter.characterName, target: currTarget.name)
         default:
-            print("A wizard is trying to do a non-wizard action")
+            localCharacter.fight(rollValue: rollValue!, rollValueToBeat: rollValueToBeat!)
         }
     } else if (localCharacter.getCharacterClass() == "Bard") {
         switch actionPerformed {
@@ -307,11 +303,7 @@ func performBattleAction(rollValue: Int? = nil, rollValueToBeat: Int? = nil) {
         case "Motivational Speech":
             (localCharacter as! Bard).castMotivationalSpeech(caster: localCharacter.characterName, team: team)
         default:
-            print("A bard is trying to do a non-bard action")
+            localCharacter.fight(rollValue: rollValue!, rollValueToBeat: rollValueToBeat!)
         }
     }
-    print("Just finished perform battle action. Here are new enemy stats")
-    currTarget.printEnemyData()
-    print("Here are the stats of Local Character")
-    localCharacter.printLocalCharacterDetailsToConsole()
 }

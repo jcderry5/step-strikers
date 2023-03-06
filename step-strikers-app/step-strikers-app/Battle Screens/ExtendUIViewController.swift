@@ -114,7 +114,6 @@ extension UIViewController {
                             let data = document2.data()
                             let userName = enemy
                             let name = data!["character_name"] as! String
-                            print("name is= \(name)")
                             let character_class = data!["class"] as! String
                             let health = data!["health"] as! Int
                             let isBlind = data!["is_blind"] as! Bool
@@ -483,6 +482,7 @@ extension UIViewController {
     func updateCurrTargetData(enemyIndex: Int) {
         print("We got inside updateCurrTargetData.... Which is good?")
         currTarget.name = enemiesList[enemyIndex].name
+        currTarget.userName = enemiesList[enemyIndex].userName
         currTarget.character_class = enemiesList[enemyIndex].character_class
         currTarget.health = enemiesList[enemyIndex].health
         currTarget.armor = enemiesList[enemyIndex].armor

@@ -234,7 +234,6 @@ class RPGCharacter {
     func fight(rollValue: Int, rollValueToBeat: Int){
         let damageDealt = calculateDamage(wielderAttackModifier: self.attackModifier, wielderCurrWeapon: self.currWeapon, wielderClass: self.getCharacterClass(), rollValue: rollValue, rollValueToBeat: rollValueToBeat)
         
-        self.damageOpponent(target: currTarget.name, damage: damageDealt)
         doConsequencesOfFight(damageDealt: damageDealt)
         
         let message = "\(self.characterName) just attacked \(currTarget.name) for \(damageDealt) points of damage"
@@ -288,18 +287,6 @@ class RPGCharacter {
             return currTarget.armor.armorClass
         } else {
             return rollDie(quant: 1, sides: currTarget.armor.armorClass)
-        }
-    }
-
-    func damageOpponent(target: String, damage: Int) {
-        let targetRef = Firestore.firestore().collection("players").document(target)
-        targetRef.getDocument { (document, error) in
-            if let document = document, document.exists {
-                let currentHealth = document.get("health") as! Int
-                let newHealth = max(0, currentHealth - damage)
-                
-                Firestore.firestore().collection("players").document(target).setData(["health": newHealth], merge: true)
-            }
         }
     }
 }

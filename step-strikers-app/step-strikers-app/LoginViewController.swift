@@ -9,7 +9,7 @@ import UIKit
 import FirebaseFirestore
 var localCharacter: RPGCharacter!
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     let munro = "munro"
     var usernameTextField:UITextField?
     var passwordTextField:UITextField?
@@ -21,6 +21,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         assignBackground()
+        usernameTextField?.delegate = self
         
         // Create title image
         _ = createImage(x:6, y:75, w:380, h:200, name:"Title")
@@ -50,6 +51,19 @@ class LoginViewController: UIViewController {
         signupButton.addTarget(self, action:#selector(signupPressed), for:.touchUpInside)
     }
 
+    // Called when 'return' key pressed
+
+    func textFieldShouldReturn(_ textField:UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    // Called when the user clicks on the view outside of the UITextField
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
     // when testing this use username: jazzyjalyn, password: doesn't matter yet but can't be empty
     @objc func loginPressed(_ sender: Any) {
         if self.usernameTextField!.text == "" {
