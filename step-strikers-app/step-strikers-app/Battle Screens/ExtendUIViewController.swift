@@ -478,6 +478,7 @@ extension UIViewController {
     func updateCurrTargetData(enemyIndex: Int) {
         print("We got inside updateCurrTargetData.... Which is good?")
         currTarget.name = enemiesList[enemyIndex].name
+        currTarget.userName = enemiesList[enemyIndex].userName
         currTarget.character_class = enemiesList[enemyIndex].character_class
         currTarget.health = enemiesList[enemyIndex].health
         currTarget.armor = enemiesList[enemyIndex].armor
