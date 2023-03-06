@@ -134,5 +134,26 @@ func refreshStats(character: String, game: String) {
      */
 
 func endTurn(game: String, player: String) {
+    
+    Firestore.firestore().collection("players").document(currTarget.userName).setData([
+        "health": currTarget.health,
+        "armor": currTarget.armor,
+        "defense_modifier": currTarget.defenseModifier,
+        "armor_inventory": currTarget.armorInInventory
+    ], merge: true)
+    
+    Firestore.firestore().collection("players").document(localCharacter.userName).setData([
+        "health": localCharacter.currHealth,
+        "stamina": localCharacter.currStamina,
+        "weapon_inventory": localCharacter.weaponsInInventory,
+        "current_weapon": localCharacter.currWeapon,
+        "armor_inventory": localCharacter.armorInInventory,
+        "current_armor": localCharacter.currArmor,
+        "item_inventory": getStringArray(items: localCharacter.itemsInInventory),
+        "attack_modifier": localCharacter.attackModifier,
+        "defense_modifier": localCharacter.defenseModifier,
+        "magic_resistance_modifier": localCharacter.magicResistanceModifier
+    ], merge: true)
+    
     Firestore.firestore().collection("last_players").document(game).setData(["last_player": player], merge: true)
 }
