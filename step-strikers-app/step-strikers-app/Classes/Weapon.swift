@@ -80,7 +80,31 @@ func rebuildWeapon(weaponName: String, useCount: Int) -> Weapon {
     }
 }
 
+func rebuildWeaponInventory(weaponInventory: [String]) -> [Weapon] {
+    var weaponInventoryToStore: [Weapon] = []
+    // Rebuild all weapons and add them to inventory
+    for weapon in weaponInventory {
+        // Splitting Weapon + UseCount from a single string
+        let weaponUseCountTuple = splitObjAndUseCount(objWithUseCount: weapon)
+        let weaponName = weaponUseCountTuple.objectName
+        let weaponUseCount: Int = weaponUseCountTuple.useCount
+        
+        // Store rebuilt weapon in inventory
+        let weaponToStore: Weapon = rebuildWeapon(weaponName: weaponName, useCount: weaponUseCount)
+        weaponInventoryToStore += [weaponToStore]
+    }
+    return weaponInventoryToStore
+}
 
+func rebuildWeaponToStore(currWeapon: String) ->Weapon {
+    // Splitting currWeapon + UseCount from a single string
+    let currWeaponUseCountTuple = splitObjAndUseCount(objWithUseCount: currWeapon)
+    let currWeaponName = currWeaponUseCountTuple.objectName
+    let currWeaponUseCount: Int = currWeaponUseCountTuple.useCount
+    
+    // Store rebuilt currWeapon in inventory
+    return rebuildWeapon(weaponName: currWeaponName, useCount: currWeaponUseCount)
+}
 // MARK: - Weapon structs
 struct fists: Weapon {
     let name = "Fists"

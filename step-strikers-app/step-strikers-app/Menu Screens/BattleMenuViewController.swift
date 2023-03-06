@@ -47,7 +47,7 @@ class BattleMenuViewController: UIViewController {
     @objc func createPressed(_ sender:UIButton!) {
         // TODO: Navigate to the PARTY SETUP page
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = sb.instantiateViewController(withIdentifier: "BattleSelectActionViewController") as! BattleSelectActionViewController
+        let vc = sb.instantiateViewController(withIdentifier: "RollInitiativeViewController") as! RollInitiativeViewController
 
         self.modalPresentationStyle = .fullScreen
         vc.modalPresentationStyle = .fullScreen
@@ -57,7 +57,7 @@ class BattleMenuViewController: UIViewController {
     @objc func joinPressed(_ sender:UIButton!) {
         // TODO: Navigate to the CODE ENTRY page
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = sb.instantiateViewController(withIdentifier: "BattleSelectActionViewController") as! BattleSelectActionViewController
+        let vc = sb.instantiateViewController(withIdentifier: "RollInitiativeViewController") as! RollInitiativeViewController
 
         self.modalPresentationStyle = .fullScreen
         vc.modalPresentationStyle = .fullScreen

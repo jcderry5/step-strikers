@@ -58,13 +58,13 @@ class Fighter: RPGCharacter {
     }
     
     // Action surge will give you double damage on your attack if you pass the check
-    func actionSurge(target: inout RPGCharacter) {
-        let damageDealt = self.calculateDamage(wielderAttackModifier: self.attackModifier, wielderCurrWeapon: self.currWeapon, wielderClass: self.getCharacterClass(), target: &target) * 2
+    func actionSurge() {
+        let damageDealt = self.calculateDamage(wielderAttackModifier: self.attackModifier, wielderCurrWeapon: self.currWeapon, wielderClass: self.getCharacterClass()) * 2
         
-        self.doConsequencesOfFight(target: &target, damageDealt: damageDealt)
+        self.doConsequencesOfFight(damageDealt: damageDealt)
         self.decreaseStamina(staminaCost: 10)
         
-        let message = "\(self.characterName) has action surged to do double damage against \(target.characterName)"
+        let message = "\(self.characterName) has action surged to do double damage against \(currTarget.name)"
         messageLog.addToMessageLog(message: message)
     }
 
@@ -116,12 +116,12 @@ class Rogue: RPGCharacter {
     }
     
     // Insight allows user to know the stats of one player, stamina cost is 6
-    func insight(target: RPGCharacter) {
+    func insight() {
         // TODO: @Alekhya add code to display the stats of target
         // TODO: @kelly to add code to get the target's info for alekhya to display
         self.decreaseStamina(staminaCost: 6)
         
-        let message = "\(self.characterName) has now gained insight into \(target.characterName)"
+        let message = "\(self.characterName) has now gained insight into \(currTarget.name)"
         messageLog.addToMessageLog(message: message)
     }
     

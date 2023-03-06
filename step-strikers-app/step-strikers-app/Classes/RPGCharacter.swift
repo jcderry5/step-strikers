@@ -65,24 +65,24 @@ class RPGCharacter {
     }
     
     func printLocalCharacterDetailsToConsole(){
-        print("Character Name: \(LocalCharacter.characterName)")
-        print("Character Name: \(LocalCharacter.userName)")
+        print("Character Name: \(localCharacter.characterName)")
+        print("Character Name: \(localCharacter.userName)")
         
         // Character Stats Variables
-        print("Curr Health: \(LocalCharacter.currHealth)")
-        print("Curr Stamina: \(LocalCharacter.currStamina)")
+        print("Curr Health: \(localCharacter.currHealth)")
+        print("Curr Stamina: \(localCharacter.currStamina)")
         
         // Inventory Variables
-        print("Weapon Inventory Count: \(LocalCharacter.weaponsInInventory.count)")
-        print("Curr Weapon: \(LocalCharacter.currWeapon.name)")
-        print("Armor Inventory Count: \(LocalCharacter.armorInInventory.count)")
-        print("CurrArmor: \(LocalCharacter.currArmor.name)")
-        print("Item Inventory Count: \(LocalCharacter.itemsInInventory.count)")
+        print("Weapon Inventory Count: \(localCharacter.weaponsInInventory.count)")
+        print("Curr Weapon: \(localCharacter.currWeapon.name)")
+        print("Armor Inventory Count: \(localCharacter.armorInInventory.count)")
+        print("CurrArmor: \(localCharacter.currArmor.name)")
+        print("Item Inventory Count: \(localCharacter.itemsInInventory.count)")
         
         // Rolling modifiers
-        print("Attack Modifier: \(LocalCharacter.attackModifier)")
-        print("Defense Modifer: \(LocalCharacter.defenseModifier)")
-        print("Magic Resistance Modifier: \(LocalCharacter.magicResistanceModifier)")
+        print("Attack Modifier: \(localCharacter.attackModifier)")
+        print("Defense Modifer: \(localCharacter.defenseModifier)")
+        print("Magic Resistance Modifier: \(localCharacter.magicResistanceModifier)")
     }
     
     // Universal Functions
@@ -131,7 +131,7 @@ class RPGCharacter {
     
     // MARK: - Armor Functions
     func wear(armorObject: Armor){
-        if(armorObject.checkIfSuited(potentialWearer: self)){
+        if(armorObject.checkIfSuited(wearerCharacterType: self.getCharacterClass())){
             self.currArmor = armorObject
         } else {
             print("\(armorObject.name) is not properly suited for \(self.characterName). Their armor class will be at a disadvantage")
@@ -198,12 +198,20 @@ class RPGCharacter {
     }
 
     // MARK: - Stat Modification Functions
+    
     func decreaseStamina(staminaCost: Int){
         self.currStamina -= staminaCost
         
         // TODO: Do something when exhausted
         if self.currStamina < 0 {
             self.currStamina = 0
+        }
+    }
+    
+    func increaseStamina(amtIncrease: Int){
+        self.currStamina += amtIncrease
+        if(self.currStamina > self.maxStamina){
+            self.currStamina = self.maxStamina
         }
     }
 
@@ -214,14 +222,7 @@ class RPGCharacter {
             // TODO: Add functionality for when a person dies
         }
     }
-
-    func increaseStamina(amtIncrease: Int){
-        self.currStamina += amtIncrease
-        if(self.currStamina > self.maxStamina){
-            self.currStamina = self.maxStamina
-        }
-    }
-
+    
     func increaseHealth(amtIncrease: Int){
         self.currHealth += amtIncrease
         if(self.currHealth > self.maxHealth){
@@ -230,39 +231,39 @@ class RPGCharacter {
     }
     
     // MARK: - Damage Functions
-    func fight(target: inout RPGCharacter){
-        let damageDealt = calculateDamage(wielderAttackModifier: self.attackModifier, wielderCurrWeapon: self.currWeapon, wielderClass: self.getCharacterClass(), target: &target)
+    func fight(){
+        let damageDealt = calculateDamage(wielderAttackModifier: self.attackModifier, wielderCurrWeapon: self.currWeapon, wielderClass: self.getCharacterClass())
         
-        self.damageOpponent(target: target.characterName, damage: damageDealt)
+        self.damageOpponent(target: currTarget.name, damage: damageDealt)
+        doConsequencesOfFight(damageDealt: damageDealt)
         
-        doConsequencesOfFight(target: &target, damageDealt: damageDealt)
-        let message = "\(self.characterName) just attacked \(target.characterName) for \(damageDealt) points of damage"
+        let message = "\(self.characterName) just attacked \(currTarget.name) for \(damageDealt) points of damage"
         messageLog.addToMessageLog(message: message)
     }
     
-    func doConsequencesOfFight(target: inout RPGCharacter, damageDealt: Int) {
+    func doConsequencesOfFight(damageDealt: Int) {
         // reset attack and defense modifier after interaction
         // TODO: @Kelly, change this code to be sent to fb as a write at end of turn
         self.attackModifier = 0
-        target.defenseModifier = 0
+        currTarget.defenseModifier = 0
         
         // adjust the condition of the wielder's weapon and the target's armor
-        target.currArmor = adjustArmorCondition(owner: &target, armorUsed: &target.currArmor)
+        currTarget.armor = adjustArmorCondition(armorUsed: &currTarget.armor)
         self.currWeapon = adjustWeaponCondition(ownerWeaponsInventory: &self.weaponsInInventory, currWeaponPointer: &self.currWeapon)
         
         // Adjust stats
-        target.decreaseHealth(amtDamage: damageDealt)
+        decreaseTargetHealth(amtDamage: damageDealt)
         self.decreaseStamina(staminaCost: self.currWeapon.staminaCost)
     }
     
     // This function will calculate the damage that the wielder imposes on their target, given their proficiency in their currWeapon and the target's currArmor suitability.
     // proficient wielder def: The weapon is assigned to their class, they roll with the weapon's damage
-    func calculateDamage(wielderAttackModifier: Int, wielderCurrWeapon: Weapon, wielderClass: String, target: inout RPGCharacter) -> Int {
+    func calculateDamage(wielderAttackModifier: Int, wielderCurrWeapon: Weapon, wielderClass: String) -> Int {
         let damage: Int
         let armorClassToBeat = calculateModifiedArmorClass()
         
         // D20 + wielders attackModifer vs target's armorClass + target's defenseModifier
-        if(rollDie(quant: 1, sides: 20) + wielderAttackModifier >= armorClassToBeat + target.defenseModifier) {
+        if(rollDie(quant: 1, sides: 20) + wielderAttackModifier >= armorClassToBeat + currTarget.defenseModifier) {
             // check if wielder is proficient in their weapon
             damage = calculateModifiedDamage()
         } else {
@@ -282,10 +283,12 @@ class RPGCharacter {
     
     // This function will return the modified armor class in case the wearer is ill-suited for their currArmor
     func calculateModifiedArmorClass() -> Int {
-        if(self.currArmor.checkIfSuited(potentialWearer: self)){
-            return self.currArmor.armorClass
+        print("inside calculate modified armor class")
+        currTarget.printEnemyData()
+        if(currTarget.armor.checkIfSuited(wearerCharacterType: currTarget.character_class)){
+            return currTarget.armor.armorClass
         } else {
-            return rollDie(quant: 1, sides: self.currArmor.armorClass)
+            return rollDie(quant: 1, sides: currTarget.armor.armorClass)
         }
     }
 
@@ -302,6 +305,10 @@ class RPGCharacter {
     }
 }
 
-
-
-    
+func decreaseTargetHealth(amtDamage: Int){
+    currTarget.health -= amtDamage
+    if currTarget.health < 0 {
+        currTarget.health = 0
+        // TODO: Add functionality for when a person dies
+    }
+}

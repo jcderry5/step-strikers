@@ -7,7 +7,7 @@
 
 import UIKit
 import FirebaseFirestore
-var LocalCharacter: RPGCharacter!
+var localCharacter: RPGCharacter!
 
 class LoginViewController: UIViewController {
     let munro = "munro"
@@ -70,63 +70,28 @@ class LoginViewController: UIViewController {
                 let defenseModifier = document.get("defense_modifier") as! Int
                 let magicResistanceModifier = document.get("magic_resistance_modifier") as! Int
                 
+                // Rebuild weaponInventory and weapon to store
                 let weaponInventory = document.get("weapon_inventory") as! [String]
-                var weaponInventoryToStore: [Weapon] = []
-                // Rebuild all weapons and add them to inventory
-                for weapon in weaponInventory {
-                    // Splitting Weapon + UseCount from a single string
-                    let weaponUseCountTuple = splitObjAndUseCount(objWithUseCount: weapon)
-                    let weaponName = weaponUseCountTuple.objectName
-                    let weaponUseCount: Int = weaponUseCountTuple.useCount
-                    
-                    // Store rebuilt weapon in inventory
-                    let weaponToStore: Weapon = rebuildWeapon(weaponName: weaponName, useCount: weaponUseCount)
-                    weaponInventoryToStore += [weaponToStore]
-                }
-                
+                let weaponInventoryToStore: [Weapon] = rebuildWeaponInventory(weaponInventory: weaponInventory)
                 let currWeapon = document.get("current_weapon") as! String
+                let currWeaponToStore: Weapon = rebuildWeaponToStore(currWeapon: currWeapon)
                 
-                // Splitting currWeapon + UseCount from a single string
-                let currWeaponUseCountTuple = splitObjAndUseCount(objWithUseCount: currWeapon)
-                let currWeaponName = currWeaponUseCountTuple.objectName
-                let currWeaponUseCount: Int = currWeaponUseCountTuple.useCount
-                
-                // Store rebuilt currWeapon in inventory
-                let currWeaponToStore: Weapon = rebuildWeapon(weaponName: currWeaponName, useCount: currWeaponUseCount)
-                
-                // Rebuild all armor and add them to inventory
+                // Rebuild armorInventory and currArmor
                 let armorInventory = document.get("armor_inventory") as! [String]
-                var armorInventoryToStore: [Armor] = []
-                for armor in armorInventory {
-                    // Splitting Armor + UseCount from a single string
-                    let armorUseCountTuple = splitObjAndUseCount(objWithUseCount: armor)
-                    let armorName = armorUseCountTuple.objectName
-                    let armorUseCount: Int = armorUseCountTuple.useCount
-                    
-                    // Store rebuilt weapon in inventory
-                    let armorToStore: Armor = rebuildArmor(armorName: armorName, useCount: armorUseCount)
-                    armorInventoryToStore += [armorToStore]
-                }
+                var armorInventoryToStore: [Armor] = rebuildArmorInventory(armorInventory: armorInventory)
                 let currArmor = document.get("current_armor") as! String
-                
-                // Splitting currArmor + UseCount from a single string
-                let currArmorUseCountTuple = splitObjAndUseCount(objWithUseCount: currArmor)
-                let currArmorName = currArmorUseCountTuple.objectName
-                let currArmorUseCount: Int = currArmorUseCountTuple.useCount
-                
-                // Store rebuilt currWeapon in inventory
-                let currArmorToStore: Armor = rebuildArmor(armorName: currArmorName, useCount: currArmorUseCount)
+                let currArmorToStore: Armor = rebuildArmorToStore(armorToStore: currArmor)
                 
                 // Build the Global Character (Does not include item inventory yet)
                 switch characterClass {
                     case "Fighter":
-                        LocalCharacter = Fighter(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [])
+                        localCharacter = Fighter(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [])
                     case "Wizard":
-                        LocalCharacter = Wizard(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, spellPoints: currSpellPoints, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [])
+                        localCharacter = Wizard(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, spellPoints: currSpellPoints, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [])
                     case "Rogue":
-                        LocalCharacter = Rogue(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [])
+                        localCharacter = Rogue(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [])
                     case "Bard":
-                        LocalCharacter = Bard(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, spellPoints: currSpellPoints, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [])
+                        localCharacter = Bard(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, spellPoints: currSpellPoints, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [])
                     default:
                         print("Getting a characterClass not from the main 4... should not happen.")
                 }
@@ -135,27 +100,21 @@ class LoginViewController: UIViewController {
                 var itemInventoryToStore: [Item] = []
                 for item in itemInventory {
                     // Store rebuilt item in inventory
-                    let currItemToStore: Item = rebuildItem(itemName: item, owner: LocalCharacter)
+                    let currItemToStore: Item = rebuildItem(itemName: item, owner: localCharacter)
                     itemInventoryToStore += [currItemToStore]
                 }
                 
-                LocalCharacter.itemsInInventory = itemInventoryToStore
+                localCharacter.itemsInInventory = itemInventoryToStore
                 
                 // Add modifiers
-                LocalCharacter.attackModifier = attackModifier
-                LocalCharacter.defenseModifier = defenseModifier
-                LocalCharacter.magicResistanceModifier = magicResistanceModifier
+                localCharacter.attackModifier = attackModifier
+                localCharacter.defenseModifier = defenseModifier
+                localCharacter.magicResistanceModifier = magicResistanceModifier
                 
                 // For Testing:
-                // LocalCharacter.printLocalCharacterDetailsToConsole()
-                
-                if username == "Player 1" {
-                    game = "zIuUhRjKte6oUcvdrP4D"
-                    player = "Player 1"
-                } else {
-                    game = "zIuUhRjKte6oUcvdrP4D"
-                    player = "Player 2"
-                }
+                // localCharacter.printlocalCharacterDetailsToConsole()
+                game = "zIuUhRjKte6oUcvdrP4D"
+                player = localCharacter.userName
                 let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let vc = sb.instantiateViewController(withIdentifier: "StatsViewController") as! StatsViewController
                 self.modalPresentationStyle = .fullScreen
