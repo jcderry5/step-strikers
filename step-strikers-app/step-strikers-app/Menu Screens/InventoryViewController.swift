@@ -7,16 +7,25 @@
 
 import UIKit
 
+struct inventoryStruct {
+    var name:String
+    var image:UIImage
+    var quantity:Int
+}
+
 class InventoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var inventoryTable:UITableView = UITableView()
     let cellId = "inventoryCell"
+    var inventoryArr:[inventoryStruct] = [inventoryStruct]()
     
     let buttonImg = UIImage(named:"Menu Button")
     let selectedImg = UIImage(named:"Selected Menu Button")
     var weaponsButton:UIButton = UIButton()
     var armorButton:UIButton = UIButton()
     var itemsButton:UIButton = UIButton()
+    
+    var segCtrl:UISegmentedControl = UISegmentedControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,16 +52,16 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
         view.addSubview(inventoryTable)
         
         // Inventory segmented controller
-        let segments = UISegmentedControl(items:["WEAPONS", "ARMOR", "ITEMS"])
+        segCtrl = UISegmentedControl(items:["WEAPONS", "ARMOR", "ITEMS"])
         // Set attributes for each segment
-        segments.frame = CGRect(x: 15, y: 620, width: Int(view.frame.maxX)-30, height: 70)
-        segments.selectedSegmentIndex = 0
-        segments.setBackgroundImage(buttonImg, for: .normal, barMetrics: .default)
-        segments.setBackgroundImage(selectedImg, for: .selected, barMetrics: .default)
-        segments.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name:"munro", size:24)!], for: .normal)
-        segments.setWidth(115, forSegmentAt: 0)
-        segments.setWidth(115, forSegmentAt: 1)
-        segments.setWidth(115, forSegmentAt: 2)
+        segCtrl.frame = CGRect(x: 15, y: 620, width: Int(view.frame.maxX)-30, height: 70)
+        segCtrl.selectedSegmentIndex = 0
+        segCtrl.setBackgroundImage(buttonImg, for: .normal, barMetrics: .default)
+        segCtrl.setBackgroundImage(selectedImg, for: .selected, barMetrics: .default)
+        segCtrl.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name:"munro", size:24)!], for: .normal)
+        segCtrl.setWidth(115, forSegmentAt: 0)
+        segCtrl.setWidth(115, forSegmentAt: 1)
+        segCtrl.setWidth(115, forSegmentAt: 2)
         // Format divider image between each segment
         // Side note: doesn't seem like you can add space b/w segments
         var divider = UIImage(named:"segment_divider")
@@ -60,9 +69,10 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
         divider!.draw(in: CGRectMake(0, 0, 9, 70))
         divider = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
-        segments.setDividerImage(divider, forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
+        segCtrl.setDividerImage(divider, forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
         
-        view.addSubview(segments)
+        segCtrl.addTarget(self, action: #selector(onSegmentChanged), for: .valueChanged)
+        view.addSubview(segCtrl)
         
         // Swipe display
         _ = createImage(x: 140, y: 716, w: 112, h: 112, name: "backpack")
@@ -86,14 +96,14 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // TODO: Implement
-        return 10
+        return inventoryArr.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // TODO: Implement
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! InventoryTableViewCell
         cell.backgroundColor = UIColor.clear
+        cell.inventoryObj = inventoryArr[indexPath.row]
         return cell
     }
     
@@ -102,22 +112,32 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
         return 75
     }
     
-    @objc func weaponsPressed(_ sender:UIButton!) {
-        // TODO: Fill tableview with weapon cells
-        print("WEAPONS PRESSED")
-        weaponsButton.isHighlighted = true
-    }
-    
-    @objc func armorPressed(_ sender:UIButton!) {
-        // TODO: Fill tableview with armor cells
-        print("ARMOR PRESSED")
-        armorButton.isHighlighted = true
-    }
-    
-    @objc func itemsPressed(_ sender:UIButton!) {
-        // TODO: FIll tableview with item cells
-        print("ITEMS PRESSED")
-        itemsButton.isHighlighted = true
+    @objc func onSegmentChanged(_ sender: UISegmentedControl!) {
+        // TODO: Replace tableview cells depending on selected index
+        print("CHANGE")
+        inventoryArr.removeAll()
+        switch segCtrl.selectedSegmentIndex {
+        case 0:
+            print("WEAPONS")
+            let weaponsArr = localCharacter.weaponsInInventory
+            for weapon in weaponsArr {
+                inventoryArr.append(inventoryStruct(name: weapon.name, image: UIImage(named:weapon.name) ?? UIImage(named:"battle_axe")!, quantity: 1))
+            }
+        case 1:
+            print("ARMOR")
+            let armorArr = localCharacter.armorInInventory
+            for armor in armorArr {
+                inventoryArr.append(inventoryStruct(name: armor.name, image: UIImage(named:armor.name) ?? UIImage(named:"battle_axe")!, quantity: 1))
+            }
+        case 2:
+            print("ITEMS")
+            let itemsArr = localCharacter.weaponsInInventory
+            for item in itemsArr {
+                inventoryArr.append(inventoryStruct(name: item.name, image: UIImage(named:item.name) ?? UIImage(named:"battle_axe")!, quantity: 1))
+            }
+        default:
+            return
+        }
     }
     
     @objc func swipeLeft() {

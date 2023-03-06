@@ -9,13 +9,20 @@ import UIKit
 
 class InventoryTableViewCell: UITableViewCell {
     
-    // TODO: Implement a variable that accepts label values 
+    // Implement a variable that accepts label values
+    var inventoryObj : inventoryStruct? {
+        didSet {
+            name.text = inventoryObj?.name
+            quantity.text = "x\(inventoryObj!.quantity)"
+            image.image = UIImage(named:name.text ?? "battle_axe")
+        }
+    }
     
     private let image : UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleToFill
         imageView.clipsToBounds = true
-        imageView.image = UIImage(named:"battle_axe")
+//        imageView.image = UIImage(named:"battle_axe")
         return imageView
     }()
     
@@ -23,7 +30,7 @@ class InventoryTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .black
         label.font = UIFont(name: "munro", size: 35)
-        label.text = "HELLO THERE"
+//        label.text = "HELLO THERE"
         return label
     }()
     
@@ -31,7 +38,7 @@ class InventoryTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .black
         label.font = UIFont(name: "munro", size: 35)
-        label.text = "x10"
+//        label.text = "x10"
         return label
     }()
     
@@ -50,7 +57,6 @@ class InventoryTableViewCell: UITableViewCell {
     
     // Define the layout of all subviews
     override func layoutSubviews() {
-        // TODO: Fix these awful configurations
         super.layoutSubviews()
         image.frame = CGRect(x: 10, y: 5, width: contentView.frame.size.height - 10, height: contentView.frame.size.height - 10)
         name.frame = CGRect(x: 30+image.frame.size.width, y: 3, width: 200, height: contentView.frame.size.height - 10)
