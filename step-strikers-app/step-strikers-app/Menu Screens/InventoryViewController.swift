@@ -74,6 +74,14 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
         segCtrl.addTarget(self, action: #selector(onSegmentChanged), for: .valueChanged)
         view.addSubview(segCtrl)
         
+        // Populate the table with weapons on load
+        let weaponsArr = localCharacter.weaponsInInventory
+        for weapon in weaponsArr {
+            if weapon.name != "Fists" {
+                inventoryArr.append(inventoryStruct(name: weapon.name, image: UIImage(named:weapon.name) ?? UIImage(named:"battle axe")!, quantity: 1))
+            }
+        }
+        
         // Swipe display
         _ = createImage(x: 140, y: 716, w: 112, h: 112, name: "backpack")
         _ = createLabel(x: 285, y: 690, w: 92, h: 67, font: "munro", size: 20, text: "SWIPE", align: .center)
@@ -118,7 +126,6 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
         switch segCtrl.selectedSegmentIndex {
         case 0:
             let weaponsArr = localCharacter.weaponsInInventory
-            print(weaponsArr)
             for weapon in weaponsArr {
                 if weapon.name != "Fists" {
                     inventoryArr.append(inventoryStruct(name: weapon.name, image: UIImage(named:weapon.name) ?? UIImage(named:"battle axe")!, quantity: 1))
@@ -126,7 +133,6 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
             }
         case 1:
             let armorArr = localCharacter.armorInInventory
-            print(armorArr)
             for armor in armorArr {
                 if armor.name != "No Armor" {
                     inventoryArr.append(inventoryStruct(name: armor.name, image: UIImage(named:armor.name) ?? UIImage(named:"battle axe")!, quantity: 1))
@@ -134,10 +140,8 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
             }
         case 2:
             let itemsArr = localCharacter.itemsInInventory
-            print(itemsArr)
             for item in itemsArr {
                 inventoryArr.append(inventoryStruct(name: item.name, image: UIImage(named:item.name) ?? UIImage(named:"battle axe")!, quantity: 1))
-                print("onSegmentChange Size = \(inventoryArr.count)")
             }
         default:
             print("Selecting an invalid inventory genre")
