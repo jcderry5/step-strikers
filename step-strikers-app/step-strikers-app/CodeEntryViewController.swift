@@ -7,15 +7,17 @@
 
 import UIKit
 
-class CodeEntryViewController: UIViewController {
+class CodeEntryViewController: UIViewController, UITextFieldDelegate {
     
     var popUp:UIView?
+    var textField:UITextField?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         assignBackground()
+        textField?.delegate = self
         
         // background faded shoe
         createImage(x: 0, y: 250, w: 375, h: 375, name: "Faded Emblem")
@@ -25,11 +27,11 @@ class CodeEntryViewController: UIViewController {
         
         // textfield for people to enter code
         // TODO: save this to check later
-        let textField = UITextField(frame: CGRect(x: 100, y: 350, width: 200, height: 40))
-        textField.backgroundColor = UIColor.white
-        textField.layer.borderColor = UIColor.brown.cgColor
-        textField.layer.borderWidth = 2.0
-        self.view.addSubview(textField)
+        textField = UITextField(frame: CGRect(x: 100, y: 350, width: 200, height: 40))
+        textField?.backgroundColor = UIColor.white
+        textField?.layer.borderColor = UIColor.brown.cgColor
+        textField?.layer.borderWidth = 2.0
+        self.view.addSubview(textField!)
         
         // add settings button to bottom right corner
         createSettingsButton(x: 325, y: 775, width: 40, height: 40)
@@ -52,6 +54,20 @@ class CodeEntryViewController: UIViewController {
         confirmButton.addTarget(self, action:#selector(confirmButtonPressed), for:.touchUpInside)
         self.view.addSubview(confirmButton)
     }
+    
+    // Called when 'return' key pressed
+
+    func textFieldShouldReturn(_ textField:UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    // Called when the user clicks on the view outside of the UITextField
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+
     
     @objc func backButtonPressed(_ sender:UIButton!) {
         // Return to battle menu

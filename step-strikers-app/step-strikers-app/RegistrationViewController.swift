@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseFirestore
 
-class RegistrationViewController: UIViewController {
+class RegistrationViewController: UIViewController, UITextFieldDelegate {
     let munro = "munro"
     var usernameTextField:UITextField?
     var passwordTextField:UITextField?
@@ -20,7 +20,7 @@ class RegistrationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         assignBackground()
-        
+        usernameTextField?.delegate = self
         // Create title image
         _ = createImage(x:6, y:75, w:380, h:200, name:"Title")
         
@@ -50,6 +50,20 @@ class RegistrationViewController: UIViewController {
         let signInButton = createButton(x:116, y:668, w:160, h:100, text:"SIGN IN", fontSize:24, normalImage:buttonImg!, highlightedImage:selectedImg!)
         signInButton.addTarget(self, action:#selector(signInPressed), for:.touchUpInside)
     }
+    
+    // Called when 'return' key pressed
+
+    func textFieldShouldReturn(_ textField:UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    // Called when the user clicks on the view outside of the UITextField
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+
     
     @objc func registerPressed() {
         // TODO: Register credentials to Firebase and navigate to Stats screen
