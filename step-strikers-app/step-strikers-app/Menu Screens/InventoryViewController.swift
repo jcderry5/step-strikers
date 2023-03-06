@@ -117,22 +117,32 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
         switch segCtrl.selectedSegmentIndex {
         case 0:
             let weaponsArr = localCharacter.weaponsInInventory
+            print(weaponsArr)
             for weapon in weaponsArr {
-                inventoryArr.append(inventoryStruct(name: weapon.name, image: UIImage(named:weapon.name) ?? UIImage(named:"battle_axe")!, quantity: 1))
+                if weapon.name != "Fists" {
+                    inventoryArr.append(inventoryStruct(name: weapon.name, image: UIImage(named:weapon.name) ?? UIImage(named:"battle_axe")!, quantity: 1))
+                }
             }
         case 1:
             let armorArr = localCharacter.armorInInventory
+            print(armorArr)
             for armor in armorArr {
-                inventoryArr.append(inventoryStruct(name: armor.name, image: UIImage(named:armor.name) ?? UIImage(named:"battle_axe")!, quantity: 1))
+                if armor.name != "No Armor" {
+                    inventoryArr.append(inventoryStruct(name: armor.name, image: UIImage(named:armor.name) ?? UIImage(named:"battle_axe")!, quantity: 1))
+                }
             }
         case 2:
             let itemsArr = localCharacter.itemsInInventory
+            print(itemsArr)
             for item in itemsArr {
                 inventoryArr.append(inventoryStruct(name: item.name, image: UIImage(named:item.name) ?? UIImage(named:"battle_axe")!, quantity: 1))
+                print("onSegmentChange Size = \(inventoryArr.count)")
             }
         default:
             return
         }
+        
+        inventoryTable.reloadData()
     }
     
     @objc func swipeLeft() {

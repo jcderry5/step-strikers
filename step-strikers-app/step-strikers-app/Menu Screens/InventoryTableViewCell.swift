@@ -14,7 +14,7 @@ class InventoryTableViewCell: UITableViewCell {
         didSet {
             name.text = inventoryObj?.name
             quantity.text = "x\(inventoryObj!.quantity)"
-            image.image = UIImage(named:name.text ?? "battle_axe")
+            image.image = inventoryObj?.image
         }
     }
     
@@ -28,14 +28,14 @@ class InventoryTableViewCell: UITableViewCell {
     private let name : UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = UIFont(name: "munro", size: 35)
+        label.font = UIFont(name: "munro", size: 24)
         return label
     }()
     
     private let quantity : UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = UIFont(name: "munro", size: 35)
+        label.font = UIFont(name: "munro", size: 24)
         return label
     }()
     
