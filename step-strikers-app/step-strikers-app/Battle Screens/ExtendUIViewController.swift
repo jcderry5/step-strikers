@@ -114,7 +114,6 @@ extension UIViewController {
                             let data = document2.data()
                             let userName = enemy
                             let name = data!["character_name"] as! String
-                            print("name is= \(name)")
                             let character_class = data!["class"] as! String
                             let health = data!["health"] as! Int
                             let isBlind = data!["is_blind"] as! Bool
