@@ -121,7 +121,7 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
             print(weaponsArr)
             for weapon in weaponsArr {
                 if weapon.name != "Fists" {
-                    inventoryArr.append(inventoryStruct(name: weapon.name, image: UIImage(named:weapon.name) ?? UIImage(named:"battle_axe")!, quantity: 1))
+                    inventoryArr.append(inventoryStruct(name: weapon.name, image: UIImage(named:weapon.name) ?? UIImage(named:"battleaxe")!, quantity: 1))
                 }
             }
         case 1:
@@ -129,14 +129,14 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
             print(armorArr)
             for armor in armorArr {
                 if armor.name != "No Armor" {
-                    inventoryArr.append(inventoryStruct(name: armor.name, image: UIImage(named:armor.name) ?? UIImage(named:"battle_axe")!, quantity: 1))
+                    inventoryArr.append(inventoryStruct(name: armor.name, image: UIImage(named:armor.name) ?? UIImage(named:"battleaxe")!, quantity: 1))
                 }
             }
         case 2:
             let itemsArr = localCharacter.itemsInInventory
             print(itemsArr)
             for item in itemsArr {
-                inventoryArr.append(inventoryStruct(name: item.name, image: UIImage(named:item.name) ?? UIImage(named:"battle_axe")!, quantity: 1))
+                inventoryArr.append(inventoryStruct(name: item.name, image: UIImage(named:item.name) ?? UIImage(named:"battleaxe")!, quantity: 1))
                 print("onSegmentChange Size = \(inventoryArr.count)")
             }
         default:
