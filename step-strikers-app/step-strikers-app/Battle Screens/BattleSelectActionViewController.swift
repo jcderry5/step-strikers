@@ -157,9 +157,17 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
                     boxArrow[1].removeFromSuperview()
                     boxArrow[2].removeFromSuperview()
                 }
-                // TODO: save the function clicked here
                 // will need to resave if the player deselects, but if you do it here it'll override
-                characterButtons = drawEnemiesButton(enemy1: enemiesList[0].character_class, enemy2: enemiesList[1].character_class, enemy3: enemiesList[2].character_class, enemy4: enemiesList[3].character_class)
+                
+                // Decide if the player needs to select an enemy
+                if(actionRequiresEnemy()) {
+                    characterButtons = drawEnemiesButton(enemy1: enemiesList[0].character_class, enemy2: enemiesList[1].character_class, enemy3: enemiesList[2].character_class, enemy4: enemiesList[3].character_class)
+                } else {
+                    // TODO: Test this with server running
+                    performBattleAction()
+                    endTurn(game: game, player: localCharacter.userName)
+                }
+                
             }
         }
     }
@@ -234,23 +242,21 @@ struct characterSprites {
     }
 }
 
-func performBattleAction() {
+func performBattleAction(rollValue: Int? = nil, rollValueToBeat: Int? = nil) {
     let actionPerformed: String = rowSelected?.name! ?? "Fight"
     // rowSelected holds your action struct
-    
 
-    print("The action performed= \(actionPerformed)")
     // Validating character name with actions they can doo
     if (localCharacter.getCharacterClass() == "Fighter"){
         switch actionPerformed {
         case "Second Wind":
             (localCharacter as! Fighter).secondWind()
         case "Action Surge":
-            (localCharacter as! Fighter).actionSurge()
+            (localCharacter as! Fighter).actionSurge(rollValue: rollValue!, rollValueToBeat: rollValueToBeat!)
         case "Sharpen Weapon":
             (localCharacter as! Fighter).sharpenWeapon()
         default:
-            localCharacter.fight()
+            localCharacter.fight(rollValue: rollValue!, rollValueToBeat: rollValueToBeat!)
         }
     } else if (localCharacter.getCharacterClass() == "Rogue") {
         switch actionPerformed {
@@ -263,7 +269,7 @@ func performBattleAction() {
         case "Allsight":
             (localCharacter as! Rogue).allSight()
         default:
-            localCharacter.fight()
+            localCharacter.fight(rollValue: rollValue!, rollValueToBeat: rollValueToBeat!)
         }
     } else if (localCharacter.getCharacterClass() == "Wizard") {
         switch actionPerformed {
@@ -280,7 +286,7 @@ func performBattleAction() {
         case "Heal":
             (localCharacter as! Wizard).heal(caster: localCharacter.characterName, target: currTarget.name)
         default:
-            localCharacter.fight()
+            localCharacter.fight(rollValue: rollValue!, rollValueToBeat: rollValueToBeat!)
         }
     } else if (localCharacter.getCharacterClass() == "Bard") {
         switch actionPerformed {
@@ -297,11 +303,7 @@ func performBattleAction() {
         case "Motivational Speech":
             (localCharacter as! Bard).castMotivationalSpeech(caster: localCharacter.characterName, team: team)
         default:
-            localCharacter.fight()
+            localCharacter.fight(rollValue: rollValue!, rollValueToBeat: rollValueToBeat!)
         }
     }
-    print("Just finished perform battle action. Here are new enemy stats")
-    currTarget.printEnemyData()
-    print("Here are the stats of Local Character")
-    localCharacter.printLocalCharacterDetailsToConsole()
 }

@@ -444,20 +444,24 @@ extension UIViewController {
     
     @objc func enemyBoxSelected(_ sender:UIButton, event: UIEvent) {
         // TODO: if you want to save things before transferring view controllers do it here From action -> roll to hit
-        // TODO: @Jalyn call performBattleActions
-        print("perform Battle Action has just been called")
-        performBattleAction()
         let touch: UITouch = event.allTouches!.first!
         if (touch.tapCount == 2) {
             // save the variables after you know its a double tap
             let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "BattleRollViewController") as! BattleRollViewController
-            vc.selectTargetInfo = (enemiesList[0].userName, enemiesList[1].userName, enemiesList[2].userName, enemiesList[3].userName, rowSelected!)
-            print(vc.selectTargetInfo!.0)
+            // Decide if the player needs to roll or not
+            if(actionRequiresRoll()) {
+                let vc = storyboard.instantiateViewController(withIdentifier: "BattleRollViewController") as! BattleRollViewController
+                vc.selectTargetInfo = (enemiesList[0].userName, enemiesList[1].userName, enemiesList[2].userName, enemiesList[3].userName, rowSelected!)
+                
+                self.modalPresentationStyle = .fullScreen
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc,animated: false)
+            } else {
+                // TODO: Test with server running
+                performBattleAction()
+                endTurn(game: game, player: localCharacter.userName)
+            }
             
-            self.modalPresentationStyle = .fullScreen
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc,animated: false)
         }
     }
     
