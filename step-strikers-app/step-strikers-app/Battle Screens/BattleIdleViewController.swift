@@ -74,8 +74,8 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
                         labels[i].lineBreakMode = .byWordWrapping
                         labels[i].textColor = UIColor.black
                         labels[i].font = UIFont(name: "munro", size: 20)
-                        labels[i].frame = CGRect(x: 0, y: 25*CGFloat(i), width: view.frame.width, height: 25)
-                        labels[i].contentMode = .scaleAspectFill
+                        labels[i].frame = CGRect(x: 0, y: 25*CGFloat(i), width: scrollView.contentSize.width, height: 100)
+                        labels[i].contentMode = .scaleAspectFit
                         self.scrollView.addSubview(labels[i])
                     }
                 }
