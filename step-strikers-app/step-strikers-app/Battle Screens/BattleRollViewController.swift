@@ -18,6 +18,7 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
     var actionDisplay:UITableView = UITableView()
     var statsDisplay:UITableView = UITableView()
     var selectTargetInfo :(String, String, String, String, Action)?
+    var rollValueToBeat: Int!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,16 +114,35 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         view.addSubview(diceButton)
         diceButton.addTarget(self, action:#selector(rollPressed), for:.touchUpInside)
         // TODO: CHANGE label text to display number to beat
+        
         let label = UILabel(frame: CGRect(x:100, y:790, width:250, height:25))
         label.center.x = view.center.x
         label.text = "Number to Beat: __"
         label.textAlignment = .center
         label.font = UIFont(name:"munro", size:22)
         view.addSubview(label)
+        
+        // Checking what to display as rollToBeat
+        if(rowSelected?.name == "Fight" || rowSelected?.name == "Action Surge") {
+            rollValueToBeat = localCharacter.calculateModifiedArmorClass()
+            label.text = "Number to Beat: \(String(describing: rollValueToBeat!))"
+        } else {
+            label.text = "Number to Beat: __"
+        }
     }
     
     @objc func rollPressed(sender: UIButton!) {
         // TODO: Add roll to hit backend here
+        // Decide which type of die to roll
+        var rollValue = 0
+        if(rowSelected?.name == "Fight" || rowSelected?.name == "Action Surge") {
+            // Any action that needs to roll a D20 goes here. Let jalyn know before you expand this tho...
+            rollValue = rollDie(quant: 1, sides: 20)
+        } else if(rowSelected?.name == "Frost Bite") {
+            // Any action that needs to roll a D6 goes here
+            // TODO: @Kelly here you can add the different rolls that require different # sided dice
+            rollValue = rollDie(quant: 1, sides: 6)
+        }
         sender.isHidden = true
         
         let continueButton = UIButton()
@@ -134,8 +154,7 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         rollLabel.textAlignment = .center
         rollLabel.center.x = view.center.x
         rollLabel.numberOfLines = 2
-        // TODO: change text to show number rolled
-        rollLabel.text = "You rolled a\n__!"
+        rollLabel.text = "You rolled a\n\(rollValue)!"
         rollLabel.font = UIFont(name:"munro", size:40)
         view.addSubview(rollLabel)
         
@@ -147,9 +166,7 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         dice2.image = UIImage(named:"d20")
         view.addSubview(dice2)
         
-        // TODO: take action if the roll hits
-        
-        endTurn(game: game, player: player)
+        performBattleAction(rollValue: rollValue, rollValueToBeat: rollValueToBeat)
     }
     
     @objc func continuePressed(sender: UIButton!) {
