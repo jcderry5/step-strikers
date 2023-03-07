@@ -7,31 +7,23 @@
 
 import UIKit
 
-class ClassSelectViewController: UIViewController {
+class SelectRogueViewController: UIViewController {
     
     let munro = "munro"
     let iso8 = "iso8"
     let buttonImg = UIImage(named: "Big choice Button")
-    
-    let classCycle = ["Fighter"]
-    
-    let fighterDesc = "A master of martial combat, skilled with a variety of weapons and armor"
-    let bardDesc = "An inspiring magician whose power echoes the music of creation"
-    let wizardDesc = "A scholarly magic user capable of manipulating the structures of reality"
     let rogueDesc = "A scoundrel who uses stealth and trickery to overcome obstacles and enemies"
 
     override func viewDidLoad() {
         super.viewDidLoad()
         assignBackground()
         createSettingsButton(x: 325, y: 800, width: 40, height: 40)
-        let className = createLabel(x: 25, y: 100, w: 361, h: 60, font: iso8, size: 60, text: "FIGHTER", align: .center)
+        _ = createLabel(x: 25, y: 100, w: 361, h: 60, font: iso8, size: 60, text: "ROGUE", align: .center)
         
         // Add images and arrows
-        let classImage = createImage(x: 107, y: 177, w: 179, h: 197, name: "Fighter")
+        _ = createImage(x: 107, y: 177, w: 179, h: 197, name: "Rogue")
         _ = createLabel(x: 66, y: 350, w: 92, h: 67, font: "munro", size: 20, text: "SWIPE", align: .center)
         _ = createImage(x: 66, y: 394, w: 92, h: 67, name: "left arrow")
-        _ = createLabel(x: 235, y: 350, w: 92, h: 67, font: "munro", size: 20, text: "SWIPE", align: .center)
-        _ = createImage(x: 225, y: 401, w: 112, h: 62, name: "right arrow")
         
         // Create swipe area
         let swipeView = UIView(frame: CGRect(x:0, y:175, width:393, height:290))
@@ -39,9 +31,6 @@ class ClassSelectViewController: UIViewController {
         let swipeRight = UISwipeGestureRecognizer(target:self, action:#selector(swipeRight))
         swipeRight.direction = .right
         swipeView.addGestureRecognizer(swipeRight)
-        let swipeLeft = UISwipeGestureRecognizer(target:self, action:#selector(swipeLeft))
-        swipeLeft.direction = .left
-        swipeView.addGestureRecognizer(swipeLeft)
         
         // Name text field
         let nameField = createTextField(x: 61, y: 490, w: 270, h: 34, secured: false)
@@ -52,7 +41,7 @@ class ClassSelectViewController: UIViewController {
         classDescription.backgroundColor = .clear
         classDescription.font = UIFont(name: munro, size: 24)
         classDescription.textAlignment = .justified
-        classDescription.text = fighterDesc
+        classDescription.text = rogueDesc
         view.addSubview(classDescription)
         
         // Select button
@@ -70,15 +59,12 @@ class ClassSelectViewController: UIViewController {
     }
     
     @objc func swipeRight() {
+        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "SelectBardViewController") as! SelectBardViewController
         
-    }
-    
-    @objc func swipeLeft() {
-        
-    }
-    
-    private func changeClass() {
-        
+        self.modalPresentationStyle = .fullScreen
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false)
     }
 
 }
