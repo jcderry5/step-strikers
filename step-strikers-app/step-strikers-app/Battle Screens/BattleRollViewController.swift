@@ -167,6 +167,7 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         view.addSubview(dice2)
         
         performBattleAction(rollValue: rollValue, rollValueToBeat: rollValueToBeat)
+        endTurn(game: game, player: localCharacter.userName)
     }
     
     @objc func continuePressed(sender: UIButton!) {
