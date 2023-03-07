@@ -52,6 +52,7 @@ struct enemyData {
 
 struct currTargetData {
     var name:String
+    var userName:String
     var character_class:String
     var health:Int
     var armor: Armor

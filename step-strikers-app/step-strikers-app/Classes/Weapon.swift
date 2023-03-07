@@ -38,6 +38,27 @@ protocol Weapon {
     func checkIfProficient(wielderClass: String) -> Bool
 }
 
+func getWeaponStrings(weapons:[Weapon]) -> [String] {
+    var weaponStrings = [String]()
+    for weapon in weapons {
+        weaponStrings.append(getConstructedName(weapon: weapon))
+    }
+    
+    return weaponStrings
+}
+
+func getConstructedName(weapon:Weapon) -> String {
+    var constructedName = ""
+    if(weapon.useCount < 10){
+        constructedName += "0\(weapon.useCount)"
+    } else {
+        constructedName += "\(weapon.useCount)"
+    }
+    constructedName += weapon.name
+    
+    return constructedName
+}
+
 // MARK: - Initialization Helper Functions
 func getConditionFromUseCount(useCount: Int) -> Int {
     if(useCount >= 0 && useCount < 5) {

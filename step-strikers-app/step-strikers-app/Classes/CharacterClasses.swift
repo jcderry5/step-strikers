@@ -58,8 +58,8 @@ class Fighter: RPGCharacter {
     }
     
     // Action surge will give you double damage on your attack if you pass the check
-    func actionSurge() {
-        let damageDealt = self.calculateDamage(wielderAttackModifier: self.attackModifier, wielderCurrWeapon: self.currWeapon, wielderClass: self.getCharacterClass()) * 2
+    func actionSurge(rollValue: Int, rollValueToBeat: Int) {
+        let damageDealt = self.calculateDamage(wielderAttackModifier: self.attackModifier, wielderCurrWeapon: self.currWeapon, wielderClass: self.getCharacterClass(), rollValue: rollValue, rollValueToBeat: rollValueToBeat) * 2
         
         self.doConsequencesOfFight(damageDealt: damageDealt)
         self.decreaseStamina(staminaCost: 10)
@@ -132,5 +132,27 @@ class Rogue: RPGCharacter {
         
         let message = "\(self.characterName) now knows all the opposing team's stats through All Sight"
         messageLog.addToMessageLog(message: message)
+    }
+}
+
+func actionRequiresEnemy() -> Bool {
+    let actionSelected = rowSelected?.name
+    
+    switch actionSelected {
+    case "Fight", "Action Surge", "Insight", "Frost Bite", "Mage Hand", "Shield", "Sleep", "Animate the Dead", "Heal", "Bardic Inspiration", "Vicious Mockery", "Blindness", "Invisibility":
+        return true
+    default:
+        return false
+    }
+}
+
+func actionRequiresRoll() -> Bool {
+    let actionSelected = rowSelected?.name
+    
+    switch actionSelected {
+    case "Fight", "Action Surge", "Frost Bite":
+        return true
+    default:
+        return false
     }
 }
