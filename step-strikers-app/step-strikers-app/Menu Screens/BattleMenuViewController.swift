@@ -65,9 +65,9 @@ class BattleMenuViewController: UIViewController {
     }
     
     @objc func swipeRight() {
-        // TODO: Set destination to inventory screen
+        // Navigate to the INVENTORY screen
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = sb.instantiateViewController(withIdentifier: "StatsViewController") as! StatsViewController
+        let vc = sb.instantiateViewController(withIdentifier: "InventoryViewController") as! InventoryViewController
 
         self.modalPresentationStyle = .fullScreen
         vc.modalPresentationStyle = .fullScreen

@@ -96,9 +96,9 @@ class StatsViewController: UIViewController {
     }
 
     @objc func swipeLeft() {
-        // TODO: Set destination to inventory screen
+        // Navigate to the INVENTORY screen
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = sb.instantiateViewController(withIdentifier: "BattleMenuViewController") as! BattleMenuViewController
+        let vc = sb.instantiateViewController(withIdentifier: "InventoryViewController") as! InventoryViewController
 
         self.modalPresentationStyle = .fullScreen
         vc.modalPresentationStyle = .fullScreen

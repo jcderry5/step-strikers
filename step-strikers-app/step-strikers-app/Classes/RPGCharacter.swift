@@ -25,6 +25,7 @@ class RPGCharacter {
     var armorInInventory: [Armor]
     var currArmor: Armor
     var itemsInInventory: [Item]
+    var inventoryQuantities: [String:Int]
     
     // Rolling modifiers
     var attackModifier = 0
@@ -32,7 +33,7 @@ class RPGCharacter {
     var magicResistanceModifier = 0
     
     init(characterName: String, userName: String, health: Int,
-         stamina: Int, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item]){
+         stamina: Int, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item], inventoryQuantities: [String:Int]){
         self.characterName = characterName
         self.userName = userName
         self.maxHealth = health
@@ -46,6 +47,7 @@ class RPGCharacter {
         self.armorInInventory = armorInInventory
         self.currArmor = currArmor
         self.itemsInInventory = itemsInInventory
+        self.inventoryQuantities = inventoryQuantities
     }
     
     // Returns a string of the class of the current character

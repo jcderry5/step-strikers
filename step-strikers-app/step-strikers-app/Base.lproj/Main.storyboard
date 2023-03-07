@@ -68,6 +68,21 @@
             </objects>
             <point key="canvasLocation" x="-5371.7557251908393" y="14.788732394366198"/>
         </scene>
+        <!--Inventory View Controller-->
+        <scene sceneID="piv-Cf-gQ6">
+            <objects>
+                <viewController storyboardIdentifier="InventoryViewController" id="WMe-Cv-qYE" customClass="InventoryViewController" customModule="step_strikers_app" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Gcv-D6-Cro">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="4pg-SM-eiW"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ahM-Y0-wC5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-4842" y="875"/>
+        </scene>
         <!--Battle Menu View Controller-->
         <scene sceneID="rvc-86-rE6">
             <objects>
