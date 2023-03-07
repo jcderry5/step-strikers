@@ -60,4 +60,38 @@ extension UIViewController {
         return imageView
     }
     
+    func createNotification() {
+        let notificationView = UIView(frame: CGRect(x:8,y:27,width:359,height:90))
+        let background = UIImageView(frame: notificationView.frame)
+        background.clipsToBounds = true
+        background.image = UIImage(named:"Banner")
+        background.center = notificationView.center
+        notificationView.addSubview(background)
+        
+        // Create banner label and icon
+        let label = UILabel(frame: CGRect(x:100, y:57, width:249, height:31))
+        label.text = "You found a new item!"
+        label.font = UIFont(name:"munro", size:24)
+        notificationView.addSubview(label)
+        let symbol = UIImageView(frame: CGRect(x:25, y:46, width:60, height:54))
+        symbol.image = UIImage(named:"Notification Icon")
+        notificationView.addSubview(symbol)
+        
+        // Pressing the banner will redirect the user to the inventory screen
+        let push = UIButton()
+        push.frame = notificationView.frame
+        push.addTarget(self, action:#selector(pushPressed), for:.touchUpInside)
+        notificationView.addSubview(push)
+        view.addSubview(notificationView)
+    }
+    
+    @objc private func pushPressed(_ sender:UIButton!) {
+        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "InventoryViewController") as! InventoryViewController
+
+        self.modalPresentationStyle = .fullScreen
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false)
+    }
+    
 }
