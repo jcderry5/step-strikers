@@ -76,9 +76,11 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
         
         // Populate the table with weapons on load
         let weaponsArr = localCharacter.weaponsInInventory
+        var quantities = localCharacter.inventoryQuantities
         for weapon in weaponsArr {
-            if weapon.name != "Fists" {
-                inventoryArr.append(inventoryStruct(name: weapon.name, image: UIImage(named:weapon.name) ?? UIImage(named:"battle axe")!, quantity: 1))
+            if weapon.name != "Fists" && quantities.keys.contains(weapon.name) {
+                inventoryArr.append(inventoryStruct(name: weapon.name, image: UIImage(named:weapon.name) ?? UIImage(named:"battle axe")!, quantity: quantities[weapon.name]!))
+                quantities.removeValue(forKey: weapon.name)
             }
         }
         
@@ -126,22 +128,30 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
         switch segCtrl.selectedSegmentIndex {
         case 0:
             let weaponsArr = localCharacter.weaponsInInventory
+            var quantities = localCharacter.inventoryQuantities
             for weapon in weaponsArr {
-                if weapon.name != "Fists" {
-                    inventoryArr.append(inventoryStruct(name: weapon.name, image: UIImage(named:weapon.name) ?? UIImage(named:"battle axe")!, quantity: 1))
+                if weapon.name != "Fists" && quantities.keys.contains(weapon.name) {
+                    inventoryArr.append(inventoryStruct(name: weapon.name, image: UIImage(named:weapon.name) ?? UIImage(named:"battle axe")!, quantity: quantities[weapon.name]!))
+                    quantities.removeValue(forKey: weapon.name)
                 }
             }
         case 1:
             let armorArr = localCharacter.armorInInventory
+            var quantities = localCharacter.inventoryQuantities
             for armor in armorArr {
-                if armor.name != "No Armor" {
-                    inventoryArr.append(inventoryStruct(name: armor.name, image: UIImage(named:armor.name) ?? UIImage(named:"battle axe")!, quantity: 1))
+                if armor.name != "No Armor" && quantities.keys.contains(armor.name) {
+                    inventoryArr.append(inventoryStruct(name: armor.name, image: UIImage(named:armor.name) ?? UIImage(named:"battle axe")!, quantity: quantities[armor.name]!))
+                    quantities.removeValue(forKey: armor.name)
                 }
             }
         case 2:
             let itemsArr = localCharacter.itemsInInventory
+            var quantities = localCharacter.inventoryQuantities
             for item in itemsArr {
-                inventoryArr.append(inventoryStruct(name: item.name, image: UIImage(named:item.name) ?? UIImage(named:"battle axe")!, quantity: 1))
+                if quantities.keys.contains(item.name) {
+                    inventoryArr.append(inventoryStruct(name: item.name, image: UIImage(named:item.name) ?? UIImage(named:"battle axe")!, quantity: quantities[item.name]!))
+                    quantities.removeValue(forKey: item.name)
+                }
             }
         default:
             print("Selecting an invalid inventory genre")
