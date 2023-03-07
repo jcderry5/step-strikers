@@ -126,10 +126,18 @@ extension UIViewController {
 
                             let currArmorToStore: Armor = rebuildArmorToStore(armorToStore: armor)
                             
+                            let player1Image:UIImageView?
+                            player1Image = UIImageView()
+                            player1Image!.backgroundColor = .clear
+                            // TODO: use local character
+                            let is_blind = false
                             // or don't save info and do UI stuff here one enemy at a time
-                            let player1 = characterSprites(name: character_class)
-                            let player1Image = player1.drawCharacter(view: self.view, x: xValues[count], y: 400, width: 100, height: 100)
+                            if is_blind == false {
+                                let player1 = characterSprites(name: character_class)
+                                let player1Image = player1.drawCharacter(view: self.view, x: xValues[count], y: 400, width: 100, height: 100, isInvisible: isInvisible)
+                            }
                             
+                            // TODO: @Alekhya check if player is dead here change character_class to "Skeleton"
                             enemiesList.append(enemyData(userName: userName, name: name, character_class: character_class, health: health, isBlind: isBlind, isInvisible: isInvisible,imageView: player1Image!, armor: currArmorToStore, defenseModifier: defenseModifier, armorInInventory: armorInventoryToStore))
                             
                             count = count + 1
@@ -194,19 +202,19 @@ extension UIViewController {
         //        print(enemiesList[0].name)
         // player 1
         let player1 = characterSprites(name: enemiesList[0].character_class)
-        let player1Image = player1.drawCharacter(view: self.view, x: 10, y: 400, width: 100, height: 100)
+        let player1Image = player1.drawCharacter(view: self.view, x: 10, y: 400, width: 100, height: 100, isInvisible: enemiesList[0].isInvisible)
         
         // player 2
         let player2 = characterSprites(name: enemy2)
-        let player2Image = player2.drawCharacter(view: self.view, x: 100, y: 400, width: 100, height: 100)
+        let player2Image = player2.drawCharacter(view: self.view, x: 100, y: 400, width: 100, height: 100, isInvisible: enemiesList[1].isInvisible)
         
         // player 3
         let player3 = characterSprites(name: enemy3)
-        let player3Image =  player3.drawCharacter(view: self.view, x: 200, y: 400, width: 100, height: 100)
+        let player3Image =  player3.drawCharacter(view: self.view, x: 200, y: 400, width: 100, height: 100, isInvisible: enemiesList[2].isInvisible)
         
         // player  4
         let player4 = characterSprites(name: enemy4)
-        let player4Image = player4.drawCharacter(view: self.view, x: 290, y: 400, width: 100, height: 100)
+        let player4Image = player4.drawCharacter(view: self.view, x: 290, y: 400, width: 100, height: 100, isInvisible: enemiesList[3].isInvisible)
         
         return [player1Image!, player2Image!, player3Image!, player4Image!]
     }
@@ -226,26 +234,33 @@ extension UIViewController {
         let player1Button = player1.drawButtonCharacter(controller: self, x: 10, y: 400, width: 100, height: 100)
         // need to change to a method that does whatever happens when enemy 1 is pressed
         player1Button.addTarget(self, action:#selector(self.enemy1Selected(_:)), for: .touchUpInside)
-        self.view.addSubview(player1Button)
+        if enemiesList[0].isInvisible == false {
+            self.view.addSubview(player1Button)
+        }
         
         // player 2
         let player2 = characterSprites(name: enemy2)
-        //        player2.drawCharacter(view: self.view, x: 100, y: 400, width: 100, height: 100)
         let player2Button = player2.drawButtonCharacter(controller: self, x: 100, y: 400, width: 100, height: 100)
         player2Button.addTarget(self, action:#selector(self.enemy2Selected(_:)), for: .touchUpInside)
-        self.view.addSubview(player2Button)
+        if enemiesList[1].isInvisible == false {
+            self.view.addSubview(player2Button)
+        }
         
         // player 3
         let player3 = characterSprites(name: enemy3)
         let player3Button = player3.drawButtonCharacter(controller: self, x: 200, y: 400, width: 100, height: 100)
         player3Button.addTarget(self, action:#selector(self.enemy3Selected(_:)), for: .touchUpInside)
-        self.view.addSubview(player3Button)
+        if enemiesList[2].isInvisible == false {
+            self.view.addSubview(player3Button)
+        }
         
         // player  4
         let player4 = characterSprites(name: enemy4)
         let player4Button = player4.drawButtonCharacter(controller: self, x: 290, y: 400, width: 100, height: 100)
         player4Button.addTarget(self, action:#selector(self.enemy4Selected(_:)), for: .touchUpInside)
-        self.view.addSubview(player4Button)
+        if enemiesList[3].isInvisible == false {
+            self.view.addSubview(player4Button)
+        }
         
         return [player1Button, player2Button, player3Button, player4Button]
     }

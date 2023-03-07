@@ -31,6 +31,10 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     var recentlyTapped:Int = 1000
     var selected:Bool = false
     
+    // TODO: get rid of this and instead use localCharacter
+    var is_blind = false
+    var is_invisible = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         renderEnemies(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
@@ -77,7 +81,15 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         // get rid of grey separator line in between rows
         statsDisplay.separatorColor = UIColor.clear
         self.view.addSubview(statsDisplay)
-       
+        
+        // blind only pop up
+        if is_blind {
+            let popUp = createPopUpBlind()
+            self.view.addSubview(popUp)
+        }
+        if is_invisible {
+            isInvisible_label()
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -127,20 +139,24 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         print(enemiesList[0].name)
         if recentlyTapped == indexPath.row && selected == true {
             selected = false
-            characterButtons[0].removeFromSuperview()
-            characterButtons[1].removeFromSuperview()
-            characterButtons[2].removeFromSuperview()
-            characterButtons[3].removeFromSuperview()
+            if characterButtons.isEmpty == false {
+                characterButtons[0].removeFromSuperview()
+                characterButtons[1].removeFromSuperview()
+                characterButtons[2].removeFromSuperview()
+                characterButtons[3].removeFromSuperview()
+            }
             if boxArrow.isEmpty == false {
                 boxArrow[0].removeFromSuperview()
                 boxArrow[1].removeFromSuperview()
                 boxArrow[2].removeFromSuperview()
             }
             tableView.deselectRow(at: indexPath, animated:false)
-            self.view.addSubview(enemiesList[0].imageView)
-            self.view.addSubview(enemiesList[1].imageView)
-            self.view.addSubview(enemiesList[2].imageView)
-            self.view.addSubview(enemiesList[3].imageView)
+            if is_blind == false {
+                self.view.addSubview(enemiesList[0].imageView)
+                self.view.addSubview(enemiesList[1].imageView)
+                self.view.addSubview(enemiesList[2].imageView)
+                self.view.addSubview(enemiesList[3].imageView)
+            }
         } else {
             selected = true
             rowSelected = actions[indexPath.row] // Actions stuct (holds
@@ -157,9 +173,19 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
                     boxArrow[1].removeFromSuperview()
                     boxArrow[2].removeFromSuperview()
                 }
-                // TODO: save the function clicked here
-                // will need to resave if the player deselects, but if you do it here it'll override
-                characterButtons = drawEnemiesButton(enemy1: enemiesList[0].character_class, enemy2: enemiesList[1].character_class, enemy3: enemiesList[2].character_class, enemy4: enemiesList[3].character_class)
+                if is_blind {
+                    selectRandomEnemy()
+                    if boxArrow.isEmpty == false {
+                        boxArrow[0].removeFromSuperview()
+                        boxArrow[1].removeFromSuperview()
+                        boxArrow[2].removeFromSuperview()
+                    }
+                } else {
+                    // TODO: save the function clicked here
+                    // will need to resave if the player deselects, but if you do it here it'll override
+                    characterButtons = drawEnemiesButton(enemy1: enemiesList[0].character_class, enemy2: enemiesList[1].character_class, enemy3: enemiesList[2].character_class, enemy4: enemiesList[3].character_class)
+                    checkAllEnemiesInvisible()
+                }
             }
         }
     }
@@ -209,8 +235,67 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points:[1,2,3,4] , totalPoints: [1,2,3,4]))
     }
     
-
+    func checkAllEnemiesInvisible() {
+        if enemiesList[0].isInvisible && enemiesList[1].isInvisible && enemiesList[2].isInvisible && enemiesList[3].isInvisible {
+            selectRandomEnemy()
+        }
+    }
     
+    func isInvisible_label() {
+        let invisible = createLabel(x: 40, y: 300, w: 200, h: 30, font: "munro", size: 15, text: "* You are invisible!", align: .left)
+        self.view.addSubview(invisible)
+    }
+    
+    func selectRandomEnemy() {
+        // edit change to enemy count instead of 4
+        let randomEnemy = Int.random(in: 1...4)
+        let blankButton = UIButton()
+        blankButton.backgroundColor = .clear
+        blankButton.setTitle("", for: .normal)
+        if randomEnemy == 1 {
+            enemy1Selected(blankButton)
+        } else if randomEnemy == 2 {
+            enemy2Selected(blankButton)
+        } else if randomEnemy == 3 {
+            enemy3Selected(blankButton)
+        } else if randomEnemy == 4 {
+            enemy4Selected(blankButton)
+        }
+        let seconds = 1.5
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+            performBattleAction()
+            let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "BattleRollViewController") as! BattleRollViewController
+            vc.selectTargetInfo = (enemiesList[0].userName, enemiesList[1].userName, enemiesList[2].userName, enemiesList[3].userName, rowSelected!)
+            print(vc.selectTargetInfo!.0)
+            
+            self.modalPresentationStyle = .fullScreen
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc,animated: false)
+        }
+    }
+    
+    func createPopUpBlind() -> UIView {
+        // view to display
+        let popView = UIView(frame: CGRect(x: 50, y: 350, width: 300, height: 200))
+        popView.backgroundColor = UIColor(red: 0.941, green: 0.851, blue: 0.690, alpha: 1.0)
+        
+        // incorrect party code label
+        let label = UILabel(frame: CGRect(x: 25, y: 5, width: 250, height: 200))
+        label.text = "You are blind\nYour enemy will be randomly selected for you\nPlease select an action it will be completed for you"
+        label.font = UIFont(name: "munro", size: 20)
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 0
+        label.textColor = UIColor.black
+        label.backgroundColor = UIColor.clear
+        popView.addSubview(label)
+        
+        // popView border
+        popView.layer.borderWidth = 1.0
+        popView.layer.borderColor = UIColor.black.cgColor
+        
+        return popView
+    }
     
 }
 
@@ -218,12 +303,14 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
 struct characterSprites {
     var name:String
     
-    func drawCharacter(view:UIView, x:Int, y:Int, width:Int, height:Int) -> UIImageView!{
+    func drawCharacter(view:UIView, x:Int, y:Int, width:Int, height:Int, isInvisible:Bool) -> UIImageView!{
         let image = UIImage(named:name)
         var imageView: UIImageView!
         imageView = UIImageView(frame: CGRect(x:x, y: y, width: width, height: height))
         imageView.image = image
-        view.addSubview(imageView)
+        if isInvisible == false {
+            view.addSubview(imageView)
+        }
         return imageView
     }
     
