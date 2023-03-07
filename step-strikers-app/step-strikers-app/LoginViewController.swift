@@ -112,13 +112,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 // Build the Global Character (Does not include item inventory yet)
                 switch characterClass {
                     case "Fighter":
-                        localCharacter = Fighter(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [])
+                    localCharacter = Fighter(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [], inventoryQuantities: [:])
                     case "Wizard":
-                        localCharacter = Wizard(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, spellPoints: currSpellPoints, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [])
+                    localCharacter = Wizard(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, spellPoints: currSpellPoints, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [], inventoryQuantities: [:])
                     case "Rogue":
-                        localCharacter = Rogue(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [])
+                    localCharacter = Rogue(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [], inventoryQuantities: [:])
                     case "Bard":
-                        localCharacter = Bard(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, spellPoints: currSpellPoints, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [])
+                    localCharacter = Bard(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, spellPoints: currSpellPoints, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [], inventoryQuantities: [:])
                     default:
                         print("Getting a characterClass not from the main 4... should not happen.")
                 }

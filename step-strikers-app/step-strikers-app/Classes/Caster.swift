@@ -16,11 +16,11 @@ class Caster: RPGCharacter {
     var spellModifier = 0
     
     init(characterName: String, userName: String, health: Int,
-         stamina: Int, spellPoints: Int, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item]) {
+         stamina: Int, spellPoints: Int, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item], inventoryQuantities: [String:Int]) {
         self.currSpellPoints = spellPoints
         self.maxSpellPoints = spellPoints
         super.init(characterName: characterName, userName: userName, health: health,
-                   stamina: stamina, currWeapon: currWeapon, weaponsInInventory: weaponsInInventory, currArmor: currArmor, armorInInventory: armorInInventory, itemsInInventory: itemsInInventory)
+                   stamina: stamina, currWeapon: currWeapon, weaponsInInventory: weaponsInInventory, currArmor: currArmor, armorInInventory: armorInInventory, itemsInInventory: itemsInInventory, inventoryQuantities: inventoryQuantities)
     }
     
     func increaseSpellPoints(amtIncrease: Int){
@@ -80,9 +80,9 @@ class Caster: RPGCharacter {
                 Firestore.firestore().collection("players").document(target).setData(["defense_modifier": currentModifier + 5], merge: true)
             }
         }
-        
+
         decreaseSpellPoints(amtDecrease: 4)
-        
+
         let message = "\(self.characterName) cast shield on \(target)"
         messageLog.addToMessageLog(message: message)
     }
