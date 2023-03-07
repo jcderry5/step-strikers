@@ -84,17 +84,30 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 let defenseModifier = document.get("defense_modifier") as! Int
                 let magicResistanceModifier = document.get("magic_resistance_modifier") as! Int
                 
+                // Keep track of item names
+                var itemNames = [String]()
+                
                 // Rebuild weaponInventory and weapon to store
                 let weaponInventory = document.get("weapon_inventory") as! [String]
                 let weaponInventoryToStore: [Weapon] = rebuildWeaponInventory(weaponInventory: weaponInventory)
                 let currWeapon = document.get("current_weapon") as! String
                 let currWeaponToStore: Weapon = rebuildWeaponToStore(currWeapon: currWeapon)
                 
+                // Add weapons to quantity array
+                for weapon in weaponInventoryToStore {
+                    itemNames.append(weapon.name)
+                }
+                
                 // Rebuild armorInventory and currArmor
                 let armorInventory = document.get("armor_inventory") as! [String]
                 var armorInventoryToStore: [Armor] = rebuildArmorInventory(armorInventory: armorInventory)
                 let currArmor = document.get("current_armor") as! String
                 let currArmorToStore: Armor = rebuildArmorToStore(armorToStore: currArmor)
+                
+                // Add armor to quantity array
+                for armor in armorInventoryToStore {
+                    itemNames.append(armor.name)
+                }
                 
                 // Build the Global Character (Does not include item inventory yet)
                 switch characterClass {
@@ -116,10 +129,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     // Store rebuilt item in inventory
                     let currItemToStore: Item = rebuildItem(itemName: item, owner: localCharacter)
                     itemInventoryToStore += [currItemToStore]
+                    // Add items to quantity array
+                    itemNames.append(currItemToStore.name)
                 }
                 
                 localCharacter.itemsInInventory = itemInventoryToStore
                 
+                // Create quantity dictionary and send it to global character
+                var itemQuantities:[String:Int] = [:]
+                for name in itemNames {
+                    itemQuantities[name] = (itemQuantities[name] ?? 0)+1
+                }
+                
+                localCharacter.inventoryQuantities = itemQuantities
+
                 // Add modifiers
                 localCharacter.attackModifier = attackModifier
                 localCharacter.defenseModifier = defenseModifier
@@ -135,7 +158,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: false)
             } else {
-                // TODO: @Nick display this on screen instead of printing
                 self.message.text = "Incorrect username or password"
             }
             
