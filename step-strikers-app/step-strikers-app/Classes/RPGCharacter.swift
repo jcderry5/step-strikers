@@ -231,10 +231,9 @@ class RPGCharacter {
     }
     
     // MARK: - Damage Functions
-    func fight(){
-        let damageDealt = calculateDamage(wielderAttackModifier: self.attackModifier, wielderCurrWeapon: self.currWeapon, wielderClass: self.getCharacterClass())
+    func fight(rollValue: Int, rollValueToBeat: Int){
+        let damageDealt = calculateDamage(wielderAttackModifier: self.attackModifier, wielderCurrWeapon: self.currWeapon, wielderClass: self.getCharacterClass(), rollValue: rollValue, rollValueToBeat: rollValueToBeat)
         
-        self.damageOpponent(target: currTarget.name, damage: damageDealt)
         doConsequencesOfFight(damageDealt: damageDealt)
         
         let message = "\(self.characterName) just attacked \(currTarget.name) for \(damageDealt) points of damage"
@@ -258,12 +257,11 @@ class RPGCharacter {
     
     // This function will calculate the damage that the wielder imposes on their target, given their proficiency in their currWeapon and the target's currArmor suitability.
     // proficient wielder def: The weapon is assigned to their class, they roll with the weapon's damage
-    func calculateDamage(wielderAttackModifier: Int, wielderCurrWeapon: Weapon, wielderClass: String) -> Int {
+    func calculateDamage(wielderAttackModifier: Int, wielderCurrWeapon: Weapon, wielderClass: String, rollValue: Int, rollValueToBeat: Int) -> Int {
         let damage: Int
-        let armorClassToBeat = calculateModifiedArmorClass()
         
         // D20 + wielders attackModifer vs target's armorClass + target's defenseModifier
-        if(rollDie(quant: 1, sides: 20) + wielderAttackModifier >= armorClassToBeat + currTarget.defenseModifier) {
+        if(rollValue + wielderAttackModifier >= rollValueToBeat + currTarget.defenseModifier) {
             // check if wielder is proficient in their weapon
             damage = calculateModifiedDamage()
         } else {
@@ -289,18 +287,6 @@ class RPGCharacter {
             return currTarget.armor.armorClass
         } else {
             return rollDie(quant: 1, sides: currTarget.armor.armorClass)
-        }
-    }
-
-    func damageOpponent(target: String, damage: Int) {
-        let targetRef = Firestore.firestore().collection("players").document(target)
-        targetRef.getDocument { (document, error) in
-            if let document = document, document.exists {
-                let currentHealth = document.get("health") as! Int
-                let newHealth = max(0, currentHealth - damage)
-                
-                Firestore.firestore().collection("players").document(target).setData(["health": newHealth], merge: true)
-            }
         }
     }
 }

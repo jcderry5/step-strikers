@@ -17,6 +17,27 @@ protocol Armor {
     func checkIfSuited(wearerCharacterType: String) -> Bool
 }
 
+func getArmorStrings(armors:[Armor]) -> [String] {
+    var armorStrings = [String]()
+    for armor in armors {
+        armorStrings.append(getConstructedName(armor: armor))
+    }
+    
+    return armorStrings
+}
+
+func getConstructedName(armor: Armor) -> String {
+    var constructedName = ""
+    if(armor.useCount < 10){
+        constructedName += "0\(armor.useCount)"
+    } else {
+        constructedName += "\(armor.useCount)"
+    }
+    constructedName += armor.name
+    
+    return constructedName
+}
+
 func rebuildArmor(armorName: String, useCount: Int) -> Armor{
     switch armorName {
     case "Leather":

@@ -114,7 +114,6 @@ extension UIViewController {
                             let data = document2.data()
                             let userName = enemy
                             let name = data!["character_name"] as! String
-                            print("name is= \(name)")
                             let character_class = data!["class"] as! String
                             let health = data!["health"] as! Int
                             let isBlind = data!["is_blind"] as! Bool
@@ -445,20 +444,24 @@ extension UIViewController {
     
     @objc func enemyBoxSelected(_ sender:UIButton, event: UIEvent) {
         // TODO: if you want to save things before transferring view controllers do it here From action -> roll to hit
-        // TODO: @Jalyn call performBattleActions
-        print("perform Battle Action has just been called")
-        performBattleAction()
         let touch: UITouch = event.allTouches!.first!
         if (touch.tapCount == 2) {
             // save the variables after you know its a double tap
             let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "BattleRollViewController") as! BattleRollViewController
-            vc.selectTargetInfo = (enemiesList[0].userName, enemiesList[1].userName, enemiesList[2].userName, enemiesList[3].userName, rowSelected!)
-            print(vc.selectTargetInfo!.0)
+            // Decide if the player needs to roll or not
+            if(actionRequiresRoll()) {
+                let vc = storyboard.instantiateViewController(withIdentifier: "BattleRollViewController") as! BattleRollViewController
+                vc.selectTargetInfo = (enemiesList[0].userName, enemiesList[1].userName, enemiesList[2].userName, enemiesList[3].userName, rowSelected!)
+                
+                self.modalPresentationStyle = .fullScreen
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc,animated: false)
+            } else {
+                // TODO: Test with server running
+                performBattleAction()
+                endTurn(game: game, player: localCharacter.userName)
+            }
             
-            self.modalPresentationStyle = .fullScreen
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc,animated: false)
         }
     }
     
@@ -479,6 +482,7 @@ extension UIViewController {
     func updateCurrTargetData(enemyIndex: Int) {
         print("We got inside updateCurrTargetData.... Which is good?")
         currTarget.name = enemiesList[enemyIndex].name
+        currTarget.userName = enemiesList[enemyIndex].userName
         currTarget.character_class = enemiesList[enemyIndex].character_class
         currTarget.health = enemiesList[enemyIndex].health
         currTarget.armor = enemiesList[enemyIndex].armor

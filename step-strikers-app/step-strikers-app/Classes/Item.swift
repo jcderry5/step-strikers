@@ -75,6 +75,16 @@ func rebuildItem(itemName: String, owner: RPGCharacter) -> Item {
     }
 }
 
+func getItemStrings (items:[Item]) -> [String] {
+    var itemStrings = [String]()
+    
+    for item in items {
+        itemStrings.append(item.name)
+    }
+    
+    return itemStrings
+}
+
 protocol Item {
     var name: String { get }
     var owner: RPGCharacter { get set }
