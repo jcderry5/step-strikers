@@ -164,16 +164,16 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
 
     // TODO: Update with actual item data
     func createItemArray() {
-        items.append(Items(name: "one", quantity: "x5"))
-        items.append(Items(name: "two", quantity: "x5"))
-        items.append(Items(name: "three", quantity: "x5"))
-        items.append(Items(name: "four", quantity: "x5"))
-        items.append(Items(name: "five", quantity: "x5"))
-        items.append(Items(name: "six", quantity: "x5"))
-        items.append(Items(name: "seven", quantity: "x5"))
-        items.append(Items(name: "eight", quantity: "x5"))
-        items.append(Items(name: "nine", quantity: "x5"))
-        items.append(Items(name: "ten", quantity: "x5"))
+        let itemsArr = localCharacter.itemsInInventory
+        var quantities = localCharacter.inventoryQuantities
+        for ite in itemsArr {
+            if quantities.keys.contains(ite.name) {
+                print(ite.name)
+                print(quantities[ite.name])
+                items.append(Items(name: ite.name, quantity: "x\(quantities[ite.name]!)"))
+                quantities.removeValue(forKey: ite.name)
+            }
+        }
     }
 
     func createStatsArray() {

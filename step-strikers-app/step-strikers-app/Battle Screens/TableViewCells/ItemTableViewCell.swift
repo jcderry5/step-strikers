@@ -41,7 +41,7 @@ class ItemTableViewCell: UITableViewCell {
         addSubview(itemName)
         addSubview(itemQuantity)
         // anchors the two strings based on their relative position within the cell and each other
-        itemName.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 0, width: 90, height: 0, enableInsets: false)
+        itemName.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 0, width: 200, height: 0, enableInsets: false)
         itemQuantity.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 0, width: 90, height: 0, enableInsets: false)
     }
     
