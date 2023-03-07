@@ -16,11 +16,11 @@ class Caster: RPGCharacter {
     var spellModifier = 0
     
     init(characterName: String, userName: String, health: Int,
-         stamina: Int, spellPoints: Int, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item]) {
+         stamina: Int, spellPoints: Int, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item], inventoryQuantities: [String:Int]) {
         self.currSpellPoints = spellPoints
         self.maxSpellPoints = spellPoints
         super.init(characterName: characterName, userName: userName, health: health,
-                   stamina: stamina, currWeapon: currWeapon, weaponsInInventory: weaponsInInventory, currArmor: currArmor, armorInInventory: armorInInventory, itemsInInventory: itemsInInventory)
+                   stamina: stamina, currWeapon: currWeapon, weaponsInInventory: weaponsInInventory, currArmor: currArmor, armorInInventory: armorInInventory, itemsInInventory: itemsInInventory, inventoryQuantities: inventoryQuantities)
     }
     
     func increaseSpellPoints(amtIncrease: Int){
@@ -43,33 +43,33 @@ class Caster: RPGCharacter {
     }
     
     func castMageHand(caster: String, target: String) {
-        let targetRef = Firestore.firestore().collection("players").document(target)
-        targetRef.getDocument { (document, error) in
-            if let document = document, document.exists {
-                // get info about target's current weapon
-                let weaponWithUseCount = document.get("current_weapon") as! String
-                
-                // update target info on firebase
-                Firestore.firestore().collection("players").document(target).updateData([
-                    "weapon_inventory": FieldValue.arrayRemove([weaponWithUseCount])])
-                Firestore.firestore().collection("players").document(target).setData(["current_weapon": "fists"], merge: true)
-                
-                // Splitting Weapon + UseCount from a single string
-                let weaponUseCountTuple = splitObjAndUseCount(objWithUseCount: weaponWithUseCount)
-                let weaponName = weaponUseCountTuple.objectName
-                let useCount: Int = weaponUseCountTuple.useCount
-                
-                // update own info locally -> initialize new weapon, add to self's inventory, equip it
-                let newWeapon = rebuildWeapon(weaponName: weaponName, useCount: useCount)
-                self.addToInventory(weaponObject: newWeapon)
-                self.wield(weaponObject: newWeapon)
-
-            }
-        }
-        decreaseSpellPoints(amtDecrease: 20)
-        
-        let message = "\(self.characterName) cast mage hand on \(target)"
-        messageLog.addToMessageLog(message: message)
+//        let targetRef = Firestore.firestore().collection("players").document(target)
+//        targetRef.getDocument { (document, error) in
+//            if let document = document, document.exists {
+//                // get info about target's current weapon
+//                let weaponWithUseCount = document.get("current_weapon") as! String
+//
+//                // update target info on firebase
+//                Firestore.firestore().collection("players").document(target).updateData([
+//                    "weapon_inventory": FieldValue.arrayRemove([weaponWithUseCount])])
+//                Firestore.firestore().collection("players").document(target).setData(["current_weapon": "fists"], merge: true)
+//
+//                // Splitting Weapon + UseCount from a single string
+//                let weaponUseCountTuple = splitObjAndUseCount(objWithUseCount: weaponWithUseCount)
+//                let weaponName = weaponUseCountTuple.objectName
+//                let useCount: Int = weaponUseCountTuple.useCount
+//
+//                // update own info locally -> initialize new weapon, add to self's inventory, equip it
+//                let newWeapon = rebuildWeapon(weaponName: weaponName, useCount: useCount)
+//                self.addToInventory(weaponObject: newWeapon)
+//                self.wield(weaponObject: newWeapon)
+//
+//            }
+//        }
+//        decreaseSpellPoints(amtDecrease: 20)
+//
+//        let message = "\(self.characterName) cast mage hand on \(target)"
+//        messageLog.addToMessageLog(message: message)
     }
     
     func castShield(caster: String, target: String) {
@@ -80,9 +80,9 @@ class Caster: RPGCharacter {
                 Firestore.firestore().collection("players").document(target).setData(["defense_modifier": currentModifier + 5], merge: true)
             }
         }
-        
+
         decreaseSpellPoints(amtDecrease: 4)
-        
+
         let message = "\(self.characterName) cast shield on \(target)"
         messageLog.addToMessageLog(message: message)
     }
