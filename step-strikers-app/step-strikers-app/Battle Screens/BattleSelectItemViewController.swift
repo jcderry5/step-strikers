@@ -166,12 +166,12 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
     func createItemArray() {
         let itemsArr = localCharacter.itemsInInventory
         var quantities = localCharacter.inventoryQuantities
-        for ite in itemsArr {
-            if quantities.keys.contains(ite.name) {
-                print(ite.name)
-                print(quantities[ite.name])
-                items.append(Items(name: ite.name, quantity: "x\(quantities[ite.name]!)"))
-                quantities.removeValue(forKey: ite.name)
+        for invItem in itemsArr {
+            if quantities.keys.contains(invItem.name) {
+                print(invItem.name)
+                print(quantities[invItem.name])
+                items.append(Items(name: invItem.name, quantity: "x\(quantities[invItem.name]!)"))
+                quantities.removeValue(forKey: invItem.name)
             }
         }
     }
