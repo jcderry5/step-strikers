@@ -159,8 +159,6 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
         var quantities = localCharacter.inventoryQuantities
         for weapon in weaponsArr {
             if quantities.keys.contains(weapon.name) {
-                print(weapon.name)
-                print(quantities[weapon.name])
                 equips.append(Equip(name: weapon.name, quantity: "x\(quantities[weapon.name]!)"))
                 quantities.removeValue(forKey: weapon.name)
             }
@@ -169,8 +167,6 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
         let armorArr = localCharacter.armorInInventory
         for armor in armorArr {
             if quantities.keys.contains(armor.name) {
-                print(armor.name)
-                print(quantities[armor.name])
                 equips.append(Equip(name: armor.name, quantity: "x\(quantities[armor.name]!)"))
                 quantities.removeValue(forKey: armor.name)
             }

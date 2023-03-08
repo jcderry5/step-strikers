@@ -168,8 +168,6 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
         var quantities = localCharacter.inventoryQuantities
         for invItem in itemsArr {
             if quantities.keys.contains(invItem.name) {
-                print(invItem.name)
-                print(quantities[invItem.name])
                 items.append(Items(name: invItem.name, quantity: "x\(quantities[invItem.name]!)"))
                 quantities.removeValue(forKey: invItem.name)
             }
