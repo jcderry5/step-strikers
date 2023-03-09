@@ -50,9 +50,11 @@ struct enemyData {
     var armorInInventory: [Armor]
     
     // New attributes for spells:
-    var magicResistanceModifier: Int
     var isDead: Bool
     var isSleep: Bool
+    var magicResistanceModifier: Int
+    var currWeapon: Weapon
+    var weaponInventory: [Weapon]
     // Have not implemented advantage and disadvantage on rollDie
     var hasAdvantage: Bool
     var hasDisadvantage: Bool

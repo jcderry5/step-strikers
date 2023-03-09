@@ -129,12 +129,14 @@ extension UIViewController {
                     
                     let isBlind = data!["is_blind"] as! Bool
                     let isDead = data!["is_dead"] as! Bool
-                    let isSleep = data!["is_sleep"] as! Bool
+                    let isSleep = data!["is_asleep"] as! Bool
                     let isInvisible = data!["is_invisible"] as! Bool
                     
                     let magicResistanceModifier = data!["magic_resistance_modifier"] as! Int
-                    let currWeapon = data!["curr_weapon"] as! String
+                    let currWeapon = data!["current_weapon"] as! String
                     let currWeaponToStore = rebuildWeaponToStore(currWeapon: currWeapon)
+                    let weaponInventory = data!["weapon_inventory"] as! [String]
+                    let weaponInventoryToStore: [Weapon] = rebuildWeaponInventory(weaponInventory: weaponInventory)
                     
                     let hasAdvantage = data!["has_advantage"] as! Bool
                     let hasDisadvantage = data!["has_disadvantage"] as! Bool
@@ -146,7 +148,7 @@ extension UIViewController {
                     let player1 = characterSprites(name: character_class)
                     let player1Image = player1.drawCharacter(view: self.view, x: xValues[count], y: 400, width: 100, height: 100)
                     
-                    enemiesList.append(enemyData(userName: userName, name: name, character_class: character_class, health: health, isBlind: isBlind, isInvisible: isInvisible, imageView: player1Image!, armor: currArmorToStore, defenseModifier: defenseModifier, armorInInventory: armorInventoryToStore, magicResistanceModifier: magicResistanceModifier, isDead: isDead, isSleep: isSleep,  hasAdvantage: hasAdvantage, hasDisadvantage: hasDisadvantage))
+                    enemiesList.append(enemyData(userName: userName, name: name, character_class: character_class, health: health, isBlind: isBlind, isInvisible: isInvisible, imageView: player1Image!, armor: currArmorToStore, defenseModifier: defenseModifier, armorInInventory: armorInventoryToStore, isDead: isDead, isSleep: isSleep, magicResistanceModifier: magicResistanceModifier, currWeapon: currWeaponToStore, weaponInventory: weaponInventoryToStore, hasAdvantage: hasAdvantage, hasDisadvantage: hasDisadvantage))
                     
                     count = count + 1
                     }
@@ -501,6 +503,17 @@ extension UIViewController {
         currTarget.modifiedArmorClass = calculateModifiedArmorClass()
         currTarget.defenseModifier = enemiesList[enemyIndex].defenseModifier
         currTarget.armorInInventory = enemiesList[enemyIndex].armorInInventory
+        
+        
+        currTarget.isBlind = enemiesList[enemyIndex].isBlind
+        currTarget.isDead = enemiesList[enemyIndex].isDead
+        currTarget.isSleep = enemiesList[enemyIndex].isSleep
+        currTarget.magicResistanceModifier = enemiesList[enemyIndex].magicResistanceModifier
+        currTarget.currWeapon = enemiesList[enemyIndex].currWeapon
+        currTarget.weaponInventory = enemiesList[enemyIndex].weaponInventory
+        
+        currTarget.hasAdvantage = enemiesList[enemyIndex].hasAdvantage
+        currTarget.hasDisadvantage = enemiesList[enemyIndex].hasDisadvantage
     }
     
     // TODO: Fill out
