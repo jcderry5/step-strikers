@@ -44,7 +44,7 @@ class EquipTableViewCell: UITableViewCell {
         addSubview(equipName)
         addSubview(equipQuantity)
         // anchors the name to the left of the row
-        equipName.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 0, width: 90, height: 0, enableInsets: false)
+        equipName.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 0, width: 200, height: 0, enableInsets: false)
         // anchors the quantity based on how long the name is
         equipQuantity.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 0, width: 90, height: 0, enableInsets: false)
     }
