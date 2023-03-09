@@ -373,4 +373,9 @@ func destroyWeapon(ownerWeaponsInventory: inout [Weapon], weaponToDestroy: Weapo
     }
 }
 
-
+func removeWeaponFromInventory(weaponToRemove: Weapon, weaponInventory: inout [Weapon]) {
+    if weaponInventory.contains(where: { weapon in weapon.name == weaponToRemove.name && weapon.useCount == weaponToRemove.useCount }) {
+        weaponInventory.removeAll { weapon in
+            weapon.name == weaponToRemove.name && weapon.useCount == weaponToRemove.useCount }
+    }
+}

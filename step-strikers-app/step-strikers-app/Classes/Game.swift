@@ -93,25 +93,20 @@ func resetPlayerStats(player:String) {
 }
 
 func rollInitiative(player:String, game: String) -> Int{
-    let initiative = rollDie(quant: 1, sides: 20)
+    let initiative = rollDie(sides: 20)
         
     // send initiative to firebase
     Firestore.firestore().collection("games").document(game).updateData(["initiative.\(player)": initiative])
     return initiative
 }
 
-func rollDie(quant: Int, sides: Int) -> Int {
-    var sum = 0
-    for _ in 1...quant {
-        sum += Int.random(in: 1...sides)
-    }
-    
-    return sum
+func rollDie(sides: Int) -> Int {
+    return Int.random(in: 1...sides)
 }
 
 func rollDieDisadvantage(sides: Int) -> Int {
-    let firstRoll = rollDie(quant: 1, sides: sides)
-    let secondRoll = rollDie(quant: 1, sides: sides)
+    let firstRoll = rollDie(sides: sides)
+    let secondRoll = rollDie(sides: sides)
     return (firstRoll <= secondRoll) ? firstRoll : secondRoll
 }
 

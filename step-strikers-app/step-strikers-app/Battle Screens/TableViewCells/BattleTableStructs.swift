@@ -48,6 +48,14 @@ struct enemyData {
     var armor: Armor
     var defenseModifier: Int
     var armorInInventory: [Armor]
+    
+    // New attributes for spells:
+    var magicResistanceModifier: Int
+    var isDead: Bool
+    var isSleep: Bool
+    // Have not implemented advantage and disadvantage on rollDie
+    var hasAdvantage: Bool
+    var hasDisadvantage: Bool
 }
 
 struct currTargetData {
@@ -58,6 +66,18 @@ struct currTargetData {
     var armor: Armor
     var defenseModifier: Int
     var armorInInventory: [Armor] // For potentially destroying poor armor
+    
+    // Added values for spells
+    // TODO: Need to add this to updateCurrTarget or this will be nil
+    var isBlind:Bool
+    var isDead: Bool
+    var isSleep: Bool
+    var magicResistanceModifier: Int
+    var currWeapon: Weapon
+    var weaponInventory: [Weapon]
+    // Have not implemented advantage and disadvantage on rollDie
+    var hasAdvantage: Bool
+    var hasDisadvantage: Bool
     
     func printEnemyData() {
         print("currTarget name is: \(name)")
@@ -76,4 +96,16 @@ struct teamData {
     let health:Int
     let isBlind:Bool
     let isInvisible:Bool
+    // Added for spells
+    let hasAdvantage:Bool
+    let defenseModifier:Int
+}
+
+struct currTeamMemberData {
+    var name: String
+    var characterClass:String
+    var health: Int
+    var isInvisible:Bool
+    var hasAdvantage: Bool
+    var defenseModifier: Int
 }

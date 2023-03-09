@@ -82,12 +82,151 @@ class Wizard: Caster {
     override init(characterName: String, userName: String, health: Int, stamina: Int, spellPoints: Int, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item], inventoryQuantities: [String:Int]) {
         super.init(characterName: characterName, userName: userName, health: health, stamina: stamina, spellPoints: spellPoints, currWeapon: currWeapon, weaponsInInventory: weaponsInInventory, currArmor: currArmor, armorInInventory: armorInInventory, itemsInInventory: itemsInInventory, inventoryQuantities: inventoryQuantities)
     }
+    
+    func castFrostbite(rollValue: Int) {
+        decreaseSpellPoints(amtDecrease: 3)
+        
+        guard didSpellHit(rollValue: rollValue) else {
+            let message = "\(self.characterName) failed in casting Frost Bite on \(currTarget.name)"
+            messageLog.addToMessageLog(message: message)
+            return
+        }
+        
+        let damage = rollDie(sides: 6)
+        
+        decreaseTargetHealth(amtDamage: damage)
+        
+        
+        let message = "\(self.characterName) cast frosbite on \(currTarget.name)"
+        messageLog.addToMessageLog(message: message)
+    }
+    
+    func castShield() {
+        currTeamMember.defenseModifier += 20
+        decreaseSpellPoints(amtDecrease: 4)
+
+        let message = "\(self.characterName) cast shield on \(currTeamMember.name)"
+        messageLog.addToMessageLog(message: message)
+    }
+    
+    func sleep(rollValue: Int) {
+        decreaseSpellPoints(amtDecrease: 12)
+        
+        guard didSpellHit(rollValue: rollValue) else {
+            let message = "\(self.characterName) failed to cast sleep on \(currTarget.name)"
+            messageLog.addToMessageLog(message: message)
+            return
+        }
+        
+        currTarget.isSleep = true
+        
+        
+        
+        let message = "\(self.characterName) cast sleep on \(currTarget.name). Their turn is skipped for 1 round."
+        messageLog.addToMessageLog(message: message)
+    }
+    
+    func castAnimateDead() {
+        // TODO: @Jalyn Update currTarget to wherever teammate info will be held
+        guard currTarget.isDead else {
+            let message = "\(self.characterName) tried to cast Animate the Dead on \(currTarget.name) but they are not dead."
+            messageLog.addToMessageLog(message: message)
+            return
+        }
+        
+        currTarget.isDead = false
+        currTarget.health = 1
+        
+        decreaseSpellPoints(amtDecrease: 17)
+        
+        let message = "\(self.characterName) cast animate dead on \(currTarget.name). They are now alive with 1HP"
+        messageLog.addToMessageLog(message: message)
+    }
+    
+    // TODO: @Jalyn update roll check screen for this specific spell
+    func heal(amtToHeal: Int) {
+        
+        currTeamMember.health += amtToHeal
+        let currTeamMemberMaxHealth = getMaxHealth(characterClass: currTeamMember.characterClass)
+        
+        // Make sure they do not get past their max health
+        currTeamMember.health = (currTeamMember.health > currTeamMemberMaxHealth) ? currTeamMemberMaxHealth : currTeamMember.health
+        
+        decreaseSpellPoints(amtDecrease: 5)
+        
+        let message = "\(self.characterName) healed \(currTarget.name) for \(amtToHeal)HP"
+        messageLog.addToMessageLog(message: message)
+    }
+    
+    
 }
 
 
 class Bard: Caster {
     override init(characterName: String, userName: String, health: Int, stamina: Int, spellPoints: Int, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item], inventoryQuantities: [String:Int]) {
         super.init(characterName: characterName, userName: userName, health: health, stamina: stamina, spellPoints: spellPoints, currWeapon: currWeapon, weaponsInInventory: weaponsInInventory, currArmor: currArmor, armorInInventory: armorInInventory, itemsInInventory: itemsInInventory, inventoryQuantities: inventoryQuantities)
+    }
+    
+    // TODO: @Jalyn. This is towards teammates. Wait.
+    func castBardicInspiration() {
+        currTeamMember.hasAdvantage = true
+        decreaseSpellPoints(amtDecrease: 7)
+        
+        let message = "\(self.characterName) cast bardic inspiration on \(currTarget.name)"
+        messageLog.addToMessageLog(message: message)
+    }
+    
+    
+    func castViciousMockery(rollValue: Int) {
+        decreaseSpellPoints(amtDecrease: 7)
+        
+        guard didSpellHit(rollValue: rollValue) else {
+            let message = "\(self.characterName) failed in casting vicious mockery on \(currTarget.name)"
+            messageLog.addToMessageLog(message: message)
+            return
+        }
+        
+        currTarget.hasDisadvantage = true
+        
+        
+        
+        let message = "\(self.characterName) cast vicious mockery on \(currTarget.name)"
+        messageLog.addToMessageLog(message: message)
+    }
+    
+    // TODO: @Alekhya
+    func castBlindness(rollValue: Int) {
+        decreaseSpellPoints(amtDecrease: 8)
+        
+        guard didSpellHit(rollValue: rollValue) else {
+            let message = "\(self.characterName) failed in casting blindness on \(currTarget.name)"
+            messageLog.addToMessageLog(message: message)
+            return
+        }
+        
+        currTarget.isBlind = true
+        
+        let message = "\(self.characterName) cast blindness on..."
+        messageLog.addToMessageLog(message: message)
+    }
+    
+    // TODO: @Alekhya
+    func castInvisibility() {
+        
+        currTeamMember.isInvisible = true
+        decreaseSpellPoints(amtDecrease: 10)
+        
+        let message = "\(self.characterName) cast invisibility on \(currTeamMember.name)"
+        messageLog.addToMessageLog(message: message)
+    }
+    
+    func castMotivationalSpeech() {
+        // TODO: @Kelly for this to work, can you check the global rowSelected and if it's "Motivational Speech" push hasAdvantage to true for all teammates within endGame
+        
+        decreaseSpellPoints(amtDecrease: 15)
+        
+        let message = "\(self.characterName) cast motivational speech on their team"
+        messageLog.addToMessageLog(message: message)
     }
 }
 

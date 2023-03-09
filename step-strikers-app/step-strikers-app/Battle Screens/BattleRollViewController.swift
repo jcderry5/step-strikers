@@ -123,7 +123,7 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         view.addSubview(label)
         
         // Checking what to display as rollToBeat
-        if(rowSelected?.name == "Fight" || rowSelected?.name == "Action Surge") {
+        if(rowSelected?.name == "Fight" || rowSelected?.name == "Action Surge" || rowSelected?.name == "Frost Bite") {
             rollValueToBeat = localCharacter.calculateModifiedArmorClass()
             label.text = "Number to Beat: \(String(describing: rollValueToBeat!))"
         } else {
@@ -135,13 +135,9 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         // TODO: Add roll to hit backend here
         // Decide which type of die to roll
         var rollValue = 0
-        if(rowSelected?.name == "Fight" || rowSelected?.name == "Action Surge") {
+        if(rowSelected?.name == "Fight" || rowSelected?.name == "Action Surge" || rowSelected?.name == "Frost Bite") {
             // Any action that needs to roll a D20 goes here. Let jalyn know before you expand this tho...
-            rollValue = rollDie(quant: 1, sides: 20)
-        } else if(rowSelected?.name == "Frost Bite") {
-            // Any action that needs to roll a D6 goes here
-            // TODO: @Kelly here you can add the different rolls that require different # sided dice
-            rollValue = rollDie(quant: 1, sides: 6)
+            rollValue = rollDie(sides: 20)
         }
         sender.isHidden = true
         

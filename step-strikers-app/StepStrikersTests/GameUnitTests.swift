@@ -59,7 +59,7 @@ final class GameUnitTests: XCTestCase {
     
     func testRollDie() {
         // Act
-        let rollValue = rollDie(quant: 1, sides: 20)
+        let rollValue = rollDie(sides: 20)
         
         // Assert
         XCTAssertTrue(rollValue > 0 && rollValue <= 20)

@@ -9,6 +9,25 @@ import FirebaseFirestore
 
 var messageLog: MessageLog = MessageLog();
 
+let maxHealthPerClass = [
+    (characterClass: "Fighter", maxHealth: 45),
+    (characterClass: "Rogue", maxHealth: 40),
+    (characterClass: "Bard", maxHealth: 30),
+    (characterClass: "Wizard", maxHealth: 35)
+]
+
+let maxStaminaPerClass = [
+    (characterClass: "Fighter", maxStamina: 50),
+    (characterClass: "Rogue", maxStamina: 55),
+    (characterClass: "Bard", maxStamina: 35),
+    (characterClass: "Wizard", maxStamina: 30)
+]
+
+let maxSpellPointsPerClass = [
+    (characterClass: "Bard", maxSpellPoints: 30),
+    (characterClass: "Wizard", maxSpellPoints: 40)
+]
+
 class RPGCharacter {
     var characterName: String
     var userName: String
@@ -277,7 +296,7 @@ class RPGCharacter {
         if(self.currWeapon.checkIfProficient(wielderClass: self.getCharacterClass())){
             return self.currWeapon.damage
         } else {
-            return rollDie(quant: 1, sides: self.currWeapon.damage)
+            return rollDie(sides: self.currWeapon.damage)
         }
     }
     
@@ -288,7 +307,7 @@ class RPGCharacter {
         if(currTarget.armor.checkIfSuited(wearerCharacterType: currTarget.character_class)){
             return currTarget.armor.armorClass
         } else {
-            return rollDie(quant: 1, sides: currTarget.armor.armorClass)
+            return rollDie(sides: currTarget.armor.armorClass)
         }
     }
 }
@@ -298,5 +317,49 @@ func decreaseTargetHealth(amtDamage: Int){
     if currTarget.health < 0 {
         currTarget.health = 0
         // TODO: Add functionality for when a person dies
+    }
+}
+
+func getMaxHealth(characterClass: String) -> Int {
+    switch characterClass {
+    case maxHealthPerClass[0].characterClass:
+        return maxHealthPerClass[0].maxHealth
+    case maxHealthPerClass[1].characterClass:
+        return maxHealthPerClass[1].maxHealth
+    case maxHealthPerClass[2].characterClass:
+        return maxHealthPerClass[2].maxHealth
+    case maxHealthPerClass[3].characterClass:
+        return maxHealthPerClass[3].maxHealth
+    default:
+        print("Asking for the max health of a class that doesn't exist")
+        return 30
+    }
+}
+
+func getMaxStamina(characterClass: String) -> Int {
+    switch characterClass {
+    case maxStaminaPerClass[0].characterClass:
+        return maxStaminaPerClass[0].maxStamina
+    case maxStaminaPerClass[1].characterClass:
+        return maxStaminaPerClass[1].maxStamina
+    case maxStaminaPerClass[2].characterClass:
+        return maxStaminaPerClass[2].maxStamina
+    case maxStaminaPerClass[3].characterClass:
+        return maxStaminaPerClass[3].maxStamina
+    default:
+        print("Asking for the max stamina of a class that doesn't exist")
+        return 30
+    }
+}
+
+func getMaxSpellPoints(characterClass: String) -> Int {
+    switch characterClass {
+    case maxSpellPointsPerClass[0].characterClass:
+        return maxSpellPointsPerClass[0].maxSpellPoints
+    case maxSpellPointsPerClass[1].characterClass:
+        return maxSpellPointsPerClass[2].maxSpellPoints
+    default:
+        print("Asking for the max health of a class that doesn't exist")
+        return 30
     }
 }
