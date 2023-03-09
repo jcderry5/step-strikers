@@ -354,3 +354,47 @@ func getMaxSpellPoints(characterClass: String) -> Int {
         return 30
     }
 }
+
+func getMaxHealth(characterClass: String) -> Int {
+    switch characterClass {
+    case maxHealthPerClass[0].characterClass:
+        return maxHealthPerClass[0].maxHealth
+    case maxHealthPerClass[1].characterClass:
+        return maxHealthPerClass[1].maxHealth
+    case maxHealthPerClass[2].characterClass:
+        return maxHealthPerClass[2].maxHealth
+    case maxHealthPerClass[3].characterClass:
+        return maxHealthPerClass[3].maxHealth
+    default:
+        print("Asking for the max health of a class that doesn't exist")
+        return 30
+    }
+}
+
+func getMaxStamina(characterClass: String) -> Int {
+    switch characterClass {
+    case maxStaminaPerClass[0].characterClass:
+        return maxStaminaPerClass[0].maxStamina
+    case maxStaminaPerClass[1].characterClass:
+        return maxStaminaPerClass[1].maxStamina
+    case maxStaminaPerClass[2].characterClass:
+        return maxStaminaPerClass[2].maxStamina
+    case maxStaminaPerClass[3].characterClass:
+        return maxStaminaPerClass[3].maxStamina
+    default:
+        print("Asking for the max stamina of a class that doesn't exist")
+        return 30
+    }
+}
+
+func getMaxSpellPoints(characterClass: String) -> Int {
+    switch characterClass {
+    case maxSpellPointsPerClass[0].characterClass:
+        return maxSpellPointsPerClass[0].maxSpellPoints
+    case maxSpellPointsPerClass[1].characterClass:
+        return maxSpellPointsPerClass[2].maxSpellPoints
+    default:
+        print("Asking for the max health of a class that doesn't exist")
+        return 30
+    }
+}
