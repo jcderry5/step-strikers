@@ -123,9 +123,11 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         view.addSubview(label)
         
         // Checking what to display as rollToBeat
-        if(rowSelected?.name == "Fight" || rowSelected?.name == "Action Surge" || rowSelected?.name == "Frost Bite") {
-            rollValueToBeat = localCharacter.calculateModifiedArmorClass()
-            label.text = "Number to Beat: \(String(describing: rollValueToBeat!))"
+        if(actionIsContested()) {
+            rollValueToBeat = calculateModifiedArmorClass()
+            label.text = "Number to Beat: \(String(describing: rollValueToBeat!)) + MOD"
+        } else if rowSelected?.name == "Heal" {
+            label.text = "You can heal up to 8HP"
         } else {
             label.text = "Number to Beat: __"
         }
@@ -135,9 +137,11 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         // TODO: Add roll to hit backend here
         // Decide which type of die to roll
         var rollValue = 0
-        if(rowSelected?.name == "Fight" || rowSelected?.name == "Action Surge" || rowSelected?.name == "Frost Bite") {
-            // Any action that needs to roll a D20 goes here. Let jalyn know before you expand this tho...
-            rollValue = rollDie(sides: 20)
+        if(actionRequiresRoll()) {
+            rollValue = rollDie(sides: 20, withAdvantage: localCharacter.hasAdvantage, withDisadvantage: localCharacter.hasDisadvantage)
+            // Replace advantage and disadvantage back to false
+            localCharacter.hasAdvantage = false
+            localCharacter.hasDisadvantage = false
         }
         sender.isHidden = true
         
@@ -150,7 +154,7 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         rollLabel.textAlignment = .center
         rollLabel.center.x = view.center.x
         rollLabel.numberOfLines = 2
-        rollLabel.text = "You rolled a\n\(rollValue)!"
+        rollLabel.text = "You rolled a\n\(rollValue) + MOD!"
         rollLabel.font = UIFont(name:"munro", size:40)
         view.addSubview(rollLabel)
         
@@ -162,8 +166,7 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         dice2.image = UIImage(named:"d20")
         view.addSubview(dice2)
         
-        performBattleAction(rollValue: rollValue, rollValueToBeat: rollValueToBeat)
-        endTurn(game: game, player: localCharacter.userName)
+        performBattleAction(rollValue: rollValue)
     }
     
     @objc func continuePressed(sender: UIButton!) {

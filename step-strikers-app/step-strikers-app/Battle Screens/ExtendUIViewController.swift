@@ -473,7 +473,6 @@ extension UIViewController {
             } else {
                 // TODO: Test with server running
                 performBattleAction()
-                endTurn(game: game, player: localCharacter.userName)
             }
             
         }
@@ -499,6 +498,7 @@ extension UIViewController {
         currTarget.character_class = enemiesList[enemyIndex].character_class
         currTarget.health = enemiesList[enemyIndex].health
         currTarget.armor = enemiesList[enemyIndex].armor
+        currTarget.modifiedArmorClass = calculateModifiedArmorClass()
         currTarget.defenseModifier = enemiesList[enemyIndex].defenseModifier
         currTarget.armorInInventory = enemiesList[enemyIndex].armorInInventory
     }

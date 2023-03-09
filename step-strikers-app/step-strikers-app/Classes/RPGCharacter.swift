@@ -50,6 +50,9 @@ class RPGCharacter {
     var attackModifier = 0
     var defenseModifier = 0
     var magicResistanceModifier = 0
+    // TODO: @Kelly, when loading up your character for your turn, this is needed.
+    var hasAdvantage: Bool = false
+    var hasDisadvantage: Bool = false
     
     init(characterName: String, userName: String, health: Int,
          stamina: Int, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item], inventoryQuantities: [String:Int]){
@@ -252,8 +255,8 @@ class RPGCharacter {
     }
     
     // MARK: - Damage Functions
-    func fight(rollValue: Int, rollValueToBeat: Int){
-        let damageDealt = calculateDamage(wielderAttackModifier: self.attackModifier, wielderCurrWeapon: self.currWeapon, wielderClass: self.getCharacterClass(), rollValue: rollValue, rollValueToBeat: rollValueToBeat)
+    func fight(rollValue: Int){
+        let damageDealt = calculateDamage(wielderAttackModifier: self.attackModifier, wielderCurrWeapon: self.currWeapon, wielderClass: self.getCharacterClass(), rollValue: rollValue)
         
         doConsequencesOfFight(damageDealt: damageDealt)
         
@@ -278,11 +281,11 @@ class RPGCharacter {
     
     // This function will calculate the damage that the wielder imposes on their target, given their proficiency in their currWeapon and the target's currArmor suitability.
     // proficient wielder def: The weapon is assigned to their class, they roll with the weapon's damage
-    func calculateDamage(wielderAttackModifier: Int, wielderCurrWeapon: Weapon, wielderClass: String, rollValue: Int, rollValueToBeat: Int) -> Int {
+    func calculateDamage(wielderAttackModifier: Int, wielderCurrWeapon: Weapon, wielderClass: String, rollValue: Int) -> Int {
         let damage: Int
         
         // D20 + wielders attackModifer vs target's armorClass + target's defenseModifier
-        if(rollValue + wielderAttackModifier >= rollValueToBeat + currTarget.defenseModifier) {
+        if(rollValue + wielderAttackModifier >= currTarget.modifiedArmorClass + currTarget.defenseModifier) {
             // check if wielder is proficient in their weapon
             damage = calculateModifiedDamage()
         } else {
@@ -296,18 +299,11 @@ class RPGCharacter {
         if(self.currWeapon.checkIfProficient(wielderClass: self.getCharacterClass())){
             return self.currWeapon.damage
         } else {
-            return rollDie(sides: self.currWeapon.damage)
-        }
-    }
-    
-    // This function will return the modified armor class in case the wearer is ill-suited for their currArmor
-    func calculateModifiedArmorClass() -> Int {
-        print("inside calculate modified armor class")
-        currTarget.printEnemyData()
-        if(currTarget.armor.checkIfSuited(wearerCharacterType: currTarget.character_class)){
-            return currTarget.armor.armorClass
-        } else {
-            return rollDie(sides: currTarget.armor.armorClass)
+            let returnValue = rollDie(sides: self.currWeapon.damage, withAdvantage: localCharacter.hasAdvantage, withDisadvantage: localCharacter.hasDisadvantage)
+            // Replace advantage and disadvantage back to false
+            localCharacter.hasAdvantage = false
+            localCharacter.hasDisadvantage = false
+            return returnValue
         }
     }
 }

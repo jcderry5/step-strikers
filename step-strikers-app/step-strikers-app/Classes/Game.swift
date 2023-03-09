@@ -100,14 +100,18 @@ func rollInitiative(player:String, game: String) -> Int{
     return initiative
 }
 
-func rollDie(sides: Int) -> Int {
-    return Int.random(in: 1...sides)
-}
-
-func rollDieDisadvantage(sides: Int) -> Int {
-    let firstRoll = rollDie(sides: sides)
-    let secondRoll = rollDie(sides: sides)
-    return (firstRoll <= secondRoll) ? firstRoll : secondRoll
+func rollDie(sides: Int, withAdvantage: Bool? = false, withDisadvantage: Bool? = false) -> Int {
+    
+    let firstValue = Int.random(in: 1...sides)
+    let secondValue = Int.random(in: 1...sides)
+    
+    if (withAdvantage!) {
+        return (firstValue >= secondValue) ? firstValue : secondValue
+    } else if (withDisadvantage!) {
+        return (firstValue <= secondValue) ? firstValue : secondValue
+    } else {
+        return firstValue
+    }
 }
 
 func refreshStats(character: String, game: String) {

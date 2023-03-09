@@ -166,7 +166,6 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
                 } else {
                     // TODO: Test this with server running
                     performBattleAction()
-                    endTurn(game: game, player: localCharacter.userName)
                 }
                 
             }
@@ -243,7 +242,7 @@ struct characterSprites {
     }
 }
 
-func performBattleAction(rollValue: Int? = nil, rollValueToBeat: Int? = nil, amtToHeal: Int? = nil) {
+func performBattleAction(rollValue: Int? = nil, amtToHeal: Int? = nil) {
     let actionPerformed: String = rowSelected?.name! ?? "Fight"
     // rowSelected holds your action struct
 
@@ -253,11 +252,11 @@ func performBattleAction(rollValue: Int? = nil, rollValueToBeat: Int? = nil, amt
         case "Second Wind":
             (localCharacter as! Fighter).secondWind()
         case "Action Surge":
-            (localCharacter as! Fighter).actionSurge(rollValue: rollValue!, rollValueToBeat: rollValueToBeat!)
+            (localCharacter as! Fighter).actionSurge(rollValue: rollValue!)
         case "Sharpen Weapon":
             (localCharacter as! Fighter).sharpenWeapon()
         default:
-            localCharacter.fight(rollValue: rollValue!, rollValueToBeat: rollValueToBeat!)
+            localCharacter.fight(rollValue: rollValue!)
         }
     } else if (localCharacter.getCharacterClass() == "Rogue") {
         switch actionPerformed {
@@ -270,7 +269,7 @@ func performBattleAction(rollValue: Int? = nil, rollValueToBeat: Int? = nil, amt
         case "Allsight":
             (localCharacter as! Rogue).allSight()
         default:
-            localCharacter.fight(rollValue: rollValue!, rollValueToBeat: rollValueToBeat!)
+            localCharacter.fight(rollValue: rollValue!)
         }
     } else if (localCharacter.getCharacterClass() == "Wizard") {
         switch actionPerformed {
@@ -287,7 +286,7 @@ func performBattleAction(rollValue: Int? = nil, rollValueToBeat: Int? = nil, amt
         case "Heal":
             (localCharacter as! Wizard).heal(amtToHeal: amtToHeal!)
         default:
-            localCharacter.fight(rollValue: rollValue!, rollValueToBeat: rollValueToBeat!)
+            localCharacter.fight(rollValue: rollValue!)
         }
     } else if (localCharacter.getCharacterClass() == "Bard") {
         switch actionPerformed {
@@ -304,7 +303,8 @@ func performBattleAction(rollValue: Int? = nil, rollValueToBeat: Int? = nil, amt
         case "Motivational Speech":
             (localCharacter as! Bard).castMotivationalSpeech()
         default:
-            localCharacter.fight(rollValue: rollValue!, rollValueToBeat: rollValueToBeat!)
+            localCharacter.fight(rollValue: rollValue!)
         }
     }
+    endTurn(game: game, player: localCharacter.userName)
 }

@@ -64,6 +64,7 @@ struct currTargetData {
     var character_class:String
     var health:Int
     var armor: Armor
+    var modifiedArmorClass: Int
     var defenseModifier: Int
     var armorInInventory: [Armor] // For potentially destroying poor armor
     

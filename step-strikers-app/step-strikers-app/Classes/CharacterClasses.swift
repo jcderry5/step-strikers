@@ -58,8 +58,8 @@ class Fighter: RPGCharacter {
     }
     
     // Action surge will give you double damage on your attack if you pass the check
-    func actionSurge(rollValue: Int, rollValueToBeat: Int) {
-        let damageDealt = self.calculateDamage(wielderAttackModifier: self.attackModifier, wielderCurrWeapon: self.currWeapon, wielderClass: self.getCharacterClass(), rollValue: rollValue, rollValueToBeat: rollValueToBeat) * 2
+    func actionSurge(rollValue: Int) {
+        let damageDealt = self.calculateDamage(wielderAttackModifier: self.attackModifier, wielderCurrWeapon: self.currWeapon, wielderClass: self.getCharacterClass(), rollValue: rollValue) * 2
         
         self.doConsequencesOfFight(damageDealt: damageDealt)
         self.decreaseStamina(staminaCost: 10)
@@ -92,8 +92,10 @@ class Wizard: Caster {
             return
         }
         
-        let damage = rollDie(sides: 6)
-        
+        let damage = rollDie(sides: 6, withAdvantage: localCharacter.hasAdvantage, withDisadvantage: localCharacter.hasDisadvantage)
+        // Replace advantage and disadvantage back to false
+        localCharacter.hasAdvantage = false
+        localCharacter.hasDisadvantage = false
         decreaseTargetHealth(amtDamage: damage)
         
         
@@ -289,7 +291,18 @@ func actionRequiresRoll() -> Bool {
     let actionSelected = rowSelected?.name
     
     switch actionSelected {
-    case "Fight", "Action Surge", "Frost Bite":
+    case "Fight", "Action Surge", "Frost Bite", "Mage Hand", "Sleep", "Heal", "Vicious Mockery", "Blindness":
+        return true
+    default:
+        return false
+    }
+}
+
+func actionIsContested() -> Bool {
+    let actionSelected = rowSelected?.name
+    
+    switch actionSelected {
+    case "Fight", "Action Surge", "Frost Bite", "Mage Hand", "Sleep", "Vicious Mockery", "Blindness":
         return true
     default:
         return false

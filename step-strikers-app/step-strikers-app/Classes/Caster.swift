@@ -67,5 +67,5 @@ func splitObjAndUseCount(objWithUseCount: String) -> (useCount: Int, objectName:
 }
 
 func didSpellHit(rollValue: Int) -> Bool{
-    return (rollValue + localCharacter.attackModifier > currTarget.armor.armorClass + currTarget.magicResistanceModifier)
+    return (rollValue + localCharacter.attackModifier > currTarget.modifiedArmorClass + currTarget.magicResistanceModifier)
 }
