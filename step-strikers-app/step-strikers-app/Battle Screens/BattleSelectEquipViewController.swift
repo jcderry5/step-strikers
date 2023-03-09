@@ -155,16 +155,23 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
     
     // TODO: change this array based on actual player data
     func createEquipArray() {
-        equips.append(Equip(name: "one", quantity: "x5"))
-        equips.append(Equip(name: "two", quantity: "x5"))
-        equips.append(Equip(name: "three", quantity: "x5"))
-        equips.append(Equip(name: "four", quantity: "x5"))
-        equips.append(Equip(name: "five", quantity: "x5"))
-        equips.append(Equip(name: "six", quantity: "x5"))
-        equips.append(Equip(name: "seven", quantity: "x5"))
-        equips.append(Equip(name: "eight", quantity: "x5"))
-        equips.append(Equip(name: "nine", quantity: "x5"))
-        equips.append(Equip(name: "ten", quantity: "x5"))
+        let weaponsArr = localCharacter.weaponsInInventory
+        var quantities = localCharacter.inventoryQuantities
+        for weapon in weaponsArr {
+            if quantities.keys.contains(weapon.name) {
+                equips.append(Equip(name: weapon.name, quantity: "x\(quantities[weapon.name]!)"))
+                quantities.removeValue(forKey: weapon.name)
+            }
+        }
+        
+        let armorArr = localCharacter.armorInInventory
+        for armor in armorArr {
+            if quantities.keys.contains(armor.name) {
+                equips.append(Equip(name: armor.name, quantity: "x\(quantities[armor.name]!)"))
+                quantities.removeValue(forKey: armor.name)
+            }
+        }
+        
     }
     
     func createStatsArray() {
