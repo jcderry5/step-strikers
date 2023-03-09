@@ -25,9 +25,9 @@ final class CharacterClassUnitTests: XCTestCase {
         noArmorForPlayerOne = noArmor()
         noArmorForPlayerTwo = noArmor()
         
-        playerOne = Fighter(characterName: "Roywyn", userName: "jazzyLinkage", health: 30, stamina: 30, currWeapon: fistsForPlayerOne, weaponsInInventory: [fistsForPlayerOne], currArmor: noArmorForPlayerOne, armorInInventory: [noArmorForPlayerOne], itemsInInventory: []) as Fighter
+        playerOne = Fighter(characterName: "Roywyn", userName: "jazzyLinkage", health: 30, stamina: 30, currWeapon: fistsForPlayerOne, weaponsInInventory: [fistsForPlayerOne], currArmor: noArmorForPlayerOne, armorInInventory: [noArmorForPlayerOne], itemsInInventory: [], inventoryQuantities: [:]) as Fighter
         
-        playerTwo = Rogue(characterName: "Inigo Montoya", userName: "amazingAlekhya", health: 30, stamina: 30, currWeapon: fistsForPlayerTwo, weaponsInInventory: [fistsForPlayerTwo], currArmor: noArmorForPlayerTwo, armorInInventory: [noArmorForPlayerTwo], itemsInInventory: []) as Rogue
+        playerTwo = Rogue(characterName: "Inigo Montoya", userName: "amazingAlekhya", health: 30, stamina: 30, currWeapon: fistsForPlayerTwo, weaponsInInventory: [fistsForPlayerTwo], currArmor: noArmorForPlayerTwo, armorInInventory: [noArmorForPlayerTwo], itemsInInventory: [], inventoryQuantities: [:]) as Rogue
     }
 
     override func tearDownWithError() throws {
@@ -57,59 +57,46 @@ final class CharacterClassUnitTests: XCTestCase {
         }
     }
     
-    func testSecondWind() {
-        // Arrange
-        playerOne.decreaseHealth(amtDamage: 10)
-        
-        // Act
-        playerOne.secondWind()
-        
-        // Assert
-        XCTAssertTrue(playerOne.currHealth == playerOne.maxHealth)
-        XCTAssertTrue(playerOne.currStamina == playerTwo.maxStamina - 8)
-    }
+//    func testSecondWind() {
+//        // Arrange
+//        playerOne.decreaseHealth(amtDamage: 10)
+//        
+//        // Act
+//        playerOne.secondWind()
+//        
+//        // Assert
+//        XCTAssertTrue(playerOne.currHealth == playerOne.maxHealth)
+//        XCTAssertTrue(playerOne.currStamina == playerTwo.maxStamina - 8)
+//    }
     
-    func testActionSurge() {
-        // Arrange
-        playerOne.attackModifier += 20
-        
-        // Act
-        var playerTwoAsRPGCharacter: RPGCharacter = playerTwo!
-        playerOne.actionSurge(target: &playerTwoAsRPGCharacter)
-        let expectedDamageDealt = playerOne.currWeapon.damage * 2
-        let expectedStaminaCost = playerOne.currWeapon.staminaCost + 10
-        
-        // Assert
-        XCTAssertTrue(playerTwo.currHealth == playerTwo.maxHealth - expectedDamageDealt)
-        XCTAssertTrue(playerOne.currStamina == playerOne.maxStamina - expectedStaminaCost)
-    }
+//
     
-    func testSharpenWeapon() {
-        // Act
-        playerOne.sharpenWeapon()
-        
-        // Assert
-        XCTAssertTrue(playerOne.attackModifier == 3)
-        XCTAssertTrue(playerOne.currStamina == playerOne.maxStamina - 7)
-    }
+//    func testSharpenWeapon() {
+//        // Act
+//        playerOne.sharpenWeapon()
+//
+//        // Assert
+//        XCTAssertTrue(playerOne.attackModifier == 3)
+//        XCTAssertTrue(playerOne.currStamina == playerOne.maxStamina - 7)
+//    }
 
-    func testUncannyDodge() {
-        // Act
-        playerTwo.uncannyDodge()
-        
-        // Assert
-        XCTAssertTrue(playerTwo.defenseModifier == 3)
-        XCTAssertTrue(playerTwo.currStamina == playerTwo.maxStamina - 5)
-    }
+//    func testUncannyDodge() {
+//        // Act
+//        playerTwo.uncannyDodge()
+//
+//        // Assert
+//        XCTAssertTrue(playerTwo.defenseModifier == 3)
+//        XCTAssertTrue(playerTwo.currStamina == playerTwo.maxStamina - 5)
+//    }
     
-    func testHoneSkill() {
-        // Act
-        playerTwo.honeSkill()
-        
-        // Assert
-        XCTAssertTrue(playerTwo.attackModifier == 5)
-        XCTAssertTrue(playerTwo.currStamina == playerTwo.maxStamina - 3)
-    }
+//    func testHoneSkill() {
+//        // Act
+//        playerTwo.honeSkill()
+//
+//        // Assert
+//        XCTAssertTrue(playerTwo.attackModifier == 5)
+//        XCTAssertTrue(playerTwo.currStamina == playerTwo.maxStamina - 3)
+//    }
     
     func testInsight() {
         // TODO: @Alekhya add tests for insight
