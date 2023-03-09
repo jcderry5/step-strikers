@@ -50,7 +50,6 @@ struct enemyData {
     var armorInInventory: [Armor]
     
     // New attributes for spells:
-    var magicResistanceModifier: Int
     var isDead: Bool
     var isSleep: Bool
     var magicResistanceModifier: Int
