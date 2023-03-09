@@ -59,7 +59,12 @@ class Fighter: RPGCharacter {
     
     // Action surge will give you double damage on your attack if you pass the check
     func actionSurge(rollValue: Int) {
-        let damageDealt = self.calculateDamage(wielderAttackModifier: self.attackModifier, wielderCurrWeapon: self.currWeapon, wielderClass: self.getCharacterClass(), rollValue: rollValue) * 2
+        let damageDealt: Int
+        if (self.didAttackHit(rollValue: rollValue)) {
+            damageDealt =  calculateModifiedDamage() * 2
+        } else {
+            damageDealt = 0
+        }
         
         self.doConsequencesOfFight(damageDealt: damageDealt)
         self.decreaseStamina(staminaCost: 10)

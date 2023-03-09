@@ -256,7 +256,12 @@ class RPGCharacter {
     
     // MARK: - Damage Functions
     func fight(rollValue: Int){
-        let damageDealt = calculateDamage(wielderAttackModifier: self.attackModifier, wielderCurrWeapon: self.currWeapon, wielderClass: self.getCharacterClass(), rollValue: rollValue)
+        let damageDealt: Int
+        if (self.didAttackHit(rollValue: rollValue)) {
+            damageDealt =  calculateModifiedDamage()
+        } else {
+            damageDealt = 0
+        }
         
         doConsequencesOfFight(damageDealt: damageDealt)
         
@@ -264,9 +269,12 @@ class RPGCharacter {
         messageLog.addToMessageLog(message: message)
     }
     
+    func didAttackHit(rollValue: Int) -> Bool {
+        return rollValue + attackModifier >= currTarget.modifiedArmorClass + currTarget.defenseModifier
+    }
+    
     func doConsequencesOfFight(damageDealt: Int) {
         // reset attack and defense modifier after interaction
-        // TODO: @Kelly, change this code to be sent to fb as a write at end of turn
         self.attackModifier = 0
         currTarget.defenseModifier = 0
         
@@ -279,20 +287,7 @@ class RPGCharacter {
         self.decreaseStamina(staminaCost: self.currWeapon.staminaCost)
     }
     
-    // This function will calculate the damage that the wielder imposes on their target, given their proficiency in their currWeapon and the target's currArmor suitability.
-    // proficient wielder def: The weapon is assigned to their class, they roll with the weapon's damage
-    func calculateDamage(wielderAttackModifier: Int, wielderCurrWeapon: Weapon, wielderClass: String, rollValue: Int) -> Int {
-        let damage: Int
-        
-        // D20 + wielders attackModifer vs target's armorClass + target's defenseModifier
-        if(rollValue + wielderAttackModifier >= currTarget.modifiedArmorClass + currTarget.defenseModifier) {
-            // check if wielder is proficient in their weapon
-            damage = calculateModifiedDamage()
-        } else {
-            damage = 0 // if wielder does not beat the character's AC, they do not inflict damage upon them
-        }
-        return damage
-    }
+    
 
     // Returns the amount of damage wielder imposes with their weapon taking into account their proficiency in the weapon
     func calculateModifiedDamage() -> Int{
