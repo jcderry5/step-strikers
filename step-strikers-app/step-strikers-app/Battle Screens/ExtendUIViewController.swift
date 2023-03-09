@@ -503,15 +503,12 @@ extension UIViewController {
         currTarget.modifiedArmorClass = calculateModifiedArmorClass()
         currTarget.defenseModifier = enemiesList[enemyIndex].defenseModifier
         currTarget.armorInInventory = enemiesList[enemyIndex].armorInInventory
-        
-        
         currTarget.isBlind = enemiesList[enemyIndex].isBlind
         currTarget.isDead = enemiesList[enemyIndex].isDead
         currTarget.isSleep = enemiesList[enemyIndex].isSleep
         currTarget.magicResistanceModifier = enemiesList[enemyIndex].magicResistanceModifier
         currTarget.currWeapon = enemiesList[enemyIndex].currWeapon
         currTarget.weaponInventory = enemiesList[enemyIndex].weaponInventory
-        
         currTarget.hasAdvantage = enemiesList[enemyIndex].hasAdvantage
         currTarget.hasDisadvantage = enemiesList[enemyIndex].hasDisadvantage
     }

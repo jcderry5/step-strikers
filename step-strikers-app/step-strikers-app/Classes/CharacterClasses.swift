@@ -103,7 +103,6 @@ class Wizard: Caster {
         localCharacter.hasDisadvantage = false
         decreaseTargetHealth(amtDamage: damage)
         
-        
         let message = "\(self.characterName) cast frosbite on \(currTarget.name)"
         messageLog.addToMessageLog(message: message)
     }
@@ -133,7 +132,7 @@ class Wizard: Caster {
     
     func castAnimateDead() {
         decreaseSpellPoints(amtDecrease: 17)
-        
+
         guard currTarget.isDead else {
             let message = "\(self.characterName) tried to cast Animate the Dead on \(currTarget.name) but they are not dead."
             messageLog.addToMessageLog(message: message)
@@ -217,7 +216,6 @@ class Bard: Caster {
     
     // TODO: @Alekhya
     func castInvisibility() {
-        
         currTarget.isInvisible = true
         decreaseSpellPoints(amtDecrease: 10)
         

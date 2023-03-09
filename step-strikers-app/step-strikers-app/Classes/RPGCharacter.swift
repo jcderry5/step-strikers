@@ -303,10 +303,7 @@ class RPGCharacter {
 
 func increaseTargetHealth(amtHealed: Int) {
     currTarget.health += amtHealed
-    
     let maxHealth = getMaxHealth(characterClass: currTarget.character_class)
-    
-    
     currTarget.health = min(maxHealth, currTarget.health)
 }
 
