@@ -243,7 +243,7 @@ class RPGCharacter {
         self.currHealth -= amtDamage
         if self.currHealth < 0 {
             self.currHealth = 0
-            // TODO: Add functionality for when a person dies
+            print("Warning!!! You just decreased the current player past zero. How did that happen???")
         }
     }
     
@@ -307,7 +307,7 @@ func decreaseTargetHealth(amtDamage: Int){
     currTarget.health -= amtDamage
     if currTarget.health < 0 {
         currTarget.health = 0
-        // TODO: Add functionality for when a person dies
+        currTarget.isDead = true
     }
 }
 

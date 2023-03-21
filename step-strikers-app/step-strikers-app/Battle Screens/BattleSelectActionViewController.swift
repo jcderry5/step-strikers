@@ -9,7 +9,8 @@ import UIKit
 
 var boxArrow: [AnyObject] = [AnyObject]()
 var rowSelected:Action?
-var currTarget: currTargetData!
+// Dummy currTarget, until get's set by action
+var currTarget: currTargetData = currTargetData(name: "EmptyPlayer", userName: "emptyPlayer", character_class: "Fighter", health: 30, armor: noArmor(), modifiedArmorClass: 0, defenseModifier: 0, armorInInventory: [noArmor()], isBlind: false, isDead: false, isSleep: false, magicResistanceModifier: 0, currWeapon: fists(), weaponInventory: [fists()], hasAdvantage: false, hasDisadvantage: false)
 var currTeamMember: currTeamMemberData!
 var actions: [Action] = [Action]()
 var player: String = ""
