@@ -134,6 +134,13 @@ func refreshStats(character: String, game: String) {
 
 func endTurn(game: String, player: String) {
     
+    // TODO: @Kelly, within the if-block goes all the edits to currTarget in firebase, in the else statement meant the currPlayer only changed themself
+    if (actionRequiresEnemy()){
+        
+    } else {
+        
+    }
+    
     Firestore.firestore().collection("players").document(currTarget.userName).setData([
         "health": currTarget.health,
         "armor": getConstructedName(armor:currTarget.armor),
