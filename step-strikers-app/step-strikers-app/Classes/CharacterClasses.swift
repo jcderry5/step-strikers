@@ -8,7 +8,7 @@
 // These are for front-end, do not need to write to firebase
 
 let FighterActions: [(actionName: String, cost: String)] = [
-    (actionName: "Fight", cost: "?? STA"), // TODO: Ask Kelly if displaying the cost is feasible
+    (actionName: "Fight", cost: "?? STA"),
     (actionName: "Second Wind", cost: "08 STA"),
     (actionName: "Action Surge", cost: "10 STA"),
     (actionName: "Sharpen Weapon", cost: "07S TA")
