@@ -6,14 +6,57 @@
 //
 
 import UIKit
+import HealthKit
+var steps:Double = 0.0
 
 class StatsViewController: UIViewController {
     
     let cellId = "statsCell"
+    var boostTotal = 3000
+    var numTillBoost = 0
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // TODO: Pull steps info from firebase and display it here
+        if steps == 0 {
+            let healthStore = HKHealthStore()
+            if HKHealthStore.isHealthDataAvailable(){
+                let writeDataTypes = dataTypesToWrite()
+                let readDataTypes = dataTypesToWrite()
+                
+                healthStore.requestAuthorization(toShare: writeDataTypes as? Set<HKSampleType>, read: readDataTypes as? Set<HKObjectType>, completion: { (success, error) in
+                    if(!success){
+                        print("error")
+                        
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        HealthKitViewController().getTodaysSteps() { sum in
+                            steps = sum
+                            var trackBoost:Double = 0.0
+                            trackBoost = steps.truncatingRemainder(dividingBy: Double(self.boostTotal))
+                            _ = self.createLabel(x: 130, y: 624, w: 253, h: 41, font: "munro", size: 28, text: "\(Int(trackBoost)) steps until boost", align: .left)
+                            _ = self.createLabel(x: 130, y: 653, w: 253, h: 41, font: "munro", size: 28, text: "\(Int(steps)) taken today", align: .left)
+                        }
+                    }
+                    
+                })
+            }
+        } else {
+            var trackBoost:Double = 0.0
+            trackBoost = steps.truncatingRemainder(dividingBy: Double(self.boostTotal))
+            _ = self.createLabel(x: 130, y: 624, w: 253, h: 41, font: "munro", size: 28, text: "\(Int(trackBoost)) steps until boost", align: .left)
+            _ = self.createLabel(x: 130, y: 653, w: 253, h: 41, font: "munro", size: 28, text: "\(Int(steps)) taken today", align: .left)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.isUserInteractionEnabled = true
+        
+        DispatchQueue.main.async {
+            HealthKitViewController().getSteps()
+        }
         
         assignBackground()
         createSettingsButton(x: 325, y: 800, width: 40, height: 40)
@@ -78,9 +121,6 @@ class StatsViewController: UIViewController {
         
         // Display steps info
         _ = createImage(x: 25, y: 618, w: 75, h: 75, name: "brown boots")
-        // TODO: Pull steps info from firebase and display it here
-        _ = createLabel(x: 130, y: 624, w: 253, h: 41, font: "munro", size: 28, text: "__ steps until boost", align: .left)
-        _ = createLabel(x: 130, y: 653, w: 253, h: 41, font: "munro", size: 28, text: "__ taken today", align: .left)
         
         // Swipe area
         _ = createImage(x: 140, y: 716, w: 112, h: 112, name: characterClass)
@@ -93,6 +133,20 @@ class StatsViewController: UIViewController {
         let swipeLeft = UISwipeGestureRecognizer(target:self, action: #selector(swipeLeft))
         swipeLeft.direction = .left
         swipeView.addGestureRecognizer(swipeLeft)
+    }
+    
+    func dataTypesToWrite() -> NSSet{
+        let stepsCount = HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.stepCount)
+
+        let returnSet = NSSet(objects: stepsCount!)
+        return returnSet
+    }
+    
+    func dataTypesToRead() -> NSSet{
+        let stepsCount = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.stepCount)
+        let returnSet = NSSet(objects: stepsCount!)
+
+        return returnSet
     }
 
     @objc func swipeLeft() {

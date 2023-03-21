@@ -49,6 +49,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         // Signin button design
         let signupButton = createButton(x:116, y:668, w:160, h:100, text:"SIGN UP", fontSize:24, normalImage:buttonImg!, highlightedImage:selectedImg!)
         signupButton.addTarget(self, action:#selector(signupPressed), for:.touchUpInside)
+        
+        DispatchQueue.main.async {
+            HealthKitViewController().getSteps()
+        }
     }
 
     // Called when 'return' key pressed
