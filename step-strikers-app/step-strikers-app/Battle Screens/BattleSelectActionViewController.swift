@@ -187,8 +187,9 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     
     func createActionArray() {
         // First: check if the fight action (possible for all characters) is possible
+        // Note: String format makes the number 2 digits
         if(localCharacter.currWeapon.staminaCost <= localCharacter.currStamina) {
-            actions.append(Action(name: "Fight", staminaCost: "\(localCharacter.currWeapon.staminaCost) STA"))
+            actions.append(Action(name: "Fight", staminaCost: "\(String(format: "%02d", localCharacter.currWeapon.staminaCost)) STA"))
         }
         
         // Next: Add all other actions. Check against stamina for Attackers and against spell points for Casters
