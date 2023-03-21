@@ -187,23 +187,41 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     }
     
     func createActionArray() {
+        // First: check if the fight action (possible for all characters) is possible
+        // Note: String format makes the number 2 digits
+        if(localCharacter.currWeapon.staminaCost <= localCharacter.currStamina) {
+            actions.append(Action(name: "Fight", staminaCost: "\(String(format: "%02d", localCharacter.currWeapon.staminaCost)) STA"))
+        }
+        
+        // Next: Add all other actions. Check against stamina for Attackers and against spell points for Casters
         let characterClass = localCharacter.getCharacterClass()
-        print(characterClass)
         if characterClass == "Fighter" {
-            for index in 0 ... (FighterActions.count-1) {
-                actions.append(Action(name:FighterActions[index].actionName, staminaCost: FighterActions[index].cost))
+            for index in 1 ... (FighterActions.count-1) {
+                let cost: Int = Int(FighterActions[index].cost.prefix(2))!
+                if(cost <= localCharacter.currStamina) {
+                    actions.append(Action(name:FighterActions[index].actionName, staminaCost: FighterActions[index].cost))
+                }
             }
         } else if characterClass == "Wizard" {
-            for index in 0 ... (WizardActions.count-1) {
-                actions.append(Action(name:WizardActions[index].actionName, staminaCost: WizardActions[index].cost))
+            for index in 1 ... (WizardActions.count-1) {
+                let cost: Int = Int(WizardActions[index].cost.prefix(2))!
+                if(cost <= (localCharacter as! Wizard).currSpellPoints) {
+                    actions.append(Action(name:WizardActions[index].actionName, staminaCost: WizardActions[index].cost))
+                }
             }
         } else if characterClass == "Rogue" {
-            for index in 0 ... (RogueActions.count-1) {
-                actions.append(Action(name:WizardActions[index].actionName, staminaCost: RogueActions[index].cost))
+            for index in 1 ... (RogueActions.count-1) {
+                let cost: Int = Int(RogueActions[index].cost.prefix(2))!
+                if(cost <= localCharacter.currStamina){
+                    actions.append(Action(name:WizardActions[index].actionName, staminaCost: RogueActions[index].cost))
+                }
             }
         } else if characterClass == "Bard" {
-            for index in 0 ... (BardActions.count-1) {
-                actions.append(Action(name:BardActions[index].actionName, staminaCost: BardActions[index].cost))
+            for index in 1 ... (BardActions.count-1) {
+                let cost: Int = Int(BardActions[index].cost.prefix(2))!
+                if(cost <= (localCharacter as! Bard).currSpellPoints) {
+                    actions.append(Action(name:BardActions[index].actionName, staminaCost: BardActions[index].cost))
+                }
             }
         }
     }
