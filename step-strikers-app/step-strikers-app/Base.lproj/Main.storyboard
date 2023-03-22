@@ -143,6 +143,21 @@
             </objects>
             <point key="canvasLocation" x="-863" y="6"/>
         </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="alO-hi-wy8">
+            <objects>
+                <viewController storyboardIdentifier="SettingsViewController" id="nsG-qp-D7e" customClass="SettingsViewController" customModule="step_strikers_app" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="IHy-Vs-g4T">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="g0d-Wi-Rg1"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TU0-od-27f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1753" y="2223"/>
+        </scene>
         <!--Party Menu Host View Controller-->
         <scene sceneID="WIS-dL-Bst">
             <objects>
