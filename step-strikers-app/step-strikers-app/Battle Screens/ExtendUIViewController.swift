@@ -366,7 +366,12 @@ extension UIViewController {
     // TODO: Change this to transfer to the settings screen when it is built
     // please dont make separate storyboards for all the types of boards right now
     @objc func settingsButtonPressed(_ sender:UIButton!) {
-        print("my settings button pressed")
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
+
+        self.modalPresentationStyle = .fullScreen
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated:false)
     }
     
     @objc func enemy1Selected(_ sender:UIButton!) {
