@@ -186,6 +186,7 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     }
     
     func createActionArray() {
+        actions.removeAll()
         // First: check if the fight action (possible for all characters) is possible
         // Note: String format makes the number 2 digits
         if(localCharacter.currWeapon.staminaCost <= localCharacter.currStamina) {
