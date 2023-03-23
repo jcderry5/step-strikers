@@ -10,8 +10,7 @@ import UIKit
 var boxArrow: [AnyObject] = [AnyObject]()
 var rowSelected:Action?
 // Dummy currTarget, until get's set by action
-var currTarget: currTargetData = currTargetData(name: "EmptyPlayer", userName: "emptyPlayer", character_class: "Fighter", health: 30, armor: noArmor(), modifiedArmorClass: 0, defenseModifier: 0, armorInInventory: [noArmor()], isBlind: false, isDead: false, isSleep: false, magicResistanceModifier: 0, currWeapon: fists(), weaponInventory: [fists()], hasAdvantage: false, hasDisadvantage: false)
-var currTeamMember: currTeamMemberData!
+var currTarget: currTargetData = currTargetData(name: "EmptyPlayer", userName: "emptyPlayer", character_class: "Fighter", health: 30, armor: noArmor(), modifiedArmorClass: 0, attackModifier: 0, defenseModifier: 0, armorInInventory: [noArmor()], isBlind: false, isDead: false, isSleep: false, isInvisible: false, magicResistanceModifier: 0, currWeapon: fists(), weaponInventory: [fists()], hasAdvantage: false, hasDisadvantage: false)
 var actions: [Action] = [Action]()
 var player: String = ""
 var game: String = ""
@@ -261,7 +260,7 @@ struct characterSprites {
     }
 }
 
-func performBattleAction(rollValue: Int? = nil, amtToHeal: Int? = nil) {
+func performBattleAction(rollValue: Int? = nil) {
     let actionPerformed: String = rowSelected?.name! ?? "Fight"
     // rowSelected holds your action struct
 
@@ -303,7 +302,7 @@ func performBattleAction(rollValue: Int? = nil, amtToHeal: Int? = nil) {
         case "Animate the Dead":
             (localCharacter as! Wizard).castAnimateDead()
         case "Heal":
-            (localCharacter as! Wizard).heal(amtToHeal: amtToHeal!)
+            (localCharacter as! Wizard).heal(amtToHeal: rollValue!)
         default:
             localCharacter.fight(rollValue: rollValue!)
         }

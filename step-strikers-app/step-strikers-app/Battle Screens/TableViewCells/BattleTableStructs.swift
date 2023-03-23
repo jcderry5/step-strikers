@@ -67,6 +67,7 @@ struct currTargetData {
     var health:Int
     var armor: Armor
     var modifiedArmorClass: Int
+    var attackModifier: Int
     var defenseModifier: Int
     var armorInInventory: [Armor] // For potentially destroying poor armor
     
@@ -75,6 +76,7 @@ struct currTargetData {
     var isBlind:Bool
     var isDead: Bool
     var isSleep: Bool
+    var isInvisible: Bool
     var magicResistanceModifier: Int
     var currWeapon: Weapon
     var weaponInventory: [Weapon]

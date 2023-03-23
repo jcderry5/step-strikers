@@ -415,7 +415,6 @@ extension UIViewController {
     }
     
     @objc func player1Selected(_ sender:UIButton!) {
-        updateCurrTeamMemberData(teamMemberIndex: 1)
         selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
             boxArrow[0].removeFromSuperview()
@@ -426,7 +425,6 @@ extension UIViewController {
     }
     
     @objc func player2Selected(_ sender:UIButton!) {
-        updateCurrTeamMemberData(teamMemberIndex: 2)
         selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
             boxArrow[0].removeFromSuperview()
@@ -437,7 +435,6 @@ extension UIViewController {
     }
     
     @objc func player3Selected(_ sender:UIButton!) {
-        updateCurrTeamMemberData(teamMemberIndex: 3)
         selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
             boxArrow[0].removeFromSuperview()
@@ -448,7 +445,6 @@ extension UIViewController {
     }
     
     @objc func player4Selected(_ sender:UIButton!) {
-        updateCurrTeamMemberData(teamMemberIndex: 4)
         selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
             boxArrow[0].removeFromSuperview()
@@ -473,7 +469,6 @@ extension UIViewController {
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc,animated: false)
             } else {
-                // TODO: Test with server running
                 performBattleAction()
             }
             
@@ -514,15 +509,5 @@ extension UIViewController {
         
         currTarget.hasAdvantage = enemiesList[enemyIndex].hasAdvantage
         currTarget.hasDisadvantage = enemiesList[enemyIndex].hasDisadvantage
-    }
-    
-    // TODO: Fill out
-    func updateCurrTeamMemberData(teamMemberIndex: Int) {
-        currTeamMember.name = teamList[teamMemberIndex].name
-        currTeamMember.characterClass = teamList[teamMemberIndex].character_class
-        currTeamMember.health = teamList[teamMemberIndex].health
-        currTeamMember.isInvisible = teamList[teamMemberIndex].isInvisible
-        currTeamMember.hasAdvantage = teamList[teamMemberIndex].hasAdvantage
-        currTeamMember.defenseModifier = teamList[teamMemberIndex].defenseModifier
     }
 }

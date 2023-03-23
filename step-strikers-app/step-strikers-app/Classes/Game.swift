@@ -141,6 +141,11 @@ func endTurn(game: String, player: String) {
         
     }
     
+    // TODO: @Kelly for Motivational Speech to work, can you check the global rowSelected and if it's "Motivational Speech" push hasAdvantage to true for all teammates within endGame
+    if rowSelected?.name == "Motivational Speech" {
+        // Write true for all teammates
+    }
+    
     Firestore.firestore().collection("players").document(currTarget.userName).setData([
         "health": currTarget.health,
         "armor": getConstructedName(armor:currTarget.armor),

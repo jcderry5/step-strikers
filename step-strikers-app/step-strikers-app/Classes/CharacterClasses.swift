@@ -109,10 +109,10 @@ class Wizard: Caster {
     }
     
     func castShield() {
-        currTeamMember.defenseModifier += 20
+        currTarget.defenseModifier += 20
         decreaseSpellPoints(amtDecrease: 4)
 
-        let message = "\(self.characterName) cast shield on \(currTeamMember.name)"
+        let message = "\(self.characterName) cast shield on \(currTarget.name)"
         messageLog.addToMessageLog(message: message)
     }
     
@@ -127,14 +127,13 @@ class Wizard: Caster {
         
         currTarget.isSleep = true
         
-        
-        
         let message = "\(self.characterName) cast sleep on \(currTarget.name). Their turn is skipped for 1 round."
         messageLog.addToMessageLog(message: message)
     }
     
     func castAnimateDead() {
-        // TODO: @Jalyn Update currTarget to wherever teammate info will be held
+        decreaseSpellPoints(amtDecrease: 17)
+        
         guard currTarget.isDead else {
             let message = "\(self.characterName) tried to cast Animate the Dead on \(currTarget.name) but they are not dead."
             messageLog.addToMessageLog(message: message)
@@ -144,28 +143,17 @@ class Wizard: Caster {
         currTarget.isDead = false
         currTarget.health = 1
         
-        decreaseSpellPoints(amtDecrease: 17)
-        
         let message = "\(self.characterName) cast animate dead on \(currTarget.name). They are now alive with 1HP"
         messageLog.addToMessageLog(message: message)
     }
     
-    // TODO: @Jalyn update roll check screen for this specific spell
     func heal(amtToHeal: Int) {
-        
-        currTeamMember.health += amtToHeal
-        let currTeamMemberMaxHealth = getMaxHealth(characterClass: currTeamMember.characterClass)
-        
-        // Make sure they do not get past their max health
-        currTeamMember.health = (currTeamMember.health > currTeamMemberMaxHealth) ? currTeamMemberMaxHealth : currTeamMember.health
-        
+        increaseTargetHealth(amtHealed: amtToHeal)
         decreaseSpellPoints(amtDecrease: 5)
         
         let message = "\(self.characterName) healed \(currTarget.name) for \(amtToHeal)HP"
         messageLog.addToMessageLog(message: message)
     }
-    
-    
 }
 
 
@@ -174,9 +162,9 @@ class Bard: Caster {
         super.init(characterName: characterName, userName: userName, health: health, stamina: stamina, spellPoints: spellPoints, currWeapon: currWeapon, weaponsInInventory: weaponsInInventory, currArmor: currArmor, armorInInventory: armorInInventory, itemsInInventory: itemsInInventory, inventoryQuantities: inventoryQuantities)
     }
     
-    // TODO: @Jalyn. This is towards teammates. Wait.
+    // TODO: @Jalyn. This is towards teammates. Wait for Alekhya.
     func castBardicInspiration() {
-        currTeamMember.hasAdvantage = true
+        currTarget.hasAdvantage = true
         decreaseSpellPoints(amtDecrease: 7)
         
         let message = "\(self.characterName) cast bardic inspiration on \(currTarget.name)"
@@ -187,6 +175,12 @@ class Bard: Caster {
     func castViciousMockery(rollValue: Int) {
         decreaseSpellPoints(amtDecrease: 7)
         
+        guard currTarget.character_class != "Fighter" else {
+            let message = "\(self.characterName) tried casting vicious mockery on \(currTarget.name). However, Fighters are too confident for mockery"
+            messageLog.addToMessageLog(message: message)
+            return
+        }
+        
         guard didSpellHit(rollValue: rollValue) else {
             let message = "\(self.characterName) failed in casting vicious mockery on \(currTarget.name)"
             messageLog.addToMessageLog(message: message)
@@ -194,8 +188,6 @@ class Bard: Caster {
         }
         
         currTarget.hasDisadvantage = true
-        
-        
         
         let message = "\(self.characterName) cast vicious mockery on \(currTarget.name)"
         messageLog.addToMessageLog(message: message)
@@ -205,6 +197,12 @@ class Bard: Caster {
     func castBlindness(rollValue: Int) {
         decreaseSpellPoints(amtDecrease: 8)
         
+        guard currTarget.character_class != "Rogue" else {
+            let message = "\(self.characterName) tried casting blindness on \(currTarget.name), but Rogues are too stealthy for this trickery."
+            messageLog.addToMessageLog(message: message)
+            return
+        }
+        
         guard didSpellHit(rollValue: rollValue) else {
             let message = "\(self.characterName) failed in casting blindness on \(currTarget.name)"
             messageLog.addToMessageLog(message: message)
@@ -213,23 +211,22 @@ class Bard: Caster {
         
         currTarget.isBlind = true
         
-        let message = "\(self.characterName) cast blindness on..."
+        let message = "\(self.characterName) cast blindness on \(currTarget.name)"
         messageLog.addToMessageLog(message: message)
     }
     
     // TODO: @Alekhya
     func castInvisibility() {
         
-        currTeamMember.isInvisible = true
+        currTarget.isInvisible = true
         decreaseSpellPoints(amtDecrease: 10)
         
-        let message = "\(self.characterName) cast invisibility on \(currTeamMember.name)"
+        let message = "\(self.characterName) cast invisibility on \(currTarget.name)"
         messageLog.addToMessageLog(message: message)
     }
     
+    //TODO: @Kelly for this to work, it needs to be written to all four team members in endTurn()
     func castMotivationalSpeech() {
-        // TODO: @Kelly for this to work, can you check the global rowSelected and if it's "Motivational Speech" push hasAdvantage to true for all teammates within endGame
-        
         decreaseSpellPoints(amtDecrease: 15)
         
         let message = "\(self.characterName) cast motivational speech on their team"

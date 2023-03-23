@@ -130,7 +130,7 @@ func rebuildWeaponToStore(currWeapon: String) -> Weapon {
 struct fists: Weapon {
     let name = "Fists"
     let damage = 2
-    let staminaCost = 1
+    let staminaCost = 0
     var condition = 4
     var useCount = 0
     

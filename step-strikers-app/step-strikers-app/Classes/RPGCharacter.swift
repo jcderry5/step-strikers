@@ -122,6 +122,7 @@ class RPGCharacter {
             }
         } else {
             print ("You cannot wield this weapon. It is not in your inventory")
+            return
         }
         let message = "\(self.characterName) is now wielding \(weaponObject.name)"
         messageLog.addToMessageLog(message: message)
@@ -234,9 +235,8 @@ class RPGCharacter {
     
     func increaseStamina(amtIncrease: Int){
         self.currStamina += amtIncrease
-        if(self.currStamina > self.maxStamina){
-            self.currStamina = self.maxStamina
-        }
+        
+        self.currStamina = min(self.currStamina, self.maxStamina)
     }
 
     func decreaseHealth(amtDamage: Int){
@@ -301,11 +301,22 @@ class RPGCharacter {
     }
 }
 
+func increaseTargetHealth(amtHealed: Int) {
+    currTarget.health += amtHealed
+    
+    let maxHealth = getMaxHealth(characterClass: currTarget.character_class)
+    
+    
+    currTarget.health = min(maxHealth, currTarget.health)
+}
+
 func decreaseTargetHealth(amtDamage: Int){
     currTarget.health -= amtDamage
     if currTarget.health < 0 {
         currTarget.health = 0
         currTarget.isDead = true
+        let message = "\(localCharacter.characterName) has just killed \(currTarget.name)!"
+        messageLog.addToMessageLog(message: message)
     }
 }
 
