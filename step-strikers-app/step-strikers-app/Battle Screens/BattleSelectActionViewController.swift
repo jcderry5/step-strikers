@@ -164,8 +164,13 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
                 if(actionRequiresEnemy()) {
                     characterButtons = drawEnemiesButton(enemy1: enemiesList[0].character_class, enemy2: enemiesList[1].character_class, enemy3: enemiesList[2].character_class, enemy4: enemiesList[3].character_class)
                 } else {
-                    // TODO: Test this with server running
                     performBattleAction()
+                    let sb = UIStoryboard(name: "Main", bundle: nil)
+                    let vc = sb.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
+                    
+                    self.modalPresentationStyle = .fullScreen
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated:false)
                 }
                 
             }

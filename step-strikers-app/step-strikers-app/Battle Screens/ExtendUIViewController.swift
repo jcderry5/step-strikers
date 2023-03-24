@@ -475,6 +475,12 @@ extension UIViewController {
                 self.present(vc,animated: false)
             } else {
                 performBattleAction()
+                let sb = UIStoryboard(name: "Main", bundle: nil)
+                let vc = sb.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
+                
+                self.modalPresentationStyle = .fullScreen
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated:false)
             }
             
         }

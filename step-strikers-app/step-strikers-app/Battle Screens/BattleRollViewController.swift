@@ -134,7 +134,6 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     @objc func rollPressed(sender: UIButton!) {
-        // TODO: Add roll to hit backend here
         // Decide which type of die to roll
         var rollValue = 0
         if(actionRequiresRoll()) {
