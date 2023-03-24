@@ -58,8 +58,13 @@ class Fighter: RPGCharacter {
     }
     
     // Action surge will give you double damage on your attack if you pass the check
-    func actionSurge(rollValue: Int, rollValueToBeat: Int) {
-        let damageDealt = self.calculateDamage(wielderAttackModifier: self.attackModifier, wielderCurrWeapon: self.currWeapon, wielderClass: self.getCharacterClass(), rollValue: rollValue, rollValueToBeat: rollValueToBeat) * 2
+    func actionSurge(rollValue: Int) {
+        let damageDealt: Int
+        if (self.didAttackHit(rollValue: rollValue)) {
+            damageDealt =  calculateModifiedDamage() * 2
+        } else {
+            damageDealt = 0
+        }
         
         self.doConsequencesOfFight(damageDealt: damageDealt)
         self.decreaseStamina(staminaCost: 10)
@@ -82,12 +87,148 @@ class Wizard: Caster {
     override init(characterName: String, userName: String, health: Int, stamina: Int, spellPoints: Int, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item], inventoryQuantities: [String:Int]) {
         super.init(characterName: characterName, userName: userName, health: health, stamina: stamina, spellPoints: spellPoints, currWeapon: currWeapon, weaponsInInventory: weaponsInInventory, currArmor: currArmor, armorInInventory: armorInInventory, itemsInInventory: itemsInInventory, inventoryQuantities: inventoryQuantities)
     }
+    
+    func castFrostbite(rollValue: Int) {
+        decreaseSpellPoints(amtDecrease: 3)
+        
+        guard didSpellHit(rollValue: rollValue) else {
+            let message = "\(self.characterName) failed in casting Frost Bite on \(currTarget.name)"
+            messageLog.addToMessageLog(message: message)
+            return
+        }
+        
+        let damage = rollDie(sides: 6, withAdvantage: localCharacter.hasAdvantage, withDisadvantage: localCharacter.hasDisadvantage)
+        // Replace advantage and disadvantage back to false
+        localCharacter.hasAdvantage = false
+        localCharacter.hasDisadvantage = false
+        decreaseTargetHealth(amtDamage: damage)
+        
+        let message = "\(self.characterName) cast frosbite on \(currTarget.name)"
+        messageLog.addToMessageLog(message: message)
+    }
+    
+    func castShield() {
+        currTarget.defenseModifier += 20
+        decreaseSpellPoints(amtDecrease: 4)
+
+        let message = "\(self.characterName) cast shield on \(currTarget.name)"
+        messageLog.addToMessageLog(message: message)
+    }
+    
+    func sleep(rollValue: Int) {
+        decreaseSpellPoints(amtDecrease: 12)
+        
+        guard didSpellHit(rollValue: rollValue) else {
+            let message = "\(self.characterName) failed to cast sleep on \(currTarget.name)"
+            messageLog.addToMessageLog(message: message)
+            return
+        }
+        
+        currTarget.isSleep = true
+        
+        let message = "\(self.characterName) cast sleep on \(currTarget.name). Their turn is skipped for 1 round."
+        messageLog.addToMessageLog(message: message)
+    }
+    
+    func castAnimateDead() {
+        decreaseSpellPoints(amtDecrease: 17)
+
+        guard currTarget.isDead else {
+            let message = "\(self.characterName) tried to cast Animate the Dead on \(currTarget.name) but they are not dead."
+            messageLog.addToMessageLog(message: message)
+            return
+        }
+        
+        currTarget.isDead = false
+        currTarget.health = 1
+        
+        let message = "\(self.characterName) cast animate dead on \(currTarget.name). They are now alive with 1HP"
+        messageLog.addToMessageLog(message: message)
+    }
+    
+    func heal(amtToHeal: Int) {
+        increaseTargetHealth(amtHealed: amtToHeal)
+        decreaseSpellPoints(amtDecrease: 5)
+        
+        let message = "\(self.characterName) healed \(currTarget.name) for \(amtToHeal)HP"
+        messageLog.addToMessageLog(message: message)
+    }
 }
 
 
 class Bard: Caster {
     override init(characterName: String, userName: String, health: Int, stamina: Int, spellPoints: Int, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item], inventoryQuantities: [String:Int]) {
         super.init(characterName: characterName, userName: userName, health: health, stamina: stamina, spellPoints: spellPoints, currWeapon: currWeapon, weaponsInInventory: weaponsInInventory, currArmor: currArmor, armorInInventory: armorInInventory, itemsInInventory: itemsInInventory, inventoryQuantities: inventoryQuantities)
+    }
+    
+    // TODO: @Jalyn. This is towards teammates. Wait for Alekhya.
+    func castBardicInspiration() {
+        currTarget.hasAdvantage = true
+        decreaseSpellPoints(amtDecrease: 7)
+        
+        let message = "\(self.characterName) cast bardic inspiration on \(currTarget.name)"
+        messageLog.addToMessageLog(message: message)
+    }
+    
+    
+    func castViciousMockery(rollValue: Int) {
+        decreaseSpellPoints(amtDecrease: 7)
+        
+        guard currTarget.character_class != "Fighter" else {
+            let message = "\(self.characterName) tried casting vicious mockery on \(currTarget.name). However, Fighters are too confident for mockery"
+            messageLog.addToMessageLog(message: message)
+            return
+        }
+        
+        guard didSpellHit(rollValue: rollValue) else {
+            let message = "\(self.characterName) failed in casting vicious mockery on \(currTarget.name)"
+            messageLog.addToMessageLog(message: message)
+            return
+        }
+        
+        currTarget.hasDisadvantage = true
+        
+        let message = "\(self.characterName) cast vicious mockery on \(currTarget.name)"
+        messageLog.addToMessageLog(message: message)
+    }
+    
+    // TODO: @Alekhya
+    func castBlindness(rollValue: Int) {
+        decreaseSpellPoints(amtDecrease: 8)
+        
+        guard currTarget.character_class != "Rogue" else {
+            let message = "\(self.characterName) tried casting blindness on \(currTarget.name), but Rogues are too stealthy for this trickery."
+            messageLog.addToMessageLog(message: message)
+            return
+        }
+        
+        guard didSpellHit(rollValue: rollValue) else {
+            let message = "\(self.characterName) failed in casting blindness on \(currTarget.name)"
+            messageLog.addToMessageLog(message: message)
+            return
+        }
+        
+        currTarget.isBlind = true
+        
+        let message = "\(self.characterName) cast blindness on \(currTarget.name)"
+        messageLog.addToMessageLog(message: message)
+    }
+    
+    // TODO: @Alekhya
+    func castInvisibility() {
+        currTarget.isInvisible = true
+        decreaseSpellPoints(amtDecrease: 10)
+        
+        let message = "\(self.characterName) cast invisibility on \(currTarget.name)"
+        messageLog.addToMessageLog(message: message)
+    }
+    
+    //TODO: @Kelly for this to work, it needs to be written to all four team members in endTurn()
+    func castMotivationalSpeech() {
+        decreaseSpellPoints(amtDecrease: 15)
+        
+        let message = "\(self.characterName) cast motivational speech on their team"
+        messageLog.addToMessageLog(message: message)
     }
 }
 
@@ -150,7 +291,18 @@ func actionRequiresRoll() -> Bool {
     let actionSelected = rowSelected?.name
     
     switch actionSelected {
-    case "Fight", "Action Surge", "Frost Bite":
+    case "Fight", "Action Surge", "Frost Bite", "Mage Hand", "Sleep", "Heal", "Vicious Mockery", "Blindness":
+        return true
+    default:
+        return false
+    }
+}
+
+func actionIsContested() -> Bool {
+    let actionSelected = rowSelected?.name
+    
+    switch actionSelected {
+    case "Fight", "Action Surge", "Frost Bite", "Mage Hand", "Sleep", "Vicious Mockery", "Blindness":
         return true
     default:
         return false

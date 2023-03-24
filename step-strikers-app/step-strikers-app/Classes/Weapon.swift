@@ -117,7 +117,7 @@ func rebuildWeaponInventory(weaponInventory: [String]) -> [Weapon] {
     return weaponInventoryToStore
 }
 
-func rebuildWeaponToStore(currWeapon: String) ->Weapon {
+func rebuildWeaponToStore(currWeapon: String) -> Weapon {
     // Splitting currWeapon + UseCount from a single string
     let currWeaponUseCountTuple = splitObjAndUseCount(objWithUseCount: currWeapon)
     let currWeaponName = currWeaponUseCountTuple.objectName
@@ -130,7 +130,7 @@ func rebuildWeaponToStore(currWeapon: String) ->Weapon {
 struct fists: Weapon {
     let name = "Fists"
     let damage = 2
-    let staminaCost = 1
+    let staminaCost = 0
     var condition = 4
     var useCount = 0
     
@@ -373,4 +373,12 @@ func destroyWeapon(ownerWeaponsInventory: inout [Weapon], weaponToDestroy: Weapo
     }
 }
 
-
+// Remove the first instance of weaponToRemove that has the same name and useCount
+func removeWeaponFromInventory(weaponToRemove: Weapon, weaponInventory: inout [Weapon]) {
+    if weaponInventory.contains(where: { weapon in weapon.name == weaponToRemove.name && weapon.useCount == weaponToRemove.useCount }) {
+        let indexToRemove: Int = weaponInventory.firstIndex(where: {
+            weapon in weapon.name == weaponToRemove.name && weapon.useCount == weaponToRemove.useCount
+        })!
+        weaponInventory.remove(at: indexToRemove)
+    }
+}

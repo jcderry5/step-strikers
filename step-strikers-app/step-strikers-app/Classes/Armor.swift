@@ -196,6 +196,19 @@ struct noArmor: Armor {
     }
 }
 
+// This function will return the modified armor class in case the wearer is ill-suited for their currArmor
+func calculateModifiedArmorClass() -> Int {
+    if(currTarget.armor.checkIfSuited(wearerCharacterType: currTarget.character_class)){
+        return currTarget.armor.armorClass
+    } else {
+        let returnValue = rollDie(sides: currTarget.armor.armorClass, withAdvantage: currTarget.hasAdvantage, withDisadvantage: currTarget.hasDisadvantage)
+        // Replace advantage and disadvantage back to false
+        currTarget.hasAdvantage = false
+        currTarget.hasDisadvantage = false
+        return returnValue
+    }
+}
+
 func adjustArmorCondition(armorUsed: inout Armor) -> Armor{
     armorUsed.useCount += 1
     let useCounter: Int = armorUsed.useCount

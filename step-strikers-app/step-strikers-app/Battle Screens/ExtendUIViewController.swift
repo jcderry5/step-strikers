@@ -105,43 +105,55 @@ extension UIViewController {
         let xValues = [10,100,200,290]
         let enemiesRef = Firestore.firestore().collection("teams").document(enemyTeam)
         enemiesRef.getDocument { (document, error) in
-            if let document = document, document.exists {
-                let enemies = document.get("players") as! [String]
-                for enemy in enemies {
-                    let gameRef = Firestore.firestore().collection("players").document(enemy)
-                    gameRef.getDocument { (document2, error) in
-                        if let document2 = document2, document2.exists {
-                            let data = document2.data()
-                            let userName = enemy
-                            let name = data!["character_name"] as! String
-                            let character_class = data!["class"] as! String
-                            let health = data!["health"] as! Int
-                            let isBlind = data!["is_blind"] as! Bool
-                            let isInvisible = data!["is_invisible"] as! Bool
-                            let defenseModifier = data!["defense_modifier"] as! Int
-                            // Rebuild all armor and add them to inventory
-                            let armorInventory = data!["armor_inventory"] as! [String]
-                            let armorInventoryToStore = rebuildArmorInventory(armorInventory: armorInventory)
-                            let armor = data!["current_armor"] as! String
+            guard let document = document, document.exists else {
+                print("This team does not exist")
+                return
+            }
+            let enemies = document.get("players") as! [String]
+            for enemy in enemies {
+                let gameRef = Firestore.firestore().collection("players").document(enemy)
+                gameRef.getDocument { (document2, error) in
+                    guard let document2 = document2, document2.exists else {
+                        print("This player does not exist")
+                        return
+                    }
+                    let data = document2.data()
+                    let userName = enemy
+                    let name = data!["character_name"] as! String
+                    let character_class = data!["class"] as! String
+                    let health = data!["health"] as! Int
+                    let armor = data!["current_armor"] as! String
+                    let defenseModifier = data!["defense_modifier"] as! Int
+                    let armorInventory = data!["armor_inventory"] as! [String]
+                    let armorInventoryToStore = rebuildArmorInventory(armorInventory: armorInventory)
+                    
+                    let isBlind = data!["is_blind"] as! Bool
+                    let isDead = data!["is_dead"] as! Bool
+                    let isSleep = data!["is_asleep"] as! Bool
+                    let isInvisible = data!["is_invisible"] as! Bool
+                    
+                    let magicResistanceModifier = data!["magic_resistance_modifier"] as! Int
+                    let currWeapon = data!["current_weapon"] as! String
+                    let currWeaponToStore = rebuildWeaponToStore(currWeapon: currWeapon)
+                    let weaponInventory = data!["weapon_inventory"] as! [String]
+                    let weaponInventoryToStore: [Weapon] = rebuildWeaponInventory(weaponInventory: weaponInventory)
+                    
+                    let hasAdvantage = data!["has_advantage"] as! Bool
+                    let hasDisadvantage = data!["has_disadvantage"] as! Bool
+                    // Rebuild all armor and add them to inventory
 
-                            let currArmorToStore: Armor = rebuildArmorToStore(armorToStore: armor)
-                            
-                            // or don't save info and do UI stuff here one enemy at a time
-                            let player1 = characterSprites(name: character_class)
-                            let player1Image = player1.drawCharacter(view: self.view, x: xValues[count], y: 400, width: 100, height: 100)
-                            
-                            enemiesList.append(enemyData(userName: userName, name: name, character_class: character_class, health: health, isBlind: isBlind, isInvisible: isInvisible,imageView: player1Image!, armor: currArmorToStore, defenseModifier: defenseModifier, armorInInventory: armorInventoryToStore))
-                            
-                            count = count + 1
-                        } else {
-                            print("This player does not exist")
-                        }
+                    let currArmorToStore: Armor = rebuildArmorToStore(armorToStore: armor)
+                    
+                    // or don't save info and do UI stuff here one enemy at a time
+                    let player1 = characterSprites(name: character_class)
+                    let player1Image = player1.drawCharacter(view: self.view, x: xValues[count], y: 400, width: 100, height: 100)
+                    
+                    enemiesList.append(enemyData(userName: userName, name: name, character_class: character_class, health: health, isBlind: isBlind, isInvisible: isInvisible, imageView: player1Image!, armor: currArmorToStore, defenseModifier: defenseModifier, armorInInventory: armorInventoryToStore, isDead: isDead, isSleep: isSleep, magicResistanceModifier: magicResistanceModifier, currWeapon: currWeaponToStore, weaponInventory: weaponInventoryToStore, hasAdvantage: hasAdvantage, hasDisadvantage: hasDisadvantage))
+                    
+                    count = count + 1
                     }
                 }
-            } else {
-                print("This team does not exist")
             }
-        }
         print("The number of enemies are \(enemiesList.count)")
     }
     
@@ -151,35 +163,33 @@ extension UIViewController {
         // TODO: update with team reference
         let enemiesRef = Firestore.firestore().collection("teams").document(enemyTeam)
         enemiesRef.getDocument { (document, error) in
-            if let document = document, document.exists {
-                let enemies = document.get("players") as! [String]
-                for enemy in enemies {
-                    let gameRef = Firestore.firestore().collection("players").document(enemy)
-                    gameRef.getDocument { (document2, error) in
-                        if let document2 = document2, document2.exists {
-                            let data = document2.data()
-                            let name = data!["character_name"] as! String
-                            let character_class = data!["class"] as! String
-                            let health = data!["health"] as! Int
-                            let isBlind = data!["is_blind"] as! Bool
-                            let isInvisible = data!["is_invisible"] as! Bool
-                            let userName = enemy
-                            
-                            // replace this with whatever data structure you want
-                            let newTuple = (name, character_class, health, isBlind, isInvisible)
-                            print(newTuple)
-                            // or don't save info and do UI stuff here one enemy at a time
-                            
-                            teamList.append(teamData(userName: userName, name: name, character_class: character_class, health: health, isBlind: isBlind, isInvisible: isInvisible))
-                            // TODO: stats save to a new struct
-                            count = count + 1
-                        } else {
-                            print("This player does not exist")
-                        }
-                    }
-                }
-            } else {
+            guard let document = document, document.exists else {
                 print("This team does not exist")
+                return
+            }
+            let enemies = document.get("players") as! [String]
+            for enemy in enemies {
+                let gameRef = Firestore.firestore().collection("players").document(enemy)
+                gameRef.getDocument { (document2, error) in
+                    guard let document2 = document2, document2.exists else {
+                        print("This player does not exist")
+                        return
+                    }
+                    let data = document2.data()
+                    let name = data!["character_name"] as! String
+                    let character_class = data!["class"] as! String
+                    let health = data!["health"] as! Int
+                    let isBlind = data!["is_blind"] as! Bool
+                    let isInvisible = data!["is_invisible"] as! Bool
+                    let hasAdvantage = data!["has_advantage"] as! Bool
+                    let defenseModifier = data!["defense_modifier"] as! Int
+                    
+                    let userName = enemy
+                    
+                    
+                    teamList.append(teamData(userName: userName, name: name, character_class: character_class, health: health, isBlind: isBlind, isInvisible: isInvisible, hasAdvantage: hasAdvantage, defenseModifier: defenseModifier))
+                    count = count + 1
+                }
             }
         }
     }
@@ -429,7 +439,8 @@ extension UIViewController {
         boxArrow = drawSelectBoxButtonArrowItem(x: 120, y: 130, width: 70, height: 150)
     }
     
-    @objc func player3Selected(_ sender:UIButton!) {        selectPlayerLabel.removeFromSuperview()
+    @objc func player3Selected(_ sender:UIButton!) {
+        selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
             boxArrow[0].removeFromSuperview()
             boxArrow[1].removeFromSuperview()
@@ -438,7 +449,8 @@ extension UIViewController {
         boxArrow = drawSelectBoxButtonArrowItem(x: 200, y: 130, width: 70, height: 150)
     }
     
-    @objc func player4Selected(_ sender:UIButton!) {        selectPlayerLabel.removeFromSuperview()
+    @objc func player4Selected(_ sender:UIButton!) {
+        selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
             boxArrow[0].removeFromSuperview()
             boxArrow[1].removeFromSuperview()
@@ -462,9 +474,13 @@ extension UIViewController {
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc,animated: false)
             } else {
-                // TODO: Test with server running
                 performBattleAction()
-                endTurn(game: game, player: localCharacter.userName)
+                let sb = UIStoryboard(name: "Main", bundle: nil)
+                let vc = sb.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
+                
+                self.modalPresentationStyle = .fullScreen
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated:false)
             }
             
         }
@@ -485,16 +501,21 @@ extension UIViewController {
     }
     
     func updateCurrTargetData(enemyIndex: Int) {
-        print("We got inside updateCurrTargetData.... Which is good?")
         currTarget.name = enemiesList[enemyIndex].name
         currTarget.userName = enemiesList[enemyIndex].userName
         currTarget.character_class = enemiesList[enemyIndex].character_class
         currTarget.health = enemiesList[enemyIndex].health
         currTarget.armor = enemiesList[enemyIndex].armor
+        currTarget.modifiedArmorClass = calculateModifiedArmorClass()
         currTarget.defenseModifier = enemiesList[enemyIndex].defenseModifier
         currTarget.armorInInventory = enemiesList[enemyIndex].armorInInventory
-        
-        print("Just updated currTarget. Here are the results:")
-        currTarget.printEnemyData()
+        currTarget.isBlind = enemiesList[enemyIndex].isBlind
+        currTarget.isDead = enemiesList[enemyIndex].isDead
+        currTarget.isSleep = enemiesList[enemyIndex].isSleep
+        currTarget.magicResistanceModifier = enemiesList[enemyIndex].magicResistanceModifier
+        currTarget.currWeapon = enemiesList[enemyIndex].currWeapon
+        currTarget.weaponInventory = enemiesList[enemyIndex].weaponInventory
+        currTarget.hasAdvantage = enemiesList[enemyIndex].hasAdvantage
+        currTarget.hasDisadvantage = enemiesList[enemyIndex].hasDisadvantage
     }
 }

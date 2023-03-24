@@ -346,4 +346,3 @@ final class RPGCharacterTests: XCTestCase {
     // TODO: @Kelly Add test for damageOpponent
 }
 
-

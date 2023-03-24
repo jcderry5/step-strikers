@@ -9,7 +9,8 @@ import UIKit
 
 var boxArrow: [AnyObject] = [AnyObject]()
 var rowSelected:Action?
-var currTarget: currTargetData = currTargetData(name: "", userName: "", character_class: "", health: 30, armor: noArmor(), defenseModifier: 0, armorInInventory: [noArmor()]) //TODO: @jalyn fix later...need to initialize it to something
+// Dummy currTarget, until get's set by action
+var currTarget: currTargetData = currTargetData(name: "EmptyPlayer", userName: "emptyPlayer", character_class: "Fighter", health: 30, armor: noArmor(), modifiedArmorClass: 0, attackModifier: 0, defenseModifier: 0, armorInInventory: [noArmor()], isBlind: false, isDead: false, isSleep: false, isInvisible: false, magicResistanceModifier: 0, currWeapon: fists(), weaponInventory: [fists()], hasAdvantage: false, hasDisadvantage: false)
 var actions: [Action] = [Action]()
 var player: String = ""
 var game: String = ""
@@ -163,9 +164,13 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
                 if(actionRequiresEnemy()) {
                     characterButtons = drawEnemiesButton(enemy1: enemiesList[0].character_class, enemy2: enemiesList[1].character_class, enemy3: enemiesList[2].character_class, enemy4: enemiesList[3].character_class)
                 } else {
-                    // TODO: Test this with server running
                     performBattleAction()
-                    endTurn(game: game, player: localCharacter.userName)
+                    let sb = UIStoryboard(name: "Main", bundle: nil)
+                    let vc = sb.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
+                    
+                    self.modalPresentationStyle = .fullScreen
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated:false)
                 }
                 
             }
@@ -261,7 +266,7 @@ struct characterSprites {
     }
 }
 
-func performBattleAction(rollValue: Int? = nil, rollValueToBeat: Int? = nil) {
+func performBattleAction(rollValue: Int? = nil) {
     let actionPerformed: String = rowSelected?.name! ?? "Fight"
     // rowSelected holds your action struct
 
@@ -271,11 +276,11 @@ func performBattleAction(rollValue: Int? = nil, rollValueToBeat: Int? = nil) {
         case "Second Wind":
             (localCharacter as! Fighter).secondWind()
         case "Action Surge":
-            (localCharacter as! Fighter).actionSurge(rollValue: rollValue!, rollValueToBeat: rollValueToBeat!)
+            (localCharacter as! Fighter).actionSurge(rollValue: rollValue!)
         case "Sharpen Weapon":
             (localCharacter as! Fighter).sharpenWeapon()
         default:
-            localCharacter.fight(rollValue: rollValue!, rollValueToBeat: rollValueToBeat!)
+            localCharacter.fight(rollValue: rollValue!)
         }
     } else if (localCharacter.getCharacterClass() == "Rogue") {
         switch actionPerformed {
@@ -288,41 +293,42 @@ func performBattleAction(rollValue: Int? = nil, rollValueToBeat: Int? = nil) {
         case "Allsight":
             (localCharacter as! Rogue).allSight()
         default:
-            localCharacter.fight(rollValue: rollValue!, rollValueToBeat: rollValueToBeat!)
+            localCharacter.fight(rollValue: rollValue!)
         }
     } else if (localCharacter.getCharacterClass() == "Wizard") {
         switch actionPerformed {
         case "Frost Bite":
-            (localCharacter as! Wizard).castFrostbite(caster: localCharacter.characterName, target: currTarget.name)
+            (localCharacter as! Wizard).castFrostbite(rollValue: rollValue!)
         case "Mage Hand":
-            (localCharacter as! Wizard).castMageHand(caster: localCharacter.characterName, target: currTarget.name)
+            (localCharacter as! Wizard).castMageHand(rollValue: rollValue!)
         case "Shield":
-            (localCharacter as! Wizard).castShield(caster: localCharacter.characterName, target: currTarget.name)
+            (localCharacter as! Wizard).castShield()
         case "Sleep":
-            (localCharacter as! Wizard).sleep(caster: localCharacter.characterName, target: currTarget.name)
+            (localCharacter as! Wizard).sleep(rollValue: rollValue!)
         case "Animate the Dead":
-            (localCharacter as! Wizard).castAnimateDead(caster: localCharacter.characterName, target: currTarget.name)
+            (localCharacter as! Wizard).castAnimateDead()
         case "Heal":
-            (localCharacter as! Wizard).heal(caster: localCharacter.characterName, target: currTarget.name)
+            (localCharacter as! Wizard).heal(amtToHeal: rollValue!)
         default:
-            localCharacter.fight(rollValue: rollValue!, rollValueToBeat: rollValueToBeat!)
+            localCharacter.fight(rollValue: rollValue!)
         }
     } else if (localCharacter.getCharacterClass() == "Bard") {
         switch actionPerformed {
         case "Mage Hand":
-            (localCharacter as! Bard).castMageHand(caster: localCharacter.characterName, target: currTarget.name)
+            (localCharacter as! Bard).castMageHand(rollValue: rollValue!)
         case "Bardic Inspiration":
-            (localCharacter as! Bard).castBardicInspiration(caster: localCharacter.characterName, target: currTarget.name)
+            (localCharacter as! Bard).castBardicInspiration()
         case "Vicious Mockery":
-            (localCharacter as! Bard).castViciousMockery(caster: localCharacter.characterName, target: currTarget.name)
+            (localCharacter as! Bard).castViciousMockery(rollValue: rollValue!)
         case "Blindness":
-            (localCharacter as! Bard).castBlindness(caster: localCharacter.characterName, target: currTarget.name, game: game)
+            (localCharacter as! Bard).castBlindness(rollValue: rollValue!)
         case "Invisibility":
-            (localCharacter as! Bard).castInvisibility(caster: localCharacter.characterName, target: currTarget.name, game: game)
+            (localCharacter as! Bard).castInvisibility()
         case "Motivational Speech":
-            (localCharacter as! Bard).castMotivationalSpeech(caster: localCharacter.characterName, team: team)
+            (localCharacter as! Bard).castMotivationalSpeech()
         default:
-            localCharacter.fight(rollValue: rollValue!, rollValueToBeat: rollValueToBeat!)
+            localCharacter.fight(rollValue: rollValue!)
         }
     }
+    endTurn(game: game, player: localCharacter.userName)
 }

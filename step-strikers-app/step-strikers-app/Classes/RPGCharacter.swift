@@ -9,6 +9,25 @@ import FirebaseFirestore
 
 var messageLog: MessageLog = MessageLog();
 
+let maxHealthPerClass = [
+    (characterClass: "Fighter", maxHealth: 45),
+    (characterClass: "Rogue", maxHealth: 40),
+    (characterClass: "Bard", maxHealth: 30),
+    (characterClass: "Wizard", maxHealth: 35)
+]
+
+let maxStaminaPerClass = [
+    (characterClass: "Fighter", maxStamina: 50),
+    (characterClass: "Rogue", maxStamina: 55),
+    (characterClass: "Bard", maxStamina: 35),
+    (characterClass: "Wizard", maxStamina: 30)
+]
+
+let maxSpellPointsPerClass = [
+    (characterClass: "Bard", maxSpellPoints: 30),
+    (characterClass: "Wizard", maxSpellPoints: 40)
+]
+
 class RPGCharacter {
     var characterName: String
     var userName: String
@@ -31,6 +50,9 @@ class RPGCharacter {
     var attackModifier = 0
     var defenseModifier = 0
     var magicResistanceModifier = 0
+    // TODO: @Kelly, when loading up your character for your turn, this is needed.
+    var hasAdvantage: Bool = false
+    var hasDisadvantage: Bool = false
     
     init(characterName: String, userName: String, health: Int,
          stamina: Int, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item], inventoryQuantities: [String:Int]){
@@ -100,6 +122,7 @@ class RPGCharacter {
             }
         } else {
             print ("You cannot wield this weapon. It is not in your inventory")
+            return
         }
         let message = "\(self.characterName) is now wielding \(weaponObject.name)"
         messageLog.addToMessageLog(message: message)
@@ -212,16 +235,15 @@ class RPGCharacter {
     
     func increaseStamina(amtIncrease: Int){
         self.currStamina += amtIncrease
-        if(self.currStamina > self.maxStamina){
-            self.currStamina = self.maxStamina
-        }
+        
+        self.currStamina = min(self.currStamina, self.maxStamina)
     }
 
     func decreaseHealth(amtDamage: Int){
         self.currHealth -= amtDamage
         if self.currHealth < 0 {
             self.currHealth = 0
-            // TODO: Add functionality for when a person dies
+            print("Warning!!! You just decreased the current player past zero. How did that happen???")
         }
     }
     
@@ -233,8 +255,13 @@ class RPGCharacter {
     }
     
     // MARK: - Damage Functions
-    func fight(rollValue: Int, rollValueToBeat: Int){
-        let damageDealt = calculateDamage(wielderAttackModifier: self.attackModifier, wielderCurrWeapon: self.currWeapon, wielderClass: self.getCharacterClass(), rollValue: rollValue, rollValueToBeat: rollValueToBeat)
+    func fight(rollValue: Int){
+        let damageDealt: Int
+        if (self.didAttackHit(rollValue: rollValue)) {
+            damageDealt =  calculateModifiedDamage()
+        } else {
+            damageDealt = 0
+        }
         
         doConsequencesOfFight(damageDealt: damageDealt)
         
@@ -242,9 +269,12 @@ class RPGCharacter {
         messageLog.addToMessageLog(message: message)
     }
     
+    func didAttackHit(rollValue: Int) -> Bool {
+        return rollValue + attackModifier >= currTarget.modifiedArmorClass + currTarget.defenseModifier
+    }
+    
     func doConsequencesOfFight(damageDealt: Int) {
         // reset attack and defense modifier after interaction
-        // TODO: @Kelly, change this code to be sent to fb as a write at end of turn
         self.attackModifier = 0
         currTarget.defenseModifier = 0
         
@@ -256,47 +286,77 @@ class RPGCharacter {
         decreaseTargetHealth(amtDamage: damageDealt)
         self.decreaseStamina(staminaCost: self.currWeapon.staminaCost)
     }
-    
-    // This function will calculate the damage that the wielder imposes on their target, given their proficiency in their currWeapon and the target's currArmor suitability.
-    // proficient wielder def: The weapon is assigned to their class, they roll with the weapon's damage
-    func calculateDamage(wielderAttackModifier: Int, wielderCurrWeapon: Weapon, wielderClass: String, rollValue: Int, rollValueToBeat: Int) -> Int {
-        let damage: Int
-        
-        // D20 + wielders attackModifer vs target's armorClass + target's defenseModifier
-        if(rollValue + wielderAttackModifier >= rollValueToBeat + currTarget.defenseModifier) {
-            // check if wielder is proficient in their weapon
-            damage = calculateModifiedDamage()
-        } else {
-            damage = 0 // if wielder does not beat the character's AC, they do not inflict damage upon them
-        }
-        return damage
-    }
 
     // Returns the amount of damage wielder imposes with their weapon taking into account their proficiency in the weapon
     func calculateModifiedDamage() -> Int{
         if(self.currWeapon.checkIfProficient(wielderClass: self.getCharacterClass())){
             return self.currWeapon.damage
         } else {
-            return rollDie(quant: 1, sides: self.currWeapon.damage)
+            let returnValue = rollDie(sides: self.currWeapon.damage, withAdvantage: localCharacter.hasAdvantage, withDisadvantage: localCharacter.hasDisadvantage)
+            // Replace advantage and disadvantage back to false
+            localCharacter.hasAdvantage = false
+            localCharacter.hasDisadvantage = false
+            return returnValue
         }
     }
-    
-    // This function will return the modified armor class in case the wearer is ill-suited for their currArmor
-    func calculateModifiedArmorClass() -> Int {
-        print("inside calculate modified armor class")
-        currTarget.printEnemyData()
-        if(currTarget.armor.checkIfSuited(wearerCharacterType: currTarget.character_class)){
-            return currTarget.armor.armorClass
-        } else {
-            return rollDie(quant: 1, sides: currTarget.armor.armorClass)
-        }
-    }
+}
+
+func increaseTargetHealth(amtHealed: Int) {
+    currTarget.health += amtHealed
+    let maxHealth = getMaxHealth(characterClass: currTarget.character_class)
+    currTarget.health = min(maxHealth, currTarget.health)
 }
 
 func decreaseTargetHealth(amtDamage: Int){
     currTarget.health -= amtDamage
     if currTarget.health < 0 {
         currTarget.health = 0
-        // TODO: Add functionality for when a person dies
+        currTarget.isDead = true
+        let message = "\(localCharacter.characterName) has just killed \(currTarget.name)!"
+        messageLog.addToMessageLog(message: message)
+    }
+}
+
+func getMaxHealth(characterClass: String) -> Int {
+    switch characterClass {
+    case maxHealthPerClass[0].characterClass:
+        return maxHealthPerClass[0].maxHealth
+    case maxHealthPerClass[1].characterClass:
+        return maxHealthPerClass[1].maxHealth
+    case maxHealthPerClass[2].characterClass:
+        return maxHealthPerClass[2].maxHealth
+    case maxHealthPerClass[3].characterClass:
+        return maxHealthPerClass[3].maxHealth
+    default:
+        print("Asking for the max health of a class that doesn't exist")
+        return 30
+    }
+}
+
+func getMaxStamina(characterClass: String) -> Int {
+    switch characterClass {
+    case maxStaminaPerClass[0].characterClass:
+        return maxStaminaPerClass[0].maxStamina
+    case maxStaminaPerClass[1].characterClass:
+        return maxStaminaPerClass[1].maxStamina
+    case maxStaminaPerClass[2].characterClass:
+        return maxStaminaPerClass[2].maxStamina
+    case maxStaminaPerClass[3].characterClass:
+        return maxStaminaPerClass[3].maxStamina
+    default:
+        print("Asking for the max stamina of a class that doesn't exist")
+        return 30
+    }
+}
+
+func getMaxSpellPoints(characterClass: String) -> Int {
+    switch characterClass {
+    case maxSpellPointsPerClass[0].characterClass:
+        return maxSpellPointsPerClass[0].maxSpellPoints
+    case maxSpellPointsPerClass[1].characterClass:
+        return maxSpellPointsPerClass[2].maxSpellPoints
+    default:
+        print("Asking for the max health of a class that doesn't exist")
+        return 30
     }
 }

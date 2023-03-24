@@ -93,26 +93,25 @@ func resetPlayerStats(player:String) {
 }
 
 func rollInitiative(player:String, game: String) -> Int{
-    let initiative = rollDie(quant: 1, sides: 20)
+    let initiative = rollDie(sides: 20)
         
     // send initiative to firebase
     Firestore.firestore().collection("games").document(game).updateData(["initiative.\(player)": initiative])
     return initiative
 }
 
-func rollDie(quant: Int, sides: Int) -> Int {
-    var sum = 0
-    for _ in 1...quant {
-        sum += Int.random(in: 1...sides)
-    }
+func rollDie(sides: Int, withAdvantage: Bool? = false, withDisadvantage: Bool? = false) -> Int {
     
-    return sum
-}
-
-func rollDieDisadvantage(sides: Int) -> Int {
-    let firstRoll = rollDie(quant: 1, sides: sides)
-    let secondRoll = rollDie(quant: 1, sides: sides)
-    return (firstRoll <= secondRoll) ? firstRoll : secondRoll
+    let firstValue = Int.random(in: 1...sides)
+    let secondValue = Int.random(in: 1...sides)
+    
+    if (withAdvantage!) {
+        return (firstValue >= secondValue) ? firstValue : secondValue
+    } else if (withDisadvantage!) {
+        return (firstValue <= secondValue) ? firstValue : secondValue
+    } else {
+        return firstValue
+    }
 }
 
 func refreshStats(character: String, game: String) {
@@ -134,6 +133,18 @@ func refreshStats(character: String, game: String) {
      */
 
 func endTurn(game: String, player: String) {
+    
+    // TODO: @Kelly, within the if-block goes all the edits to currTarget in firebase, in the else statement meant the currPlayer only changed themself
+    if (actionRequiresEnemy()){
+        
+    } else {
+        
+    }
+    
+    // TODO: @Kelly for Motivational Speech to work, can you check the global rowSelected and if it's "Motivational Speech" push hasAdvantage to true for all teammates within endGame
+    if rowSelected?.name == "Motivational Speech" {
+        // Write true for all teammates
+    }
     
     Firestore.firestore().collection("players").document(currTarget.userName).setData([
         "health": currTarget.health,
