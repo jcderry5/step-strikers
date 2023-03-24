@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class BattleMenuViewController: UIViewController {
     
@@ -45,19 +46,31 @@ class BattleMenuViewController: UIViewController {
     }
     
     @objc func createPressed(_ sender:UIButton!) {
-        // TODO: Navigate to the PARTY SETUP page
-        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = sb.instantiateViewController(withIdentifier: "RollInitiativeViewController") as! RollInitiativeViewController
+        // generate code
+        let code = generateCode()
+        print(code)
 
+        Firestore.firestore().collection("teams").document(code).setData([
+            "joinable": true,
+            "players": [localCharacter.userName]
+        ]) { err in
+            if let err = err {
+                print("Error writing new team document: \(err)")
+            }
+        }
+
+        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "PartyMenuHostViewController") as! PartyMenuHostViewController
+        
+        vc.partyCode = code
         self.modalPresentationStyle = .fullScreen
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: false)
     }
     
     @objc func joinPressed(_ sender:UIButton!) {
-        // TODO: Navigate to the CODE ENTRY page
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = sb.instantiateViewController(withIdentifier: "RollInitiativeViewController") as! RollInitiativeViewController
+        let vc = sb.instantiateViewController(withIdentifier: "CodeEntryViewController") as! CodeEntryViewController
 
         self.modalPresentationStyle = .fullScreen
         vc.modalPresentationStyle = .fullScreen
@@ -73,5 +86,9 @@ class BattleMenuViewController: UIViewController {
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: false)
     }
-
+    
+    func generateCode() -> String {
+      let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+      return String((0..<9).map{ _ in letters.randomElement()! })
+    }
 }
