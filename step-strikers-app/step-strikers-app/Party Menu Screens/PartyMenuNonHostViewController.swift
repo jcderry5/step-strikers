@@ -6,11 +6,13 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 // TODO: Route here from code entry screen when correct code is input
 class PartyMenuNonHostViewController: UIViewController {
     
     var labelText:NSMutableAttributedString?
+    var partyCode = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,12 +38,25 @@ class PartyMenuNonHostViewController: UIViewController {
         createSettingsButton(x: 325, y: 775, width: 40, height: 40)
         
         // add joined: label
-        let joinedLabel = displayJoinedMembers()
-        // TODO: add names for team members using this method
-        joinedLabel.0.attributedText = appendMemberJoined(labelText: joinedLabel.1, member: "Host")
-        joinedLabel.0.attributedText = appendMemberJoined(labelText: joinedLabel.1, member: "Player X")
-        joinedLabel.0.attributedText = appendMemberJoined(labelText: joinedLabel.1, member: "Player Y")
-        joinedLabel.0.attributedText = appendMemberJoined(labelText: joinedLabel.1, member: "Player Z")
+        var joinedLabel = displayJoinedMembers()
+        let docRef = Firestore.firestore().collection("teams").document(self.partyCode)
+        docRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                docRef.addSnapshotListener {
+                    documentSnapshot, error in guard let document = documentSnapshot else {
+                        print("Error fetching team document \(self.partyCode): \(error!)")
+                        return
+                    }
+
+                    let players = document.get("players") as! [String]
+                    joinedLabel.0.removeFromSuperview()
+                    joinedLabel = self.displayJoinedMembers()
+                    for player in players {
+                        joinedLabel.0.attributedText = self.appendMemberJoined(labelText: joinedLabel.1, member: player)
+                    }
+                }
+            }
+        }
         
         // leave button
         let leave = createLeaveButton()
@@ -113,12 +128,20 @@ class PartyMenuNonHostViewController: UIViewController {
     }
     
     @objc func leavePressed(_ sender: Any) {
-        // TODO: Move to battle menu
-//        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//        let vc = sb.instantiateViewController(withIdentifier: "BattleMenuViewController") as! BattleMenuViewController
-//
-//        self.modalPresentationStyle = .fullScreen
-//        vc.modalPresentationStyle = .fullScreen
-//        self.present(vc, animated: false)
+        // remove player from the team on firebase
+        let docRef = Firestore.firestore().collection("teams").document(self.partyCode)
+        docRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                docRef.updateData(["players": FieldValue.arrayRemove([localCharacter.userName])])
+            }
+        }
+
+        // go back to battle menu
+        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "BattleMenuViewController") as! BattleMenuViewController
+
+        self.modalPresentationStyle = .fullScreen
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false)
     }
 }

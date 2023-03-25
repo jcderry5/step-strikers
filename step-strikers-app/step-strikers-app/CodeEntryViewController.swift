@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class CodeEntryViewController: UIViewController, UITextFieldDelegate {
     
@@ -31,6 +32,7 @@ class CodeEntryViewController: UIViewController, UITextFieldDelegate {
         textField?.backgroundColor = UIColor.white
         textField?.layer.borderColor = UIColor.brown.cgColor
         textField?.layer.borderWidth = 2.0
+        textField?.autocapitalizationType = .none
         self.view.addSubview(textField!)
         
         // add settings button to bottom right corner
@@ -80,13 +82,27 @@ class CodeEntryViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func confirmButtonPressed(_ sender:UIButton!) {
-        // TODO: someone figure out how to check if they entered the right code
-        var codeCorrect:Bool = false
-        if codeCorrect {
-            // TODO: edit so goes to correct party menu after the correct code is placed
-        } else {
-            popUp = createPopUp()
-            self.view.addSubview(popUp!)
+        let docRef = Firestore.firestore().collection("teams").document(textField!.text!)
+        docRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                // code entered is correct
+                
+                // add yourself to the team on firebase
+                docRef.updateData(["players": FieldValue.arrayUnion([localCharacter.userName])])
+                
+                // go to the next screen
+                let sb = UIStoryboard(name: "Main", bundle: nil)
+                let vc = sb.instantiateViewController(withIdentifier: "PartyMenuNonHostViewController") as! PartyMenuNonHostViewController
+                
+                vc.partyCode = self.textField!.text!
+                self.modalPresentationStyle = .fullScreen
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated:false)
+            } else {
+                // code entered is incorrect
+                self.popUp = self.createPopUp()
+                self.view.addSubview(self.popUp!)
+            }
         }
     }
     
