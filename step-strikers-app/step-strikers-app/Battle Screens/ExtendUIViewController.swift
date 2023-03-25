@@ -214,7 +214,6 @@ extension UIViewController {
     
     // this method draw the enemy characters as selectable buttons for the select target screens
     // still need to work out the corresponding button methods and what they need as parameters
-    // TODO: figure out when to put the red arrow
     func drawEnemiesButton(enemy1:String, enemy2:String, enemy3:String, enemy4:String) -> [UIButton] {
         // select character label
         selectEnemyLabel = UILabel(frame: CGRect(x:100, y: 300, width:200, height:100))
@@ -365,7 +364,6 @@ extension UIViewController {
         self.present(vc,animated: false)
     }
     
-    // TODO: Change this to transfer to the settings screen when it is built
     // please dont make separate storyboards for all the types of boards right now
     @objc func settingsButtonPressed(_ sender:UIButton!) {
         let sb = UIStoryboard(name: "Main", bundle: nil)

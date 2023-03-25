@@ -85,7 +85,6 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         checkDeadOrAsleep()
         
         // blind only pop up
-        // TODO: change to the blind and invisible variables from localCharacter object
         if localCharacter.isBlind {
             let popUp = createPopUpBlind()
             self.view.addSubview(popUp)
@@ -159,7 +158,6 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
                 boxArrow[2].removeFromSuperview()
             }
             tableView.deselectRow(at: indexPath, animated:false)
-            // TODO: change to the blind variable from localCharacter object
             if localCharacter.isBlind == false {
                 self.view.addSubview(enemiesList[0].imageView)
                 self.view.addSubview(enemiesList[1].imageView)
@@ -187,7 +185,6 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
                 
                 // Decide if the player needs to select an enemy
                 if(actionRequiresEnemy()) {
-                    // TODO: change to the blind variable from localCharacter object
                     if localCharacter.isBlind {
                         if actionTargetsTeam() {
                             selectRandomTeamMember()
@@ -465,7 +462,6 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     
 }
 
-// TODO: remove these functions to the UIViewController extension and use the information set from Game.swift (?)
 struct characterSprites {
     var name:String
     
