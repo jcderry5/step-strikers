@@ -36,6 +36,8 @@ class Caster: RPGCharacter {
     }
     
     func castMageHand(rollValue: Int) {
+        decreaseSpellPoints(amtDecrease: 20)
+        
         guard currTarget.character_class != "Fighter" else {
             let message = "\(self.characterName) tried using Mage Hand to take \(currTarget.armor.name) from \(currTarget.name), but Fighters are too strong to take their weapon!"
             messageLog.addToMessageLog(message: message)
@@ -68,9 +70,6 @@ class Caster: RPGCharacter {
             currTarget.currWeapon = newFists
             currTarget.weaponInventory.append(newFists)
         }
-        
-        // Do Consequences of Spell
-        (localCharacter as! Caster).decreaseSpellPoints(amtDecrease: 20)
     }
 }
 
