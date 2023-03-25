@@ -31,9 +31,13 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         createSettingsButton(x: 10, y: 50, width: 40, height: 40)
         
         // create characters
-        // will need to change "name" based on what the enemy players are
-        // TODO: update to take what the enemies character type are
-        drawEnemies(enemy1: "Fighter", enemy2: "Bard", enemy3: "Rogue", enemy4: "Wizard")
+        let xValues = [10,100,200,290]
+        var count = 0
+        for enemies in enemiesList {
+            let character = characterSprites(name: enemies.character_class)
+            character.drawCharacter(view: self.view, x: xValues[count], y: 400, width: 100, height: 100, isInvisible: enemies.isInvisible, isDead: enemies.isDead)
+            count = count + 1
+        }
         
         displayRollingScreen()
         

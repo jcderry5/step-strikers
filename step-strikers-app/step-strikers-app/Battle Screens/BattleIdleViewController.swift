@@ -47,6 +47,14 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
         statsDisplay.separatorColor = UIColor.clear
         self.view.addSubview(statsDisplay)
         
+        // if a player is blind
+        if localCharacter.isBlind {
+            let popUp = createPopUpBlind()
+            self.view.addSubview(popUp)
+        }
+        
+        checkDeadOrAsleep()
+        
         // scroll view
         // Set the scrollView's frame to be the size of the screen
         scrollView = UIScrollView(frame: CGRect(x: view.safeAreaInsets.left+40, y: 640, width: 320, height: 150))
@@ -118,6 +126,63 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
     
     @objc func tableView(_ tableView: UITableView, heightForRowAt indexPath:IndexPath) -> CGFloat {
         return 30
+    }
+    
+    func checkDeadOrAsleep() {
+        print(localCharacter.isDead)
+        if localCharacter.isDead || localCharacter.isAsleep {
+            let popUp = createPopUpDeadAsleep()
+            self.view.addSubview(popUp)
+        }
+    }
+    
+    func createPopUpDeadAsleep() -> UIView {
+       // view to display
+       let popView = UIView(frame: CGRect(x: 50, y: 350, width: 300, height: 200))
+       popView.backgroundColor = UIColor(red: 0.941, green: 0.851, blue: 0.690, alpha: 1.0)
+
+       // label based on dead or asleep
+        let label = UILabel(frame: CGRect(x: 50, y: 5, width: 250, height: 200))
+        if localCharacter.isDead {
+            label.text = "You are dead\nWait for the battle to complete"
+            label.font = UIFont(name: "munro", size: 30)
+        } else if localCharacter.isAsleep {
+            label.text = "You are asleep\nWait until you wake up"
+        }
+       label.font = UIFont(name: "munro", size: 30)
+       label.lineBreakMode = .byWordWrapping
+       label.numberOfLines = 0
+       label.textColor = UIColor.black
+       label.backgroundColor = UIColor.clear
+       popView.addSubview(label)
+
+       // popView border
+       popView.layer.borderWidth = 1.0
+       popView.layer.borderColor = UIColor.black.cgColor
+
+       return popView
+    }
+    
+    func createPopUpBlind() -> UIView {
+       // view to display
+       let popView = UIView(frame: CGRect(x: 50, y: 350, width: 300, height: 200))
+       popView.backgroundColor = UIColor(red: 0.941, green: 0.851, blue: 0.690, alpha: 1.0)
+
+       // label based on blind or invisible
+       let label = UILabel(frame: CGRect(x: 25, y: 5, width: 250, height: 200))
+       label.text = "You are blind\nYou will not be able to see your enemies"
+       label.font = UIFont(name: "munro", size: 30)
+       label.lineBreakMode = .byWordWrapping
+       label.numberOfLines = 0
+       label.textColor = UIColor.black
+       label.backgroundColor = UIColor.clear
+       popView.addSubview(label)
+
+       // popView border
+       popView.layer.borderWidth = 1.0
+       popView.layer.borderColor = UIColor.black.cgColor
+
+       return popView
     }
     
     func createStatsArray() {

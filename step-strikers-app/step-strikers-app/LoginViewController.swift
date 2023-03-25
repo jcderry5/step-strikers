@@ -88,6 +88,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 let defenseModifier = document.get("defense_modifier") as! Int
                 let magicResistanceModifier = document.get("magic_resistance_modifier") as! Int
                 
+                let currDead = document.get("is_dead") as! Bool
+                let currAsleep = document.get("is_asleep") as! Bool
+                let currBlind = document.get("is_blind") as! Bool
+                let currInvisible = document.get("is_invisible") as! Bool
+                
                 // Keep track of item names
                 var itemNames = [String]()
                 
@@ -116,13 +121,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 // Build the Global Character (Does not include item inventory yet)
                 switch characterClass {
                     case "Fighter":
-                    localCharacter = Fighter(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [], inventoryQuantities: [:])
+                    localCharacter = Fighter(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, dead: currDead, asleep: currAsleep, blind: currBlind, invisible: currInvisible, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [], inventoryQuantities: [:])
                     case "Wizard":
-                    localCharacter = Wizard(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, spellPoints: currSpellPoints, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [], inventoryQuantities: [:])
+                    localCharacter = Wizard(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, spellPoints: currSpellPoints, dead: currDead, asleep: currAsleep, blind: currBlind, invisible: currInvisible, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [], inventoryQuantities: [:])
                     case "Rogue":
-                    localCharacter = Rogue(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [], inventoryQuantities: [:])
+                    localCharacter = Rogue(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, dead: currDead, asleep: currAsleep, blind: currBlind, invisible: currInvisible, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [], inventoryQuantities: [:])
                     case "Bard":
-                    localCharacter = Bard(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, spellPoints: currSpellPoints, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [], inventoryQuantities: [:])
+                    localCharacter = Bard(characterName: characterName, userName: username, health: currHealth, stamina: currStamina, spellPoints: currSpellPoints, dead: currDead, asleep: currAsleep, blind: currBlind, invisible: currInvisible, currWeapon: currWeaponToStore, weaponsInInventory: weaponInventoryToStore, currArmor: currArmorToStore, armorInInventory: armorInventoryToStore, itemsInInventory: [], inventoryQuantities: [:])
                     default:
                         print("Getting a characterClass not from the main 4... should not happen.")
                 }

@@ -44,8 +44,8 @@ let BardActions: [(actionName: String, cost: String)] = [
 
 class Fighter: RPGCharacter {
     override init(characterName: String, userName: String, health: Int,
-                  stamina: Int, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item], inventoryQuantities: [String:Int]){
-        super.init(characterName: characterName, userName: userName, health: health, stamina: stamina, currWeapon: currWeapon, weaponsInInventory: weaponsInInventory, currArmor: currArmor, armorInInventory: armorInInventory, itemsInInventory: itemsInInventory, inventoryQuantities: inventoryQuantities)
+                  stamina: Int, dead: Bool, asleep: Bool, blind: Bool, invisible: Bool, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item], inventoryQuantities: [String:Int]){
+        super.init(characterName: characterName, userName: userName, health: health, stamina: stamina, dead: dead, asleep: asleep, blind: blind, invisible: invisible,currWeapon: currWeapon, weaponsInInventory: weaponsInInventory, currArmor: currArmor, armorInInventory: armorInInventory, itemsInInventory: itemsInInventory, inventoryQuantities: inventoryQuantities)
     }
     
     // Second wind will give Fighter 10HP but cost 8 stamina
@@ -84,8 +84,9 @@ class Fighter: RPGCharacter {
 }
 
 class Wizard: Caster {
-    override init(characterName: String, userName: String, health: Int, stamina: Int, spellPoints: Int, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item], inventoryQuantities: [String:Int]) {
-        super.init(characterName: characterName, userName: userName, health: health, stamina: stamina, spellPoints: spellPoints, currWeapon: currWeapon, weaponsInInventory: weaponsInInventory, currArmor: currArmor, armorInInventory: armorInInventory, itemsInInventory: itemsInInventory, inventoryQuantities: inventoryQuantities)
+    override init(characterName: String, userName: String, health: Int,
+                  stamina: Int, spellPoints: Int, dead: Bool, asleep: Bool, blind: Bool, invisible: Bool, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item], inventoryQuantities: [String:Int]){
+        super.init(characterName: characterName, userName: userName, health: health, stamina: stamina, spellPoints: spellPoints, dead: dead, asleep: asleep, blind: blind, invisible: invisible, currWeapon: currWeapon, weaponsInInventory: weaponsInInventory, currArmor: currArmor, armorInInventory: armorInInventory, itemsInInventory: itemsInInventory, inventoryQuantities: inventoryQuantities)
     }
     
     func castFrostbite(rollValue: Int) {
@@ -158,8 +159,9 @@ class Wizard: Caster {
 
 
 class Bard: Caster {
-    override init(characterName: String, userName: String, health: Int, stamina: Int, spellPoints: Int, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item], inventoryQuantities: [String:Int]) {
-        super.init(characterName: characterName, userName: userName, health: health, stamina: stamina, spellPoints: spellPoints, currWeapon: currWeapon, weaponsInInventory: weaponsInInventory, currArmor: currArmor, armorInInventory: armorInInventory, itemsInInventory: itemsInInventory, inventoryQuantities: inventoryQuantities)
+    override init(characterName: String, userName: String, health: Int,
+                  stamina: Int, spellPoints: Int, dead: Bool, asleep: Bool, blind: Bool, invisible: Bool, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item], inventoryQuantities: [String:Int]) {
+        super.init(characterName: characterName, userName: userName, health: health, stamina: stamina, spellPoints: spellPoints, dead: dead, asleep: asleep, blind: blind, invisible: invisible, currWeapon: currWeapon, weaponsInInventory: weaponsInInventory, currArmor: currArmor, armorInInventory: armorInInventory, itemsInInventory: itemsInInventory, inventoryQuantities: inventoryQuantities)
     }
     
     // TODO: @Jalyn. This is towards teammates. Wait for Alekhya.
@@ -236,8 +238,9 @@ class Bard: Caster {
 
 
 class Rogue: RPGCharacter {
-    override init(characterName: String, userName: String, health: Int, stamina: Int, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item], inventoryQuantities: [String:Int]) {
-        super.init(characterName: characterName, userName: userName, health: health, stamina: stamina, currWeapon: currWeapon, weaponsInInventory: weaponsInInventory, currArmor: currArmor, armorInInventory: armorInInventory, itemsInInventory: itemsInInventory, inventoryQuantities: inventoryQuantities)
+    override init(characterName: String, userName: String, health: Int,
+                  stamina: Int, dead: Bool, asleep: Bool, blind: Bool, invisible: Bool, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item], inventoryQuantities: [String:Int]) {
+        super.init(characterName: characterName, userName: userName, health: health, stamina: stamina, dead: dead, asleep: asleep, blind: blind, invisible: invisible, currWeapon: currWeapon, weaponsInInventory: weaponsInInventory, currArmor: currArmor, armorInInventory: armorInInventory, itemsInInventory: itemsInInventory, inventoryQuantities: inventoryQuantities)
     }
     
     // Uncanny dodge will add three to your defense modifier but costs 5 stamina
@@ -305,6 +308,28 @@ func actionIsContested() -> Bool {
     
     switch actionSelected {
     case "Fight", "Action Surge", "Frost Bite", "Mage Hand", "Sleep", "Vicious Mockery", "Blindness":
+        return true
+    default:
+        return false
+    }
+}
+
+func actionTargetsTeam() -> Bool {
+    let actionSelected = rowSelected?.name
+    
+    switch actionSelected {
+    case "Shield", "Bardic Inspiration", "Invisibility", "Animate the Dead", "Heal":
+        return true
+    default:
+        return false
+    }
+}
+
+func isAnimateDead() -> Bool {
+    let actionSelected = rowSelected?.name
+    
+    switch actionSelected {
+    case "Animate the Dead":
         return true
     default:
         return false

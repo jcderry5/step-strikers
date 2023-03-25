@@ -16,11 +16,11 @@ class Caster: RPGCharacter {
     var spellModifier = 0
     
     init(characterName: String, userName: String, health: Int,
-         stamina: Int, spellPoints: Int, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item], inventoryQuantities: [String:Int]) {
+         stamina: Int, spellPoints: Int, dead: Bool, asleep: Bool, blind: Bool, invisible: Bool, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item], inventoryQuantities: [String:Int]) {
         self.currSpellPoints = spellPoints
         self.maxSpellPoints = spellPoints
         super.init(characterName: characterName, userName: userName, health: health,
-                   stamina: stamina, currWeapon: currWeapon, weaponsInInventory: weaponsInInventory, currArmor: currArmor, armorInInventory: armorInInventory, itemsInInventory: itemsInInventory, inventoryQuantities: inventoryQuantities)
+                   stamina: stamina, dead: dead, asleep: asleep, blind: blind, invisible: invisible, currWeapon: currWeapon, weaponsInInventory: weaponsInInventory, currArmor: currArmor, armorInInventory: armorInInventory, itemsInInventory: itemsInInventory, inventoryQuantities: inventoryQuantities)
     }
     
     func increaseSpellPoints(amtIncrease: Int){

@@ -30,10 +30,12 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     var characters: [UIImageView] = [UIImageView]()
     var characterButtons: [UIButton] = [UIButton]()
     var recentlyTapped:Int = 1000
+    var playerButtons: [UIButton] = [UIButton]()
     var selected:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        renderTeam(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
         renderEnemies(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
         // puts full screen image as background of view controller
         // sets up the background images of the view controller
@@ -78,6 +80,20 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         // get rid of grey separator line in between rows
         statsDisplay.separatorColor = UIColor.clear
         self.view.addSubview(statsDisplay)
+        
+        // turn skipped if you are dead or asleep
+        checkDeadOrAsleep()
+        
+        // blind only pop up
+        // TODO: change to the blind and invisible variables from localCharacter object
+        if localCharacter.isBlind {
+            let popUp = createPopUpBlind()
+            self.view.addSubview(popUp)
+        }
+        // label indicating current player is invisible
+        if localCharacter.isInvisible {
+            isInvisible_label()
+        }
        
     }
     
@@ -128,20 +144,28 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         print(enemiesList[0].name)
         if recentlyTapped == indexPath.row && selected == true {
             selected = false
-            characterButtons[0].removeFromSuperview()
-            characterButtons[1].removeFromSuperview()
-            characterButtons[2].removeFromSuperview()
-            characterButtons[3].removeFromSuperview()
+            if characterButtons.isEmpty == false {
+               characterButtons[0].removeFromSuperview()
+               characterButtons[1].removeFromSuperview()
+               characterButtons[2].removeFromSuperview()
+               characterButtons[3].removeFromSuperview()
+           }
+            selectEnemyLabel.removeFromSuperview()
+            selectPlayerLabel.removeFromSuperview()
+            
             if boxArrow.isEmpty == false {
                 boxArrow[0].removeFromSuperview()
                 boxArrow[1].removeFromSuperview()
                 boxArrow[2].removeFromSuperview()
             }
             tableView.deselectRow(at: indexPath, animated:false)
-            self.view.addSubview(enemiesList[0].imageView)
-            self.view.addSubview(enemiesList[1].imageView)
-            self.view.addSubview(enemiesList[2].imageView)
-            self.view.addSubview(enemiesList[3].imageView)
+            // TODO: change to the blind variable from localCharacter object
+            if localCharacter.isBlind == false {
+                self.view.addSubview(enemiesList[0].imageView)
+                self.view.addSubview(enemiesList[1].imageView)
+                self.view.addSubview(enemiesList[2].imageView)
+                self.view.addSubview(enemiesList[3].imageView)
+            }
         } else {
             selected = true
             rowSelected = actions[indexPath.row] // Actions stuct (holds
@@ -153,6 +177,7 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
                 enemiesList[1].imageView.removeFromSuperview()
                 enemiesList[2].imageView.removeFromSuperview()
                 enemiesList[3].imageView.removeFromSuperview()
+                selectEnemyLabel.removeFromSuperview()
                 if boxArrow.isEmpty == false {
                     boxArrow[0].removeFromSuperview()
                     boxArrow[1].removeFromSuperview()
@@ -162,10 +187,34 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
                 
                 // Decide if the player needs to select an enemy
                 if(actionRequiresEnemy()) {
-                    characterButtons = drawEnemiesButton(enemy1: enemiesList[0].character_class, enemy2: enemiesList[1].character_class, enemy3: enemiesList[2].character_class, enemy4: enemiesList[3].character_class)
+                    // TODO: change to the blind variable from localCharacter object
+                    if localCharacter.isBlind {
+                        if actionTargetsTeam() {
+                            selectRandomTeamMember()
+                        } else {
+                            selectRandomEnemy()
+                        }
+                        if boxArrow.isEmpty == false {
+                            boxArrow[0].removeFromSuperview()
+                            boxArrow[1].removeFromSuperview()
+                            boxArrow[2].removeFromSuperview()
+                        }
+                    } else {
+                        if actionTargetsTeam() {
+                            playerButtons = drawPlayerButtons(player1: teamList[0].character_class, player2:    teamList[1].character_class, player3: teamList[2].character_class, player4: teamList[3].character_class)
+                        } else {
+                            characterButtons = drawEnemiesButton(enemy1: enemiesList[0].character_class, enemy2: enemiesList[1].character_class, enemy3: enemiesList[2].character_class, enemy4: enemiesList[3].character_class)
+                            checkAllEnemiesInvisible()
+                        }
+                    }
                 } else {
                     // TODO: Test this with server running
                     performBattleAction()
+                    let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                    let vc = storyboard.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
+                    self.modalPresentationStyle = .fullScreen
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc,animated: false)
                 }
                 
             }
@@ -186,6 +235,7 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     }
     
     func createActionArray() {
+        actions.removeAll()
         // First: check if the fight action (possible for all characters) is possible
         // Note: String format makes the number 2 digits
         if(localCharacter.currWeapon.staminaCost <= localCharacter.currStamina) {
@@ -236,7 +286,182 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     }
     
 
+    func checkAllEnemiesInvisible() {
+       if enemiesList[0].isInvisible && enemiesList[1].isInvisible && enemiesList[2].isInvisible && enemiesList[3].isInvisible {
+           selectRandomEnemy()
+       }
+    }
+
+    func checkAllEnemiesDead() {
+        if enemiesList[0].isDead && enemiesList[1].isDead && enemiesList[2].isDead && enemiesList[3].isDead {
+                // segue to battle results screen?
+                // probably victory since all enemies are dead
+            let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "BattleResultsVictoryViewController") as! BattleResultsVictoryViewController
+            self.modalPresentationStyle = .fullScreen
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc,animated: false)
+        }
+    }
     
+    func checkDeadOrAsleep() {
+        print(localCharacter.isDead)
+        if localCharacter.isDead || localCharacter.isAsleep {
+            let popUp = createPopUpDeadAsleep()
+            self.view.addSubview(popUp)
+            endTurn(game: game, player: localCharacter.userName)
+            let seconds = 1.5
+            DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+                let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
+                self.modalPresentationStyle = .fullScreen
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc,animated: false)
+            }
+        }
+    }
+
+    func isInvisible_label() {
+       let invisible = createLabel(x: 40, y: 300, w: 200, h: 30, font: "munro", size: 15, text: "* You are invisible!", align: .left)
+       self.view.addSubview(invisible)
+    }
+    
+    func selectRandomTeamMember() {
+        var randomMember = Int.random(in: 0...3)
+        if rowSelected?.name == "Animate the Dead" {
+            // if action is animate the dead don't want to animate yourself on accident
+            while teamList[randomMember].userName == localCharacter.userName {
+                randomMember = Int.random(in: 0...3)
+            }
+        }
+        let blankButton = UIButton()
+        blankButton.backgroundColor = .clear
+        blankButton.setTitle("", for: .normal)
+        if randomMember == 0 {
+            player1Selected(blankButton)
+        } else if randomMember == 1 {
+            player2Selected(blankButton)
+        } else if randomMember == 2 {
+            player3Selected(blankButton)
+        } else if randomMember == 3 {
+            player4Selected(blankButton)
+        }
+        let seconds = 1.5
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+            let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            // Decide if the player needs to roll or not
+             if(actionRequiresRoll()) {
+                 let vc = storyboard.instantiateViewController(withIdentifier: "BattleRollViewController") as! BattleRollViewController
+                 vc.selectTargetInfo = (enemiesList[0].userName, enemiesList[1].userName, enemiesList[2].userName, enemiesList[3].userName, rowSelected!)
+
+                 self.modalPresentationStyle = .fullScreen
+                 vc.modalPresentationStyle = .fullScreen
+                 self.present(vc,animated: false)
+             } else {
+                 // TODO: Test with server running
+                 performBattleAction()
+                 let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                 let vc = storyboard.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
+                 self.modalPresentationStyle = .fullScreen
+                 vc.modalPresentationStyle = .fullScreen
+                 self.present(vc,animated: false)
+             }
+        }
+    }
+
+    func selectRandomEnemy() {
+        // check if all the enemies are dead
+        // TODO: when ready to finish battle as all enemies are dead uncomment this checker method
+       // checkAllEnemiesDead()
+       // edit change to enemy count instead of 4
+       var randomEnemy = Int.random(in: 1...4)
+        // while the enemy chosen is dead select new random enemy until an enemy that is not dead is chosen
+        while enemiesList[randomEnemy].isDead {
+            randomEnemy = Int.random(in: 1...4)
+        }
+       let blankButton = UIButton()
+       blankButton.backgroundColor = .clear
+       blankButton.setTitle("", for: .normal)
+       if randomEnemy == 1 {
+           enemy1Selected(blankButton)
+       } else if randomEnemy == 2 {
+           enemy2Selected(blankButton)
+       } else if randomEnemy == 3 {
+           enemy3Selected(blankButton)
+       } else if randomEnemy == 4 {
+           enemy4Selected(blankButton)
+       }
+       let seconds = 1.5
+       DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+           let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+           // Decide if the player needs to roll or not
+            if(actionRequiresRoll()) {
+                let vc = storyboard.instantiateViewController(withIdentifier: "BattleRollViewController") as! BattleRollViewController
+                vc.selectTargetInfo = (enemiesList[0].userName, enemiesList[1].userName, enemiesList[2].userName, enemiesList[3].userName, rowSelected!)
+
+                self.modalPresentationStyle = .fullScreen
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc,animated: false)
+            } else {
+                // TODO: Test with server running
+                performBattleAction()
+                let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
+                self.modalPresentationStyle = .fullScreen
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc,animated: false)
+            }
+       }
+    }
+
+    func createPopUpBlind() -> UIView {
+       // view to display
+       let popView = UIView(frame: CGRect(x: 50, y: 350, width: 300, height: 200))
+       popView.backgroundColor = UIColor(red: 0.941, green: 0.851, blue: 0.690, alpha: 1.0)
+
+       // label based on blind or invisible
+       let label = UILabel(frame: CGRect(x: 25, y: 5, width: 250, height: 200))
+       label.text = "You are blind\nYour enemy will be randomly selected for you\nPlease select an action it will be completed for you"
+       label.font = UIFont(name: "munro", size: 20)
+       label.lineBreakMode = .byWordWrapping
+       label.numberOfLines = 0
+       label.textColor = UIColor.black
+       label.backgroundColor = UIColor.clear
+       popView.addSubview(label)
+
+       // popView border
+       popView.layer.borderWidth = 1.0
+       popView.layer.borderColor = UIColor.black.cgColor
+
+       return popView
+    }
+    
+    func createPopUpDeadAsleep() -> UIView {
+       // view to display
+       let popView = UIView(frame: CGRect(x: 50, y: 350, width: 300, height: 200))
+       popView.backgroundColor = UIColor(red: 0.941, green: 0.851, blue: 0.690, alpha: 1.0)
+
+       // label based on dead or asleep
+       let label = UILabel(frame: CGRect(x: 25, y: 5, width: 250, height: 200))
+        if localCharacter.isDead {
+            label.text = "You are dead\nYour turn will now be skipped for you"
+            label.font = UIFont(name: "munro", size: 20)
+        } else if localCharacter.isAsleep {
+            label.text = "You are asleep\nYour turn will now be skipped for you"
+        }
+       label.font = UIFont(name: "munro", size: 20)
+       label.lineBreakMode = .byWordWrapping
+       label.numberOfLines = 0
+       label.textColor = UIColor.black
+       label.backgroundColor = UIColor.clear
+       popView.addSubview(label)
+
+       // popView border
+       popView.layer.borderWidth = 1.0
+       popView.layer.borderColor = UIColor.black.cgColor
+
+       return popView
+    }
     
 }
 
@@ -244,12 +469,19 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
 struct characterSprites {
     var name:String
     
-    func drawCharacter(view:UIView, x:Int, y:Int, width:Int, height:Int) -> UIImageView!{
+    func drawCharacter(view:UIView, x:Int, y:Int, width:Int, height:Int, isInvisible:Bool, isDead:Bool) -> UIImageView!{
         let image = UIImage(named:name)
         var imageView: UIImageView!
         imageView = UIImageView(frame: CGRect(x:x, y: y, width: width, height: height))
         imageView.image = image
-        view.addSubview(imageView)
+        if isDead {
+            imageView?.image = UIImage(named: "Skeleton")
+        }
+        if isInvisible == false {
+           view.addSubview(imageView)
+        } else if isInvisible == true && isDead {
+           view.addSubview(imageView)
+        }
         return imageView
     }
     
