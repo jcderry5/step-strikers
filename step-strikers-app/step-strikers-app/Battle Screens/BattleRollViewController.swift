@@ -32,11 +32,10 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         
         // create characters
         let xValues = [10,100,200,290]
-        var count = 0
-        for enemies in enemiesList {
+        for index in 0...3 {
+            let enemies = enemiesList[index]
             let character = characterSprites(name: enemies.character_class)
-            character.drawCharacter(view: self.view, x: xValues[count], y: 400, width: 100, height: 100, isInvisible: enemies.isInvisible, isDead: enemies.isDead)
-            count = count + 1
+            character.drawCharacter(view: self.view, x: xValues[index], y: 400, width: 100, height: 100, isInvisible: enemies.isInvisible, isDead: enemies.isDead)
         }
         
         displayRollingScreen()
