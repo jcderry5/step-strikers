@@ -8,7 +8,6 @@
 import UIKit
 import FirebaseFirestore
 
-// TODO: Route here from code entry screen when correct code is input
 class PartyMenuNonHostViewController: UIViewController {
     
     var labelText:NSMutableAttributedString?
@@ -62,10 +61,28 @@ class PartyMenuNonHostViewController: UIViewController {
         let leave = createLeaveButton()
         leave.addTarget(self, action:#selector(leavePressed), for:.touchUpInside)
         
-        // TODO: call this method when ready to display player's team matched with a team
-//        displayMatchFound(teamNumber: 5)
-        
-        
+        // listen for when to move to TeamMatchViewController
+        let teamRef = Firestore.firestore().collection("teams").document(self.partyCode)
+        teamRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                teamRef.addSnapshotListener {
+                    documentSnapshot, error in guard let document = documentSnapshot else {
+                        print("Error fetching team document \(self.partyCode): \(error!)")
+                        return
+                    }
+
+                    if document.get("game_id") != nil {
+                        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                        let vc = sb.instantiateViewController(withIdentifier: "TeamMatchViewController") as! TeamMatchViewController
+
+                        vc.partyCode = self.partyCode
+                        self.modalPresentationStyle = .fullScreen
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: false)
+                    }
+                }
+            }
+        }
     }
     
     func displayJoinedMembers() -> (UILabel, NSMutableAttributedString) {

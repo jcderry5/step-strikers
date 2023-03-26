@@ -8,77 +8,13 @@
 import Foundation
 import FirebaseFirestore
 
-// This is called when ONE person decides they want to form a team.
-func makeTeam(){
-    /*
-     1. Make a document in firebase of this team
-     2. Get the team code (and display it)
-     3. Add yourself to the list
-     4. Have an observer looking at the players list for more players
-     */
-}
-// This is called when they have entered the teamcode and pressed the button
-func joinTeam(){
-    /*
-     0. Confirm that code exists
-     1. Confirm that the game is open for members
-     2. Write yourself to the corresponding team document players list
-     3. Observer looking for changes and updating the screen with it
-     4. When the observer sees that publishedTeam == TRUE, call browseTeams
-     --
-     */
-}
-
-// This is a function only called by non-hosts
-func browseTeams(){
-    /*
-     Visual code for scrolling through lobby
-     1. observer for foundMatch
-     2. When foundMatch == TRUE, rollIniative
-     */
-}
-
-// This func will be called when you have all the players for your personal team and you want to make it public so that others can request to fight you
-func publishTeam(){
-    /*
-        1. Destory the observer from looking for new players
-     
-    for hosts:
-     
-    for non-hosts:
-     
-     */
-}
-
-// This will be called when a team host selects another team to fight
-func requestToFight(){
-    /*
-     1. Check to see if team is available (for race conflicts)
-     2. if available: mark both teams as unavailable IMMEDIATELY and call mergeTeams(send match leader - whoever requested to fight)
-     3. if not available: throw error on screen
-     */
-}
-
-func mergeTeams(){
-    /*
-     1. Make document
-     2. Populate all values into document (populateValues)
-     3. Call startGame
-     */
-}
-
-func populateValues(){
-    /*
-     set all the values in the document for the game
-     this will call setTeams
-     */
-}
 
 func setTeams(blueTeam: [RPGCharacter], redTeam: [RPGCharacter]) {
     // Read the order from fb, s
 }
 
 // resets player stats that don't carry over between games
+// TODO: @Kelly call this at some point
 func resetPlayerStats(player:String) {
     Firestore.firestore().collection("players").document(player).setData([
         "is_asleep": false,
@@ -114,6 +50,7 @@ func rollDie(sides: Int, withAdvantage: Bool? = false, withDisadvantage: Bool? =
     }
 }
 
+// TODO: @Kelly call this at some point?
 func refreshStats(character: String, game: String) {
     // read updated character info and game stats
     let playerRef = Firestore.firestore().collection("players").document(character)

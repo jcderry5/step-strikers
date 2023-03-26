@@ -124,21 +124,14 @@ class PartyMenuHostViewController: UIViewController {
 //    }
     
     @objc func readyPressed(_ sender: Any) {
-        // TODO: Move to team match menu
-//        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//        let vc = sb.instantiateViewController(withIdentifier: "TeamMatchViewController") as! TeamMatchViewController
-//
-//        self.modalPresentationStyle = .fullScreen
-//        vc.modalPresentationStyle = .fullScreen
-//        self.present(vc, animated: false)
-    }
-    
-    @objc func eject1Pressed(_ sender: Any) {
-        // TODO: do something when a player is ejected
-    }
-    
-    @objc func eject2Pressed(_ sender: Any) {}
-    
-    @objc func eject3Pressed(_ sender: Any) {}
+        // signal that team is ready to be matched
+        Firestore.firestore().collection("matchable_teams").document("teams").updateData(["teams": FieldValue.arrayUnion([self.partyCode])])
+        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "TeamMatchViewController") as! TeamMatchViewController
 
+        vc.partyCode = self.partyCode
+        self.modalPresentationStyle = .fullScreen
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false)
+    }
 }
