@@ -148,6 +148,10 @@ func endTurn(game: String, player: String) {
     
     Firestore.firestore().collection("players").document(currTarget.userName).setData([
         "health": currTarget.health,
+        "is_dead": currTarget.isDead,
+        "is_asleep": currTarget.isSleep,
+        "is_blind": currTarget.isBlind,
+        "is_invisible": currTarget.isInvisible,
         "armor": getConstructedName(armor:currTarget.armor),
         "defense_modifier": currTarget.defenseModifier,
         "armor_inventory": getArmorStrings(armors: currTarget.armorInInventory)
@@ -156,6 +160,10 @@ func endTurn(game: String, player: String) {
     Firestore.firestore().collection("players").document(localCharacter.userName).setData([
         "health": localCharacter.currHealth,
         "stamina": localCharacter.currStamina,
+        "is_dead": localCharacter.isDead,
+        "is_asleep": localCharacter.isAsleep,
+        "is_blind": localCharacter.isBlind,
+        "is_invisible": localCharacter.isInvisible,
         "weapon_inventory": getWeaponStrings(weapons: localCharacter.weaponsInInventory),
         "current_weapon": getConstructedName(weapon:localCharacter.currWeapon),
         "armor_inventory": getArmorStrings(armors: localCharacter.armorInInventory),

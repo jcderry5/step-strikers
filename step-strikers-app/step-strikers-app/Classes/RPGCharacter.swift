@@ -38,6 +38,12 @@ class RPGCharacter {
     var maxStamina: Int
     var currStamina: Int
     
+    // Dead, Asleep, Blind, Invisible
+    var isDead: Bool
+    var isAsleep: Bool
+    var isBlind: Bool
+    var isInvisible: Bool
+    
     // Inventory Variables
     var weaponsInInventory: [Weapon]
     var currWeapon: Weapon
@@ -55,13 +61,17 @@ class RPGCharacter {
     var hasDisadvantage: Bool = false
     
     init(characterName: String, userName: String, health: Int,
-         stamina: Int, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item], inventoryQuantities: [String:Int]){
+         stamina: Int, dead: Bool, asleep: Bool, blind: Bool, invisible: Bool, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item], inventoryQuantities: [String:Int]){
         self.characterName = characterName
         self.userName = userName
         self.maxHealth = health
         self.currHealth = health
         self.maxStamina = stamina
         self.currStamina = stamina
+        self.isDead = dead
+        self.isAsleep = asleep
+        self.isBlind = blind
+        self.isInvisible = invisible
         
         // Initialize Starter Inventory
         self.weaponsInInventory = weaponsInInventory

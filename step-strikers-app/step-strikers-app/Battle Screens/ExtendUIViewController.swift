@@ -17,21 +17,6 @@ var selectPlayerLabel:UILabel = UILabel()
 // these methods are now part of the UIViewController class as more than one view controller needs them
 // i.e. all the battle menus
 extension UIViewController {
-    // takes the background image and places it as a UIImage across the entire screen
-    // shouldn't matter if this one is done last
-    // I'm going to leave this here for now in case. duplicate function with Nick's PR
-    /*
-     func assignBackground() {
-     let background = UIImage(named: "Background")
-     var imageView: UIImageView!
-     imageView = UIImageView(frame: self.view.frame)
-     imageView.clipsToBounds = true
-     imageView.image = background
-     imageView.center = view.center
-     view.addSubview(imageView)
-     self.view.sendSubviewToBack(imageView)
-     }
-     */
     
     // creates the initial top board, without the table
     func createBattleStatsDisplay() {
@@ -144,9 +129,15 @@ extension UIViewController {
 
                     let currArmorToStore: Armor = rebuildArmorToStore(armorToStore: armor)
                     
-                    // or don't save info and do UI stuff here one enemy at a time
-                    let player1 = characterSprites(name: character_class)
-                    let player1Image = player1.drawCharacter(view: self.view, x: xValues[count], y: 400, width: 100, height: 100)
+                    let player1Image:UIImageView?
+                    player1Image = UIImageView()
+                    player1Image!.backgroundColor = .clear
+                    
+                    // don't show enemies if the current player is blind dead or asleep
+                    if localCharacter.isBlind == false && localCharacter.isDead == false && localCharacter.isAsleep == false {
+                        let player1 = characterSprites(name: character_class)
+                        let player1Image = player1.drawCharacter(view: self.view, x: xValues[count], y: 400, width: 100, height: 100, isInvisible: isInvisible, isDead: isDead)
+                    }
                     
                     enemiesList.append(enemyData(userName: userName, name: name, character_class: character_class, health: health, isBlind: isBlind, isInvisible: isInvisible, imageView: player1Image!, armor: currArmorToStore, defenseModifier: defenseModifier, armorInInventory: armorInventoryToStore, isDead: isDead, isSleep: isSleep, magicResistanceModifier: magicResistanceModifier, currWeapon: currWeaponToStore, weaponInventory: weaponInventoryToStore, hasAdvantage: hasAdvantage, hasDisadvantage: hasDisadvantage))
                     
@@ -204,26 +195,25 @@ extension UIViewController {
         //        print(enemiesList[0].name)
         // player 1
         let player1 = characterSprites(name: enemiesList[0].character_class)
-        let player1Image = player1.drawCharacter(view: self.view, x: 10, y: 400, width: 100, height: 100)
+        let player1Image = player1.drawCharacter(view: self.view, x: 10, y: 400, width: 100, height: 100, isInvisible: enemiesList[0].isInvisible, isDead: enemiesList[0].isDead)
         
         // player 2
         let player2 = characterSprites(name: enemy2)
-        let player2Image = player2.drawCharacter(view: self.view, x: 100, y: 400, width: 100, height: 100)
+        let player2Image = player2.drawCharacter(view: self.view, x: 100, y: 400, width: 100, height: 100, isInvisible: enemiesList[1].isInvisible, isDead: enemiesList[1].isDead)
         
         // player 3
         let player3 = characterSprites(name: enemy3)
-        let player3Image =  player3.drawCharacter(view: self.view, x: 200, y: 400, width: 100, height: 100)
+        let player3Image =  player3.drawCharacter(view: self.view, x: 200, y: 400, width: 100, height: 100, isInvisible: enemiesList[2].isInvisible, isDead: enemiesList[2].isDead)
         
         // player  4
         let player4 = characterSprites(name: enemy4)
-        let player4Image = player4.drawCharacter(view: self.view, x: 290, y: 400, width: 100, height: 100)
+        let player4Image = player4.drawCharacter(view: self.view, x: 290, y: 400, width: 100, height: 100, isInvisible: enemiesList[3].isInvisible, isDead: enemiesList[3].isDead)
         
         return [player1Image!, player2Image!, player3Image!, player4Image!]
     }
     
     // this method draw the enemy characters as selectable buttons for the select target screens
     // still need to work out the corresponding button methods and what they need as parameters
-    // TODO: figure out when to put the red arrow
     func drawEnemiesButton(enemy1:String, enemy2:String, enemy3:String, enemy4:String) -> [UIButton] {
         // select character label
         selectEnemyLabel = UILabel(frame: CGRect(x:100, y: 300, width:200, height:100))
@@ -236,26 +226,34 @@ extension UIViewController {
         let player1Button = player1.drawButtonCharacter(controller: self, x: 10, y: 400, width: 100, height: 100)
         // need to change to a method that does whatever happens when enemy 1 is pressed
         player1Button.addTarget(self, action:#selector(self.enemy1Selected(_:)), for: .touchUpInside)
-        self.view.addSubview(player1Button)
+        if enemiesList[0].isInvisible == false && enemiesList[0].isDead == false {
+                    self.view.addSubview(player1Button)
+        }
         
         // player 2
         let player2 = characterSprites(name: enemy2)
         //        player2.drawCharacter(view: self.view, x: 100, y: 400, width: 100, height: 100)
         let player2Button = player2.drawButtonCharacter(controller: self, x: 100, y: 400, width: 100, height: 100)
         player2Button.addTarget(self, action:#selector(self.enemy2Selected(_:)), for: .touchUpInside)
-        self.view.addSubview(player2Button)
+        if enemiesList[1].isInvisible == false && enemiesList[1].isDead == false {
+            self.view.addSubview(player2Button)
+        }
         
         // player 3
         let player3 = characterSprites(name: enemy3)
         let player3Button = player3.drawButtonCharacter(controller: self, x: 200, y: 400, width: 100, height: 100)
         player3Button.addTarget(self, action:#selector(self.enemy3Selected(_:)), for: .touchUpInside)
-        self.view.addSubview(player3Button)
+        if enemiesList[2].isInvisible == false && enemiesList[2].isDead == false {
+            self.view.addSubview(player3Button)
+        }
         
         // player  4
         let player4 = characterSprites(name: enemy4)
         let player4Button = player4.drawButtonCharacter(controller: self, x: 290, y: 400, width: 100, height: 100)
         player4Button.addTarget(self, action:#selector(self.enemy4Selected(_:)), for: .touchUpInside)
-        self.view.addSubview(player4Button)
+        if enemiesList[3].isInvisible == false && enemiesList[3].isDead == false {
+            self.view.addSubview(player4Button)
+        }
         
         return [player1Button, player2Button, player3Button, player4Button]
     }
@@ -271,7 +269,10 @@ extension UIViewController {
         let player1Button = createButton(x: 40, y: 140, width: 70, height: 150, fontName: "munro", imageName: "", fontColor: UIColor.clear, buttonTitle: "player1")
         player1Button.backgroundColor = UIColor.clear
         player1Button.addTarget(self, action:#selector(self.player1Selected(_:)), for: .touchUpInside)
-        self.view.addSubview(player1Button)
+        // cannot pick self if animate the dead
+        if isAnimateDead() == false {
+            self.view.addSubview(player1Button)
+        }
         
         let player2Button = createButton(x: 120, y: 140, width: 60, height: 150, fontName: "munro", imageName: "", fontColor: UIColor.clear, buttonTitle: "")
         player2Button.backgroundColor = UIColor.clear
@@ -363,7 +364,6 @@ extension UIViewController {
         self.present(vc,animated: false)
     }
     
-    // TODO: Change this to transfer to the settings screen when it is built
     // please dont make separate storyboards for all the types of boards right now
     @objc func settingsButtonPressed(_ sender:UIButton!) {
         let sb = UIStoryboard(name: "Main", bundle: nil)
@@ -475,12 +475,11 @@ extension UIViewController {
                 self.present(vc,animated: false)
             } else {
                 performBattleAction()
-                let sb = UIStoryboard(name: "Main", bundle: nil)
-                let vc = sb.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
-                
+                let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
                 self.modalPresentationStyle = .fullScreen
                 vc.modalPresentationStyle = .fullScreen
-                self.present(vc, animated:false)
+                self.present(vc,animated: false)
             }
             
         }
@@ -489,14 +488,22 @@ extension UIViewController {
     @objc func playerBoxSelected(_ sender:UIButton, event: UIEvent) {
         let touch: UITouch = event.allTouches!.first!
         if (touch.tapCount == 2) {
-            // TODO: to save or move variables from item -> idle view controller do it here
             let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
-            vc.selectTargetInfoItem = (teamList[0].userName, teamList[1].userName, teamList[2].userName, teamList[3].userName, rowItemSelected!)
-            print(vc.selectTargetInfoItem!.0)
-            self.modalPresentationStyle = .fullScreen
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc,animated: false)
+            // Decide if the player needs to roll or not
+            // TODO: add if row selected was an item 
+            if(actionRequiresRoll()) {
+                let vc = storyboard.instantiateViewController(withIdentifier: "BattleRollViewController") as! BattleRollViewController
+                self.modalPresentationStyle = .fullScreen
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc,animated: false)
+            } else {
+                performBattleAction()
+                let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
+                self.modalPresentationStyle = .fullScreen
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc,animated: false)
+            }
         }
     }
     

@@ -29,19 +29,19 @@ class BattleResultsLossViewController: UIViewController {
         // TODO: add enemeiesList[index].character_class when previous vc's are functional
         // adding now will break everything
         let player1 = characterSprites(name: "Skeleton")
-        let player1Image = player1.drawCharacter(view: self.view, x: 10, y: 550, width: 100, height:100)
+        let player1Image = player1.drawCharacter(view: self.view, x: 10, y: 550, width: 100, height:100, isInvisible: false, isDead: true)
         
         // player 2
         let player2 = characterSprites(name:  "Skeleton")
-        let player2Image = player2.drawCharacter(view: self.view, x: 100, y: 550, width: 100, height: 100)
+        let player2Image = player2.drawCharacter(view: self.view, x: 100, y: 550, width: 100, height: 100, isInvisible: false, isDead: true)
         
         // player 3
         let player3 = characterSprites(name:  "Skeleton")
-        let player3Image =  player3.drawCharacter(view: self.view, x: 200, y: 550, width: 100, height: 100)
+        let player3Image =  player3.drawCharacter(view: self.view, x: 200, y: 550, width: 100, height: 100, isInvisible: false, isDead: true)
         
         // player  4
         let player4 = characterSprites(name:  "Skeleton")
-        let player4Image = player4.drawCharacter(view: self.view, x: 290, y: 550, width: 100, height: 100)
+        let player4Image = player4.drawCharacter(view: self.view, x: 290, y: 550, width: 100, height: 100, isInvisible: false, isDead: true)
         
         let bigButton = UIImage(named: "Big choice Button")
         let continueButton = createButton(x: 100, y: 725, w: 200, h: 75, text: "CONTINUE", fontSize: 30, normalImage: bigButton!, highlightedImage: bigButton!)
