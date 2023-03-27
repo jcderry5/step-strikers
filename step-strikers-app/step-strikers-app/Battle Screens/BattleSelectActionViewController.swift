@@ -9,7 +9,7 @@ import UIKit
 
 var boxArrow: [AnyObject] = [AnyObject]()
 var rowSelected:Action?
-var rowLongPressed:Action?
+var actionLongPressed:Action?
 // Dummy currTarget, until get's set by action
 var currTarget: currTargetData = currTargetData(name: "EmptyPlayer", userName: "emptyPlayer", character_class: "Fighter", health: 30, armor: noArmor(), modifiedArmorClass: 0, attackModifier: 0, defenseModifier: 0, armorInInventory: [noArmor()], isBlind: false, isDead: false, isSleep: false, isInvisible: false, magicResistanceModifier: 0, currWeapon: fists(), weaponInventory: [fists()], hasAdvantage: false, hasDisadvantage: false)
 var actions: [Action] = [Action]()
@@ -242,42 +242,44 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         if longPressGestureRecognizer.state == .began {
             let touchPoint = longPressGestureRecognizer.location(in: actionDisplay)
             if let indexPath = actionDisplay.indexPathForRow(at: touchPoint){
+                helpPopUp?.removeFromSuperview()
                 actionName = actions[indexPath.row].name!
-                rowLongPressed = actions[indexPath.row]
+                actionLongPressed = actions[indexPath.row]
+                
+                // view to display
+                let popView = UIView(frame: CGRect(x: 50, y: 350, width: 300, height: 200))
+                popView.backgroundColor = UIColor(red: 0.941, green: 0.851, blue: 0.690, alpha: 1.0)
+                
+                // label based on blind or invisible
+                let label = UILabel(frame: CGRect(x: 25, y: 5, width: 250, height: 200))
+                let actionDescription = actionDescription(actionName: actionName)
+                label.text = "\(actionName): \(actionDescription)"
+                label.font = UIFont(name: "munro", size: 20)
+                label.lineBreakMode = .byWordWrapping
+                label.numberOfLines = 0
+                label.textColor = UIColor.black
+                label.backgroundColor = UIColor.clear
+                popView.addSubview(label)
+                
+                // x button
+                let xButton = UIButton(frame: CGRect(x: 270, y: 10, width: 20, height: 15))
+                xButton.setTitle("x", for: UIControl.State.normal)
+                xButton.backgroundColor = UIColor.clear
+                xButton.titleLabel!.font = UIFont(name: "American Typewriter", size: 20)
+                xButton.setTitleColor(UIColor.black, for: UIControl.State.normal)
+                xButton.addTarget(self, action: #selector(xPressed), for: .touchUpInside)
+                popView.addSubview(xButton)
+
+                // popView border
+                popView.layer.borderWidth = 1.0
+                popView.layer.borderColor = UIColor.black.cgColor
+                helpPopUp = popView
+                self.view.addSubview(helpPopUp!)
             }
         }
-        
-        // view to display
-        let popView = UIView(frame: CGRect(x: 50, y: 350, width: 300, height: 200))
-        popView.backgroundColor = UIColor(red: 0.941, green: 0.851, blue: 0.690, alpha: 1.0)
-        
-        // label based on blind or invisible
-        let label = UILabel(frame: CGRect(x: 25, y: 5, width: 250, height: 200))
-        let actionDescription = actionDescription(actionName: actionName)
-        label.text = "\(actionName): \(actionDescription)"
-        label.font = UIFont(name: "munro", size: 20)
-        label.lineBreakMode = .byWordWrapping
-        label.numberOfLines = 0
-        label.textColor = UIColor.black
-        label.backgroundColor = UIColor.clear
-        popView.addSubview(label)
-        
-        // x button
-        let xButton = UIButton(frame: CGRect(x: 270, y: 10, width: 20, height: 15))
-        xButton.setTitle("x", for: UIControl.State.normal)
-        xButton.backgroundColor = UIColor.clear
-        xButton.titleLabel!.font = UIFont(name: "American Typewriter", size: 20)
-        xButton.setTitleColor(UIColor.black, for: UIControl.State.normal)
-        xButton.addTarget(self, action: #selector(xPressed), for: .touchUpInside)
-        popView.addSubview(xButton)
 
-        // popView border
-        popView.layer.borderWidth = 1.0
-        popView.layer.borderColor = UIColor.black.cgColor
-        helpPopUp = popView
-        self.view.addSubview(helpPopUp!)
     }
-    
+
     // x pressed on the help button
     @objc func xPressed(_ sender:UIButton!) {
         // remove pop up

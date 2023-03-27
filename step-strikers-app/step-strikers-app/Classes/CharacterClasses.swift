@@ -339,6 +339,8 @@ func isAnimateDead() -> Bool {
 // based on the actionName return the description for that action
 func actionDescription(actionName: String) -> String {
     switch actionName {
+    case "Fight":
+        return "Causes 2 damage to an enemy"
     case "Frostbite":
         return "Damages 1 opponent for 1d6 of damage if save is failed"
     case "Mage Hand":
@@ -375,6 +377,104 @@ func actionDescription(actionName: String) -> String {
         return "No one can see you and you cannot be attacked for 1 turn"
     case "Motivational Speech":
         return "Gives Bardic Inspiration to the entire group"
+    default:
+        return ""
+    }
+}
+
+func itemDescription(itemName:String) -> String {
+    switch itemName {
+    case "Potion of Healing":
+        return "Restores a small amount of health"
+    case "Elixir of Magic":
+        return "Restores a small amount of magic"
+    case "Energy Powder":
+        return "Restores a small amount of stamina"
+    case "Regain Sight":
+        return "Cures any ailments"
+    case "Awakening":
+        return "Wakes up the target"
+    case "Potion of Greater Healing":
+        return "Restores a moderate amount of health"
+    case "Elixir of Great Magic":
+        return "Restores a moderate amount of magic"
+    case "Energy Pill":
+        return "Restores a moderate amount of stamina"
+    case "Resurrection Stone":
+        return "Revives the target with small healing"
+    case "Four-leaf Clover":
+        return "+2 to attack roll"
+    case "Leather Armor Pad":
+        return "Increase defense by a small amount"
+    case "Feather of Vigor":
+        return "Increase attack by a small amount"
+    case "Scroll of Resistance":
+        return "Increases magic resistance by a small amount"
+    case "Potion of Superior Healing":
+        return "Restores a large amount of health"
+    case "Elixir of Superior Magic":
+        return "Restores a large amount of magic"
+    case "Energy Root":
+        return "Restores a large amount of stamina"
+    case "Revival Crystal":
+        return "Revives the target with moderate healing"
+    case "Five-leaf Clover":
+        return "+4 to attack roll"
+    case "Metal Armor Pad":
+        return "Increase defense by a moderate amount"
+    case "Vial of Vigor":
+        return "Increase attack by a moderate amount"
+    case "Scroll of Greater Resistance":
+        return "Increases magic resistance by a moderate amount"
+    case "Potion of Vitality":
+        return "Fully restores health"
+    case "Elixir of Sorcery":
+        return "Fully restores magic"
+    case "Energy Sap":
+        return "Fully restores stamina"
+    case "Miracle of Life":
+        return "Revives target with full health"
+    case "Seven-leaf Clover":
+        return "Attack is guaranteed to hit"
+    case "Heart of Iron":
+        return "Prevents the uder from taking damage. Lasts 1 turn"
+    default:
+        return ""
+    }
+}
+
+func equipDescription(equipName:String) -> String {
+    switch equipName {
+    case "Fists":
+        return ""
+    case "Dagger":
+        return ""
+    case "Darts":
+        return ""
+    case "Cross-Bow":
+        return ""
+    case "Rapier":
+        return ""
+    case "Short Sword":
+        return ""
+    case "Long Bow":
+        return ""
+    case "Hand Axe":
+        return ""
+    case "Battle Axe":
+        return ""
+    case "Long Sword":
+        return ""
+    case "Leather":
+        return ""
+    case "Padded":
+        return ""
+    case "Studded Leather":
+        return ""
+    case "Chainmail":
+        return ""
+    case "Shield":
+        return ""
     default:
         return ""
     }

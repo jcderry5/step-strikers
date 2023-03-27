@@ -6,7 +6,10 @@
 //
 
 import UIKit
+
 var statsDisplay:UITableView = UITableView()
+var equipLongPressed:Equip?
+
 class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     // array to store items that would exist in the equip menu
@@ -21,6 +24,7 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
     var selected:Bool = false
     var rowEquipSelected:Equip?
     var weaponEquiped:Equip?
+    var helpPopUp: UIView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +59,8 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
         // sets the table to have a clear background
         equipDisplay.backgroundColor = UIColor.clear
         // add it to the overall view of the the viewController
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(helpPressed))
+        equipDisplay.addGestureRecognizer(longPress)
         self.view.addSubview(equipDisplay)
         
         // stats menu
@@ -151,6 +157,56 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
         }
         
         return UITableView.automaticDimension
+    }
+    
+    // long press on action from action table
+    @objc func helpPressed(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        var equipName:String = " "
+        if longPressGestureRecognizer.state == .began {
+            let touchPoint = longPressGestureRecognizer.location(in: equipDisplay)
+            if let indexPath = equipDisplay.indexPathForRow(at: touchPoint){
+                helpPopUp?.removeFromSuperview()
+                equipName = equips[indexPath.row].name!
+                equipLongPressed = equips[indexPath.row]
+                
+                // view to display
+                let popView = UIView(frame: CGRect(x: 50, y: 350, width: 300, height: 200))
+                popView.backgroundColor = UIColor(red: 0.941, green: 0.851, blue: 0.690, alpha: 1.0)
+                
+                // label based on blind or invisible
+                let label = UILabel(frame: CGRect(x: 25, y: 5, width: 250, height: 200))
+                let equipDescription = equipDescription(equipName: equipName)
+                label.text = "\(equipName): \(equipDescription)"
+                label.font = UIFont(name: "munro", size: 20)
+                label.lineBreakMode = .byWordWrapping
+                label.numberOfLines = 0
+                label.textColor = UIColor.black
+                label.backgroundColor = UIColor.clear
+                popView.addSubview(label)
+                
+                // x button
+                let xButton = UIButton(frame: CGRect(x: 270, y: 10, width: 20, height: 15))
+                xButton.setTitle("x", for: UIControl.State.normal)
+                xButton.backgroundColor = UIColor.clear
+                xButton.titleLabel!.font = UIFont(name: "American Typewriter", size: 20)
+                xButton.setTitleColor(UIColor.black, for: UIControl.State.normal)
+                xButton.addTarget(self, action: #selector(xPressed), for: .touchUpInside)
+                popView.addSubview(xButton)
+
+                // popView border
+                popView.layer.borderWidth = 1.0
+                popView.layer.borderColor = UIColor.black.cgColor
+                helpPopUp = popView
+                self.view.addSubview(helpPopUp!)
+            }
+        }
+
+    }
+
+    // x pressed on the help button
+    @objc func xPressed(_ sender:UIButton!) {
+        // remove pop up
+        helpPopUp?.removeFromSuperview()
     }
     
     // TODO: change this array based on actual player data
