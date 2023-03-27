@@ -335,3 +335,47 @@ func isAnimateDead() -> Bool {
         return false
     }
 }
+
+// based on the actionName return the description for that action
+func actionDescription(actionName: String) -> String {
+    switch actionName {
+    case "Frostbite":
+        return "Damages 1 opponent for 1d6 of damage if save is failed"
+    case "Mage Hand":
+        return "Take a weapon from someone and give it to yourself"
+    case "Shield":
+        return "Protect yourself or someone else"
+    case "Sleep":
+        return "Put 1 opponent to sleep and make them lose a turn"
+    case "Animate the Dead":
+        return "Bring someone back to life"
+    case "Heal":
+        return "Heal someone based on dice roll"
+    case "Uncanny Dodge":
+        return "Add +3 to armor class modifier"
+    case "Hone Skill":
+        return "+5 attack modifier"
+    case "Insight":
+        return "Select a target and know their HP"
+    case "Allsight":
+        return "Know all of your enemies' HP"
+    case "Second Wind":
+        return "Regain 10 HP"
+    case "Action Surge":
+        return "Double Damage if you beat the roll"
+    case "Sharpen Weapon":
+        return "+3 attack modifier"
+    case "Bardic Inspiration":
+        return "Allows target to roll with advantage"
+    case "Vicious Mockery":
+        return "Makes target roll with disadvantage"
+    case "Blindness":
+        return "Cause enemy to go blind and enemy cannot select who to target on their turn"
+    case "Invisibility":
+        return "No one can see you and you cannot be attacked for 1 turn"
+    case "Motivational Speech":
+        return "Gives Bardic Inspiration to the entire group"
+    default:
+        return ""
+    }
+}
