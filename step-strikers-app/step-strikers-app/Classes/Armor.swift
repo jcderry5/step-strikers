@@ -5,6 +5,7 @@
 //  Created by Jalyn Derry on 2/9/23.
 //
 
+let allArmor: [String] = ["Leather","Padding","Studded Leather","Chain Mail","Shield","No Armor"]
 
 protocol Armor {
     var name: String { get}

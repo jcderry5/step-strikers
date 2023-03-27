@@ -26,6 +26,8 @@ let conditionIntEquivalent = [
 
 let maxWeaponUses = 20
 
+let allWeapons: [String] = ["Fists","Dagger","Darts","Cross Bow","Rapier","Short Sword","Long Bow","Hand Axe","Battle Axe","Long Sword"]
+
 protocol Weapon {
     var name: String {get}
     var damage: Int {get}
