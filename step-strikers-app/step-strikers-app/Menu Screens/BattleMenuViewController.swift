@@ -51,7 +51,7 @@ class BattleMenuViewController: UIViewController {
         print(code)
 
         Firestore.firestore().collection("teams").document(code).setData([
-            "joinable": true,
+            "matched": false,
             "players": [localCharacter.userName]
         ]) { err in
             if let err = err {
