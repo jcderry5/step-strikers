@@ -122,10 +122,8 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
             tableView.deselectRow(at: indexPath, animated: false)
             let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "BattleSelectEquipViewController") as! BattleSelectEquipViewController
-            // TODO: add code to save the new weapon or armor equipped here
-            // and discard the old one
-            // make text in cell red here once selected (tbh I have no idea how to do that, custom cell tings)
-            print("reloading equip")
+            
+            // TODO: @Alekhya: make text in cell red here once selected (tbh I have no idea how to do that, custom cell tings)
             self.modalPresentationStyle = .fullScreen
             vc.modalPresentationStyle = .fullScreen
             self.present(vc,animated: false)
@@ -133,11 +131,7 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
             selected = true
             rowEquipSelected = equips[indexPath.row]
             recentlyTapped = indexPath.row
-            if tableView == equipDisplay {
-                print("selected row")
-                
-            }
-            
+            equipItem(item: rowEquipSelected!)
         }
     }
     
@@ -153,7 +147,43 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
         return UITableView.automaticDimension
     }
     
-    // TODO: change this array based on actual player data
+    func equipItem(item: Equip){
+        guard allWeapons.contains(item.name!) || allArmor.contains(item.name!) else {
+            print("\(String(describing: item.name)) is not a weapon nor armor")
+            return
+        }
+        
+        let quantity: Int = Int((item.quantity?.suffix(1))!)!
+        
+        if allWeapons.contains(item.name!) {
+            // just initializing weaponToEquip with first armor. Will be replaced
+            var weaponToEquip: Weapon = localCharacter.weaponsInInventory[0]
+            if quantity > 1 {
+                for weapon in localCharacter.weaponsInInventory {
+                    if weapon.name == item.name! && weapon.useCount > weaponToEquip.useCount {
+                        weaponToEquip = weapon
+                    }
+                }
+            } else {
+                weaponToEquip = localCharacter.weaponsInInventory.first(where: {weapon in weapon.name == item.name!})!
+            }
+            localCharacter.wield(weaponObject: weaponToEquip)
+        } else {
+            // just initializing armorToEquip with first armor. Will be replaced
+            var armorToEquip: Armor = localCharacter.armorInInventory[0]
+            if quantity > 1 {
+                for armor in localCharacter.armorInInventory {
+                    if armor.name == item.name! && armor.useCount > armorToEquip.useCount {
+                        armorToEquip = armor
+                    }
+                }
+            } else {
+                armorToEquip = localCharacter.armorInInventory.first(where: {armor in armor.name == item.name!})!
+            }
+            localCharacter.wear(armorObject: armorToEquip)
+        }
+    }
+    
     func createEquipArray() {
         let weaponsArr = localCharacter.weaponsInInventory
         var quantities = localCharacter.inventoryQuantities
