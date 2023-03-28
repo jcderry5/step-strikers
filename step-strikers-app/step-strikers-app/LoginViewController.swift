@@ -160,7 +160,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 // For Testing:
                 // localCharacter.printlocalCharacterDetailsToConsole()
                 game = "zIuUhRjKte6oUcvdrP4D"
-                player = localCharacter.userName
                 let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let vc = sb.instantiateViewController(withIdentifier: "StatsViewController") as! StatsViewController
                 self.modalPresentationStyle = .fullScreen

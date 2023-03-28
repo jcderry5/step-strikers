@@ -42,19 +42,19 @@ func getConstructedName(armor: Armor) -> String {
 func rebuildArmor(armorName: String, useCount: Int) -> Armor{
     switch armorName {
     case "Leather":
-        return leather(useCount: useCount)
+        return Leather(useCount: useCount)
     case "Padding":
-        return padding(useCount: useCount)
+        return Padding(useCount: useCount)
     case "Studded Leather":
-        return studdedLeather(useCount: useCount)
+        return StuddedLeather(useCount: useCount)
     case "Chain Mail":
-        return chainMail(useCount: useCount)
+        return ChainMail(useCount: useCount)
     case "Shield":
-        return shield(useCount: useCount)
+        return Shield(useCount: useCount)
     case "No Armor":
-        return noArmor(useCount: useCount)
+        return NoArmor(useCount: useCount)
     default:
-        return noArmor()
+        return NoArmor()
     }
 }
 
@@ -84,7 +84,7 @@ func rebuildArmorToStore(armorToStore: String) -> Armor {
     return currArmorToStore
 }
 
-struct leather: Armor {
+struct Leather: Armor {
     let name = "Leather"
     let armorClass = 11
     var condition = 4
@@ -103,7 +103,7 @@ struct leather: Armor {
     }
 }
 
-struct padding: Armor {
+struct Padding: Armor {
     let name = "Padding"
     let armorClass = 11
     var condition = 4
@@ -122,7 +122,7 @@ struct padding: Armor {
     }
 }
 
-struct studdedLeather: Armor {
+struct StuddedLeather: Armor {
     let name = "Studded Leather"
     let armorClass = 12
     var condition = 4
@@ -141,7 +141,7 @@ struct studdedLeather: Armor {
     }
 }
 
-struct chainMail: Armor {
+struct ChainMail: Armor {
     let name = "Chain Mail"
     let armorClass = 16
     var condition = 4
@@ -160,7 +160,7 @@ struct chainMail: Armor {
     }
 }
 
-struct shield: Armor {
+struct Shield: Armor {
     var name = "Shield"
     var armorClass = 2
     var condition = 4
@@ -179,7 +179,7 @@ struct shield: Armor {
     }
 }
 
-struct noArmor: Armor {
+struct NoArmor: Armor {
     var name = "No Armor"
     var armorClass = 0
     var condition = 4
@@ -215,7 +215,7 @@ func adjustArmorCondition(armorUsed: inout Armor) -> Armor{
     let useCounter: Int = armorUsed.useCount
     // Condition of Fists is forever
         // checks if conditionBoundary contains the useCount, if so change condition
-    if !(armorUsed is noArmor) {
+    if !(armorUsed is NoArmor) {
         if conditionBoundary.contains(where: {$0.boundary == useCounter}) {
             // changingIndex holds the index in conditionBoundary with their previous condition of the weapon
             let targetIndex = conditionBoundary.firstIndex(where: {$0.boundary == useCounter})
@@ -248,7 +248,7 @@ func destroyArmor(armorToDestroy: Armor) -> Armor{
         return currTarget.armorInInventory[noArmorIndexToEquip]
         
     } else {
-        let newNoArmor: Armor = noArmor()
+        let newNoArmor: Armor = NoArmor()
         currTarget.armorInInventory += [newNoArmor]
         return newNoArmor
     }

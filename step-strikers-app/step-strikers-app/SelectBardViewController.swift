@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class SelectBardViewController: UIViewController {
     
@@ -13,6 +14,9 @@ class SelectBardViewController: UIViewController {
     let iso8 = "iso8"
     let buttonImg = UIImage(named: "Big choice Button")
     let bardDesc = "An inspiring magician whose power echoes the music of creation"
+    
+    var nameField:UITextField?
+    var userName = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +42,7 @@ class SelectBardViewController: UIViewController {
         swipeView.addGestureRecognizer(swipeLeft)
         
         // Name text field
-        let nameField = createTextField(x: 61, y: 490, w: 270, h: 34, secured: false)
+        nameField = createTextField(x: 61, y: 490, w: 270, h: 34, secured: false)
         nameField!.placeholder = "Enter name"
         
         // Character creation text
@@ -55,6 +59,37 @@ class SelectBardViewController: UIViewController {
     }
     
     @objc func selectPressed(_ sender:UIButton!) {
+        // create localCharacter
+        let currWeapon = Fists(useCount: 0)
+        let currArmor = NoArmor(useCount: 0)
+        localCharacter = Bard(characterName: nameField!.text!, userName: userName, health: 30, stamina: 35, spellPoints: 30, dead: false, asleep: false, blind: false, invisible: false, currWeapon: currWeapon, weaponsInInventory: [], currArmor: currArmor, armorInInventory: [], itemsInInventory: [], inventoryQuantities: [:])
+        
+        // write to firebase
+        Firestore.firestore().collection("players").document(userName).setData([
+            "armor_inventory": [],
+            "attack_modifier": 0,
+            "character_name": localCharacter.characterName,
+            "class": "Bard",
+            "current_armor": "00No Armor",
+            "current_weapon": "00Fists",
+            "defense_modifier": 0,
+            "has_advantage": false,
+            "has_disadvantage": false,
+            "health": localCharacter.currHealth,
+            "is_blind": false,
+            "is_invisible": false,
+            "is_asleep": false,
+            "is_dead": false,
+            "item_inventory": [],
+            "magic_resistance_modifier": 0,
+            "spell_points": 30,
+            "stamina": localCharacter.currStamina,
+            "weapon_inventory": []
+        ], merge: true) { err in if let err = err {
+                print("Error writing document: \(err)")
+            }
+        }
+        
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "StatsViewController") as! StatsViewController
         
@@ -67,6 +102,7 @@ class SelectBardViewController: UIViewController {
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "SelectWizardViewController") as! SelectWizardViewController
         
+        vc.userName = userName
         self.modalPresentationStyle = .fullScreen
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: false)
@@ -76,6 +112,7 @@ class SelectBardViewController: UIViewController {
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "SelectRogueViewController") as! SelectRogueViewController
         
+        vc.userName = userName
         self.modalPresentationStyle = .fullScreen
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: false)

@@ -79,27 +79,27 @@ func getConditionFromUseCount(useCount: Int) -> Int {
 func rebuildWeapon(weaponName: String, useCount: Int) -> Weapon {
     switch weaponName {
     case "Fists":
-        return fists(useCount: useCount)
+        return Fists(useCount: useCount)
     case "Dagger":
-        return dagger(useCount: useCount)
+        return Dagger(useCount: useCount)
     case "Darts":
-        return dagger(useCount: useCount)
+        return Dagger(useCount: useCount)
     case "Cross Bow":
-        return crossBow(useCount: useCount)
+        return CrossBow(useCount: useCount)
     case "Rapier":
-        return rapier(useCount: useCount)
+        return Rapier(useCount: useCount)
     case "Short Sword":
-        return shortSword(useCount: useCount)
+        return ShortSword(useCount: useCount)
     case "Long Bow":
-        return longBow(useCount: useCount)
+        return LongBow(useCount: useCount)
     case "Hand Axe":
-        return handAxe(useCount: useCount)
+        return HandAxe(useCount: useCount)
     case "Battle Axe":
-        return battleAxe(useCount: useCount)
+        return BattleAxe(useCount: useCount)
     case "Long Sword":
-        return longSword(useCount: useCount)
+        return LongSword(useCount: useCount)
     default:
-        return fists()
+        return Fists()
     }
 }
 
@@ -129,7 +129,7 @@ func rebuildWeaponToStore(currWeapon: String) -> Weapon {
     return rebuildWeapon(weaponName: currWeaponName, useCount: currWeaponUseCount)
 }
 // MARK: - Weapon structs
-struct fists: Weapon {
+struct Fists: Weapon {
     let name = "Fists"
     let damage = 2
     let staminaCost = 0
@@ -148,7 +148,7 @@ struct fists: Weapon {
     }
 }
 
-struct dagger: Weapon {
+struct Dagger: Weapon {
     let name = "Dagger"
     let damage = 4
     let staminaCost = 3
@@ -168,7 +168,7 @@ struct dagger: Weapon {
     }
 }
 
-struct darts: Weapon {
+struct Darts: Weapon {
     let name = "Darts"
     let damage = 5
     let staminaCost = 4
@@ -188,7 +188,7 @@ struct darts: Weapon {
     }
 }
 
-struct crossBow: Weapon {
+struct CrossBow: Weapon {
     let name = "Cross Bow"
     let damage = 8
     let staminaCost = 5
@@ -208,7 +208,7 @@ struct crossBow: Weapon {
     }
 }
 
-struct rapier: Weapon {
+struct Rapier: Weapon {
     let name = "Rapier"
     let damage = 8
     let staminaCost = 5
@@ -228,7 +228,7 @@ struct rapier: Weapon {
     }
 }
 
-struct shortSword: Weapon {
+struct ShortSword: Weapon {
     let name = "Short Sword"
     let damage = 6
     let staminaCost = 4
@@ -248,7 +248,7 @@ struct shortSword: Weapon {
     }
 }
 
-struct longBow: Weapon {
+struct LongBow: Weapon {
     let name = "Long Bow"
     let damage = 8
     let staminaCost = 6
@@ -268,7 +268,7 @@ struct longBow: Weapon {
     }
 }
 
-struct handAxe: Weapon {
+struct HandAxe: Weapon {
     let name = "Hand Axe"
     let damage = 6
     let staminaCost = 5
@@ -288,7 +288,7 @@ struct handAxe: Weapon {
     }
 }
 
-struct battleAxe: Weapon {
+struct BattleAxe: Weapon {
     let name = "Battle Axe"
     let damage = 10
     let staminaCost = 8
@@ -308,7 +308,7 @@ struct battleAxe: Weapon {
     }
 }
 
-struct longSword: Weapon {
+struct LongSword: Weapon {
     let name = "Long Sword"
     let damage = 8
     let staminaCost = 5
@@ -338,7 +338,7 @@ func adjustWeaponCondition(ownerWeaponsInventory: inout [Weapon], currWeaponPoin
     
     // Condition of Fists is forever
         // checks if conditionBoundary contains the useCount, if so change condition
-    if !(currWeapon is fists) {
+    if !(currWeapon is Fists) {
         if conditionBoundary.contains(where: {$0.boundary == useCounter}) {
             // changingIndex holds the index in conditionBoundary with their previous condition of the weapon
             let targetIndex = (conditionBoundary.firstIndex(where: {$0.boundary == useCounter}) ?? 0)
@@ -369,7 +369,7 @@ func destroyWeapon(ownerWeaponsInventory: inout [Weapon], weaponToDestroy: Weapo
     }) {
         return ownerWeaponsInventory[fistIndexToEquip]
     } else {
-        let newFists: Weapon = fists()
+        let newFists: Weapon = Fists()
         ownerWeaponsInventory += [newFists]
         return newFists
     }
