@@ -83,7 +83,7 @@ func rebuildWeapon(weaponName: String, useCount: Int) -> Weapon {
     case "Dagger":
         return Dagger(useCount: useCount)
     case "Darts":
-        return Dagger(useCount: useCount)
+        return Darts(useCount: useCount)
     case "Cross Bow":
         return CrossBow(useCount: useCount)
     case "Rapier":
