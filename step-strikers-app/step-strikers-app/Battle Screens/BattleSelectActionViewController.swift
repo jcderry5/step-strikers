@@ -145,7 +145,10 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     // TODO: update with segue to select target view controller when pressed
     // TODO: update with real information about the action selected
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath:IndexPath) {
-        print(enemiesList[0].name)
+        enemiesList[0].imageView.removeFromSuperview()
+        enemiesList[1].imageView.removeFromSuperview()
+        enemiesList[2].imageView.removeFromSuperview()
+        enemiesList[3].imageView.removeFromSuperview()
         if recentlyTapped == indexPath.row && selected == true {
             selected = false
             if characterButtons.isEmpty == false {

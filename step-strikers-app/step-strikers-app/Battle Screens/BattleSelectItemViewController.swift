@@ -125,6 +125,7 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
     
     // TODO: complete for when a row is selected to segue to Battle Item Select target screen
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath:IndexPath) {
+        helpPopUp?.removeFromSuperview()
         print(enemiesList[0].name)
         if recentlyTapped == indexPath.row && selected == true {
             selected = false

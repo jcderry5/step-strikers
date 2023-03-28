@@ -340,43 +340,43 @@ func isAnimateDead() -> Bool {
 func actionDescription(actionName: String) -> String {
     switch actionName {
     case "Fight":
-        return "Causes 2 damage to an enemy"
-    case "Frostbite":
-        return "Damages 1 opponent for 1d6 of damage if save is failed"
+        return "Attack your target using the weapon you are currently wielding."
+    case "Frost Bite":
+        return "Cast a spell against your target for up to six points of damage"
     case "Mage Hand":
-        return "Take a weapon from someone and give it to yourself"
+        return "Take the current weapon from an enemy and wield it"
     case "Shield":
-        return "Protect yourself or someone else"
+        return "Boost the defense modifier of one of your teammates"
     case "Sleep":
-        return "Put 1 opponent to sleep and make them lose a turn"
+        return "Put an enemy to sleep causing them to skip their next turn"
     case "Animate the Dead":
-        return "Bring someone back to life"
+        return "Revive a dead teammate to 1HP"
     case "Heal":
-        return "Heal someone based on dice roll"
+        return "Heal a teammate for up to 8HP"
     case "Uncanny Dodge":
-        return "Add +3 to armor class modifier"
+        return "Take a turn to increase your defense modifier"
     case "Hone Skill":
-        return "+5 attack modifier"
+        return "Take a turn to increase your attack modifier"
     case "Insight":
-        return "Select a target and know their HP"
+        return "View the stats for one of your enemies"
     case "Allsight":
-        return "Know all of your enemies' HP"
+        return "View the stats for all of your enemies"
     case "Second Wind":
-        return "Regain 10 HP"
+        return "Take a turn to rest for +10 Health"
     case "Action Surge":
-        return "Double Damage if you beat the roll"
+        return "Attack your target using your current weapon with the chance to double the damage you deal"
     case "Sharpen Weapon":
-        return "+3 attack modifier"
+        return "Take a turn to increase your attack modifier"
     case "Bardic Inspiration":
-        return "Allows target to roll with advantage"
+        return "Inspire a teammate giving them advantage on their next roll"
     case "Vicious Mockery":
-        return "Makes target roll with disadvantage"
+        return "Mock an enemy giving them disadvantage on their next roll"
     case "Blindness":
-        return "Cause enemy to go blind and enemy cannot select who to target on their turn"
+        return "Blind an enemy taking away the choice to select their target on their next turn"
     case "Invisibility":
-        return "No one can see you and you cannot be attacked for 1 turn"
+        return "Make a teammate invisible, preventing them from being targeted until after their next turn"
     case "Motivational Speech":
-        return "Gives Bardic Inspiration to the entire group"
+        return "Inspire your entire team, giving your entire team advantage on their next roll"
     default:
         return ""
     }
@@ -446,35 +446,37 @@ func itemDescription(itemName:String) -> String {
 func equipDescription(equipName:String) -> String {
     switch equipName {
     case "Fists":
-        return ""
+        return "deals 2 damage at the cost of 0 stamina"
     case "Dagger":
-        return ""
+        return "deals 4 damage at the cost of 3 stamina"
     case "Darts":
-        return ""
+        return "deals 5 damage at the cost of 4 stamina"
     case "Cross-Bow":
-        return ""
+        return "deals 8 damage at the cost of 5 stamina"
     case "Rapier":
-        return ""
+        return "deals 8 damage at the cost of 5 stamina"
     case "Short Sword":
-        return ""
+        return "deals 6 damage at the cost of 4 stamina"
     case "Long Bow":
-        return ""
+        return "deals 8 damage at the cost of 6 stamina"
     case "Hand Axe":
-        return ""
+        return "deals 6 damage at the cost of 5 stamina"
     case "Battle Axe":
-        return ""
+        return "deals 10 damage at the cost of 8 stamina"
     case "Long Sword":
-        return ""
+        return "deals 8 damage at the cost of 5 stamina"
     case "Leather":
-        return ""
+        return "equips you with 11 AC"
     case "Padded":
-        return ""
+        return "equips you with 11 AC"
     case "Studded Leather":
-        return ""
+        return "equips you with 12 AC"
     case "Chainmail":
-        return ""
+        return "equips you with 16 AC"
     case "Shield":
-        return ""
+        return "equips you with 2 AC"
+    case "Leather Armor":
+        return "equips you with 11 AC"
     default:
         return ""
     }
