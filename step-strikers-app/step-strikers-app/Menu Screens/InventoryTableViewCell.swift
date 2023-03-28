@@ -28,7 +28,7 @@ class InventoryTableViewCell: UITableViewCell {
     private let name : UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = UIFont(name: "munro", size: 24)
+        label.font = UIFont(name: "munro", size: 20)
         return label
     }()
     
