@@ -20,7 +20,7 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        renderTeam(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
+        renderTeam(yourTeam: "4bDfA6dWfv8fRSdebjWI")
         renderEnemies(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
         // Do any additional setup after loading the view.
         // background images and view set up
@@ -64,6 +64,7 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
         view.addSubview(scrollView!)
         var labels = [UILabel]()
         
+        // update messages as they come in
         let docRef = Firestore.firestore().collection("games").document(game)
         docRef.getDocument { [self] (document, error) in
             if let document = document, document.exists {
@@ -89,7 +90,42 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
                 }
             }
         }
+        
+        // update stats between each player's turn
+        let teamRef = Firestore.firestore().collection("last_players").document(game)
+        teamRef.getDocument { [self] (document, error) in
+            if let document = document, document.exists {
+                docRef.addSnapshotListener {
+                    documentSnapshot, error in guard let document = documentSnapshot else {
+                        print("Error fetching document: \(error!)")
+                        return
+                    }
+                    
+                    // get team info again
+                    for i in 0..<teamList.count {
+                        let playerRef = Firestore.firestore().collection("players").document(teamList[i].userName)
+                        playerRef.getDocument { (document2, error) in
+                            guard let document2 = document2, document2.exists else {
+                                print("This player does not exist")
+                                return
+                            }
+                            
+                            let data = document2.data()
+                            teamList[i].health = data!["health"] as! Int
+                            teamList[i].stamina = data!["stamina"] as! Int
+                            teamList[i].spellPoints = data!["spell_points"] as! Int
+                        }
+                    }
+                    
+                    // TODO: @alekhya refresh stats table view
+                    
+                }
+            }
+        }
 
+        // listen for when you should refresh localCharacter from firebase
+        refreshStats()
+        // listen for when it's your turn
         segueWhenTurn()
     }
     

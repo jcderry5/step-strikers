@@ -98,12 +98,15 @@ struct teamData {
     let userName:String
     let name:String
     let character_class:String
-    let health:Int
+    var health:Int
     let isBlind:Bool
     let isInvisible:Bool
     // Added for spells
     let hasAdvantage:Bool
     let defenseModifier:Int
+    // adding for stats table display
+    var stamina:Int
+    var spellPoints:Int
 }
 
 struct currTeamMemberData {

@@ -11,6 +11,8 @@ import FirebaseFirestore
 var enemiesList: [enemyData] = [enemyData]()
 var teamList: [teamData] = [teamData]()
 
+var teamListReady = false
+
 var selectEnemyLabel:UILabel = UILabel()
 var selectPlayerLabel:UILabel = UILabel()
 
@@ -148,20 +150,20 @@ extension UIViewController {
         print("The number of enemies are \(enemiesList.count)")
     }
     
-    func renderTeam(enemyTeam: String) {
-        var count:Int = 0
-        let xValues = [10,100,200,290]
-        // TODO: update with team reference
-        let enemiesRef = Firestore.firestore().collection("teams").document(enemyTeam)
-        enemiesRef.getDocument { (document, error) in
+    func renderTeam(yourTeam: String) {
+//        var count:Int = 0
+//        let xValues = [10,100,200,290]
+//         TODO: update with team reference
+        let teamRef = Firestore.firestore().collection("teams").document(yourTeam)
+        teamRef.getDocument { (document, error) in
             guard let document = document, document.exists else {
                 print("This team does not exist")
                 return
             }
-            let enemies = document.get("players") as! [String]
-            for enemy in enemies {
-                let gameRef = Firestore.firestore().collection("players").document(enemy)
-                gameRef.getDocument { (document2, error) in
+            let team = document.get("players") as! [String]
+            for player in team {
+                let playerRef = Firestore.firestore().collection("players").document(player)
+                playerRef.getDocument { (document2, error) in
                     guard let document2 = document2, document2.exists else {
                         print("This player does not exist")
                         return
@@ -170,16 +172,19 @@ extension UIViewController {
                     let name = data!["character_name"] as! String
                     let character_class = data!["class"] as! String
                     let health = data!["health"] as! Int
+                    let stamina = data!["stamina"] as! Int
+                    let spellPoints = data!["spell_points"] as! Int
                     let isBlind = data!["is_blind"] as! Bool
                     let isInvisible = data!["is_invisible"] as! Bool
                     let hasAdvantage = data!["has_advantage"] as! Bool
                     let defenseModifier = data!["defense_modifier"] as! Int
                     
-                    let userName = enemy
+                    let userName = player
                     
+                    var newMember:teamData = teamData(userName: userName, name: name, character_class: character_class, health: health, isBlind: isBlind, isInvisible: isInvisible, hasAdvantage: hasAdvantage, defenseModifier: defenseModifier, stamina: stamina, spellPoints: spellPoints)
                     
-                    teamList.append(teamData(userName: userName, name: name, character_class: character_class, health: health, isBlind: isBlind, isInvisible: isInvisible, hasAdvantage: hasAdvantage, defenseModifier: defenseModifier))
-                    count = count + 1
+                    teamList.append(newMember)
+//                    count = count + 1
                 }
             }
         }

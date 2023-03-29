@@ -90,6 +90,9 @@ class CodeEntryViewController: UIViewController, UITextFieldDelegate {
                 // add yourself to the team on firebase
                 docRef.updateData(["players": FieldValue.arrayUnion([localCharacter.userName])])
                 
+                // set team global variable
+                team = self.textField!.text!
+                
                 // go to the next screen
                 let sb = UIStoryboard(name: "Main", bundle: nil)
                 let vc = sb.instantiateViewController(withIdentifier: "PartyMenuNonHostViewController") as! PartyMenuNonHostViewController

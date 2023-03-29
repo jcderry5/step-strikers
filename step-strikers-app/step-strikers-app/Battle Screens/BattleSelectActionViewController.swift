@@ -33,9 +33,10 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     var playerButtons: [UIButton] = [UIButton]()
     var selected:Bool = false
     
+    private var queue:DispatchQueue!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        renderTeam(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
         renderEnemies(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
         // puts full screen image as background of view controller
         // sets up the background images of the view controller
@@ -63,23 +64,24 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         actionDisplay.backgroundColor = UIColor.clear
         self.view.addSubview(actionDisplay)
         
-        // stats menu
+        let queue = DispatchQueue(label: "myQueue", qos: .userInteractive)
+        var ready = false
         createStatsArray()
-        statsDisplay = UITableView(frame: CGRect(x: self.view.safeAreaInsets.left+40, y: 140, width: 300, height: 300))
-        statsDisplay.translatesAutoresizingMaskIntoConstraints = false
-        statsDisplay.dataSource = self
+        self.statsDisplay = UITableView(frame: CGRect(x: self.view.safeAreaInsets.left+40, y: 140, width: 300, height: 300))
+        self.statsDisplay.translatesAutoresizingMaskIntoConstraints = false
+        self.statsDisplay.dataSource = self
         // register the table since it was not created with the storyboard
         // two different types of custom cells hence
         // need to register both types
-        statsDisplay.register(StatsTableViewCell.self, forCellReuseIdentifier: statsCellID)
-        statsDisplay.register(StatsHeaderTableViewCell.self, forCellReuseIdentifier: statsHeaderID)
-        statsDisplay.backgroundColor = UIColor.clear
-        statsDisplay.delegate = self
+        self.statsDisplay.register(StatsTableViewCell.self, forCellReuseIdentifier: self.statsCellID)
+        self.statsDisplay.register(StatsHeaderTableViewCell.self, forCellReuseIdentifier: self.statsHeaderID)
+        self.statsDisplay.backgroundColor = UIColor.clear
+        self.statsDisplay.delegate = self
         // cannot press on a row
-        statsDisplay.allowsSelection = false
+        self.statsDisplay.allowsSelection = false
         // get rid of grey separator line in between rows
-        statsDisplay.separatorColor = UIColor.clear
-        self.view.addSubview(statsDisplay)
+        self.statsDisplay.separatorColor = UIColor.clear
+        self.view.addSubview(self.statsDisplay)
         
         // turn skipped if you are dead or asleep
         checkDeadOrAsleep()
@@ -272,13 +274,18 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         }
     }
     
+    // instead of points[1234] teamList[0].health etc
+    // this is every time you reload a vc
+    // to refresh table, unappend everything in stats and reappend
+    // then statsdisplay.reload
+    // all 3 battle vcs
     func createStatsArray() {
-        // TODO: update all instances of this method
+        // TODO: @Kelly update all instances of this method
         header.append(StatsHeaderRow(names: ["Host", "Player 1", "Player 2", "Player 3"]))
         // extra to account for header messing everything up
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
-        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [teamList[0].health, teamList[1].health, teamList[2].health, teamList[3].health] , totalPoints: [1,2,3,4]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [teamList[0].health, teamList[1].health, teamList[2].health, teamList[3].health] , totalPoints: [1,2,3,4]))
+        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: [1, 2, 3, 4] , totalPoints: [1,2,3,4]))
         stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points:[1,2,3,4] , totalPoints: [1,2,3,4]))
     }
     
