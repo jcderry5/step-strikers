@@ -327,6 +327,21 @@ func decreaseTargetHealth(amtDamage: Int){
     }
 }
 
+func increaseTargetSpellPoints(amtIncrease: Int){
+    guard currTarget.character_class == "Caster" else {
+        print("ERROR: Trying to increase spell points of non-caster")
+        return
+    }
+    
+    currTarget.spellPoints += amtIncrease
+    currTarget.spellPoints = min(currTarget.spellPoints, getMaxSpellPoints(characterClass: currTarget.character_class))
+}
+
+func increaseTargetStamina(amtIncrease: Int) {
+    currTarget.currStamina += amtIncrease
+    currTarget.currStamina = min(currTarget.currStamina, getMaxStamina(characterClass: currTarget.character_class))
+}
+
 func getMaxHealth(characterClass: String) -> Int {
     switch characterClass {
     case maxHealthPerClass[0].characterClass:

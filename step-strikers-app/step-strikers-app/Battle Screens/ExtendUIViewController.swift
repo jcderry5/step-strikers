@@ -174,11 +174,12 @@ extension UIViewController {
                     let isInvisible = data!["is_invisible"] as! Bool
                     let hasAdvantage = data!["has_advantage"] as! Bool
                     let defenseModifier = data!["defense_modifier"] as! Int
-                    
+                    let spellPoints = data!["spell_points"] as! Int
+                    let currStamina = data!["stamina"] as! Int
                     let userName = enemy
                     
                     
-                    teamList.append(teamData(userName: userName, name: name, character_class: character_class, health: health, isBlind: isBlind, isInvisible: isInvisible, hasAdvantage: hasAdvantage, defenseModifier: defenseModifier))
+                    teamList.append(teamData(userName: userName, name: name, character_class: character_class, health: health, isBlind: isBlind, isInvisible: isInvisible, hasAdvantage: hasAdvantage, defenseModifier: defenseModifier, spellPoints: spellPoints, stamina: currStamina))
                     count = count + 1
                 }
             }
@@ -420,6 +421,7 @@ extension UIViewController {
     }
     
     @objc func player1Selected(_ sender:UIButton!) {
+        updateCurrTargetData(teamMemberIndex: 1)
         selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
             boxArrow[0].removeFromSuperview()
@@ -430,6 +432,7 @@ extension UIViewController {
     }
     
     @objc func player2Selected(_ sender:UIButton!) {
+        updateCurrTargetData(teamMemberIndex: 2)
         selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
             boxArrow[0].removeFromSuperview()
@@ -440,6 +443,7 @@ extension UIViewController {
     }
     
     @objc func player3Selected(_ sender:UIButton!) {
+        updateCurrTargetData(teamMemberIndex: 3)
         selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
             boxArrow[0].removeFromSuperview()
@@ -450,6 +454,7 @@ extension UIViewController {
     }
     
     @objc func player4Selected(_ sender:UIButton!) {
+        updateCurrTargetData(teamMemberIndex: 4)
         selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
             boxArrow[0].removeFromSuperview()
@@ -460,7 +465,6 @@ extension UIViewController {
     }
     
     @objc func enemyBoxSelected(_ sender:UIButton, event: UIEvent) {
-        // TODO: if you want to save things before transferring view controllers do it here From action -> roll to hit
         let touch: UITouch = event.allTouches!.first!
         if (touch.tapCount == 2) {
             // save the variables after you know its a double tap
@@ -489,14 +493,17 @@ extension UIViewController {
         let touch: UITouch = event.allTouches!.first!
         if (touch.tapCount == 2) {
             let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-            // Decide if the player needs to roll or not
-            // TODO: add if row selected was an item 
+            // update currTarget with the playerBox they selected
+            print("Inside playerBoxSelected and rowSelected is: \(String(describing: rowItemSelected?.name))")
             if(actionRequiresRoll()) {
                 let vc = storyboard.instantiateViewController(withIdentifier: "BattleRollViewController") as! BattleRollViewController
                 self.modalPresentationStyle = .fullScreen
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc,animated: false)
             } else {
+                // Note: Both of these actions will send them to idle menu after
+                // TODO: add if row selected was an item
+                // TODO: if rowItemSelected is storing something use it and (crucial!) then return it back to empty + call endTurn after method
                 performBattleAction()
                 let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let vc = storyboard.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
@@ -524,5 +531,17 @@ extension UIViewController {
         currTarget.weaponInventory = enemiesList[enemyIndex].weaponInventory
         currTarget.hasAdvantage = enemiesList[enemyIndex].hasAdvantage
         currTarget.hasDisadvantage = enemiesList[enemyIndex].hasDisadvantage
+    }
+    
+    func updateCurrTargetData(teamMemberIndex: Int) {
+        currTarget.name = teamList[teamMemberIndex].name
+        currTarget.userName = teamList[teamMemberIndex].userName
+        currTarget.character_class = teamList[teamMemberIndex].character_class
+        currTarget.health = teamList[teamMemberIndex].health
+        currTarget.isBlind = teamList[teamMemberIndex].isInvisible
+        currTarget.hasAdvantage = teamList[teamMemberIndex].hasAdvantage
+        currTarget.defenseModifier = teamList[teamMemberIndex].defenseModifier
+        currTarget.spellPoints = teamList[teamMemberIndex].spellPoints
+        currTarget.currStamina = teamList[teamMemberIndex].stamina
     }
 }
