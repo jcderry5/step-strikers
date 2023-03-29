@@ -505,8 +505,7 @@ extension UIViewController {
                 self.present(vc,animated: false)
             } else if rowItemSelected != nil {
                 // rowItemSelected holds string of item selected
-                // TODO: JALYN DONT FUCKING FORGET THIS
-                var itemToUse = returnItemFromInventory(requestedItemName: (rowItemSelected?.name)!, itemInventory: localCharacter.itemsInInventory)
+                let itemToUse = returnItemFromInventory(requestedItemName: (rowItemSelected?.name)!, itemInventory: localCharacter.itemsInInventory)
                 
                 // Check if the target is yourself or a target
                 if localCharacter.characterName == currTarget.name {
