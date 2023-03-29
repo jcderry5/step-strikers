@@ -66,7 +66,7 @@ class Caster: RPGCharacter {
         if (currTarget.weaponInventory.contains(where: { weapon in weapon.name == "Fists" })) {
             currTarget.currWeapon = currTarget.weaponInventory.first(where: { weapon in weapon.name == "Fists" })!
         } else {
-            let newFists = fists()
+            let newFists = Fists()
             currTarget.currWeapon = newFists
             currTarget.weaponInventory.append(newFists)
         }

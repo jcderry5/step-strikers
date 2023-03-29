@@ -206,13 +206,10 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
                     }
                     
                     if !first {
-                        print("change triggered!")
-                        
                         let data = document.data()
                         let order = data?["order"] as! [String]
                         
-                        print("order[0] is \(order[0]) and I am \(player)")
-                        if order[0] == player {
+                        if order[0] == localCharacter.userName {
                             
                             sleep(2)
                             

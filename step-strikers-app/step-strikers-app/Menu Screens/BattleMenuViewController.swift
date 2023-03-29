@@ -48,6 +48,7 @@ class BattleMenuViewController: UIViewController {
     @objc func createPressed(_ sender:UIButton!) {
         // generate code
         let code = generateCode()
+        team = code
         print(code)
 
         Firestore.firestore().collection("teams").document(code).setData([

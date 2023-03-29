@@ -86,6 +86,7 @@ class CodeEntryViewController: UIViewController, UITextFieldDelegate {
         docRef.getDocument { (document, error) in
             if let document = document, document.exists {
                 // code entered is correct
+                team = self.textField!.text!
                 
                 // add yourself to the team on firebase
                 docRef.updateData(["players": FieldValue.arrayUnion([localCharacter.userName])])
