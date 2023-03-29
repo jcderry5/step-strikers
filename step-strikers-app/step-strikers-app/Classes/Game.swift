@@ -84,7 +84,7 @@ func endTurn(game: String, player: String) {
         "stamina": localCharacter.currStamina,
         "is_dead": localCharacter.isDead,
         "is_asleep": false,
-        "is_blind": localCharacter.isBlind,
+        "is_blind": false,
         "is_invisible": localCharacter.isInvisible,
         "has_advantage": localCharacter.hasAdvantage,
         "has_disadvantage": localCharacter.hasDisadvantage,
