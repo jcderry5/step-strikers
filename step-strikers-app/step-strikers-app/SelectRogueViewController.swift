@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class SelectRogueViewController: UIViewController {
     
@@ -13,6 +14,9 @@ class SelectRogueViewController: UIViewController {
     let iso8 = "iso8"
     let buttonImg = UIImage(named: "Big choice Button")
     let rogueDesc = "A scoundrel who uses stealth and trickery to overcome obstacles and enemies"
+    
+    var nameField:UITextField?
+    var userName = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +37,7 @@ class SelectRogueViewController: UIViewController {
         swipeView.addGestureRecognizer(swipeRight)
         
         // Name text field
-        let nameField = createTextField(x: 61, y: 490, w: 270, h: 34, secured: false)
+        nameField = createTextField(x: 61, y: 490, w: 270, h: 34, secured: false)
         nameField!.placeholder = "Enter name"
         
         // Character creation text
@@ -50,6 +54,37 @@ class SelectRogueViewController: UIViewController {
     }
     
     @objc func selectPressed(_ sender:UIButton!) {
+        // create localCharacter
+        let currWeapon = Fists(useCount: 0)
+        let currArmor = NoArmor(useCount: 0)
+        localCharacter = Rogue(characterName: nameField!.text!, userName: userName, health: 40, stamina: 55, dead: false, asleep: false, blind: false, invisible: false, currWeapon: currWeapon, weaponsInInventory: [], currArmor: currArmor, armorInInventory: [], itemsInInventory: [], inventoryQuantities: [:])
+        
+        // write to firebase
+        Firestore.firestore().collection("players").document(userName).setData([
+            "armor_inventory": [],
+            "attack_modifier": 0,
+            "character_name": localCharacter.characterName,
+            "class": "Rogue",
+            "current_armor": "00No Armor",
+            "current_weapon": "00Fists",
+            "defense_modifier": 0,
+            "has_advantage": false,
+            "has_disadvantage": false,
+            "health": localCharacter.currHealth,
+            "is_blind": false,
+            "is_invisible": false,
+            "is_asleep": false,
+            "is_dead": false,
+            "item_inventory": [],
+            "magic_resistance_modifier": 0,
+            "spell_points": 0,
+            "stamina": localCharacter.currStamina,
+            "weapon_inventory": []
+        ], merge: true) { err in if let err = err {
+                print("Error writing document: \(err)")
+            }
+        }
+        
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "StatsViewController") as! StatsViewController
         
@@ -62,6 +97,7 @@ class SelectRogueViewController: UIViewController {
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "SelectBardViewController") as! SelectBardViewController
         
+        vc.userName = userName
         self.modalPresentationStyle = .fullScreen
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: false)

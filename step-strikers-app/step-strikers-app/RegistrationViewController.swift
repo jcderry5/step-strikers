@@ -77,38 +77,18 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate {
             // TODO: @Nick don't print this, display it on the screen
             print("Passwords are not matching")
         } else {
-            // This is just dummy data. In beta most of this will be populated by the character creation screen
             Firestore.firestore().collection("players").document(self.usernameTextField!.text!).setData([
-                "password": self.passwordTextField!.text!,
-                "armor_inventory": [],
-                "attack_modifier": 0,
-                "character_name": "New character",
-                "class": "Bard",
-                "current_armor": "00No Armor",
-                "current_weapon": "00Fists",
-                "defense_modifier": 0,
-                "has_advantage": false,
-                "health": 20,
-                "is_blind": false,
-                "is_invisible": false,
-                "item_inventory": [],
-                "magic_resistance_modifier": 0,
-                "spell_points": 10,
-                "stamina": 20,
-                "weapon_inventory": []
+                "password": self.passwordTextField!.text!
             ]) { err in if let err = err {
                     print("Error writing document: \(err)")
                 }
             }
             
-            // Temporarily hardcoded
-            game = "zIuUhRjKte6oUcvdrP4D"
-            player = self.usernameTextField!.text!
-            
             // TODO: For beta go to character creation screen
             let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = sb.instantiateViewController(withIdentifier: "RollInitiativeViewController") as! RollInitiativeViewController
+            let vc = sb.instantiateViewController(withIdentifier: "SelectFighterViewController") as! SelectFighterViewController
 
+            vc.userName = usernameTextField!.text!
             self.modalPresentationStyle = .fullScreen
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: false)
