@@ -112,7 +112,7 @@ func endTurn(game: String, player: String) {
             }
         }
     }
-    
-    Firestore.firestore().collection("last_players").document(game).setData(["last_player": player], merge: true)
+ 
+    Firestore.firestore().collection("last_players").document(game).setData(["last_player": localCharacter.userName], merge: true)
 }
 

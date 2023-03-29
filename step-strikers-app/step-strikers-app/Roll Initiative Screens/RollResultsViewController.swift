@@ -81,12 +81,12 @@ class RollResultsViewController: UIViewController {
             if let document = document, document.exists {
                 let order = document.get("order") as! [String]
 
-                if player == order[0] {
+                if localCharacter.userName == order[0] {
                     let vc = storyboard.instantiateViewController(withIdentifier: "BattleSelectActionViewController") as! BattleSelectActionViewController
                     self.modalPresentationStyle = .fullScreen
                     vc.modalPresentationStyle = .fullScreen
                     self.present(vc,animated: false)
-                } else if player != order[0] {
+                } else if localCharacter.userName != order[0] {
                     let vc = storyboard.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
                     self.modalPresentationStyle = .fullScreen
                     vc.modalPresentationStyle = .fullScreen
