@@ -334,7 +334,7 @@ extension UIViewController {
     // will transder to BattleSelectActionViewController
     // will do even if you are already on it
     @objc func actionButtonPressed(_ sender:UIButton!) {
-        print("my action button pressed")
+        rowItemSelected = nil // to acoid an item being here
         // storyboard
         let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         // need to set the storyboard ID in Main.board for each viewcontroller if you want to segue to them
@@ -347,7 +347,7 @@ extension UIViewController {
     
     // will transfer to BattleSelectItemViewController
     @objc func itemButtonPressed(_ sender:UIButton!) {
-        print("my item button pressed")
+        rowSelected = nil // to avoid an action being held here
         let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "BattleSelectItemViewController") as! BattleSelectItemViewController
         self.modalPresentationStyle = .fullScreen
@@ -357,6 +357,9 @@ extension UIViewController {
     
     // will transfer to BattleSelectEquipViewController
     @objc func equipButtonPressed(_ sender:UIButton!) {
+        // avoid these holding actions and items
+        rowSelected = nil
+        rowItemSelected = nil
         print("my equip button pressed")
         let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "BattleSelectEquipViewController") as! BattleSelectEquipViewController
@@ -500,6 +503,23 @@ extension UIViewController {
                 self.modalPresentationStyle = .fullScreen
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc,animated: false)
+            } else if rowItemSelected != nil {
+                // rowItemSelected holds string of item selected
+                // TODO: JALYN DONT FUCKING FORGET THIS
+                var itemToUse = returnItemFromInventory(requestedItemName: (rowItemSelected?.name)!, itemInventory: localCharacter.itemsInInventory)
+                
+                // Check if the target is yourself or a target
+                if localCharacter.characterName == currTarget.name {
+                    itemToUse.useOnSelf()
+                } else {
+                    itemToUse.useOnTarget()
+                }
+                let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
+                self.modalPresentationStyle = .fullScreen
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc,animated: false)
+                endTurn(game: game, player: player)
             } else {
                 // Note: Both of these actions will send them to idle menu after
                 // TODO: add if row selected was an item

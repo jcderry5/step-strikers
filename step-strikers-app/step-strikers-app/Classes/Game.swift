@@ -70,7 +70,8 @@ func refreshStats(character: String, game: String) {
      */
 
 func endTurn(game: String, player: String) {
-    
+    rowSelected = nil
+    rowItemSelected = nil
     // TODO: @Kelly, within the if-block goes all the edits to currTarget in firebase, in the else statement meant the currPlayer only changed themself
     if (actionRequiresEnemy()){
         

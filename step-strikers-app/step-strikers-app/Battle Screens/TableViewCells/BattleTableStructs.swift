@@ -103,5 +103,4 @@ struct teamData {
     let defenseModifier:Int
     let spellPoints: Int
     let stamina: Int
-    let itemInventory: [Int]
 }

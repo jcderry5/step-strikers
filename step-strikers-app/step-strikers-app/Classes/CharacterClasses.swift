@@ -293,6 +293,10 @@ func actionRequiresEnemy() -> Bool {
 }
 
 func actionRequiresRoll() -> Bool {
+    guard rowSelected != nil else {
+        return false
+    }
+    
     let actionSelected = rowSelected?.name
     
     switch actionSelected {

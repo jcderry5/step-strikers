@@ -75,6 +75,14 @@ func rebuildItem(itemName: String, owner: RPGCharacter) -> Item {
     }
 }
 
+func returnItemFromInventory(requestedItemName: String, itemInventory: [Item]) -> Item{
+    guard itemInventory.contains(where: {item in item.name == requestedItemName}) else {
+        print ("ERROR: You are looking for an item that's not in this inventory. Returning first item")
+        return itemInventory[0]
+    }
+    return itemInventory.first(where: {item in item.name == requestedItemName})!
+}
+
 func getItemStrings (items:[Item]) -> [String] {
     var itemStrings = [String]()
     
