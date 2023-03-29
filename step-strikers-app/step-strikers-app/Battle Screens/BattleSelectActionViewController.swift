@@ -12,7 +12,6 @@ var rowSelected:Action?
 
 // Dummy currTarget, until gets set by action
 var currTarget: currTargetData = currTargetData(name: "EmptyPlayer", userName: "emptyPlayer", character_class: "Fighter", health: 30, armor: NoArmor(), modifiedArmorClass: 0, attackModifier: 0, defenseModifier: 0, armorInInventory: [NoArmor()], isBlind: false, isDead: false, isSleep: false, isInvisible: false, magicResistanceModifier: 0, currWeapon: Fists(), weaponInventory: [Fists()], hasAdvantage: false, hasDisadvantage: false, currStamina: 0)
-
 var actions: [Action] = [Action]()
 var game: String = ""
 var team:String = "" // TODO: @Kelly, Set this global var

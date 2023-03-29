@@ -519,7 +519,7 @@ extension UIViewController {
                 self.modalPresentationStyle = .fullScreen
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc,animated: false)
-                endTurn(game: game, player: player)
+                endTurn(game: game, player: localCharacter.userName)
             } else {
                 // Note: Both of these actions will send them to idle menu after
                 // TODO: add if row selected was an item
