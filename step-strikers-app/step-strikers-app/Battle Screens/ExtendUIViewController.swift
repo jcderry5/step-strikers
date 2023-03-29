@@ -521,8 +521,6 @@ extension UIViewController {
                 endTurn(game: game, player: localCharacter.userName)
             } else {
                 // Note: Both of these actions will send them to idle menu after
-                // TODO: add if row selected was an item
-                // TODO: if rowItemSelected is storing something use it and (crucial!) then return it back to empty + call endTurn after method
                 performBattleAction()
                 let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let vc = storyboard.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController

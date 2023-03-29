@@ -81,15 +81,6 @@ struct CurrTargetData {
     var hasDisadvantage: Bool
     var spellPoints: Int!
     var currStamina: Int
-    
-    func printEnemyData() {
-        print("currTarget name is: \(name)")
-        print("currTarget character class is: \(character_class)")
-        print("currTarget health is: \(health)")
-        print("currTarget armor name is: \(armor.name)")
-        print("currTarget defense modifier is: \(defenseModifier)")
-        print("currTarget armor inventory count is: \(armorInInventory.count)")
-    }
 }
 
 struct TeamData {
