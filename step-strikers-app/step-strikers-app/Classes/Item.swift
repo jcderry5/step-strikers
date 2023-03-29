@@ -17,61 +17,61 @@ let largeAmountOfModification: Int = 7
 func rebuildItem(itemName: String, owner: RPGCharacter) -> Item {
     switch itemName {
         case "Potion of Healing":
-            return potionOfHealing(owner: owner)
+            return PotionOfHealing(owner: owner)
         case "Elixir of Magic":
-            return elixirOfMagic(owner: owner)
+            return ElixirOfMagic(owner: owner)
         case "Energy Pill":
-            return energyPill(owner: owner)
+            return EnergyPill(owner: owner)
         case "Antidote":
-            return antidote(owner: owner)
+            return Antidote(owner: owner)
         case "Awakening":
-                return awakening(owner: owner)
+            return Awakening(owner: owner)
         case "Potion of Greater Healing":
-            return potionOfGreaterHealing(owner: owner)
+            return PotionOfGreaterHealing(owner: owner)
         case "Elixir of Greater Magic":
-            return elixirOfGreaterMagic(owner: owner)
+            return ElixirOfGreaterMagic(owner: owner)
         case "Energy Powder":
-            return energyPowder(owner: owner)
+            return EnergyPowder(owner: owner)
         case "Resurrection Stone":
-            return resurrectionStone(owner: owner)
+            return ResurrectionStone(owner: owner)
         case "Four Leaf Clover":
-                return fourLeafClover(owner: owner)
+            return FourLeafClover(owner: owner)
         case "Leather Armor Pad":
-            return leatherArmorPad(owner: owner)
+            return LeatherArmorPad(owner: owner)
         case "Feather of Vigor":
-            return featherOfVigor(owner: owner)
+            return FeatherOfVigor(owner: owner)
         case "Scroll of Resistance":
-            return scrollOfResistance(owner: owner)
+            return ScrollOfResistance(owner: owner)
         case "Potion of Superior Healing":
-            return potionOfSuperiorHealing(owner: owner)
+            return PotionOfSuperiorHealing(owner: owner)
         case "Elixir of Superior Magic":
-            return elixirOfSuperiorMagic(owner: owner)
+            return ElixirOfSuperiorMagic(owner: owner)
         case "Energy Root":
-            return energyRoot(owner: owner)
+            return EnergyRoot(owner: owner)
         case "Revival Crystal":
-            return revivalCrystal(owner: owner)
+            return RevivalCrystal(owner: owner)
         case "Five-Leaf Clover":
-            return fiveLeafClover(owner: owner)
+            return FiveLeafClover(owner: owner)
         case "Metal Armor Pad":
-            return metalArmorPad(owner: owner)
+            return MetalArmorPad(owner: owner)
         case "Vial of Vigor":
-            return vialOfVigor(owner: owner)
+            return VialOfVigor(owner: owner)
         case "Scroll of Greater Resistance":
-            return scrollOfGreaterResistance(owner: owner)
+            return ScrollOfGreaterResistance(owner: owner)
         case "Potion of Vitality":
-            return potionOfVitality(owner: owner)
+            return PotionOfVitality(owner: owner)
         case "Elixir of Sorcery":
-            return elixirOfSorcery(owner: owner)
+            return ElixirOfSorcery(owner: owner)
         case "Energy Sap":
-            return energySap(owner: owner)
+            return EnergySap(owner: owner)
         case "Miracle of Life":
-            return miracleOfLife(owner: owner)
+            return MiracleOfLife(owner: owner)
         case "Seven-leaf Clover":
-            return sevenLeafClover(owner: owner)
+            return SevenLeafClover(owner: owner)
         case "Heart of Iron":
-            return heartOfIron(owner: owner)
+            return HeartOfIron(owner: owner)
         default:
-            return potionOfHealing(owner: owner)
+            return PotionOfHealing(owner: owner)
     }
 }
 
@@ -108,7 +108,7 @@ protocol Item {
 }
 
 // restores a small amount of health
-struct potionOfHealing: Item {
+struct PotionOfHealing: Item {
     let name = "Potion of Healing"
     var owner: RPGCharacter
     var tier = 1
@@ -131,7 +131,7 @@ struct potionOfHealing: Item {
 }
 
 // restores a small amount of magic
-struct elixirOfMagic: Item {
+struct ElixirOfMagic: Item {
     let name = "Elixir of Magic"
     var owner: RPGCharacter
     var tier = 1
@@ -165,7 +165,7 @@ struct elixirOfMagic: Item {
 }
 
 // restores a small amount of stamina
-struct energyPill: Item {
+struct EnergyPill: Item {
     var name = "Energy Pill"
     var owner: RPGCharacter
     var tier: Int = 1
@@ -188,7 +188,7 @@ struct energyPill: Item {
 }
 
 // cures blindness
-struct antidote: Item {
+struct Antidote: Item {
     let name = "Antidote"
     var owner: RPGCharacter
     var tier = 1
@@ -223,7 +223,7 @@ struct antidote: Item {
 }
 
 // wakes up the target
-struct awakening: Item {
+struct Awakening: Item {
     let name = "Awakening"
     var owner: RPGCharacter
     var tier = 1
@@ -245,7 +245,7 @@ struct awakening: Item {
 }
 
 // restores a moderate amount of health
-struct potionOfGreaterHealing: Item {
+struct PotionOfGreaterHealing: Item {
     let name = "Potion of Greater Healing"
     var owner: RPGCharacter
     var tier = 2
@@ -268,7 +268,7 @@ struct potionOfGreaterHealing: Item {
 }
 
 // restores a moderate amount of magic
-struct elixirOfGreaterMagic: Item {
+struct ElixirOfGreaterMagic: Item {
     let name = "Elixir of Greater Magic"
     var owner: RPGCharacter
     var tier = 2
@@ -302,7 +302,7 @@ struct elixirOfGreaterMagic: Item {
 }
 
 // restores a moderate amount of stamina
-struct energyPowder: Item {
+struct EnergyPowder: Item {
     var name = "Energy Powder"
     var owner: RPGCharacter
     var tier = 2
@@ -325,7 +325,7 @@ struct energyPowder: Item {
 }
 
 // revives the target with small healing
-struct resurrectionStone: Item {
+struct ResurrectionStone: Item {
     let name = "Resurrection Stone"
     var owner: RPGCharacter
     var tier = 2
@@ -354,7 +354,7 @@ struct resurrectionStone: Item {
 }
 
 // +2 to attack roll
-struct fourLeafClover: Item {
+struct FourLeafClover: Item {
     let name = "Four Leaf Clover"
     var owner: RPGCharacter
     var tier = 2
@@ -377,7 +377,7 @@ struct fourLeafClover: Item {
 }
 
 // increases defense by a small amount
-struct leatherArmorPad: Item {
+struct LeatherArmorPad: Item {
     let name = "Leather Armor Pad"
     var owner: RPGCharacter
     var tier = 2
@@ -400,7 +400,7 @@ struct leatherArmorPad: Item {
 }
 
 // increases attack by a small amount
-struct featherOfVigor: Item {
+struct FeatherOfVigor: Item {
     let name = "Feather of Vigor"
     var owner: RPGCharacter
     var tier = 2
@@ -423,7 +423,7 @@ struct featherOfVigor: Item {
 }
 
 // increases magic resistance by a small amount
-struct scrollOfResistance: Item {
+struct ScrollOfResistance: Item {
     var name = "Scroll of Resistance"
     var owner: RPGCharacter
     var tier = 2
@@ -446,7 +446,7 @@ struct scrollOfResistance: Item {
 }
 
 // restores a large amount of health
-struct potionOfSuperiorHealing: Item {
+struct PotionOfSuperiorHealing: Item {
     var name = "Potion of Superior Healing"
     var owner: RPGCharacter
     var tier = 3
@@ -469,7 +469,7 @@ struct potionOfSuperiorHealing: Item {
 }
 
 // restores a large amount of magic
-struct elixirOfSuperiorMagic: Item {
+struct ElixirOfSuperiorMagic: Item {
     var name = "Elixir of Superior Magic"
     var owner: RPGCharacter
     var tier = 3
@@ -503,7 +503,7 @@ struct elixirOfSuperiorMagic: Item {
 }
 
 // restore a large amount of stamina
-struct energyRoot: Item {
+struct EnergyRoot: Item {
     var name = "Energy Root"
     var owner: RPGCharacter
     var tier = 3
@@ -526,7 +526,7 @@ struct energyRoot: Item {
 }
 
 // revives the target with moderate healing
-struct revivalCrystal: Item {
+struct RevivalCrystal: Item {
     var name = "Revival Crystal"
     var owner: RPGCharacter
     var tier = 3
@@ -555,7 +555,7 @@ struct revivalCrystal: Item {
 }
 
 // +4 to attack roll
-struct fiveLeafClover: Item {
+struct FiveLeafClover: Item {
     var name = "Five-Leaf Clover"
     var owner: RPGCharacter
     var tier = 3
@@ -578,7 +578,7 @@ struct fiveLeafClover: Item {
 }
 
 // increases defense by a moderate amount
-struct metalArmorPad: Item {
+struct MetalArmorPad: Item {
     var name = "Metal Armor Pad"
     var owner: RPGCharacter
     var tier = 3
@@ -601,7 +601,7 @@ struct metalArmorPad: Item {
 }
 
 // increases attack by a moderate amount
-struct vialOfVigor: Item {
+struct VialOfVigor: Item {
     var name = "Vial of Vigor"
     var owner: RPGCharacter
     var tier = 3
@@ -624,7 +624,7 @@ struct vialOfVigor: Item {
 }
 
 // increases magic resistance by a moderate amount
-struct scrollOfGreaterResistance: Item {
+struct ScrollOfGreaterResistance: Item {
     var name = "Scroll of Greater Resistance"
     var owner: RPGCharacter
     var tier = 3
@@ -647,7 +647,7 @@ struct scrollOfGreaterResistance: Item {
 }
 
 // Fully Restores Health
-struct potionOfVitality: Item {
+struct PotionOfVitality: Item {
     var name = "Potion of Vitality"
     var owner: RPGCharacter
     var tier = 4
@@ -673,7 +673,7 @@ struct potionOfVitality: Item {
 
 
 // Fully Restores Spell Points
-struct elixirOfSorcery: Item {
+struct ElixirOfSorcery: Item {
     var name = "Elixir of Sorcery"
     var owner: RPGCharacter
     var tier = 4
@@ -710,7 +710,7 @@ struct elixirOfSorcery: Item {
 }
 
 // Fully restores stamina
-struct energySap: Item {
+struct EnergySap: Item {
     var name = "Energy Sap"
     var owner: RPGCharacter
     var tier = 4
@@ -735,7 +735,7 @@ struct energySap: Item {
 }
 
 // Fully Revives Target with Full Health
-struct miracleOfLife: Item {
+struct MiracleOfLife: Item {
     var name = "Miracle of Life"
     var owner: RPGCharacter
     var tier = 4
@@ -764,7 +764,7 @@ struct miracleOfLife: Item {
 }
 
 // Attack is guaranteed to hit
-struct sevenLeafClover: Item {
+struct SevenLeafClover: Item {
     var name = "Seven-leaf Clover"
     var owner: RPGCharacter
     var tier = 4
@@ -787,7 +787,7 @@ struct sevenLeafClover: Item {
 }
 
 // prevents the user from taking damage. Lasts 1 turn
-struct heartOfIron: Item {
+struct HeartOfIron: Item {
     var name = "Heart of Iron"
     var owner: RPGCharacter
     var tier = 4

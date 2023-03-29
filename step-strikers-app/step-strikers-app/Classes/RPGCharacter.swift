@@ -56,7 +56,6 @@ class RPGCharacter {
     var attackModifier = 0
     var defenseModifier = 0
     var magicResistanceModifier = 0
-    // TODO: @Kelly, when loading up your character for your turn, this is needed.
     var hasAdvantage: Bool = false
     var hasDisadvantage: Bool = false
     

@@ -11,7 +11,7 @@ var boxArrow: [AnyObject] = [AnyObject]()
 var rowSelected:Action?
 
 // Dummy currTarget, until gets set by action
-var currTarget: currTargetData = currTargetData(name: "EmptyPlayer", userName: "emptyPlayer", character_class: "Fighter", health: 30, armor: NoArmor(), modifiedArmorClass: 0, attackModifier: 0, defenseModifier: 0, armorInInventory: [NoArmor()], isBlind: false, isDead: false, isSleep: false, isInvisible: false, magicResistanceModifier: 0, currWeapon: Fists(), weaponInventory: [Fists()], hasAdvantage: false, hasDisadvantage: false, currStamina: 0)
+var currTarget: CurrTargetData = CurrTargetData(name: "EmptyPlayer", userName: "emptyPlayer", character_class: "Fighter", health: 30, armor: NoArmor(), modifiedArmorClass: 0, attackModifier: 0, defenseModifier: 0, armorInInventory: [NoArmor()], isBlind: false, isDead: false, isSleep: false, isInvisible: false, magicResistanceModifier: 0, currWeapon: Fists(), weaponInventory: [Fists()], hasAdvantage: false, hasDisadvantage: false, currStamina: 0)
 var actions: [Action] = [Action]()
 var game: String = ""
 var team:String = "" // TODO: @Kelly, Set this global var
@@ -169,7 +169,6 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
             rowSelected = actions[indexPath.row] // Actions stuct (holds
             recentlyTapped = indexPath.row
             if tableView == actionDisplay {
-                // TODO: @Jalyn rowSelected (global) holds the action object/struct of the row selected, rowSelected.name is the string itself
                 print("selected row")
                 enemiesList[0].imageView.removeFromSuperview()
                 enemiesList[1].imageView.removeFromSuperview()
@@ -205,7 +204,6 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
                         }
                     }
                 } else {
-                    // TODO: Test this with server running
                     performBattleAction()
                     let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                     let vc = storyboard.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
@@ -355,7 +353,6 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
                  vc.modalPresentationStyle = .fullScreen
                  self.present(vc,animated: false)
              } else {
-                 // TODO: Test with server running
                  performBattleAction()
                  let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                  let vc = storyboard.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
@@ -400,7 +397,6 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc,animated: false)
             } else {
-                // TODO: Test with server running
                 performBattleAction()
                 let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let vc = storyboard.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
@@ -462,7 +458,7 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     
 }
 
-struct characterSprites {
+struct CharacterSprites {
     var name:String
     
     func drawCharacter(view:UIView, x:Int, y:Int, width:Int, height:Int, isInvisible:Bool, isDead:Bool) -> UIImageView!{

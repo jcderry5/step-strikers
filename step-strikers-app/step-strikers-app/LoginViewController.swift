@@ -68,7 +68,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.view.endEditing(true)
     }
     
-    // when testing this use username: jazzyjalyn, password: doesn't matter yet but can't be empty
     @objc func loginPressed(_ sender: Any) {
         if self.usernameTextField!.text == "" {
             self.message.text = "Username not entered"

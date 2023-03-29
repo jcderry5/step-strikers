@@ -164,7 +164,6 @@ class Bard: Caster {
         super.init(characterName: characterName, userName: userName, health: health, stamina: stamina, spellPoints: spellPoints, dead: dead, asleep: asleep, blind: blind, invisible: invisible, currWeapon: currWeapon, weaponsInInventory: weaponsInInventory, currArmor: currArmor, armorInInventory: armorInInventory, itemsInInventory: itemsInInventory, inventoryQuantities: inventoryQuantities)
     }
     
-    // TODO: @Jalyn. This is towards teammates. Wait for Alekhya.
     func castBardicInspiration() {
         currTarget.hasAdvantage = true
         decreaseSpellPoints(amtDecrease: 7)
@@ -195,7 +194,6 @@ class Bard: Caster {
         messageLog.addToMessageLog(message: message)
     }
     
-    // TODO: @Alekhya
     func castBlindness(rollValue: Int) {
         decreaseSpellPoints(amtDecrease: 8)
         
@@ -217,7 +215,6 @@ class Bard: Caster {
         messageLog.addToMessageLog(message: message)
     }
     
-    // TODO: @Alekhya
     func castInvisibility() {
         
         currTarget.isInvisible = true
@@ -227,7 +224,6 @@ class Bard: Caster {
         messageLog.addToMessageLog(message: message)
     }
     
-    //TODO: @Kelly for this to work, it needs to be written to all four team members in endTurn()
     func castMotivationalSpeech() {
         decreaseSpellPoints(amtDecrease: 15)
         

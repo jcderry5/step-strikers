@@ -84,7 +84,6 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate {
                 }
             }
             
-            // TODO: For beta go to character creation screen
             let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = sb.instantiateViewController(withIdentifier: "SelectFighterViewController") as! SelectFighterViewController
 

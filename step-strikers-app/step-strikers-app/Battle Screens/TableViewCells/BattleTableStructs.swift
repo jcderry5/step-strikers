@@ -35,7 +35,7 @@ struct StatsHeaderRow {
     let names:[String]
 }
 
-struct enemyData {
+struct EnemyData {
     var userName:String
     var name:String
     var character_class:String
@@ -60,7 +60,7 @@ struct enemyData {
     var hasDisadvantage: Bool
 }
 
-struct currTargetData {
+struct CurrTargetData {
     var name:String
     var userName:String
     var character_class:String
@@ -81,18 +81,9 @@ struct currTargetData {
     var hasDisadvantage: Bool
     var spellPoints: Int!
     var currStamina: Int
-    
-    func printEnemyData() {
-        print("currTarget name is: \(name)")
-        print("currTarget character class is: \(character_class)")
-        print("currTarget health is: \(health)")
-        print("currTarget armor name is: \(armor.name)")
-        print("currTarget defense modifier is: \(defenseModifier)")
-        print("currTarget armor inventory count is: \(armorInInventory.count)")
-    }
 }
 
-struct teamData {
+struct TeamData {
     let userName:String
     let name:String
     let character_class:String
