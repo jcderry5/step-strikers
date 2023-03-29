@@ -61,46 +61,33 @@ func refreshStats(character: String, game: String) {
     }
 }
 
-    /*
-     1. fetch their updated character info
-     2. Check order[0] to see if you're next up
-     3. getGameStats() - invisisble, sleep, dead
-        if true:
-        if false: restart listener for change in order
-     */
-
 func endTurn(game: String, player: String) {
-    
-    // TODO: @Kelly, within the if-block goes all the edits to currTarget in firebase, in the else statement meant the currPlayer only changed themself
+    // if action has an enemy, update enemy
     if (actionRequiresEnemy()){
-        
-    } else {
-        
+        Firestore.firestore().collection("players").document(currTarget.userName).setData([
+            "health": currTarget.health,
+            "is_dead": currTarget.isDead,
+            "is_asleep": currTarget.isSleep,
+            "is_blind": currTarget.isBlind,
+            "is_invisible": currTarget.isInvisible,
+            "current_weapon": getConstructedName(weapon: currTarget.currWeapon),
+            "current_armor": getConstructedName(armor:currTarget.armor),
+            "defense_modifier": currTarget.defenseModifier,
+            "weapon_inventory": getWeaponStrings(weapons: currTarget.weaponInventory),
+            "armor_inventory": getArmorStrings(armors: currTarget.armorInInventory)
+        ], merge: true)
     }
     
-    // TODO: @Kelly for Motivational Speech to work, can you check the global rowSelected and if it's "Motivational Speech" push hasAdvantage to true for all teammates within endGame
-    if rowSelected?.name == "Motivational Speech" {
-        // Write true for all teammates
-    }
-    
-    Firestore.firestore().collection("players").document(currTarget.userName).setData([
-        "health": currTarget.health,
-        "is_dead": currTarget.isDead,
-        "is_asleep": currTarget.isSleep,
-        "is_blind": currTarget.isBlind,
-        "is_invisible": currTarget.isInvisible,
-        "armor": getConstructedName(armor:currTarget.armor),
-        "defense_modifier": currTarget.defenseModifier,
-        "armor_inventory": getArmorStrings(armors: currTarget.armorInInventory)
-    ], merge: true)
-    
+    // update self either way
     Firestore.firestore().collection("players").document(localCharacter.userName).setData([
         "health": localCharacter.currHealth,
         "stamina": localCharacter.currStamina,
         "is_dead": localCharacter.isDead,
-        "is_asleep": localCharacter.isAsleep,
+        "is_asleep": false,
         "is_blind": localCharacter.isBlind,
         "is_invisible": localCharacter.isInvisible,
+        "has_advantage": localCharacter.hasAdvantage,
+        "has_disadvantage": localCharacter.hasDisadvantage,
         "weapon_inventory": getWeaponStrings(weapons: localCharacter.weaponsInInventory),
         "current_weapon": getConstructedName(weapon:localCharacter.currWeapon),
         "armor_inventory": getArmorStrings(armors: localCharacter.armorInInventory),
@@ -111,5 +98,21 @@ func endTurn(game: String, player: String) {
         "magic_resistance_modifier": localCharacter.magicResistanceModifier
     ], merge: true)
     
+    if rowSelected?.name == "Motivational Speech" {
+        // Set advantage true for all teammates
+        let teamRef = Firestore.firestore().collection("teams").document(team)
+        var players:[String] = [String]()
+        teamRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                players = document.get("players") as! [String]
+                
+                for player in players {
+                    Firestore.firestore().collection("players").document(player).setData(["has_advantage": true], merge: true)
+                }
+            }
+        }
+    }
+    
     Firestore.firestore().collection("last_players").document(game).setData(["last_player": player], merge: true)
 }
+
