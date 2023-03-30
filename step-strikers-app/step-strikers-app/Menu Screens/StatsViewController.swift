@@ -7,7 +7,10 @@
 
 import UIKit
 import HealthKit
+import AVFoundation
+
 var steps:Double = 0.0
+var nonCombatBackgroundMusic: AVAudioPlayer?
 
 class StatsViewController: UIViewController {
     
@@ -59,9 +62,10 @@ class StatsViewController: UIViewController {
         DispatchQueue.main.async {
             HealthKitViewController().getSteps()
         }
-        
         checkDarkMode()
         self.background = assignSwitchableBackground()
+        assignBackground()
+        startAudio()
         createSettingsButton(x: 325, y: 800, width: 40, height: 40)
         
         // Create menu title label
@@ -168,5 +172,20 @@ class StatsViewController: UIViewController {
         self.modalPresentationStyle = .fullScreen
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: false)
+    }
+    
+    func startAudio(){
+        let fileURL = Bundle.main.url(forResource: "Woodland Fantasy.mp3", withExtension: nil, subdirectory: "/Audio Files")
+        // let path = Bundle.main.path(forResource: "Woodland Fantasy", ofType: "mp3")!
+        //let url = URL(fileURLWithPath: filePath)
+        
+        if nonCombatBackgroundMusic == nil || (nonCombatBackgroundMusic?.isPlaying == false){
+            do {
+                nonCombatBackgroundMusic = try AVAudioPlayer(contentsOf: fileURL!)
+                nonCombatBackgroundMusic?.play()
+            } catch {
+                print("ERROR: Audio didn't play sad.")
+            }
+        }
     }
 }
