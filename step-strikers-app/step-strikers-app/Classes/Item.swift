@@ -13,66 +13,75 @@ let largeAmountOfRestoration: Int = 15
 let smallAmountOfModification: Int = 3
 let moderateAmountOfModification: Int = 5
 let largeAmountOfModification: Int = 7
+let allItems: [String] = ["Potion of Healing", "Elixir of Magic", "Energy Pill", "Antidote", "Awakening", "Potion of Greater Healing", "Elixir of Greater Magic", "Energy Powder", "Resurrection Stone", "Four Leaf Clover", "Leather Armor Pad", "Feather of Vigor", "Scroll of Resistance", "Potion of Superior Healing", "Elixir of Superior Magic", "Energy Root", "Revival Crystal", "Five-Leaf Clover", "Metal Armor Pad", "Vial of Vigor", "Scroll of Greater Resistance", "Potion of Vitality", "Elixir of Sorcery", "Energy Sap", "Miracle of Life", "Seven-leaf Clover", "Heart of Iron"]
 
 func rebuildItem(itemName: String, owner: RPGCharacter) -> Item {
     switch itemName {
         case "Potion of Healing":
-            return potionOfHealing(owner: owner)
+            return PotionOfHealing(owner: owner)
         case "Elixir of Magic":
-            return elixirOfMagic(owner: owner)
+            return ElixirOfMagic(owner: owner)
         case "Energy Pill":
-            return energyPill(owner: owner)
+            return EnergyPill(owner: owner)
         case "Antidote":
-            return antidote(owner: owner)
+            return Antidote(owner: owner)
         case "Awakening":
-                return awakening(owner: owner)
+            return Awakening(owner: owner)
         case "Potion of Greater Healing":
-            return potionOfGreaterHealing(owner: owner)
+            return PotionOfGreaterHealing(owner: owner)
         case "Elixir of Greater Magic":
-            return elixirOfGreaterMagic(owner: owner)
+            return ElixirOfGreaterMagic(owner: owner)
         case "Energy Powder":
-            return energyPowder(owner: owner)
+            return EnergyPowder(owner: owner)
         case "Resurrection Stone":
-            return resurrectionStone(owner: owner)
+            return ResurrectionStone(owner: owner)
         case "Four Leaf Clover":
-                return fourLeafClover(owner: owner)
+            return FourLeafClover(owner: owner)
         case "Leather Armor Pad":
-            return leatherArmorPad(owner: owner)
+            return LeatherArmorPad(owner: owner)
         case "Feather of Vigor":
-            return featherOfVigor(owner: owner)
+            return FeatherOfVigor(owner: owner)
         case "Scroll of Resistance":
-            return scrollOfResistance(owner: owner)
+            return ScrollOfResistance(owner: owner)
         case "Potion of Superior Healing":
-            return potionOfSuperiorHealing(owner: owner)
+            return PotionOfSuperiorHealing(owner: owner)
         case "Elixir of Superior Magic":
-            return elixirOfSuperiorMagic(owner: owner)
+            return ElixirOfSuperiorMagic(owner: owner)
         case "Energy Root":
-            return energyRoot(owner: owner)
+            return EnergyRoot(owner: owner)
         case "Revival Crystal":
-            return revivalCrystal(owner: owner)
+            return RevivalCrystal(owner: owner)
         case "Five-Leaf Clover":
-            return fiveLeafClover(owner: owner)
+            return FiveLeafClover(owner: owner)
         case "Metal Armor Pad":
-            return metalArmorPad(owner: owner)
+            return MetalArmorPad(owner: owner)
         case "Vial of Vigor":
-            return vialOfVigor(owner: owner)
+            return VialOfVigor(owner: owner)
         case "Scroll of Greater Resistance":
-            return scrollOfGreaterResistance(owner: owner)
+            return ScrollOfGreaterResistance(owner: owner)
         case "Potion of Vitality":
-            return potionOfVitality(owner: owner)
+            return PotionOfVitality(owner: owner)
         case "Elixir of Sorcery":
-            return elixirOfSorcery(owner: owner)
+            return ElixirOfSorcery(owner: owner)
         case "Energy Sap":
-            return energySap(owner: owner)
+            return EnergySap(owner: owner)
         case "Miracle of Life":
-            return miracleOfLife(owner: owner)
+            return MiracleOfLife(owner: owner)
         case "Seven-leaf Clover":
-            return sevenLeafClover(owner: owner)
+            return SevenLeafClover(owner: owner)
         case "Heart of Iron":
-            return heartOfIron(owner: owner)
+            return HeartOfIron(owner: owner)
         default:
-            return potionOfHealing(owner: owner)
+            return PotionOfHealing(owner: owner)
     }
+}
+
+func returnItemFromInventory(requestedItemName: String, itemInventory: [Item]) -> Item{
+    guard itemInventory.contains(where: {item in item.name == requestedItemName}) else {
+        print ("ERROR: You are looking for an item that's not in this inventory. Returning first item")
+        return itemInventory[0]
+    }
+    return itemInventory.first(where: {item in item.name == requestedItemName})!
 }
 
 func getItemStrings (items:[Item]) -> [String] {
@@ -85,18 +94,51 @@ func getItemStrings (items:[Item]) -> [String] {
     return itemStrings
 }
 
+func postItemUseActions(itemUsed: Item, message: String) {
+    _ = itemUsed.owner.removeFromInventory(itemObject: itemUsed)
+    messageLog.addToMessageLog(message: message)
+}
+
+func randomWinnerItemDrop(newOwner: RPGCharacter) -> (Weapon, Armor, Item) {
+    
+    // 1. New Weapon
+    var tempString: String = allWeapons[Int.random(in: 0...allWeapons.count)]
+    var newWeapon: Weapon = rebuildWeapon(weaponName: tempString, useCount: 0)
+    while !newWeapon.checkIfProficient(wielderClass: newOwner.getCharacterClass()) {
+        tempString = allWeapons[Int.random(in: 0...allWeapons.count)]
+        newWeapon = rebuildWeapon(weaponName: tempString, useCount: 0)
+    }
+    
+    // 2. New Armor
+    tempString = allArmor[Int.random(in: 0...allArmor.count)]
+    var newArmor: Armor = rebuildArmor(armorName: tempString, useCount: 0)
+    // Only non-Wizards have suited Armor, Wizards will get whatever
+    if !(newOwner is Wizard) {
+        while !newArmor.checkIfSuited(wearerCharacterType: newOwner.characterName) {
+            tempString = allArmor[Int.random(in: 0...allArmor.count)]
+            newArmor = rebuildArmor(armorName: tempString, useCount: 0)
+        }
+    }
+    
+    // 3. New Item
+    tempString = allItems[Int.random(in: 0...allItems.count)]
+    let newItem: Item = rebuildItem(itemName: tempString, owner: newOwner)
+    
+    return (newWeapon: newWeapon, newArmor: newArmor, newItem: newItem)
+}
+
 protocol Item {
     var name: String { get }
     var owner: RPGCharacter { get set }
     var tier: Int { get set }
     
     init(owner: RPGCharacter)
-    func use()
-    func use(target: RPGCharacter)
+    func useOnSelf()
+    func useOnTarget()
 }
 
 // restores a small amount of health
-struct potionOfHealing: Item {
+struct PotionOfHealing: Item {
     let name = "Potion of Healing"
     var owner: RPGCharacter
     var tier = 1
@@ -105,18 +147,21 @@ struct potionOfHealing: Item {
         self.owner = owner
     }
     
-    func use(){
-        use(target: self.owner)
+    func useOnSelf(){
+        localCharacter.increaseHealth(amtIncrease: smallAmountOfRestoration)
+        let message = "\(localCharacter.characterName) consumed \(self.name) for \(smallAmountOfRestoration)HP"
+        postItemUseActions(itemUsed: self, message: message)
     }
     
-    func use(target: RPGCharacter) {
-        target.increaseHealth(amtIncrease: smallAmountOfRestoration)
-        _ = self.owner.removeFromInventory(itemObject: self)
+    func useOnTarget() {
+        increaseTargetHealth(amtHealed: smallAmountOfRestoration)
+        let message = "\(localCharacter.characterName) gave \(currTarget.name) \(self.name) to heal for \(smallAmountOfRestoration)HP"
+        postItemUseActions(itemUsed: self, message: message)
     }
 }
 
 // restores a small amount of magic
-struct elixirOfMagic: Item {
+struct ElixirOfMagic: Item {
     let name = "Elixir of Magic"
     var owner: RPGCharacter
     var tier = 1
@@ -125,22 +170,32 @@ struct elixirOfMagic: Item {
         self.owner = owner
     }
     
-    func use() {
-        use(target: self.owner)
+    func useOnSelf() {
+        guard localCharacter is Caster else {
+            let message = "\(currTarget.name) cannot take \(self.name) because they are not a Caster"
+            messageLog.addToMessageLog(message: message)
+            return
+        }
+        
+        (localCharacter as! Caster).increaseSpellPoints(amtIncrease: smallAmountOfRestoration)
+        postItemUseActions(itemUsed: self, message: "\(localCharacter.characterName) consumed \(self.name) for \(smallAmountOfRestoration)MAG")
     }
     
-    func use(target: RPGCharacter) {
-        if(target is Caster){
-            (target as! Caster).increaseSpellPoints(amtIncrease: smallAmountOfRestoration)
-        } else {
-            print("\(target.characterName) cannot take \(self.name) because they are not a Caster")
+    func useOnTarget() {
+        guard currTarget.character_class == "Bard" || currTarget.character_class == "Wizard" else {
+            let message = "\(currTarget.name) cannot take \(self.name) because they are not a Caster"
+            messageLog.addToMessageLog(message: message)
+            return
         }
-        _ = self.owner.removeFromInventory(itemObject: self)
+        
+        increaseTargetSpellPoints(amtIncrease: smallAmountOfRestoration)
+        let message = "\(localCharacter.characterName) gave \(self.name) to \(currTarget.name) to consume for \(smallAmountOfRestoration)HP"
+        postItemUseActions(itemUsed: self, message: message)
     }
 }
 
 // restores a small amount of stamina
-struct energyPill: Item {
+struct EnergyPill: Item {
     var name = "Energy Pill"
     var owner: RPGCharacter
     var tier: Int = 1
@@ -149,18 +204,21 @@ struct energyPill: Item {
         self.owner = owner
     }
     
-    func use() {
-        use(target: self.owner)
+    func useOnSelf() {
+        localCharacter.increaseStamina(amtIncrease: smallAmountOfRestoration)
+        let message = "\(localCharacter.characterName) consumed \(self.name) for \(smallAmountOfRestoration)STA"
+        postItemUseActions(itemUsed: self, message: message)
     }
     
-    func use(target: RPGCharacter) {
-        target.increaseStamina(amtIncrease: smallAmountOfRestoration)
-        _ = self.owner.removeFromInventory(itemObject: self)
+    func useOnTarget() {
+        increaseTargetStamina(amtIncrease: smallAmountOfRestoration)
+        let message = "\(localCharacter.characterName) gave \(self.name) to \(currTarget.name) for \(smallAmountOfRestoration)STA"
+        postItemUseActions(itemUsed: self, message: message)
     }
 }
 
-// cures any ailments
-struct antidote: Item {
+// cures blindness
+struct Antidote: Item {
     let name = "Antidote"
     var owner: RPGCharacter
     var tier = 1
@@ -169,21 +227,33 @@ struct antidote: Item {
         self.owner = owner
     }
     
-    // TODO: Define ailment
-    func use() {
-        // If they are in the blind list, fix that
-        use(target: self.owner)
+    func useOnSelf() {
+        guard localCharacter.isBlind else {
+            let message = "\(localCharacter.characterName) cannot use \(self.name) because they are not blind"
+            messageLog.addToMessageLog(message: message)
+            return
+        }
+        
+        localCharacter.isBlind = false
+        let message = "\(localCharacter.characterName) used \(self.name) to cure their blindness"
+        postItemUseActions(itemUsed: self, message: message)
     }
     
-    // TODO: Define ailment
-    func use(target: RPGCharacter) {
-        // dependent on blind list
-        _ = self.owner.removeFromInventory(itemObject: self)
+    func useOnTarget() {
+        guard currTarget.isBlind else {
+            let message = "\(currTarget.name) cannot use \(self.name) because they are not blind"
+            messageLog.addToMessageLog(message: message)
+            return
+        }
+        
+        currTarget.isBlind = false
+        let message = "\(localCharacter.characterName) used \(self.name) on \(currTarget.name) to cure their blindness"
+        postItemUseActions(itemUsed: self, message: message)
     }
 }
 
 // wakes up the target
-struct awakening: Item {
+struct Awakening: Item {
     let name = "Awakening"
     var owner: RPGCharacter
     var tier = 1
@@ -192,20 +262,20 @@ struct awakening: Item {
         self.owner = owner
     }
     
-    // TODO: Race conflict? Ask team because it would make sense that they take this while it is not their turn
-    func use() {
-        // Remove them from the sleep list
-        use(target: self.owner)
+    func useOnSelf() {
+        // Impossible reach. They won't get the chance!
+        print("ERROR: \(localCharacter.characterName) is asleep but used a potion on themself.")
     }
     
-    func use(target: RPGCharacter) {
-        // remove them from sleep list
-        _ = self.owner.removeFromInventory(itemObject: self)
+    func useOnTarget() {
+        currTarget.isSleep = false
+        let message = "\(localCharacter.characterName) just used \(self.name) on \(currTarget.name) to awaken them from sleep"
+        postItemUseActions(itemUsed: self, message: message)
     }
 }
 
 // restores a moderate amount of health
-struct potionOfGreaterHealing: Item {
+struct PotionOfGreaterHealing: Item {
     let name = "Potion of Greater Healing"
     var owner: RPGCharacter
     var tier = 2
@@ -214,18 +284,21 @@ struct potionOfGreaterHealing: Item {
         self.owner = owner
     }
     
-    func use() {
-        use(target: self.owner)
+    func useOnSelf() {
+        localCharacter.increaseHealth(amtIncrease: moderateAmountOfRestoration)
+        let message = "\(localCharacter.characterName) consumed \(self.name) for \(moderateAmountOfRestoration)HP"
+        postItemUseActions(itemUsed: self, message: message)
     }
     
-    func use(target: RPGCharacter) {
-        target.increaseHealth(amtIncrease: moderateAmountOfRestoration)
-        _ = self.owner.removeFromInventory(itemObject: self)
+    func useOnTarget() {
+        increaseTargetHealth(amtHealed: moderateAmountOfRestoration)
+        let message = "\(localCharacter.characterName) gave \(currTarget.name) to \(self.name) to heal for \(moderateAmountOfRestoration)HP"
+        postItemUseActions(itemUsed: self, message: message)
     }
 }
 
 // restores a moderate amount of magic
-struct elixirOfGreaterMagic: Item {
+struct ElixirOfGreaterMagic: Item {
     let name = "Elixir of Greater Magic"
     var owner: RPGCharacter
     var tier = 2
@@ -234,22 +307,32 @@ struct elixirOfGreaterMagic: Item {
         self.owner = owner
     }
     
-    func use() {
-        use(target: self.owner)
+    func useOnSelf() {
+        guard localCharacter is Caster else {
+            let message = "\(currTarget.name) cannot take \(self.name) because they are not a Caster"
+            messageLog.addToMessageLog(message: message)
+            return
+        }
+        
+        (localCharacter as! Caster).increaseSpellPoints(amtIncrease: moderateAmountOfRestoration)
+        postItemUseActions(itemUsed: self, message: "\(localCharacter.characterName) consumed \(self.name) for \(moderateAmountOfRestoration)MAG")
     }
     
-    func use(target: RPGCharacter) {
-        if(target is Caster) {
-            (target as! Caster).increaseSpellPoints(amtIncrease: moderateAmountOfRestoration)
-        } else {
-            print("\(target.characterName) cannot take \(self.name) because they are not a Caster")
+    func useOnTarget() {
+        guard currTarget.character_class == "Bard" || currTarget.character_class == "Wizard" else {
+            let message = "\(currTarget.name) cannot take \(self.name) because they are not a Caster"
+            messageLog.addToMessageLog(message: message)
+            return
         }
-        _ = self.owner.removeFromInventory(itemObject: self)
+        
+        increaseTargetSpellPoints(amtIncrease: moderateAmountOfRestoration)
+        let message = "\(localCharacter.characterName) gave \(self.name) to \(currTarget.name) to consume for \(moderateAmountOfRestoration)HP"
+        postItemUseActions(itemUsed: self, message: message)
     }
 }
 
 // restores a moderate amount of stamina
-struct energyPowder: Item {
+struct EnergyPowder: Item {
     var name = "Energy Powder"
     var owner: RPGCharacter
     var tier = 2
@@ -258,18 +341,21 @@ struct energyPowder: Item {
         self.owner = owner
     }
     
-    func use() {
-        use(target: self.owner)
+    func useOnSelf() {
+        localCharacter.increaseStamina(amtIncrease: moderateAmountOfRestoration)
+        let message = "\(localCharacter.characterName) consumed \(self.name) for \(moderateAmountOfRestoration)STA"
+        postItemUseActions(itemUsed: self, message: message)
     }
     
-    func use(target: RPGCharacter) {
-        target.increaseStamina(amtIncrease: moderateAmountOfRestoration)
-        _ = self.owner.removeFromInventory(itemObject: self)
+    func useOnTarget() {
+        increaseTargetStamina(amtIncrease: moderateAmountOfRestoration)
+        let message = "\(localCharacter.characterName) gave \(self.name) to \(currTarget.name) for \(moderateAmountOfRestoration)STA"
+        postItemUseActions(itemUsed: self, message: message)
     }
 }
 
 // revives the target with small healing
-struct resurrectionStone: Item {
+struct ResurrectionStone: Item {
     let name = "Resurrection Stone"
     var owner: RPGCharacter
     var tier = 2
@@ -278,20 +364,27 @@ struct resurrectionStone: Item {
         self.owner = owner
     }
     
-    // Using the resurrectionStone without a target assumes that they are using it on themselves
-    func use() {
-        // TODO: Remove them from the dead list
-        use(target: self.owner)
+    func useOnSelf() {
+        // Impossible reach. They won't get the chance!
+        print("ERROR: \(localCharacter.characterName) is dead but used a potion on themself.")
     }
     
-    func use(target: RPGCharacter){
-        // TODO: Remove target from the dead list
-        _ = self.owner.removeFromInventory(itemObject: self)
+    func useOnTarget(){
+        guard currTarget.isDead else {
+            let message = "\(localCharacter.characterName) cannot use \(self.name) on \(currTarget.name) because they are not dead"
+            messageLog.addToMessageLog(message: message)
+            return
+        }
+        
+        currTarget.isDead = false
+        increaseTargetHealth(amtHealed: smallAmountOfRestoration)
+        let message = "\(localCharacter.characterName) just revived \(currTarget.name) with \(smallAmountOfRestoration)HP"
+        postItemUseActions(itemUsed: self, message: message)
     }
 }
 
 // +2 to attack roll
-struct fourLeafClover: Item {
+struct FourLeafClover: Item {
     let name = "Four Leaf Clover"
     var owner: RPGCharacter
     var tier = 2
@@ -300,18 +393,21 @@ struct fourLeafClover: Item {
         self.owner = owner
     }
     
-    func use() {
-        use(target: self.owner)
+    func useOnSelf() {
+        localCharacter.attackModifier += 2
+        let message = "\(localCharacter.characterName) just consumed a \(self.name)"
+        postItemUseActions(itemUsed: self, message: message)
     }
     
-    func use(target: RPGCharacter) {
-        target.attackModifier += 2
-        _ = self.owner.removeFromInventory(itemObject: self)
+    func useOnTarget() {
+        currTarget.attackModifier += 2
+        let message = "\(currTarget.name) just consumed a \(self.name) from \(localCharacter.characterName)"
+        postItemUseActions(itemUsed: self, message: message)
     }
 }
 
 // increases defense by a small amount
-struct leatherArmorPad: Item {
+struct LeatherArmorPad: Item {
     let name = "Leather Armor Pad"
     var owner: RPGCharacter
     var tier = 2
@@ -320,18 +416,21 @@ struct leatherArmorPad: Item {
         self.owner = owner
     }
     
-    func use() {
-        use(target: self.owner)
+    func useOnSelf() {
+        localCharacter.defenseModifier += smallAmountOfModification
+        let message = "\(localCharacter.characterName) just added a \(self.name)"
+        postItemUseActions(itemUsed: self, message: message)
     }
     
-    func use(target: RPGCharacter) {
-        target.defenseModifier += smallAmountOfModification
-        _ = self.owner.removeFromInventory(itemObject: self)
+    func useOnTarget() {
+        currTarget.defenseModifier += smallAmountOfModification
+        let message = "\(currTarget.name) just added a \(self.name) from \(localCharacter.characterName)"
+        postItemUseActions(itemUsed: self, message: message)
     }
 }
 
 // increases attack by a small amount
-struct featherOfVigor: Item {
+struct FeatherOfVigor: Item {
     let name = "Feather of Vigor"
     var owner: RPGCharacter
     var tier = 2
@@ -340,19 +439,21 @@ struct featherOfVigor: Item {
         self.owner = owner
     }
     
-    func use() {
-        use(target: self.owner)
+    func useOnSelf() {
+        localCharacter.attackModifier += smallAmountOfModification
+        let message = "\(localCharacter.characterName) just used a \(self.name)"
+        postItemUseActions(itemUsed: self, message: message)
     }
     
-    func use(target: RPGCharacter) {
-        target.attackModifier += smallAmountOfModification
-        _ = self.owner.removeFromInventory(itemObject: self)
+    func useOnTarget() {
+        currTarget.attackModifier += smallAmountOfModification
+        let message = "\(currTarget.name) just used a \(self.name) from \(localCharacter.characterName)"
+        postItemUseActions(itemUsed: self, message: message)
     }
 }
 
 // increases magic resistance by a small amount
-// TODO: Add the implementation of this on Spell file?
-struct scrollOfResistance: Item {
+struct ScrollOfResistance: Item {
     var name = "Scroll of Resistance"
     var owner: RPGCharacter
     var tier = 2
@@ -361,18 +462,21 @@ struct scrollOfResistance: Item {
         self.owner = owner
     }
     
-    func use() {
-        use(target: self.owner)
+    func useOnSelf() {
+        localCharacter.magicResistanceModifier += smallAmountOfModification
+        let message = "\(localCharacter.characterName) just used a \(self.name)"
+        postItemUseActions(itemUsed: self, message: message)
     }
     
-    func use(target: RPGCharacter) {
-        target.magicResistanceModifier += smallAmountOfModification
-        _ = self.owner.removeFromInventory(itemObject: self)
+    func useOnTarget() {
+        currTarget.magicResistanceModifier += smallAmountOfModification
+        let message = "\(currTarget.name) just used a \(self.name) from \(localCharacter.characterName)"
+        postItemUseActions(itemUsed: self, message: message)
     }
 }
 
 // restores a large amount of health
-struct potionOfSuperiorHealing: Item {
+struct PotionOfSuperiorHealing: Item {
     var name = "Potion of Superior Healing"
     var owner: RPGCharacter
     var tier = 3
@@ -381,18 +485,21 @@ struct potionOfSuperiorHealing: Item {
         self.owner = owner
     }
     
-    func use() {
-        use(target: self.owner)
+    func useOnSelf() {
+        localCharacter.increaseHealth(amtIncrease: largeAmountOfRestoration)
+        let message = "\(localCharacter.characterName) consumed \(self.name) for \(largeAmountOfRestoration)HP"
+        postItemUseActions(itemUsed: self, message: message)
     }
     
-    func use(target: RPGCharacter) {
-        target.increaseHealth(amtIncrease: largeAmountOfRestoration)
-        _ = self.owner.removeFromInventory(itemObject: self)
+    func useOnTarget() {
+        increaseTargetHealth(amtHealed: largeAmountOfRestoration)
+        let message = "\(localCharacter.characterName) gave \(currTarget.name) to \(self.name) to heal for \(largeAmountOfRestoration)HP"
+        postItemUseActions(itemUsed: self, message: message)
     }
 }
 
 // restores a large amount of magic
-struct elixirOfSuperiorMagic: Item {
+struct ElixirOfSuperiorMagic: Item {
     var name = "Elixir of Superior Magic"
     var owner: RPGCharacter
     var tier = 3
@@ -401,22 +508,32 @@ struct elixirOfSuperiorMagic: Item {
         self.owner = owner
     }
     
-    func use() {
-        use(target: self.owner)
+    func useOnSelf() {
+        guard localCharacter is Caster else {
+            let message = "\(currTarget.name) cannot take \(self.name) because they are not a Caster"
+            messageLog.addToMessageLog(message: message)
+            return
+        }
+        
+        (localCharacter as! Caster).increaseSpellPoints(amtIncrease: largeAmountOfRestoration)
+        postItemUseActions(itemUsed: self, message: "\(localCharacter.characterName) consumed \(self.name) for \(largeAmountOfRestoration)MAG")
     }
     
-    func use(target: RPGCharacter) {
-        if(target is Caster){
-            (target as! Caster).increaseSpellPoints(amtIncrease: largeAmountOfRestoration)
-        } else {
-            print("\(target.characterName) cannot take \(self.name) because they are not a Caster")
+    func useOnTarget() {
+        guard currTarget.character_class == "Bard" || currTarget.character_class == "Wizard" else {
+            let message = "\(currTarget.name) cannot take \(self.name) because they are not a Caster"
+            messageLog.addToMessageLog(message: message)
+            return
         }
-        _ = self.owner.removeFromInventory(itemObject: self)
+        
+        increaseTargetSpellPoints(amtIncrease: largeAmountOfRestoration)
+        let message = "\(localCharacter.characterName) gave \(self.name) to \(currTarget.name) to consume for \(largeAmountOfRestoration)HP"
+        postItemUseActions(itemUsed: self, message: message)
     }
 }
 
 // restore a large amount of stamina
-struct energyRoot: Item {
+struct EnergyRoot: Item {
     var name = "Energy Root"
     var owner: RPGCharacter
     var tier = 3
@@ -425,18 +542,21 @@ struct energyRoot: Item {
         self.owner = owner
     }
     
-    func use() {
-        use(target: self.owner)
+    func useOnSelf() {
+        localCharacter.increaseStamina(amtIncrease: largeAmountOfRestoration)
+        let message = "\(localCharacter.characterName) consumed \(self.name) for \(largeAmountOfRestoration)STA"
+        postItemUseActions(itemUsed: self, message: message)
     }
     
-    func use(target: RPGCharacter) {
-        target.increaseStamina(amtIncrease: largeAmountOfRestoration)
-        _ = self.owner.removeFromInventory(itemObject: self)
+    func useOnTarget() {
+        increaseTargetStamina(amtIncrease: largeAmountOfRestoration)
+        let message = "\(localCharacter.characterName) gave \(self.name) to \(currTarget.name) for \(largeAmountOfRestoration)STA"
+        postItemUseActions(itemUsed: self, message: message)
     }
 }
 
 // revives the target with moderate healing
-struct revivalCrystal: Item {
+struct RevivalCrystal: Item {
     var name = "Revival Crystal"
     var owner: RPGCharacter
     var tier = 3
@@ -445,19 +565,27 @@ struct revivalCrystal: Item {
         self.owner = owner
     }
     
-    func use() {
-        // TODO: Finish when done with death and revival functionality
-        use(target: self.owner)
+    func useOnSelf() {
+        // Impossible reach. They won't get the chance!
+        print("ERROR: \(localCharacter.characterName) is dead but used a potion on themself.")
     }
     
-    func use(target: RPGCharacter) {
-        // finish when done w death
-        _ = self.owner.removeFromInventory(itemObject: self)
+    func useOnTarget(){
+        guard currTarget.isDead else {
+            let message = "\(localCharacter.characterName) cannot use \(self.name) on \(currTarget.name) because they are not dead"
+            messageLog.addToMessageLog(message: message)
+            return
+        }
+        
+        currTarget.isDead = false
+        increaseTargetHealth(amtHealed: moderateAmountOfRestoration)
+        let message = "\(localCharacter.characterName) just revived \(currTarget.name) with \(moderateAmountOfRestoration)HP"
+        postItemUseActions(itemUsed: self, message: message)
     }
 }
 
 // +4 to attack roll
-struct fiveLeafClover: Item {
+struct FiveLeafClover: Item {
     var name = "Five-Leaf Clover"
     var owner: RPGCharacter
     var tier = 3
@@ -466,18 +594,21 @@ struct fiveLeafClover: Item {
         self.owner = owner
     }
     
-    func use() {
-        use(target: self.owner)
+    func useOnSelf() {
+        localCharacter.attackModifier += 4
+        let message = "\(localCharacter.characterName) just consumed a \(self.name)"
+        postItemUseActions(itemUsed: self, message: message)
     }
     
-    func use(target: RPGCharacter) {
-        owner.attackModifier += 5
-        _ = self.owner.removeFromInventory(itemObject: self)
+    func useOnTarget() {
+        currTarget.attackModifier += 4
+        let message = "\(currTarget.name) just consumed a \(self.name) from \(localCharacter.characterName)"
+        postItemUseActions(itemUsed: self, message: message)
     }
 }
 
 // increases defense by a moderate amount
-struct metalArmorPad: Item {
+struct MetalArmorPad: Item {
     var name = "Metal Armor Pad"
     var owner: RPGCharacter
     var tier = 3
@@ -486,18 +617,21 @@ struct metalArmorPad: Item {
         self.owner = owner
     }
     
-    func use() {
-        use(target: self.owner)
+    func useOnSelf() {
+        localCharacter.defenseModifier += moderateAmountOfModification
+        let message = "\(localCharacter.characterName) just added a \(self.name)"
+        postItemUseActions(itemUsed: self, message: message)
     }
     
-    func use(target: RPGCharacter) {
-        target.defenseModifier += moderateAmountOfModification
-        _ = self.owner.removeFromInventory(itemObject: self)
+    func useOnTarget() {
+        currTarget.defenseModifier += moderateAmountOfModification
+        let message = "\(currTarget.name) just added a \(self.name) from \(localCharacter.characterName)"
+        postItemUseActions(itemUsed: self, message: message)
     }
 }
 
 // increases attack by a moderate amount
-struct vialOfVigor: Item {
+struct VialOfVigor: Item {
     var name = "Vial of Vigor"
     var owner: RPGCharacter
     var tier = 3
@@ -506,18 +640,21 @@ struct vialOfVigor: Item {
         self.owner = owner
     }
     
-    func use() {
-        use(target: self.owner)
+    func useOnSelf() {
+        localCharacter.attackModifier += moderateAmountOfModification
+        let message = "\(localCharacter.characterName) just used a \(self.name)"
+        postItemUseActions(itemUsed: self, message: message)
     }
     
-    func use(target: RPGCharacter) {
-        target.attackModifier += moderateAmountOfModification
-        _ = self.owner.removeFromInventory(itemObject: self)
+    func useOnTarget() {
+        currTarget.attackModifier += moderateAmountOfModification
+        let message = "\(currTarget.name) just used a \(self.name) from \(localCharacter.characterName)"
+        postItemUseActions(itemUsed: self, message: message)
     }
 }
 
 // increases magic resistance by a moderate amount
-struct scrollOfGreaterResistance: Item {
+struct ScrollOfGreaterResistance: Item {
     var name = "Scroll of Greater Resistance"
     var owner: RPGCharacter
     var tier = 3
@@ -526,18 +663,21 @@ struct scrollOfGreaterResistance: Item {
         self.owner = owner
     }
     
-    func use() {
-        use(target: self.owner)
+    func useOnSelf() {
+        localCharacter.magicResistanceModifier += moderateAmountOfModification
+        let message = "\(localCharacter.characterName) just used a \(self.name)"
+        postItemUseActions(itemUsed: self, message: message)
     }
     
-    func use(target: RPGCharacter) {
-        target.magicResistanceModifier += moderateAmountOfModification
-        _ = self.owner.removeFromInventory(itemObject: self)
+    func useOnTarget() {
+        currTarget.magicResistanceModifier += moderateAmountOfModification
+        let message = "\(currTarget.name) just used a \(self.name) from \(localCharacter.characterName)"
+        postItemUseActions(itemUsed: self, message: message)
     }
 }
 
 // Fully Restores Health
-struct potionOfVitality: Item {
+struct PotionOfVitality: Item {
     var name = "Potion of Vitality"
     var owner: RPGCharacter
     var tier = 4
@@ -546,20 +686,24 @@ struct potionOfVitality: Item {
         self.owner = owner
     }
     
-    func use() {
-        use(target: self.owner)
+    func useOnSelf() {
+        let difference = getMaxHealth(characterClass: String(localCharacter.getCharacterClass())) - localCharacter.currHealth
+        localCharacter.increaseHealth(amtIncrease: difference)
+        let message = "\(localCharacter.characterName) just drank \(self.name) to restore full health!"
+        postItemUseActions(itemUsed: self, message: message)
     }
     
-    func use(target: RPGCharacter) {
-        let difference = target.maxHealth - target.currHealth
-        target.increaseHealth(amtIncrease: difference)
-        _ = self.owner.removeFromInventory(itemObject: self)
+    func useOnTarget() {
+        let differece = getMaxHealth(characterClass: currTarget.character_class) - currTarget.health
+        increaseTargetHealth(amtHealed: differece)
+        let message = "\(currTarget.name) just drank \(self.name) from \(localCharacter.characterName) to restore full health"
+        postItemUseActions(itemUsed: self, message: message)
     }
 }
 
 
 // Fully Restores Spell Points
-struct elixirOfSorcery: Item {
+struct ElixirOfSorcery: Item {
     var name = "Elixir of Sorcery"
     var owner: RPGCharacter
     var tier = 4
@@ -568,24 +712,35 @@ struct elixirOfSorcery: Item {
         self.owner = owner
     }
     
-    func use() {
-        use(target: self.owner)
+    func useOnSelf() {
+        guard localCharacter is Caster else {
+            let message = "\(localCharacter.characterName) cannot drink \(self.name) because they are not a caster"
+            messageLog.addToMessageLog(message: message)
+            return
+        }
+        
+        let difference = getMaxSpellPoints(characterClass: String(localCharacter.getCharacterClass())) - (localCharacter as! Caster).currSpellPoints
+        (localCharacter as! Caster).increaseSpellPoints(amtIncrease: difference)
+        let message = "\(localCharacter.characterName) just drank \(self.name) to restore full spell points!"
+        postItemUseActions(itemUsed: self, message: message)
     }
     
-    func use(target: RPGCharacter) {
-        if(target is Caster){
-            let tempTarget = target as! Caster
-            let difference = tempTarget.maxSpellPoints - tempTarget.currSpellPoints
-            tempTarget.increaseSpellPoints(amtIncrease: difference)
-        } else {
-            print("\(target.characterName) cannot take \(self.name) because they are not a Caster")
+    func useOnTarget() {
+        guard currTarget.character_class == "Bard" || currTarget.character_class == "Wizard" else {
+            let message = "\(currTarget.name) cannot drink \(self.name) because they are not a caster"
+            messageLog.addToMessageLog(message: message)
+            return
         }
-        _ = self.owner.removeFromInventory(itemObject: self)
+        
+        let difference = getMaxSpellPoints(characterClass: currTarget.character_class) - currTarget.spellPoints
+        increaseTargetSpellPoints(amtIncrease: difference)
+        let message = "\(currTarget.name) just drank \(self.name) from \(localCharacter.characterName) to restore full spell points"
+        postItemUseActions(itemUsed: self, message: message)
     }
 }
 
 // Fully restores stamina
-struct energySap: Item {
+struct EnergySap: Item {
     var name = "Energy Sap"
     var owner: RPGCharacter
     var tier = 4
@@ -594,19 +749,23 @@ struct energySap: Item {
         self.owner = owner
     }
     
-    func use() {
-        use(target: self.owner)
+    func useOnSelf() {
+        let difference = getMaxStamina(characterClass: String(localCharacter.getCharacterClass())) - localCharacter.currStamina
+        localCharacter.increaseStamina(amtIncrease: difference)
+        let message = "\(localCharacter.characterName) just drank \(self.name) to restore full stamina!"
+        postItemUseActions(itemUsed: self, message: message)
     }
     
-    func use(target: RPGCharacter) {
-        let difference = target.maxStamina - target.currStamina
-        target.increaseStamina(amtIncrease: difference)
-        _ = self.owner.removeFromInventory(itemObject: self)
+    func useOnTarget() {
+        let differece = getMaxStamina(characterClass: currTarget.character_class) - currTarget.currStamina
+        increaseTargetStamina(amtIncrease: differece)
+        let message = "\(currTarget.name) just drank \(self.name) from \(localCharacter.characterName) to restore full stamina!"
+        postItemUseActions(itemUsed: self, message: message)
     }
 }
 
 // Fully Revives Target with Full Health
-struct miracleOfLife: Item {
+struct MiracleOfLife: Item {
     var name = "Miracle of Life"
     var owner: RPGCharacter
     var tier = 4
@@ -615,19 +774,27 @@ struct miracleOfLife: Item {
         self.owner = owner
     }
     
-    func use() {
-        // TODO: Fix when death functionality is working
-        use(target: self.owner)
+    func useOnSelf() {
+        // Impossible reach. They won't get the chance!
+        print("ERROR: \(localCharacter.characterName) is dead but used a potion on themself.")
     }
     
-    func use(target: RPGCharacter) {
-        // TODO: Fix when deathe functionality is working
-        _ = self.owner.removeFromInventory(itemObject: self)
+    func useOnTarget(){
+        guard currTarget.isDead else {
+            let message = "\(localCharacter.characterName) cannot use \(self.name) on \(currTarget.name) because they are not dead"
+            messageLog.addToMessageLog(message: message)
+            return
+        }
+        
+        currTarget.isDead = false
+        increaseTargetHealth(amtHealed: getMaxHealth(characterClass: currTarget.character_class))
+        let message = "\(localCharacter.characterName) just revived \(currTarget.name) to MAX HP"
+        postItemUseActions(itemUsed: self, message: message)
     }
 }
 
 // Attack is guaranteed to hit
-struct sevenLeafClover: Item {
+struct SevenLeafClover: Item {
     var name = "Seven-leaf Clover"
     var owner: RPGCharacter
     var tier = 4
@@ -636,18 +803,21 @@ struct sevenLeafClover: Item {
         self.owner = owner
     }
     
-    func use() {
-        use(target: self.owner)
+    func useOnSelf() {
+        localCharacter.attackModifier += 20
+        let message = "\(localCharacter.characterName) just consumed a \(self.name)"
+        postItemUseActions(itemUsed: self, message: message)
     }
     
-    func use(target: RPGCharacter) {
-        target.attackModifier = 20
-        _ = self.owner.removeFromInventory(itemObject: self)
+    func useOnTarget() {
+        currTarget.attackModifier += 20
+        let message = "\(currTarget.name) just consumed a \(self.name) from \(localCharacter.characterName)"
+        postItemUseActions(itemUsed: self, message: message)
     }
 }
 
 // prevents the user from taking damage. Lasts 1 turn
-struct heartOfIron: Item {
+struct HeartOfIron: Item {
     var name = "Heart of Iron"
     var owner: RPGCharacter
     var tier = 4
@@ -656,12 +826,15 @@ struct heartOfIron: Item {
         self.owner = owner
     }
     
-    func use() {
-        use(target: self.owner)
+    func useOnSelf() {
+        localCharacter.defenseModifier += 20
+        let message = "\(localCharacter.characterName) just added a \(self.name)"
+        postItemUseActions(itemUsed: self, message: message)
     }
     
-    func use(target: RPGCharacter) {
-        target.defenseModifier = 20
-        _ = self.owner.removeFromInventory(itemObject: self)
+    func useOnTarget() {
+        currTarget.defenseModifier += 20
+        let message = "\(currTarget.name) just added a \(self.name) from \(localCharacter.characterName)"
+        postItemUseActions(itemUsed: self, message: message)
     }
 }

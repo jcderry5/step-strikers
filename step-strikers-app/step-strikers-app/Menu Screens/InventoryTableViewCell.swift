@@ -10,7 +10,7 @@ import UIKit
 class InventoryTableViewCell: UITableViewCell {
     
     // Implement a variable that accepts label values
-    var inventoryObj : inventoryStruct? {
+    var inventoryObj : InventoryStruct? {
         didSet {
             name.text = inventoryObj?.name
             quantity.text = "x\(inventoryObj!.quantity)"

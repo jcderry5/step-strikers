@@ -34,7 +34,7 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         let xValues = [10,100,200,290]
         for index in 0...3 {
             let enemies = enemiesList[index]
-            let character = characterSprites(name: enemies.character_class)
+            let character = CharacterSprites(name: enemies.character_class)
             character.drawCharacter(view: self.view, x: xValues[index], y: 400, width: 100, height: 100, isInvisible: enemies.isInvisible, isDead: enemies.isDead)
         }
         
@@ -116,7 +116,6 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         diceButton.setBackgroundImage(UIImage(named: "d20"), for:.normal)
         view.addSubview(diceButton)
         diceButton.addTarget(self, action:#selector(rollPressed), for:.touchUpInside)
-        // TODO: CHANGE label text to display number to beat
         
         let label = UILabel(frame: CGRect(x:100, y:790, width:250, height:25))
         label.center.x = view.center.x
