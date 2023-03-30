@@ -10,6 +10,7 @@ import HealthKit
 import Foundation
 
 var steps:Double = 0.0
+var nonCombatBackgroundMusic: AVAudioPlayer?
 
 class StatsViewController: UIViewController {
     
