@@ -258,7 +258,7 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
             for index in 1 ... (RogueActions.count-1) {
                 let cost: Int = Int(RogueActions[index].cost.prefix(2))!
                 if(cost <= localCharacter.currStamina){
-                    actions.append(Action(name:WizardActions[index].actionName, staminaCost: RogueActions[index].cost))
+                    actions.append(Action(name:RogueActions[index].actionName, staminaCost: RogueActions[index].cost))
                 }
             }
         } else if characterClass == "Bard" {
