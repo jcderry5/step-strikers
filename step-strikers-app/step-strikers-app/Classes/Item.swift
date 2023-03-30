@@ -13,6 +13,7 @@ let largeAmountOfRestoration: Int = 15
 let smallAmountOfModification: Int = 3
 let moderateAmountOfModification: Int = 5
 let largeAmountOfModification: Int = 7
+let allItems: [String] = ["Potion of Healing", "Elixir of Magic", "Energy Pill", "Antidote", "Awakening", "Potion of Greater Healing", "Elixir of Greater Magic", "Energy Powder", "Resurrection Stone", "Four Leaf Clover", "Leather Armor Pad", "Feather of Vigor", "Scroll of Resistance", "Potion of Superior Healing", "Elixir of Superior Magic", "Energy Root", "Revival Crystal", "Five-Leaf Clover", "Metal Armor Pad", "Vial of Vigor", "Scroll of Greater Resistance", "Potion of Vitality", "Elixir of Sorcery", "Energy Sap", "Miracle of Life", "Seven-leaf Clover", "Heart of Iron"]
 
 func rebuildItem(itemName: String, owner: RPGCharacter) -> Item {
     switch itemName {
@@ -95,6 +96,35 @@ func getItemStrings (items:[Item]) -> [String] {
 
 func postItemUseActions(itemUsed: Item, message: String) {
     _ = itemUsed.owner.removeFromInventory(itemObject: itemUsed)
+    messageLog.addToMessageLog(message: message)
+}
+
+func randomWinnerItemDrop(newOwner: RPGCharacter) -> (Weapon, Armor, Item) {
+    
+    // 1. New Weapon
+    var tempString: String = allWeapons[Int.random(in: 0...allWeapons.count)]
+    var newWeapon: Weapon = rebuildWeapon(weaponName: tempString, useCount: 0)
+    while !newWeapon.checkIfProficient(wielderClass: newOwner.getCharacterClass()) {
+        tempString = allWeapons[Int.random(in: 0...allWeapons.count)]
+        newWeapon = rebuildWeapon(weaponName: tempString, useCount: 0)
+    }
+    
+    // 2. New Armor
+    tempString = allArmor[Int.random(in: 0...allArmor.count)]
+    var newArmor: Armor = rebuildArmor(armorName: tempString, useCount: 0)
+    // Only non-Wizards have suited Armor, Wizards will get whatever
+    if !(newOwner is Wizard) {
+        while !newArmor.checkIfSuited(wearerCharacterType: newOwner.characterName) {
+            tempString = allArmor[Int.random(in: 0...allArmor.count)]
+            newArmor = rebuildArmor(armorName: tempString, useCount: 0)
+        }
+    }
+    
+    // 3. New Item
+    tempString = allItems[Int.random(in: 0...allItems.count)]
+    let newItem: Item = rebuildItem(itemName: tempString, owner: newOwner)
+    
+    return (newWeapon: newWeapon, newArmor: newArmor, newItem: newItem)
 }
 
 protocol Item {
