@@ -11,6 +11,7 @@ import Foundation
 import AVFoundation
 
 var steps:Double = 0.0
+var nonCombatBackgroundMusic: AVAudioPlayer?
 
 class StatsViewController: UIViewController {
     
@@ -62,7 +63,6 @@ class StatsViewController: UIViewController {
         }
         
         playBackgroundAudio(fileName: nonCombatBattleMusicFile)
-        
         assignBackground()
         createSettingsButton(x: 325, y: 800, width: 40, height: 40)
         
