@@ -8,6 +8,8 @@
 import UIKit
 import FirebaseFirestore
 
+let battleMusicFile: String = "Brirfing_theme.mp3"
+
 class RollResultsViewController: UIViewController {
     var listener: ListenerRegistration!
 
@@ -21,6 +23,10 @@ class RollResultsViewController: UIViewController {
         self.view.addSubview(d20)
         renderEnemies(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
         displayIntiative()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        playBackgroundAudio(fileName: battleMusicFile)
     }
     
     func createDiceButton() -> UIButton {

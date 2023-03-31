@@ -14,6 +14,7 @@
 		641220E829B0228400561860 /* RollResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641220E529B0228400561860 /* RollResultsViewController.swift */; };
 		641220EA29B02C2300561860 /* CodeEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641220E929B02C2300561860 /* CodeEntryViewController.swift */; };
 		6421C1AC29D53CE900DDFD10 /* Audio Files in Resources */ = {isa = PBXBuildFile; fileRef = 6421C1AB29D53CE900DDFD10 /* Audio Files */; };
+		6421C1D529D5FB9600DDFD10 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6421C1D429D5FB9600DDFD10 /* Audio.swift */; };
 		643651082991AA260017AA0E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643651072991AA260017AA0E /* AppDelegate.swift */; };
 		6436510A2991AA260017AA0E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643651092991AA260017AA0E /* SceneDelegate.swift */; };
 		6436510F2991AA270017AA0E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6436510D2991AA270017AA0E /* Main.storyboard */; };
@@ -92,6 +93,7 @@
 		641220E529B0228400561860 /* RollResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RollResultsViewController.swift; sourceTree = "<group>"; };
 		641220E929B02C2300561860 /* CodeEntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeEntryViewController.swift; sourceTree = "<group>"; };
 		6421C1AB29D53CE900DDFD10 /* Audio Files */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Audio Files"; sourceTree = "<group>"; };
+		6421C1D429D5FB9600DDFD10 /* Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
 		643651042991AA260017AA0E /* step-strikers-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "step-strikers-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		643651072991AA260017AA0E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		643651092991AA260017AA0E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 				82E457B529AEFB5E006A8DB5 /* GeneralUIViewControllerExtensions.swift */,
 				643651092991AA260017AA0E /* SceneDelegate.swift */,
 				6436510D2991AA270017AA0E /* Main.storyboard */,
+				6421C1D429D5FB9600DDFD10 /* Audio.swift */,
 				82407B7D29B6D97100324EAB /* SelectFighterViewController.swift */,
 				82407B7F29B7140500324EAB /* SelectWizardViewController.swift */,
 				82407B8129B7142F00324EAB /* SelectBardViewController.swift */,
@@ -475,6 +478,7 @@
 				646DD2C029A6B70A001FB2BB /* Armor.swift in Sources */,
 				82490AF129A81F5800ECBFD7 /* RegistrationViewController.swift in Sources */,
 				64CD580529AFBD69002F4F5A /* BattleTableStructs.swift in Sources */,
+				6421C1D529D5FB9600DDFD10 /* Audio.swift in Sources */,
 				641220E829B0228400561860 /* RollResultsViewController.swift in Sources */,
 				82407B8229B7142F00324EAB /* SelectBardViewController.swift in Sources */,
 				646DD2C229A6B721001FB2BB /* Item.swift in Sources */,

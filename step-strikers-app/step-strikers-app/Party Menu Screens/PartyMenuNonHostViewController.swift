@@ -13,8 +13,13 @@ class PartyMenuNonHostViewController: UIViewController {
     var labelText:NSMutableAttributedString?
     var partyCode = ""
     
+    // Audio
+    let partyMenuMusicFile: String = "Haply.mp3"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        playBackgroundAudio(fileName: partyMenuMusicFile)
         
         assignBackground()
         // background faded shoe
