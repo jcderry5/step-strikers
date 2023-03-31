@@ -11,7 +11,6 @@ import Foundation
 import AVFoundation
 
 var steps:Double = 0.0
-var nonCombatBackgroundMusic: AVAudioPlayer?
 
 class StatsViewController: UIViewController {
     
