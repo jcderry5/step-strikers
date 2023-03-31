@@ -11,10 +11,15 @@ import FirebaseFirestore
 class BattleMenuViewController: UIViewController {
     
     let buttonImg = UIImage(named: "Big choice Button")
+    
+    // Audio
+    let nonCombatBattleMusicFile: String = "Woodland Fantasy.mp3"
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.isUserInteractionEnabled = true
+        
+        playBackgroundAudio(fileName: nonCombatBattleMusicFile)
         
         assignBackground()
         createSettingsButton(x: 325, y: 800, width: 40, height: 40)
