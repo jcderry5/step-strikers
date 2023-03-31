@@ -14,11 +14,13 @@ class BattleMenuViewController: UIViewController {
     
     var background:UIImageView?
 
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.isUserInteractionEnabled = true
         
-        self.background = assignSwitchableBackground()
+        playBackgroundAudio(fileName: nonCombatBattleMusicFile)
+        assignBackground()
         createSettingsButton(x: 325, y: 800, width: 40, height: 40)
         let icon = createImage(x: -4, y: 226, w: 400, h: 400, name: "icon")
         icon.alpha = 0.25
