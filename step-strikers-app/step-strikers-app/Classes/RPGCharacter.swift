@@ -318,6 +318,7 @@ func increaseTargetHealth(amtHealed: Int) {
 
 func decreaseTargetHealth(amtDamage: Int){
     currTarget.health -= amtDamage
+    print("DEBUG: \(currTarget.userName)'s health is was \(currTarget.health + amtDamage) and is now \(currTarget.health)")
     if currTarget.health < 0 {
         currTarget.health = 0
         currTarget.isDead = true

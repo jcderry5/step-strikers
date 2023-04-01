@@ -89,7 +89,7 @@ class BattleMenuViewController: UIViewController {
     }
     
     func generateCode() -> String {
-      let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-      return String((0..<9).map{ _ in letters.randomElement()! })
+      let letters = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ123456789"
+      return String((0..<6).map{ _ in letters.randomElement()! })
     }
 }

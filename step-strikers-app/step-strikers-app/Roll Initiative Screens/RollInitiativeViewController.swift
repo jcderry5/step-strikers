@@ -13,8 +13,10 @@ class RollInitiativeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-       assignBackground()
+        assignBackground()
         rollD20()
+        
+        renderTeam(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
     }
     
     func createDiceButton() -> UIButton {

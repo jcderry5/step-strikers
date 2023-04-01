@@ -87,11 +87,11 @@ struct TeamData {
     let userName:String
     let name:String
     let character_class:String
-    let health:Int
-    let isBlind:Bool
-    let isInvisible:Bool
-    let hasAdvantage:Bool
-    let defenseModifier:Int
-    let spellPoints: Int
-    let stamina: Int
+    var health:Int
+    var isBlind:Bool
+    var isInvisible:Bool
+    var hasAdvantage:Bool
+    var defenseModifier:Int
+    var spellPoints: Int
+    var stamina: Int
 }

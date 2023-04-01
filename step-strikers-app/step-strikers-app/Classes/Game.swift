@@ -51,12 +51,37 @@ func rollDie(sides: Int, withAdvantage: Bool? = false, withDisadvantage: Bool? =
 }
 
 // TODO: @Kelly call this at some point?
-func refreshStats(character: String, game: String) {
+func refreshStats() {
     // read updated character info and game stats
-    let playerRef = Firestore.firestore().collection("players").document(character)
-    playerRef.getDocument { (document, error) in
+    let docRef = Firestore.firestore().collection("players").document(localCharacter.userName)
+    docRef.getDocument { (document, error) in
         if let document = document, document.exists {
             // use this info to update stats on combat screen
+            docRef.addSnapshotListener {
+                documentSnapshot, error in guard let document = documentSnapshot else {
+                    print("Error fetching document: \(error!)")
+                    return
+                }
+                
+                let data = document.data()
+                
+                localCharacter.currHealth = data!["health"] as! Int
+                print("DEBUG: reading update health \(localCharacter.currHealth)")
+                if localCharacter.currHealth <= 0 {
+                    localCharacter.isDead = true
+                }
+                localCharacter.isAsleep = data!["is_asleep"] as! Bool
+                localCharacter.isBlind = data!["is_blind"] as! Bool
+                localCharacter.isInvisible = data!["is_invisible"] as! Bool
+                localCharacter.hasAdvantage = data!["has_advantage"] as! Bool
+                localCharacter.hasDisadvantage = data!["has_disadvantage"] as! Bool
+                localCharacter.weaponsInInventory = rebuildWeaponInventory(weaponInventory: data!["weapon_inventory"] as! [String])
+                localCharacter.currWeapon = rebuildWeaponToStore(currWeapon: data!["current_weapon"] as! String)
+                localCharacter.armorInInventory = rebuildArmorInventory(armorInventory: data!["armor_inventory"] as! [String])
+                localCharacter.currArmor = rebuildArmorToStore(armorToStore: data!["current_armor"] as! String)
+                localCharacter.defenseModifier = data!["defense_modifier"] as! Int
+                localCharacter.magicResistanceModifier = data!["magic_resistance_modifier"] as! Int
+            }
         }
     }
 }
@@ -65,7 +90,8 @@ func endTurn(game: String, player: String) {
     rowSelected = nil
     rowItemSelected = nil
     // if action has an enemy, update enemy
-    if (actionRequiresEnemy()){
+//    if (actionRequiresEnemy()){
+    print("DEBUG: writing that \(currTarget.userName)'s health is \(currTarget.health) to firebase")
         Firestore.firestore().collection("players").document(currTarget.userName).setData([
             "health": currTarget.health,
             "is_dead": currTarget.isDead,
@@ -78,7 +104,7 @@ func endTurn(game: String, player: String) {
             "weapon_inventory": getWeaponStrings(weapons: currTarget.weaponInventory),
             "armor_inventory": getArmorStrings(armors: currTarget.armorInInventory)
         ], merge: true)
-    }
+//    }
     
     // update self either way
     Firestore.firestore().collection("players").document(localCharacter.userName).setData([
