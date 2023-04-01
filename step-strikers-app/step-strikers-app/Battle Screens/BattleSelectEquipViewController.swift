@@ -206,10 +206,10 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
     
     func createStatsArray() {
         // TODO: redo this to take in the values from kelly's function in uiviewcontroller extension
-        header.append(StatsHeaderRow(names: ["Host", "Player 1", "Player 2", "Player 3"]))
+        header.append(StatsHeaderRow(names: [teamList[0].userName, teamList[1].userName, teamList[2].userName, teamList[3].userName]))
         // extra to account for header messing everything up
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [teamList[0].health, teamList[1].health, teamList[2].health, teamList[3].health] , totalPoints: [1,2,3,4]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [teamList[0].health, teamList[1].health, teamList[2].health, teamList[3].health] , totalPoints: [1,2,3,4]))
         stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
         stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points:[1,2,3,4] , totalPoints: [1,2,3,4]))
     }
