@@ -24,7 +24,7 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        renderEnemies(enemyTeam:  "4bDfA6dWfv8fRSdebjWI")
+        displayEnemies(enemyTeam:  "4bDfA6dWfv8fRSdebjWI")
         renderTeam(enemyTeam:  "4bDfA6dWfv8fRSdebjWI")
         // Do any additional setup after loading the view.
         

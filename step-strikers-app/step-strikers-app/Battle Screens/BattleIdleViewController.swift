@@ -20,7 +20,7 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        renderEnemies(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
+        displayEnemies(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
         // Do any additional setup after loading the view.
         // background images and view set up
         assignBackground()
@@ -86,62 +86,6 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
                         labels[i].contentMode = .scaleAspectFill
                         self.scrollView.addSubview(labels[i])
                     }
-                }
-            }
-        }
-        
-        // continuously update info
-        let teamRef = Firestore.firestore().collection("last_players").document(game)
-        teamRef.getDocument { [self] (document, error) in
-            if let document = document, document.exists {
-                docRef.addSnapshotListener {
-                    documentSnapshot, error in guard let document = documentSnapshot else {
-                        print("Error fetching document: \(error!)")
-                        return
-                    }
-
-                    // get team info again
-                    for i in 0..<teamList.count {
-                        let playerRef = Firestore.firestore().collection("players").document(teamList[i].userName)
-                        playerRef.getDocument { (document2, error) in
-                            guard let document2 = document2, document2.exists else {
-                                print("This player does not exist")
-                                return
-                            }
-
-                            let data = document2.data()
-                            teamList[i].health = data!["health"] as! Int
-                            teamList[i].stamina = data!["stamina"] as! Int
-                            teamList[i].spellPoints = data!["spell_points"] as! Int
-                        }
-                    }
-                    
-                    // get enemy info again
-                    for i in 0..<enemiesList.count {
-                        let playerRef = Firestore.firestore().collection("players").document(enemiesList[i].userName)
-                        playerRef.getDocument { (document2, error) in
-                            guard let document2 = document2, document2.exists else {
-                                print("This player does not exist")
-                                return
-                            }
-
-                            let data = document2.data()
-                            enemiesList[i].health = data!["health"] as! Int
-                        }
-                    }
-                }
-            }
-        }
-        
-        let updateRef = Firestore.firestore().collection("update").document(game)
-        updateRef.getDocument { [self] (document, error) in
-            if let document = document, document.exists {
-                docRef.addSnapshotListener {
-                    documentSnapshot, error in guard let document = documentSnapshot else {
-                        print("Error fetching document: \(error!)")
-                        return
-                    }
-                    statsDisplay.reloadData()
                 }
             }
         }
@@ -253,6 +197,52 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
         stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points:[teamList[0].stamina, teamList[1].stamina, teamList[2].stamina, teamList[3].stamina] , totalPoints: [1,2,3,4]))
     }
     
+    func updateLists() {
+        for i in 0..<teamList.count {
+            let playerRef = Firestore.firestore().collection("players").document(teamList[i].userName)
+            playerRef.getDocument { (document2, error) in
+                guard let document2 = document2, document2.exists else {
+                    print("This player does not exist")
+                    return
+                }
+                
+                let data = document2.data()
+                teamList[i].health = data!["health"] as! Int
+                teamList[i].stamina = data!["stamina"] as! Int
+                teamList[i].spellPoints = data!["spell_points"] as! Int
+            }
+        }
+        
+        // get enemy info again
+        for i in 0..<enemiesList.count {
+            let playerRef = Firestore.firestore().collection("players").document(enemiesList[i].userName)
+            playerRef.getDocument { (document2, error) in
+                guard let document2 = document2, document2.exists else {
+                    print("This player does not exist")
+                    return
+                }
+                
+                let data = document2.data()
+                enemiesList[i].health = data!["health"] as! Int
+            }
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            print("DEBUG: reloading display")
+            for teamMember in teamList {
+                print("DEBUG: \(teamMember.userName)'s health is \(teamMember.health)")
+            }
+            statsDisplay.beginUpdates()
+            self.stats.removeAll()
+            self.stats.append(StatsRow(imageName: UIImage(named: "health"), points: [teamList[0].health, teamList[1].health, teamList[2].health, teamList[3].health] , totalPoints: [1,2,3,4]))
+            self.stats.append(StatsRow(imageName: UIImage(named: "health"), points: [teamList[0].health, teamList[1].health, teamList[2].health, teamList[3].health] , totalPoints: [1,2,3,4]))
+            self.stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
+            self.stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points:[teamList[0].stamina, teamList[1].stamina, teamList[2].stamina, teamList[3].stamina] , totalPoints: [1,2,3,4]))
+            statsDisplay.reloadData()
+            statsDisplay.endUpdates()
+        }
+    }
+    
     func segueWhenTurn() {
         var first = true
         let docRef = Firestore.firestore().collection("orders").document(game)
@@ -264,22 +254,27 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
                         return
                     }
                     
+                    
                     if !first {
-                        let data = document.data()
-                        let order = data?["order"] as! [String]
-                        
-                        if order[0] == localCharacter.userName {
+                        DispatchQueue.main.async {
+                            self.updateLists()
                             
-                            sleep(2)
+                            let data = document.data()
+                            let order = data?["order"] as! [String]
                             
-                            // bring up battle VC
-                            let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                            let vc = sb.instantiateViewController(withIdentifier: "BattleSelectActionViewController") as! BattleSelectActionViewController
-                            
-                            self.modalPresentationStyle = .fullScreen
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: false)
-                            
+                            if order[0] == localCharacter.userName {
+                                
+                                sleep(2)
+                                
+                                // bring up battle VC
+                                let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                                let vc = sb.instantiateViewController(withIdentifier: "BattleSelectActionViewController") as! BattleSelectActionViewController
+                                
+                                self.modalPresentationStyle = .fullScreen
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: false)
+                                
+                            }
                         }
                     } else {
                         first = false

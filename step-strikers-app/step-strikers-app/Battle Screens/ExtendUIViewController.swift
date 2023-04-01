@@ -86,6 +86,65 @@ extension UIViewController {
     
     // For now, pass in "4bDfA6dWfv8fRSdebjWI"
     func renderEnemies(enemyTeam: String) {
+        enemiesList.removeAll()
+        var count:Int = 0
+        let xValues = [10,100,200,290]
+        let enemiesRef = Firestore.firestore().collection("teams").document(enemyTeam)
+        enemiesRef.getDocument { (document, error) in
+            guard let document = document, document.exists else {
+                print("This team does not exist")
+                return
+            }
+            let enemies = document.get("players") as! [String]
+            for enemy in enemies {
+                let gameRef = Firestore.firestore().collection("players").document(enemy)
+                gameRef.getDocument { (document2, error) in
+                    guard let document2 = document2, document2.exists else {
+                        print("This player does not exist")
+                        return
+                    }
+                    let data = document2.data()
+                    let userName = enemy
+                    let name = data!["character_name"] as! String
+                    let character_class = data!["class"] as! String
+                    let health = data!["health"] as! Int
+                    let armor = data!["current_armor"] as! String
+                    let defenseModifier = data!["defense_modifier"] as! Int
+                    let armorInventory = data!["armor_inventory"] as! [String]
+                    let armorInventoryToStore = rebuildArmorInventory(armorInventory: armorInventory)
+                    
+                    let isBlind = data!["is_blind"] as! Bool
+                    let isDead = data!["is_dead"] as! Bool
+                    let isSleep = data!["is_asleep"] as! Bool
+                    let isInvisible = data!["is_invisible"] as! Bool
+                    
+                    let magicResistanceModifier = data!["magic_resistance_modifier"] as! Int
+                    let currWeapon = data!["current_weapon"] as! String
+                    let currWeaponToStore = rebuildWeaponToStore(currWeapon: currWeapon)
+                    let weaponInventory = data!["weapon_inventory"] as! [String]
+                    let weaponInventoryToStore: [Weapon] = rebuildWeaponInventory(weaponInventory: weaponInventory)
+                    
+                    let hasAdvantage = data!["has_advantage"] as! Bool
+                    let hasDisadvantage = data!["has_disadvantage"] as! Bool
+                    // Rebuild all armor and add them to inventory
+
+                    let currArmorToStore: Armor = rebuildArmorToStore(armorToStore: armor)
+                    
+                    let player1Image:UIImageView?
+                    player1Image = UIImageView()
+                    player1Image!.backgroundColor = .clear
+                    
+                    enemiesList.append(EnemyData(userName: userName, name: name, character_class: character_class, health: health, isBlind: isBlind, isInvisible: isInvisible, imageView: player1Image!, armor: currArmorToStore, defenseModifier: defenseModifier, armorInInventory: armorInventoryToStore, isDead: isDead, isSleep: isSleep, magicResistanceModifier: magicResistanceModifier, currWeapon: currWeaponToStore, weaponInventory: weaponInventoryToStore, hasAdvantage: hasAdvantage, hasDisadvantage: hasDisadvantage))
+                    
+                    count = count + 1
+                    }
+                }
+            }
+        print("The number of enemies are \(enemiesList.count)")
+    }
+    
+    // For now, pass in "4bDfA6dWfv8fRSdebjWI"
+    func displayEnemies(enemyTeam: String) {
         var count:Int = 0
         let xValues = [10,100,200,290]
         let enemiesRef = Firestore.firestore().collection("teams").document(enemyTeam)
@@ -137,9 +196,8 @@ extension UIViewController {
                     if localCharacter.isBlind == false && localCharacter.isDead == false && localCharacter.isAsleep == false {
                         let player1 = CharacterSprites(name: character_class)
                         let player1Image = player1.drawCharacter(view: self.view, x: xValues[count], y: 400, width: 100, height: 100, isInvisible: isInvisible, isDead: isDead)
+                        enemiesList[count].imageView = player1Image!
                     }
-                    
-                    enemiesList.append(EnemyData(userName: userName, name: name, character_class: character_class, health: health, isBlind: isBlind, isInvisible: isInvisible, imageView: player1Image!, armor: currArmorToStore, defenseModifier: defenseModifier, armorInInventory: armorInventoryToStore, isDead: isDead, isSleep: isSleep, magicResistanceModifier: magicResistanceModifier, currWeapon: currWeaponToStore, weaponInventory: weaponInventoryToStore, hasAdvantage: hasAdvantage, hasDisadvantage: hasDisadvantage))
                     
                     count = count + 1
                     }
@@ -149,6 +207,7 @@ extension UIViewController {
     }
     
     func renderTeam(enemyTeam: String) {
+        teamList.removeAll()
         var count:Int = 0
         let xValues = [10,100,200,290]
         // TODO: update with team reference

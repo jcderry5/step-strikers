@@ -36,7 +36,7 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     override func viewDidLoad() {
         super.viewDidLoad()
 //        renderTeam(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
-        renderEnemies(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
+        displayEnemies(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
         // puts full screen image as background of view controller
         // sets up the background images of the view controller
         // THESE NEED TO HAPPEN IN ORDER!!!!
