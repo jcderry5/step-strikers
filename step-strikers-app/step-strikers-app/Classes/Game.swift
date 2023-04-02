@@ -66,15 +66,23 @@ func endTurn(game: String, player: String) {
     if (actionRequiresEnemy() || rowItemSelected != nil){
         Firestore.firestore().collection("players").document(currTarget.userName).setData([
             "health": currTarget.health,
+            "stamina": currTarget.currStamina,
+            "spell_points":
+                currTarget.spellPoints ?? 0,
             "is_dead": currTarget.isDead,
             "is_asleep": currTarget.isSleep,
             "is_blind": currTarget.isBlind,
             "is_invisible": currTarget.isInvisible,
             "current_weapon": getConstructedName(weapon: currTarget.currWeapon),
             "current_armor": getConstructedName(armor:currTarget.armor),
-            "defense_modifier": currTarget.defenseModifier,
             "weapon_inventory": getWeaponStrings(weapons: currTarget.weaponInventory),
-            "armor_inventory": getArmorStrings(armors: currTarget.armorInInventory)
+            "armor_inventory": getArmorStrings(armors: currTarget.armorInInventory),
+            "attack_modifier": currTarget.attackModifier,
+            "defense_modifier": currTarget.defenseModifier,
+            "magic_resistance_modifier": currTarget.magicResistanceModifier,
+            
+            "has_advantage": currTarget.hasAdvantage,
+            "has_disadvantage": currTarget.hasDisadvantage
         ], merge: true)
     }
     
