@@ -102,6 +102,16 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func createStatsArray() {
+        var nameArray:[String] = [String]()
+        var healthPoints:[Int] = [Int]()
+        var spellPoints:[Int] = [Int]()
+        var stamina:[Int] = [Int]()
+        for member in teamList {
+            nameArray.append(member.userName)
+            healthPoints.append(member.health)
+            spellPoints.append(member.spellPoints)
+            stamina.append(member.stamina)
+        }
         header.append(StatsHeaderRow(names: ["Host", "Player 1", "Player 2", "Player 3"]))
         // extra to account for header messing everything up
         stats.append(StatsRow(imageName: UIImage(named: "health"), points: [teamList[0].health, teamList[1].health, teamList[2].health, teamList[3].health] , totalPoints: [1,2,3,4]))
