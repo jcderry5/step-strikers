@@ -87,29 +87,49 @@ func refreshStats() {
 }
 
 func endTurn(game: String, player: String) {
-    rowSelected = nil
-    rowItemSelected = nil
-    // if action has an enemy, update enemy
-//    if (actionRequiresEnemy()){
-    print("DEBUG: writing that \(currTarget.userName)'s health is \(currTarget.health) to firebase")
+    
+    // if action has an enemy, or an item was used, update currTarget
+    if (actionRequiresEnemy() || rowItemSelected != nil){
         Firestore.firestore().collection("players").document(currTarget.userName).setData([
             "health": currTarget.health,
+            "stamina": currTarget.currStamina,
+            "spell_points": currTarget.spellPoints ?? 0,
             "is_dead": currTarget.isDead,
             "is_asleep": currTarget.isSleep,
             "is_blind": currTarget.isBlind,
             "is_invisible": currTarget.isInvisible,
             "current_weapon": getConstructedName(weapon: currTarget.currWeapon),
             "current_armor": getConstructedName(armor:currTarget.armor),
-            "defense_modifier": currTarget.defenseModifier,
             "weapon_inventory": getWeaponStrings(weapons: currTarget.weaponInventory),
-            "armor_inventory": getArmorStrings(armors: currTarget.armorInInventory)
+            "armor_inventory": getArmorStrings(armors: currTarget.armorInInventory),
+            "attack_modifier": currTarget.attackModifier,
+            "defense_modifier": currTarget.defenseModifier,
+            "magic_resistance_modifier": currTarget.magicResistanceModifier,
+            "has_advantage": currTarget.hasAdvantage,
+            "has_disadvantage": currTarget.hasDisadvantage
         ], merge: true)
-//    }
+    }
+    
+    // If an action was taken this turn and that action was Motivational Speech
+    if (rowSelected != nil) && rowSelected?.name == "Motivational Speech" {
+        // Set advantage true for all teammates
+        let teamRef = Firestore.firestore().collection("teams").document(team)
+        var players:[String] = [String]()
+        teamRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                players = document.get("players") as! [String]
+                for player in players {
+                    Firestore.firestore().collection("players").document(player).setData(["has_advantage": true], merge: true)
+                }
+            }
+        }
+    }
     
     // update self either way
     Firestore.firestore().collection("players").document(localCharacter.userName).setData([
         "health": localCharacter.currHealth,
         "stamina": localCharacter.currStamina,
+        "spell_points": currTarget.spellPoints ?? 0,
         "is_dead": localCharacter.isDead,
         "is_asleep": false,
         "is_blind": false,
@@ -126,21 +146,10 @@ func endTurn(game: String, player: String) {
         "magic_resistance_modifier": localCharacter.magicResistanceModifier
     ], merge: true)
     
-    if rowSelected?.name == "Motivational Speech" {
-        // Set advantage true for all teammates
-        let teamRef = Firestore.firestore().collection("teams").document(team)
-        var players:[String] = [String]()
-        teamRef.getDocument { (document, error) in
-            if let document = document, document.exists {
-                players = document.get("players") as! [String]
-                
-                for player in players {
-                    Firestore.firestore().collection("players").document(player).setData(["has_advantage": true], merge: true)
-                }
-            }
-        }
-    }
- 
+     // reset whatever row or item they just used.
+    rowSelected = nil
+    rowItemSelected = nil
+
     Firestore.firestore().collection("last_players").document(game).setData(["last_player": localCharacter.userName], merge: true)
 }
 
