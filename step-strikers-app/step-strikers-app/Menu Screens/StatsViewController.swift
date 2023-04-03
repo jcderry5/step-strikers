@@ -7,7 +7,7 @@
 
 import UIKit
 import HealthKit
-var steps:Double = 0.0
+var steps:Int = 0
 
 class StatsViewController: UIViewController {
     
@@ -31,19 +31,21 @@ class StatsViewController: UIViewController {
                     }
                     DispatchQueue.main.async {
                         HealthKitViewController().getTodaysSteps() { sum in
-                            steps = sum
-                            var trackBoost:Double = 0.0
-                            trackBoost = Double(self.boostTotal) - steps
+                            steps = Int(sum)
+                            var trackBoost:Int = 0
+                            let boostMod = steps / self.boostTotal + 1
+                            trackBoost = self.boostTotal * boostMod - steps
                             _ = self.createLabel(x: 130, y: 624, w: 253, h: 41, font: "munro", size: 28, text: "\(Int(trackBoost)) steps until boost", align: .left)
                             _ = self.createLabel(x: 130, y: 653, w: 253, h: 41, font: "munro", size: 28, text: "\(Int(steps)) taken today", align: .left)
                         }
                     }
-                    
                 })
             }
         } else {
-            var trackBoost:Double = 0.0
-            trackBoost = Double(self.boostTotal) - steps
+            var trackBoost:Int = 0
+            let boostMod = steps / self.boostTotal + 1
+            trackBoost = self.boostTotal * boostMod - steps
+            
             _ = self.createLabel(x: 130, y: 624, w: 253, h: 41, font: "munro", size: 28, text: "\(Int(trackBoost)) steps until boost", align: .left)
             _ = self.createLabel(x: 130, y: 653, w: 253, h: 41, font: "munro", size: 28, text: "\(Int(steps)) taken today", align: .left)
             
