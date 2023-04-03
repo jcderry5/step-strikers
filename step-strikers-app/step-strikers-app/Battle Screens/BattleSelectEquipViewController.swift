@@ -25,6 +25,7 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
     var rowEquipSelected:Equip?
     var weaponEquiped:Equip?
     var helpPopUp: UIView?
+    var helpButton: UIButton?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,6 +80,10 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
         // get rid of grey separator line in between rows
         statsDisplay.separatorColor = UIColor.clear
         self.view.addSubview(statsDisplay)
+        
+        helpButton = createButton(x: 300, y: 300, width: 50, height: 50, fontName: "munro", imageName: "helpbutton", fontColor: .black, buttonTitle: "")
+        helpButton!.addTarget(self, action:#selector(helpButtonPressed), for:.touchUpInside)
+        self.view.addSubview(helpButton!)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -152,6 +157,43 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
         return UITableView.automaticDimension
     }
     
+    @objc func helpButtonPressed(_ sender: UIButton) {
+        helpPopUp?.removeFromSuperview()
+        
+        // view to display
+        let popView = UIView(frame: CGRect(x: 50, y: 350, width: 300, height: 200))
+        popView.backgroundColor = UIColor(red: 0.941, green: 0.851, blue: 0.690, alpha: 1.0)
+        
+        // label based on blind or invisible
+        var label = UILabel(frame: CGRect(x: 25, y: 5, width: 250, height: 200))
+        label.text = ""
+        for (index, equip) in equips.enumerated() {
+            let equipDescription = equipDescription(equipName: equip.name!)
+            label.text!.append("\(equip.name!): \(equipDescription)\n")
+        }
+        label.font = UIFont(name: "munro", size: 15)
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 0
+        label.textColor = UIColor.black
+        label.backgroundColor = UIColor.clear
+        popView.addSubview(label)
+        
+        // x button
+        let xButton = UIButton(frame: CGRect(x: 270, y: 10, width: 20, height: 15))
+        xButton.setTitle("x", for: UIControl.State.normal)
+        xButton.backgroundColor = UIColor.clear
+        xButton.titleLabel!.font = UIFont(name: "American Typewriter", size: 20)
+        xButton.setTitleColor(UIColor.black, for: UIControl.State.normal)
+        xButton.addTarget(self, action: #selector(xPressed), for: .touchUpInside)
+        popView.addSubview(xButton)
+        
+        // popView border
+        popView.layer.borderWidth = 1.0
+        popView.layer.borderColor = UIColor.black.cgColor
+        helpPopUp = popView
+        self.view.addSubview(helpPopUp!)
+    }
+    
     // long press on action from action table
     @objc func helpPressed(longPressGestureRecognizer: UILongPressGestureRecognizer) {
         var equipName:String = " "
@@ -185,7 +227,7 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
                 xButton.setTitleColor(UIColor.black, for: UIControl.State.normal)
                 xButton.addTarget(self, action: #selector(xPressed), for: .touchUpInside)
                 popView.addSubview(xButton)
-
+                
                 // popView border
                 popView.layer.borderWidth = 1.0
                 popView.layer.borderColor = UIColor.black.cgColor
@@ -193,53 +235,50 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
                 self.view.addSubview(helpPopUp!)
             }
         }
-
     }
 
     // x pressed on the help button
     @objc func xPressed(_ sender:UIButton!) {
         // remove pop up
         helpPopUp?.removeFromSuperview()
+    }
+
+    func equipItem(item: Equip) {
+        guard allWeapons.contains(item.name!) || allArmor.contains(item.name!) else {
+            print("\(String(describing: item.name)) is not a weapon nor armor")
+            return
+        }
+    
+        let quantity: Int = Int((item.quantity?.suffix(1))!)!
+        
+        if allWeapons.contains(item.name!) {
+            // just initializing weaponToEquip with first armor. Will be replaced
+            var weaponToEquip: Weapon = localCharacter.weaponsInInventory[0]
+            if quantity > 1 {
+                for weapon in localCharacter.weaponsInInventory {
+                    if weapon.name == item.name! && weapon.useCount > weaponToEquip.useCount {
+                        weaponToEquip = weapon
+                    }
+                }
+            } else {
+                weaponToEquip = localCharacter.weaponsInInventory.first(where: {weapon in weapon.name == item.name!})!
+            }
+            localCharacter.wield(weaponObject: weaponToEquip)
+        } else {
+            // just initializing armorToEquip with first armor. Will be replaced
+            var armorToEquip: Armor = localCharacter.armorInInventory[0]
+            if quantity > 1 {
+                for armor in localCharacter.armorInInventory {
+                    if armor.name == item.name! && armor.useCount > armorToEquip.useCount {
+                        armorToEquip = armor
+                    }
+                }
+            } else {
+                armorToEquip = localCharacter.armorInInventory.first(where: {armor in armor.name == item.name!})!
+            }
             localCharacter.wear(armorObject: armorToEquip)
         }
     }
-
-    func equipItem(item: Equip){
-    guard allWeapons.contains(item.name!) || allArmor.contains(item.name!) else {
-        print("\(String(describing: item.name)) is not a weapon nor armor")
-        return
-    }
-    
-    let quantity: Int = Int((item.quantity?.suffix(1))!)!
-    
-    if allWeapons.contains(item.name!) {
-        // just initializing weaponToEquip with first armor. Will be replaced
-        var weaponToEquip: Weapon = localCharacter.weaponsInInventory[0]
-        if quantity > 1 {
-            for weapon in localCharacter.weaponsInInventory {
-                if weapon.name == item.name! && weapon.useCount > weaponToEquip.useCount {
-                    weaponToEquip = weapon
-                }
-            }
-        } else {
-            weaponToEquip = localCharacter.weaponsInInventory.first(where: {weapon in weapon.name == item.name!})!
-        }
-        localCharacter.wield(weaponObject: weaponToEquip)
-    } else {
-        // just initializing armorToEquip with first armor. Will be replaced
-        var armorToEquip: Armor = localCharacter.armorInInventory[0]
-        if quantity > 1 {
-            for armor in localCharacter.armorInInventory {
-                if armor.name == item.name! && armor.useCount > armorToEquip.useCount {
-                    armorToEquip = armor
-                }
-            }
-        } else {
-            armorToEquip = localCharacter.armorInInventory.first(where: {armor in armor.name == item.name!})!
-        }
-        localCharacter.wear(armorObject: armorToEquip)
-    }
-}
     
     // TODO: change this array based on actual player data
     func createEquipArray() {

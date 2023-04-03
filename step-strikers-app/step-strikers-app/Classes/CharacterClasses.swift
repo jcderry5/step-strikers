@@ -399,8 +399,8 @@ func itemDescription(itemName:String) -> String {
         return "Restores a small amount of magic"
     case "Energy Powder":
         return "Restores a small amount of stamina"
-    case "Regain Sight":
-        return "Cures any ailments"
+    case "Antidote":
+        return "Cures blindess"
     case "Awakening":
         return "Wakes up the target"
     case "Potion of Greater Healing":
@@ -486,6 +486,8 @@ func equipDescription(equipName:String) -> String {
         return "equips you with 2 AC"
     case "Leather Armor":
         return "equips you with 11 AC"
+    case "No Armor":
+        return "equips you with 0 AC"
     default:
         return ""
     }

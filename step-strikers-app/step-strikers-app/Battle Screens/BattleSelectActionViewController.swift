@@ -10,6 +10,8 @@ import UIKit
 var boxArrow: [AnyObject] = [AnyObject]()
 var rowSelected:Action?
 
+var actionLongPressed:Action?
+
 // Dummy currTarget, until gets set by action
 var currTarget: CurrTargetData = CurrTargetData(name: "EmptyPlayer", userName: "emptyPlayer", character_class: "Fighter", health: 30, armor: NoArmor(), modifiedArmorClass: 0, attackModifier: 0, defenseModifier: 0, armorInInventory: [NoArmor()], isBlind: false, isDead: false, isSleep: false, isInvisible: false, magicResistanceModifier: 0, currWeapon: Fists(), weaponInventory: [Fists()], hasAdvantage: false, hasDisadvantage: false, currStamina: 0)
 var actions: [Action] = [Action]()
@@ -33,6 +35,7 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     var playerButtons: [UIButton] = [UIButton]()
     var selected:Bool = false
     var helpPopUp: UIView?
+    var helpButton: UIButton?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,6 +87,10 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         // get rid of grey separator line in between rows
         statsDisplay.separatorColor = UIColor.clear
         self.view.addSubview(statsDisplay)
+        
+        helpButton = createButton(x: 300, y: 300, width: 50, height: 50, fontName: "munro", imageName: "helpbutton", fontColor: .black, buttonTitle: "")
+        helpButton!.addTarget(self, action:#selector(helpButtonPressed), for:.touchUpInside)
+        self.view.addSubview(helpButton!)
         
         // turn skipped if you are dead or asleep
         checkDeadOrAsleep()
@@ -231,6 +238,43 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         }
         
         return UITableView.automaticDimension
+    }
+    
+    @objc func helpButtonPressed(_ sender: UIButton) {
+        helpPopUp?.removeFromSuperview()
+        
+        // view to display
+        let popView = UIView(frame: CGRect(x: 50, y: 350, width: 300, height: 200))
+        popView.backgroundColor = UIColor(red: 0.941, green: 0.851, blue: 0.690, alpha: 1.0)
+        
+        // label based on blind or invisible
+        var label = UILabel(frame: CGRect(x: 25, y: 5, width: 250, height: 200))
+        label.text = ""
+        for (index, action) in actions.enumerated() {
+            let actionDescription = actionDescription(actionName: action.name!)
+            label.text!.append("\(action.name!): \(actionDescription)\n")
+        }
+        label.font = UIFont(name: "munro", size: 15)
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 0
+        label.textColor = UIColor.black
+        label.backgroundColor = UIColor.clear
+        popView.addSubview(label)
+        
+        // x button
+        let xButton = UIButton(frame: CGRect(x: 270, y: 10, width: 20, height: 15))
+        xButton.setTitle("x", for: UIControl.State.normal)
+        xButton.backgroundColor = UIColor.clear
+        xButton.titleLabel!.font = UIFont(name: "American Typewriter", size: 20)
+        xButton.setTitleColor(UIColor.black, for: UIControl.State.normal)
+        xButton.addTarget(self, action: #selector(xPressed), for: .touchUpInside)
+        popView.addSubview(xButton)
+        
+        // popView border
+        popView.layer.borderWidth = 1.0
+        popView.layer.borderColor = UIColor.black.cgColor
+        helpPopUp = popView
+        self.view.addSubview(helpPopUp!)
     }
     
     // long press on action from action table
