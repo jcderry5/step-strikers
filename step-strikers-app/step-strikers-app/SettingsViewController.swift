@@ -35,22 +35,23 @@ class SettingsViewController: UIViewController {
         // blood switch
         var bloodLabel = createLabel(x: 50, y: 310, w: 100, h: 50, font: "munro", size: 25, text: "Blood:", align: .left)
         self.view.addSubview(bloodLabel)
-        bloodSwitch = createToggleButton(x: 300, y: 320, width: 50, height: 50)
+        bloodSwitch = createToggleButton(x: 300, y: 320, width: 50, height: 50, state: false)
         
         // dark mode switch
         var darkModeLabel = createLabel(x: 50, y: 370, w: 200, h: 50, font: "munro", size: 25, text: "Dark Mode:", align: .left)
         self.view.addSubview(darkModeLabel)
-        darkModeSwitch = createToggleButton(x: 300, y: 380 , width: 50, height: 50)
+        let state = self.traitCollection.userInterfaceStyle == .dark
+        darkModeSwitch = createToggleButton(x: 300, y: 380 , width: 50, height: 50, state: state)
         
         // vibration switch
         var vibrationLabel = createLabel(x: 50, y: 430, w: 200, h: 50, font: "munro", size: 25, text: "Vibration:", align: .left)
         self.view.addSubview(vibrationLabel)
-        vibrationSwitch = createToggleButton(x: 300, y: 440, width: 50, height: 50)
+        vibrationSwitch = createToggleButton(x: 300, y: 440, width: 50, height: 50, state: false)
         
         // notifications switch
         var notificationsLabel = createLabel(x: 50, y: 490, w: 200, h: 50, font: "munro", size: 25, text: "Notifications:", align: .left)
         self.view.addSubview(notificationsLabel)
-        notificationsSwitch = createToggleButton(x: 300, y: 500, width: 50, height: 50)
+        notificationsSwitch = createToggleButton(x: 300, y: 500, width: 50, height: 50, state: false)
         
         // create the back button to go to battle meny again
         let backButton = UIButton()
@@ -88,7 +89,7 @@ class SettingsViewController: UIViewController {
         return volume
     }
     
-    func createToggleButton(x: Int, y:Int, width:Int, height:Int) -> UISwitch {
+    func createToggleButton(x: Int, y:Int, width:Int, height:Int, state:Bool) -> UISwitch {
         var toggle = UISwitch(frame: CGRect(x: x, y: y, width: width, height: height))
         toggle.backgroundColor = .red
         toggle.layer.cornerRadius = toggle.frame.height / 2
@@ -98,6 +99,7 @@ class SettingsViewController: UIViewController {
         toggle.layer.borderColor = UIColor.black.cgColor
         toggle.thumbTintColor = .black
         toggle.addTarget(self, action: #selector(switchStatedidChange), for: .valueChanged)
+        toggle.setOn(state, animated: false)
         self.view.addSubview(toggle)
         return toggle
     }
@@ -173,6 +175,8 @@ class SettingsViewController: UIViewController {
                 print("blood switch turned on")
             } else if sender == darkModeSwitch {
                 print("dark mode switch turned on")
+                let appDelegate = UIApplication.shared.windows.first
+                appDelegate?.overrideUserInterfaceStyle = .dark
             } else if sender == vibrationSwitch {
                 print("vibration switch turned on")
             } else if sender == notificationsSwitch {
@@ -186,6 +190,8 @@ class SettingsViewController: UIViewController {
                 print("blood switch turned off")
             } else if sender == darkModeSwitch {
                 print("dark mode switch turned off")
+                let appDelegate = UIApplication.shared.windows.first
+                appDelegate?.overrideUserInterfaceStyle = .light
             } else if sender == vibrationSwitch {
                 print("vibration switch turned off")
             } else if sender == notificationsSwitch {
