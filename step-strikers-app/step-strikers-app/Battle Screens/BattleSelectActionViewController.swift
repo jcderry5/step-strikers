@@ -516,16 +516,22 @@ func performBattleAction(rollValue: Int? = nil) {
     } else if (localCharacter.getCharacterClass() == "Wizard") {
         switch actionPerformed {
         case "Frost Bite":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Wizard).castFrostbite(rollValue: rollValue!)
         case "Mage Hand":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Wizard).castMageHand(rollValue: rollValue!)
         case "Shield":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Wizard).castShield()
         case "Sleep":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Wizard).sleep(rollValue: rollValue!)
         case "Animate the Dead":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Wizard).castAnimateDead()
         case "Heal":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Wizard).heal(amtToHeal: rollValue!)
         default:
             localCharacter.fight(rollValue: rollValue!)
@@ -533,16 +539,22 @@ func performBattleAction(rollValue: Int? = nil) {
     } else if (localCharacter.getCharacterClass() == "Bard") {
         switch actionPerformed {
         case "Mage Hand":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Bard).castMageHand(rollValue: rollValue!)
         case "Bardic Inspiration":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Bard).castBardicInspiration()
         case "Vicious Mockery":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Bard).castViciousMockery(rollValue: rollValue!)
         case "Blindness":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Bard).castBlindness(rollValue: rollValue!)
         case "Invisibility":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Bard).castInvisibility()
         case "Motivational Speech":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Bard).castMotivationalSpeech()
         default:
             localCharacter.fight(rollValue: rollValue!)

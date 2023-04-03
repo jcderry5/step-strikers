@@ -72,6 +72,7 @@ class CodeEntryViewController: UIViewController, UITextFieldDelegate {
 
     
     @objc func backButtonPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         // Return to battle menu
         let sb = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "BattleMenuViewController") as! BattleMenuViewController
@@ -82,6 +83,7 @@ class CodeEntryViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func confirmButtonPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         let docRef = Firestore.firestore().collection("teams").document(textField!.text!)
         docRef.getDocument { (document, error) in
             if let document = document, document.exists {
@@ -148,6 +150,7 @@ class CodeEntryViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func okPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         print("Ok button pressed")
         // TODO: Route to next screen
         /*
@@ -161,6 +164,7 @@ class CodeEntryViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func xPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         // remove pop up
         popUp?.removeFromSuperview()
     }

@@ -75,6 +75,7 @@ class RollInitiativeViewController: UIViewController {
     }
     
     @objc func rollDicePressed(_ sender:UIButton) {
+        playSoundEffect(fileName: menuSelectEffect)
         let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "RollResultsViewController") as! RollResultsViewController
         

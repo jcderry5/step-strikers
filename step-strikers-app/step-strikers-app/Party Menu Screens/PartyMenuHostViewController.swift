@@ -14,9 +14,6 @@ class PartyMenuHostViewController: UIViewController {
     var labelText:NSMutableAttributedString?
     var partyCode = ""
     
-    // Audio
-    let partyMenuMusicFile: String = "Haply.mp3"
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -129,6 +126,7 @@ class PartyMenuHostViewController: UIViewController {
 //    }
     
     @objc func readyPressed(_ sender: Any) {
+        playSoundEffect(fileName: menuSelectEffect)
         // signal that team is ready to be matched
         Firestore.firestore().collection("matchable_teams").document("teams").updateData(["teams": FieldValue.arrayUnion([self.partyCode])])
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
