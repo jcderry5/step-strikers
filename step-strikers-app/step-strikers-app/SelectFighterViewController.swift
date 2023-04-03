@@ -21,7 +21,6 @@ class SelectFighterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         assignBackground()
-        createSettingsButton(x: 325, y: 800, width: 40, height: 40)
         _ = createLabel(x: 25, y: 100, w: 361, h: 60, font: iso8, size: 60, text: "FIGHTER", align: .center)
         
         // Add images and arrows

@@ -26,7 +26,6 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
         assignBackground()
         createBattleActionMenu()
         createBattleStatsDisplay()
-        createSettingsButton(x: 10, y: 50, width: 40, height: 40)
         
         // stats menu
         createStatsArray()

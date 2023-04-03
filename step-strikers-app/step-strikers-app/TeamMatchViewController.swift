@@ -26,9 +26,6 @@ class TeamMatchViewController: UIViewController, UITableViewDelegate, UITableVie
         // giant party code text
         var chooseOpponentLabel = createLabel(x: 10, y: 25, w: 375, h: 200, font: "iso8", size: 40, text: "WAITING FOR OPPONENT", align: .center)
         chooseOpponentLabel.numberOfLines = 0
-
-        // add settings button to bottom right corner
-        createSettingsButton(x: 325, y: 775, width: 40, height: 40)
         
         // create the back button to go to battle meny again
         backButton = UIButton()

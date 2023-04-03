@@ -33,9 +33,6 @@ class PartyMenuNonHostViewController: UIViewController {
         partyCodeLabel.numberOfLines = 0
         self.view.addSubview(partyCodeLabel)
         
-        // add settings button to bottom right corner
-        createSettingsButton(x: 325, y: 775, width: 40, height: 40)
-        
         // add joined: label
         var joinedLabel = displayJoinedMembers()
         let docRef = Firestore.firestore().collection("teams").document(self.partyCode)

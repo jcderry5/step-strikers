@@ -28,7 +28,6 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         assignBackground()
         createBattleActionMenu()
         createBattleStatsDisplay()
-        createSettingsButton(x: 10, y: 50, width: 40, height: 40)
         
         // create characters
         let xValues = [10,100,200,290]
