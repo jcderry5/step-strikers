@@ -18,9 +18,6 @@ class PartyMenuHostViewController: UIViewController {
     // Audio
     let partyMenuMusicFile: String = "Haply.mp3"
     
-    // Audio
-    let partyMenuMusicFile: String = "Haply.mp3"
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
