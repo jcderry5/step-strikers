@@ -263,7 +263,7 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
                             let order = data?["order"] as! [String]
                             
                             if order[0] == localCharacter.userName {
-                                
+                                playSoundEffect(fileName: turnStartedEffect)
                                 sleep(2)
                                 
                                 // bring up battle VC

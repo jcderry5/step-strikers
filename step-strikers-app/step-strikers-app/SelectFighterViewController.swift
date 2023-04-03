@@ -54,6 +54,7 @@ class SelectFighterViewController: UIViewController {
     }
     
     @objc func selectPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         // create localCharacter
         let currWeapon = Fists(useCount: 0)
         let currArmor = NoArmor(useCount: 0)
@@ -94,6 +95,7 @@ class SelectFighterViewController: UIViewController {
     }
     
     @objc func swipeLeft() {
+        playSoundEffect(fileName: menuSelectEffect)
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "SelectWizardViewController") as! SelectWizardViewController
         

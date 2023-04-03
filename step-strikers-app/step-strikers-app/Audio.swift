@@ -9,6 +9,18 @@ import Foundation
 import AVFoundation
 
 var backgroundMusic: AVAudioPlayer!
+var soundEffect: AVAudioPlayer!
+
+// Background Audio Files
+let nonCombatBattleMusicFile: String = "Woodland Fantasy.mp3"
+let partyMenuMusicFile: String = "Haply.mp3"
+let battleMusicFile: String = "Brirfing_theme.mp3"
+// Sound Effect Files
+let menuSelectEffect: String = "MenuSelect.mp3"
+let turnStartedEffect: String = "TurnStarted.mp3"
+let castSpellEffect:String = "CastSpell.mp3"
+let natOneEffect: String = "Nat1.mp3"
+let natTwentyEffect: String = "Nat20.mp3"
 
 func playBackgroundAudio(fileName: String){
     let fileURL = Bundle.main.url(forResource: fileName, withExtension: nil, subdirectory: "/Audio Files")
@@ -26,9 +38,23 @@ func playBackgroundAudio(fileName: String){
     
     do {
         backgroundMusic = try AVAudioPlayer(contentsOf: fileURL!)
-        backgroundMusic.play()
+        DispatchQueue.global().async {
+            backgroundMusic.play()
+        }
     } catch {
         print("Audio name I tried to play: \(fileName)")
         print("ERROR: Audio didn't play sad.")
+    }
+}
+
+func playSoundEffect(fileName: String){
+    let fileURL = Bundle.main.url(forResource: fileName, withExtension: nil, subdirectory: "/Audio Files")
+    
+    do {
+        soundEffect = try AVAudioPlayer(contentsOf: fileURL!)
+        soundEffect.play()
+    } catch {
+        print("Audio name I tried to play: \(fileName)")
+        print("ERROR: Sound effect didn't play sad.")
     }
 }
