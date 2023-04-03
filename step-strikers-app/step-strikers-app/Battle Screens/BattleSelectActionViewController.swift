@@ -9,13 +9,12 @@ import UIKit
 
 var boxArrow: [AnyObject] = [AnyObject]()
 var rowSelected:Action?
-var actionLongPressed:Action?
-// Dummy currTarget, until get's set by action
-var currTarget: currTargetData = currTargetData(name: "EmptyPlayer", userName: "emptyPlayer", character_class: "Fighter", health: 30, armor: noArmor(), modifiedArmorClass: 0, attackModifier: 0, defenseModifier: 0, armorInInventory: [noArmor()], isBlind: false, isDead: false, isSleep: false, isInvisible: false, magicResistanceModifier: 0, currWeapon: fists(), weaponInventory: [fists()], hasAdvantage: false, hasDisadvantage: false)
+
+// Dummy currTarget, until gets set by action
+var currTarget: CurrTargetData = CurrTargetData(name: "EmptyPlayer", userName: "emptyPlayer", character_class: "Fighter", health: 30, armor: NoArmor(), modifiedArmorClass: 0, attackModifier: 0, defenseModifier: 0, armorInInventory: [NoArmor()], isBlind: false, isDead: false, isSleep: false, isInvisible: false, magicResistanceModifier: 0, currWeapon: Fists(), weaponInventory: [Fists()], hasAdvantage: false, hasDisadvantage: false, currStamina: 0)
 var actions: [Action] = [Action]()
-var player: String = ""
 var game: String = ""
-var team:String = "" // TODO: @Kelly, Set this global var
+var team:String = ""
 
 class BattleSelectActionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -37,8 +36,8 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        renderTeam(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
-        renderEnemies(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
+//        renderTeam(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
+        displayEnemies(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
         // puts full screen image as background of view controller
         // sets up the background images of the view controller
         // THESE NEED TO HAPPEN IN ORDER!!!!
@@ -145,10 +144,7 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     // TODO: update with segue to select target view controller when pressed
     // TODO: update with real information about the action selected
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath:IndexPath) {
-        enemiesList[0].imageView.removeFromSuperview()
-        enemiesList[1].imageView.removeFromSuperview()
-        enemiesList[2].imageView.removeFromSuperview()
-        enemiesList[3].imageView.removeFromSuperview()
+        print(enemiesList[0].name)
         if recentlyTapped == indexPath.row && selected == true {
             selected = false
             if characterButtons.isEmpty == false {
@@ -177,7 +173,6 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
             rowSelected = actions[indexPath.row] // Actions stuct (holds
             recentlyTapped = indexPath.row
             if tableView == actionDisplay {
-                // TODO: @Jalyn rowSelected (global) holds the action object/struct of the row selected, rowSelected.name is the string itself
                 print("selected row")
                 enemiesList[0].imageView.removeFromSuperview()
                 enemiesList[1].imageView.removeFromSuperview()
@@ -213,7 +208,6 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
                         }
                     }
                 } else {
-                    // TODO: Test this with server running
                     performBattleAction()
                     let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                     let vc = storyboard.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
@@ -317,7 +311,7 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
             for index in 1 ... (RogueActions.count-1) {
                 let cost: Int = Int(RogueActions[index].cost.prefix(2))!
                 if(cost <= localCharacter.currStamina){
-                    actions.append(Action(name:WizardActions[index].actionName, staminaCost: RogueActions[index].cost))
+                    actions.append(Action(name:RogueActions[index].actionName, staminaCost: RogueActions[index].cost))
                 }
             }
         } else if characterClass == "Bard" {
@@ -332,10 +326,10 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     
     func createStatsArray() {
         // TODO: update all instances of this method
-        header.append(StatsHeaderRow(names: ["Host", "Player 1", "Player 2", "Player 3"]))
+        header.append(StatsHeaderRow(names: [teamList[0].userName, teamList[1].userName, teamList[2].userName, teamList[3].userName]))
         // extra to account for header messing everything up
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [teamList[0].health, teamList[1].health, teamList[2].health, teamList[3].health] , totalPoints: [1,2,3,4]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [teamList[0].health, teamList[1].health, teamList[2].health, teamList[3].health] , totalPoints: [1,2,3,4]))
         stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
         stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points:[1,2,3,4] , totalPoints: [1,2,3,4]))
     }
@@ -413,7 +407,6 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
                  vc.modalPresentationStyle = .fullScreen
                  self.present(vc,animated: false)
              } else {
-                 // TODO: Test with server running
                  performBattleAction()
                  let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                  let vc = storyboard.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
@@ -458,7 +451,6 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc,animated: false)
             } else {
-                // TODO: Test with server running
                 performBattleAction()
                 let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let vc = storyboard.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
@@ -520,7 +512,7 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     
 }
 
-struct characterSprites {
+struct CharacterSprites {
     var name:String
     
     func drawCharacter(view:UIView, x:Int, y:Int, width:Int, height:Int, isInvisible:Bool, isDead:Bool) -> UIImageView!{

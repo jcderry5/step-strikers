@@ -10,7 +10,7 @@ import UIKit
 class InventoryTableViewCell: UITableViewCell {
     
     // Implement a variable that accepts label values
-    var inventoryObj : inventoryStruct? {
+    var inventoryObj : InventoryStruct? {
         didSet {
             name.text = inventoryObj?.name
             quantity.text = "x\(inventoryObj!.quantity)"
@@ -28,7 +28,7 @@ class InventoryTableViewCell: UITableViewCell {
     private let name : UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = UIFont(name: "munro", size: 24)
+        label.font = UIFont(name: "munro", size: 20)
         return label
     }()
     

@@ -68,7 +68,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.view.endEditing(true)
     }
     
-    // when testing this use username: jazzyjalyn, password: doesn't matter yet but can't be empty
     @objc func loginPressed(_ sender: Any) {
         if self.usernameTextField!.text == "" {
             self.message.text = "Username not entered"
@@ -160,7 +159,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 // For Testing:
                 // localCharacter.printlocalCharacterDetailsToConsole()
                 game = "zIuUhRjKte6oUcvdrP4D"
-                player = localCharacter.userName
                 let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let vc = sb.instantiateViewController(withIdentifier: "StatsViewController") as! StatsViewController
                 self.modalPresentationStyle = .fullScreen

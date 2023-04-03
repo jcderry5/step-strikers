@@ -51,56 +51,91 @@ func rollDie(sides: Int, withAdvantage: Bool? = false, withDisadvantage: Bool? =
 }
 
 // TODO: @Kelly call this at some point?
-func refreshStats(character: String, game: String) {
+func refreshStats() {
     // read updated character info and game stats
-    let playerRef = Firestore.firestore().collection("players").document(character)
-    playerRef.getDocument { (document, error) in
+    let docRef = Firestore.firestore().collection("players").document(localCharacter.userName)
+    docRef.getDocument { (document, error) in
         if let document = document, document.exists {
             // use this info to update stats on combat screen
+            docRef.addSnapshotListener {
+                documentSnapshot, error in guard let document = documentSnapshot else {
+                    print("Error fetching document: \(error!)")
+                    return
+                }
+                
+                let data = document.data()
+                
+                localCharacter.currHealth = data!["health"] as! Int
+                print("DEBUG: reading update health \(localCharacter.currHealth)")
+                if localCharacter.currHealth <= 0 {
+                    localCharacter.isDead = true
+                }
+                localCharacter.isAsleep = data!["is_asleep"] as! Bool
+                localCharacter.isBlind = data!["is_blind"] as! Bool
+                localCharacter.isInvisible = data!["is_invisible"] as! Bool
+                localCharacter.hasAdvantage = data!["has_advantage"] as! Bool
+                localCharacter.hasDisadvantage = data!["has_disadvantage"] as! Bool
+                localCharacter.weaponsInInventory = rebuildWeaponInventory(weaponInventory: data!["weapon_inventory"] as! [String])
+                localCharacter.currWeapon = rebuildWeaponToStore(currWeapon: data!["current_weapon"] as! String)
+                localCharacter.armorInInventory = rebuildArmorInventory(armorInventory: data!["armor_inventory"] as! [String])
+                localCharacter.currArmor = rebuildArmorToStore(armorToStore: data!["current_armor"] as! String)
+                localCharacter.defenseModifier = data!["defense_modifier"] as! Int
+                localCharacter.magicResistanceModifier = data!["magic_resistance_modifier"] as! Int
+            }
         }
     }
 }
 
-    /*
-     1. fetch their updated character info
-     2. Check order[0] to see if you're next up
-     3. getGameStats() - invisisble, sleep, dead
-        if true:
-        if false: restart listener for change in order
-     */
-
 func endTurn(game: String, player: String) {
     
-    // TODO: @Kelly, within the if-block goes all the edits to currTarget in firebase, in the else statement meant the currPlayer only changed themself
-    if (actionRequiresEnemy()){
-        
-    } else {
-        
+    // if action has an enemy, or an item was used, update currTarget
+    if (actionRequiresEnemy() || rowItemSelected != nil){
+        Firestore.firestore().collection("players").document(currTarget.userName).setData([
+            "health": currTarget.health,
+            "stamina": currTarget.currStamina,
+            "spell_points": currTarget.spellPoints ?? 0,
+            "is_dead": currTarget.isDead,
+            "is_asleep": currTarget.isSleep,
+            "is_blind": currTarget.isBlind,
+            "is_invisible": currTarget.isInvisible,
+            "current_weapon": getConstructedName(weapon: currTarget.currWeapon),
+            "current_armor": getConstructedName(armor:currTarget.armor),
+            "weapon_inventory": getWeaponStrings(weapons: currTarget.weaponInventory),
+            "armor_inventory": getArmorStrings(armors: currTarget.armorInInventory),
+            "attack_modifier": currTarget.attackModifier,
+            "defense_modifier": currTarget.defenseModifier,
+            "magic_resistance_modifier": currTarget.magicResistanceModifier,
+            "has_advantage": currTarget.hasAdvantage,
+            "has_disadvantage": currTarget.hasDisadvantage
+        ], merge: true)
     }
     
-    // TODO: @Kelly for Motivational Speech to work, can you check the global rowSelected and if it's "Motivational Speech" push hasAdvantage to true for all teammates within endGame
-    if rowSelected?.name == "Motivational Speech" {
-        // Write true for all teammates
+    // If an action was taken this turn and that action was Motivational Speech
+    if (rowSelected != nil) && rowSelected?.name == "Motivational Speech" {
+        // Set advantage true for all teammates
+        let teamRef = Firestore.firestore().collection("teams").document(team)
+        var players:[String] = [String]()
+        teamRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                players = document.get("players") as! [String]
+                for player in players {
+                    Firestore.firestore().collection("players").document(player).setData(["has_advantage": true], merge: true)
+                }
+            }
+        }
     }
     
-    Firestore.firestore().collection("players").document(currTarget.userName).setData([
-        "health": currTarget.health,
-        "is_dead": currTarget.isDead,
-        "is_asleep": currTarget.isSleep,
-        "is_blind": currTarget.isBlind,
-        "is_invisible": currTarget.isInvisible,
-        "armor": getConstructedName(armor:currTarget.armor),
-        "defense_modifier": currTarget.defenseModifier,
-        "armor_inventory": getArmorStrings(armors: currTarget.armorInInventory)
-    ], merge: true)
-    
+    // update self either way
     Firestore.firestore().collection("players").document(localCharacter.userName).setData([
         "health": localCharacter.currHealth,
         "stamina": localCharacter.currStamina,
+        "spell_points": currTarget.spellPoints ?? 0,
         "is_dead": localCharacter.isDead,
-        "is_asleep": localCharacter.isAsleep,
-        "is_blind": localCharacter.isBlind,
+        "is_asleep": false,
+        "is_blind": false,
         "is_invisible": localCharacter.isInvisible,
+        "has_advantage": localCharacter.hasAdvantage,
+        "has_disadvantage": localCharacter.hasDisadvantage,
         "weapon_inventory": getWeaponStrings(weapons: localCharacter.weaponsInInventory),
         "current_weapon": getConstructedName(weapon:localCharacter.currWeapon),
         "armor_inventory": getArmorStrings(armors: localCharacter.armorInInventory),
@@ -111,5 +146,10 @@ func endTurn(game: String, player: String) {
         "magic_resistance_modifier": localCharacter.magicResistanceModifier
     ], merge: true)
     
-    Firestore.firestore().collection("last_players").document(game).setData(["last_player": player], merge: true)
+     // reset whatever row or item they just used.
+    rowSelected = nil
+    rowItemSelected = nil
+
+    Firestore.firestore().collection("last_players").document(game).setData(["last_player": localCharacter.userName], merge: true)
 }
+

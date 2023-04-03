@@ -20,8 +20,7 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        renderTeam(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
-        renderEnemies(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
+        displayEnemies(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
         // Do any additional setup after loading the view.
         // background images and view set up
         assignBackground()
@@ -64,6 +63,7 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
         view.addSubview(scrollView!)
         var labels = [UILabel]()
         
+        // update messages
         let docRef = Firestore.firestore().collection("games").document(game)
         docRef.getDocument { [self] (document, error) in
             if let document = document, document.exists {
@@ -89,7 +89,10 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
                 }
             }
         }
-
+        
+        // listen for when you should refresh localCharacter from firebase
+        refreshStats()
+        // listen for when it's your turn
         segueWhenTurn()
     }
     
@@ -186,12 +189,58 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func createStatsArray() {
-        header.append(StatsHeaderRow(names: ["Host", "Player 1", "Player 2", "Player 3"]))
+        header.append(StatsHeaderRow(names: [teamList[0].userName, teamList[1].userName, teamList[2].userName, teamList[3].userName]))
         // extra to account for header messing everything up
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [teamList[0].health, teamList[1].health, teamList[2].health, teamList[3].health] , totalPoints: [1,2,3,4]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [teamList[0].health, teamList[1].health, teamList[2].health, teamList[3].health] , totalPoints: [1,2,3,4]))
         stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
-        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points:[1,2,3,4] , totalPoints: [1,2,3,4]))
+        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points:[teamList[0].stamina, teamList[1].stamina, teamList[2].stamina, teamList[3].stamina] , totalPoints: [1,2,3,4]))
+    }
+    
+    func updateLists() {
+        for i in 0..<teamList.count {
+            let playerRef = Firestore.firestore().collection("players").document(teamList[i].userName)
+            playerRef.getDocument { (document2, error) in
+                guard let document2 = document2, document2.exists else {
+                    print("This player does not exist")
+                    return
+                }
+                
+                let data = document2.data()
+                teamList[i].health = data!["health"] as! Int
+                teamList[i].stamina = data!["stamina"] as! Int
+                teamList[i].spellPoints = data!["spell_points"] as! Int
+            }
+        }
+        
+        // get enemy info again
+        for i in 0..<enemiesList.count {
+            let playerRef = Firestore.firestore().collection("players").document(enemiesList[i].userName)
+            playerRef.getDocument { (document2, error) in
+                guard let document2 = document2, document2.exists else {
+                    print("This player does not exist")
+                    return
+                }
+                
+                let data = document2.data()
+                enemiesList[i].health = data!["health"] as! Int
+            }
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            print("DEBUG: reloading display")
+            for teamMember in teamList {
+                print("DEBUG: \(teamMember.userName)'s health is \(teamMember.health)")
+            }
+            statsDisplay.beginUpdates()
+            self.stats.removeAll()
+            self.stats.append(StatsRow(imageName: UIImage(named: "health"), points: [teamList[0].health, teamList[1].health, teamList[2].health, teamList[3].health] , totalPoints: [1,2,3,4]))
+            self.stats.append(StatsRow(imageName: UIImage(named: "health"), points: [teamList[0].health, teamList[1].health, teamList[2].health, teamList[3].health] , totalPoints: [1,2,3,4]))
+            self.stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
+            self.stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points:[teamList[0].stamina, teamList[1].stamina, teamList[2].stamina, teamList[3].stamina] , totalPoints: [1,2,3,4]))
+            statsDisplay.reloadData()
+            statsDisplay.endUpdates()
+        }
     }
     
     func segueWhenTurn() {
@@ -205,25 +254,27 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
                         return
                     }
                     
+                    
                     if !first {
-                        print("change triggered!")
-                        
-                        let data = document.data()
-                        let order = data?["order"] as! [String]
-                        
-                        print("order[0] is \(order[0]) and I am \(player)")
-                        if order[0] == player {
+                        DispatchQueue.main.async {
+                            self.updateLists()
                             
-                            sleep(2)
+                            let data = document.data()
+                            let order = data?["order"] as! [String]
                             
-                            // bring up battle VC
-                            let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                            let vc = sb.instantiateViewController(withIdentifier: "BattleSelectActionViewController") as! BattleSelectActionViewController
-                            
-                            self.modalPresentationStyle = .fullScreen
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: false)
-                            
+                            if order[0] == localCharacter.userName {
+                                
+                                sleep(2)
+                                
+                                // bring up battle VC
+                                let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                                let vc = sb.instantiateViewController(withIdentifier: "BattleSelectActionViewController") as! BattleSelectActionViewController
+                                
+                                self.modalPresentationStyle = .fullScreen
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: false)
+                                
+                            }
                         }
                     } else {
                         first = false

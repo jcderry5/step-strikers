@@ -261,15 +261,15 @@
 		649A4B2429A972BF00377575 /* StepStrikersTests */ = {
 			isa = PBXGroup;
 			children = (
-				649A4B2529A972BF00377575 /* StepStrikersTests.swift */,
-				649A4B2C29A9731D00377575 /* RPGCharacterTests.swift */,
-				649A4B3929A9E93100377575 /* GameUnitTests.swift */,
-				649A4B3329A9B39A00377575 /* WeaponUnitTests.swift */,
 				649A4B3529A9C34300377575 /* ArmorUnitTests.swift */,
-				649A4B3729A9D53B00377575 /* ItemUnitTests.swift */,
-				649A4B3F29AAD36B00377575 /* CharacterClassUnitTests.swift */,
-				64ECD37B29AFD5F300E28D13 /* MessageLogUnitTests.swift */,
 				64ECD37D29AFD61300E28D13 /* CasterUnitTests.swift */,
+				649A4B3F29AAD36B00377575 /* CharacterClassUnitTests.swift */,
+				649A4B3929A9E93100377575 /* GameUnitTests.swift */,
+				649A4B3729A9D53B00377575 /* ItemUnitTests.swift */,
+				64ECD37B29AFD5F300E28D13 /* MessageLogUnitTests.swift */,
+				649A4B2C29A9731D00377575 /* RPGCharacterTests.swift */,
+				649A4B2529A972BF00377575 /* StepStrikersTests.swift */,
+				649A4B3329A9B39A00377575 /* WeaponUnitTests.swift */,
 			);
 			path = StepStrikersTests;
 			sourceTree = "<group>";

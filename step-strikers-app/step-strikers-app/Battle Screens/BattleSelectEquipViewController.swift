@@ -28,8 +28,7 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        renderEnemies(enemyTeam:  "4bDfA6dWfv8fRSdebjWI")
-        renderTeam(enemyTeam:  "4bDfA6dWfv8fRSdebjWI")
+        displayEnemies(enemyTeam:  "4bDfA6dWfv8fRSdebjWI")
         // Do any additional setup after loading the view.
         
         // background view items based on which submenu is being viewed
@@ -128,10 +127,8 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
             tableView.deselectRow(at: indexPath, animated: false)
             let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "BattleSelectEquipViewController") as! BattleSelectEquipViewController
-            // TODO: add code to save the new weapon or armor equipped here
-            // and discard the old one
-            // make text in cell red here once selected (tbh I have no idea how to do that, custom cell tings)
-            print("reloading equip")
+            
+            // TODO: @Alekhya: make text in cell red here once selected (tbh I have no idea how to do that, custom cell tings)
             self.modalPresentationStyle = .fullScreen
             vc.modalPresentationStyle = .fullScreen
             self.present(vc,animated: false)
@@ -139,11 +136,7 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
             selected = true
             rowEquipSelected = equips[indexPath.row]
             recentlyTapped = indexPath.row
-            if tableView == equipDisplay {
-                print("selected row")
-                
-            }
-            
+            equipItem(item: rowEquipSelected!)
         }
     }
     
@@ -207,7 +200,46 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
     @objc func xPressed(_ sender:UIButton!) {
         // remove pop up
         helpPopUp?.removeFromSuperview()
+            localCharacter.wear(armorObject: armorToEquip)
+        }
     }
+
+    func equipItem(item: Equip){
+    guard allWeapons.contains(item.name!) || allArmor.contains(item.name!) else {
+        print("\(String(describing: item.name)) is not a weapon nor armor")
+        return
+    }
+    
+    let quantity: Int = Int((item.quantity?.suffix(1))!)!
+    
+    if allWeapons.contains(item.name!) {
+        // just initializing weaponToEquip with first armor. Will be replaced
+        var weaponToEquip: Weapon = localCharacter.weaponsInInventory[0]
+        if quantity > 1 {
+            for weapon in localCharacter.weaponsInInventory {
+                if weapon.name == item.name! && weapon.useCount > weaponToEquip.useCount {
+                    weaponToEquip = weapon
+                }
+            }
+        } else {
+            weaponToEquip = localCharacter.weaponsInInventory.first(where: {weapon in weapon.name == item.name!})!
+        }
+        localCharacter.wield(weaponObject: weaponToEquip)
+    } else {
+        // just initializing armorToEquip with first armor. Will be replaced
+        var armorToEquip: Armor = localCharacter.armorInInventory[0]
+        if quantity > 1 {
+            for armor in localCharacter.armorInInventory {
+                if armor.name == item.name! && armor.useCount > armorToEquip.useCount {
+                    armorToEquip = armor
+                }
+            }
+        } else {
+            armorToEquip = localCharacter.armorInInventory.first(where: {armor in armor.name == item.name!})!
+        }
+        localCharacter.wear(armorObject: armorToEquip)
+    }
+}
     
     // TODO: change this array based on actual player data
     func createEquipArray() {
@@ -232,10 +264,10 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
     
     func createStatsArray() {
         // TODO: redo this to take in the values from kelly's function in uiviewcontroller extension
-        header.append(StatsHeaderRow(names: ["Host", "Player 1", "Player 2", "Player 3"]))
+        header.append(StatsHeaderRow(names: [teamList[0].userName, teamList[1].userName, teamList[2].userName, teamList[3].userName]))
         // extra to account for header messing everything up
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [teamList[0].health, teamList[1].health, teamList[2].health, teamList[3].health] , totalPoints: [1,2,3,4]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [teamList[0].health, teamList[1].health, teamList[2].health, teamList[3].health] , totalPoints: [1,2,3,4]))
         stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
         stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points:[1,2,3,4] , totalPoints: [1,2,3,4]))
     }

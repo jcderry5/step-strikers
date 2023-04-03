@@ -35,7 +35,7 @@ struct StatsHeaderRow {
     let names:[String]
 }
 
-struct enemyData {
+struct EnemyData {
     var userName:String
     var name:String
     var character_class:String
@@ -60,7 +60,7 @@ struct enemyData {
     var hasDisadvantage: Bool
 }
 
-struct currTargetData {
+struct CurrTargetData {
     var name:String
     var userName:String
     var character_class:String
@@ -69,10 +69,7 @@ struct currTargetData {
     var modifiedArmorClass: Int
     var attackModifier: Int
     var defenseModifier: Int
-    var armorInInventory: [Armor] // For potentially destroying poor armor
-    
-    // Added values for spells
-    // TODO: Need to add this to updateCurrTarget or this will be nil
+    var armorInInventory: [Armor]
     var isBlind:Bool
     var isDead: Bool
     var isSleep: Bool
@@ -80,37 +77,21 @@ struct currTargetData {
     var magicResistanceModifier: Int
     var currWeapon: Weapon
     var weaponInventory: [Weapon]
-    // Have not implemented advantage and disadvantage on rollDie
     var hasAdvantage: Bool
     var hasDisadvantage: Bool
-    
-    func printEnemyData() {
-        print("currTarget name is: \(name)")
-        print("currTarget character class is: \(character_class)")
-        print("currTarget health is: \(health)")
-        print("currTarget armor name is: \(armor.name)")
-        print("currTarget defense modifier is: \(defenseModifier)")
-        print("currTarget armor inventory count is: \(armorInInventory.count)")
-    }
+    var spellPoints: Int!
+    var currStamina: Int
 }
 
-struct teamData {
+struct TeamData {
     let userName:String
     let name:String
     let character_class:String
-    let health:Int
-    let isBlind:Bool
-    let isInvisible:Bool
-    // Added for spells
-    let hasAdvantage:Bool
-    let defenseModifier:Int
-}
-
-struct currTeamMemberData {
-    var name: String
-    var characterClass:String
-    var health: Int
+    var health:Int
+    var isBlind:Bool
     var isInvisible:Bool
-    var hasAdvantage: Bool
-    var defenseModifier: Int
+    var hasAdvantage:Bool
+    var defenseModifier:Int
+    var spellPoints: Int
+    var stamina: Int
 }

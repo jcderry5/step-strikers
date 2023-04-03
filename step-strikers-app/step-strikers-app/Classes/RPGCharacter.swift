@@ -56,7 +56,6 @@ class RPGCharacter {
     var attackModifier = 0
     var defenseModifier = 0
     var magicResistanceModifier = 0
-    // TODO: @Kelly, when loading up your character for your turn, this is needed.
     var hasAdvantage: Bool = false
     var hasDisadvantage: Bool = false
     
@@ -319,12 +318,28 @@ func increaseTargetHealth(amtHealed: Int) {
 
 func decreaseTargetHealth(amtDamage: Int){
     currTarget.health -= amtDamage
+    print("DEBUG: \(currTarget.userName)'s health is was \(currTarget.health + amtDamage) and is now \(currTarget.health)")
     if currTarget.health < 0 {
         currTarget.health = 0
         currTarget.isDead = true
         let message = "\(localCharacter.characterName) has just killed \(currTarget.name)!"
         messageLog.addToMessageLog(message: message)
     }
+}
+
+func increaseTargetSpellPoints(amtIncrease: Int){
+    guard currTarget.character_class == "Caster" else {
+        print("ERROR: Trying to increase spell points of non-caster")
+        return
+    }
+    
+    currTarget.spellPoints += amtIncrease
+    currTarget.spellPoints = min(currTarget.spellPoints, getMaxSpellPoints(characterClass: currTarget.character_class))
+}
+
+func increaseTargetStamina(amtIncrease: Int) {
+    currTarget.currStamina += amtIncrease
+    currTarget.currStamina = min(currTarget.currStamina, getMaxStamina(characterClass: currTarget.character_class))
 }
 
 func getMaxHealth(characterClass: String) -> Int {
