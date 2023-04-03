@@ -16,6 +16,9 @@ class StatsViewController: UIViewController {
     let cellId = "statsCell"
     var boostTotal = 3000
     var numTillBoost = 0
+    
+    // Audio
+    let nonCombatBattleMusicFile: String = "Woodland Fantasy.mp3"
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

@@ -8,6 +8,8 @@
 import UIKit
 import FirebaseFirestore
 
+let battleMusicFile: String = "Brirfing_theme.mp3"
+
 class RollResultsViewController: UIViewController {
     var listener: ListenerRegistration!
 
