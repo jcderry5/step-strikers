@@ -27,14 +27,13 @@ class StatsViewController: UIViewController {
                 healthStore.requestAuthorization(toShare: writeDataTypes as? Set<HKSampleType>, read: readDataTypes as? Set<HKObjectType>, completion: { (success, error) in
                     if(!success){
                         print("error")
-                        
                         return
                     }
                     DispatchQueue.main.async {
                         HealthKitViewController().getTodaysSteps() { sum in
                             steps = sum
                             var trackBoost:Double = 0.0
-                            trackBoost = steps.truncatingRemainder(dividingBy: Double(self.boostTotal))
+                            trackBoost = Double(self.boostTotal) - steps
                             _ = self.createLabel(x: 130, y: 624, w: 253, h: 41, font: "munro", size: 28, text: "\(Int(trackBoost)) steps until boost", align: .left)
                             _ = self.createLabel(x: 130, y: 653, w: 253, h: 41, font: "munro", size: 28, text: "\(Int(steps)) taken today", align: .left)
                         }
@@ -44,9 +43,25 @@ class StatsViewController: UIViewController {
             }
         } else {
             var trackBoost:Double = 0.0
-            trackBoost = steps.truncatingRemainder(dividingBy: Double(self.boostTotal))
+            trackBoost = Double(self.boostTotal) - steps
             _ = self.createLabel(x: 130, y: 624, w: 253, h: 41, font: "munro", size: 28, text: "\(Int(trackBoost)) steps until boost", align: .left)
             _ = self.createLabel(x: 130, y: 653, w: 253, h: 41, font: "munro", size: 28, text: "\(Int(steps)) taken today", align: .left)
+            
+            if trackBoost == 0 {
+                // Trigger a notification
+                // TODO: Make sure step-tracking process can run while app is not open
+                let content = UNMutableNotificationContent()
+                content.title = "You found a new item!"
+                content.sound = UNNotificationSound.default
+                
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+                let request = UNNotificationRequest(identifier: "myNotification", content: content, trigger: trigger)
+                
+                UNUserNotificationCenter.current().add(request)
+                
+                // Create popup notifying in-game users
+                createNotification()
+            }
         }
     }
     

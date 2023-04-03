@@ -49,6 +49,17 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate {
         // Signin button design
         let signInButton = createButton(x:116, y:668, w:160, h:100, text:"SIGN IN", fontSize:24, normalImage:buttonImg!, highlightedImage:selectedImg!)
         signInButton.addTarget(self, action:#selector(signInPressed), for:.touchUpInside)
+        
+        // Ask for alerts and implement the handler
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) {
+            // granted = whether you have permission, error = error
+            granted, error in
+            if granted {
+                print("All set")
+            } else if let error = error {
+                print(error.localizedDescription)
+            }
+        }
     }
     
     // Called when 'return' key pressed
