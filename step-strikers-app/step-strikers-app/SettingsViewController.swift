@@ -175,6 +175,7 @@ class SettingsViewController: UIViewController {
             if sender == bloodSwitch {
                 print("blood switch turned on")
                 localCharacter.blood = true
+                // TODO: Modify blood in Firebase
             } else if sender == darkModeSwitch {
                 print("dark mode switch turned on")
                 let appDelegate = UIApplication.shared.windows.first
@@ -194,6 +195,7 @@ class SettingsViewController: UIViewController {
             if sender == bloodSwitch {
                 print("blood switch turned off")
                 localCharacter.blood = false
+                // TODO: Modify blood in Firebase
             } else if sender == darkModeSwitch {
                 print("dark mode switch turned off")
                 let appDelegate = UIApplication.shared.windows.first
