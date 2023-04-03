@@ -59,6 +59,9 @@ class RPGCharacter {
     var hasAdvantage: Bool = false
     var hasDisadvantage: Bool = false
     
+    // Settings Variables
+    var darkMode = false
+    
     init(characterName: String, userName: String, health: Int,
          stamina: Int, dead: Bool, asleep: Bool, blind: Bool, invisible: Bool, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item], inventoryQuantities: [String:Int]){
         self.characterName = characterName

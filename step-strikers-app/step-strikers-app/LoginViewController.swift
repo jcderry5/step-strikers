@@ -156,6 +156,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 localCharacter.defenseModifier = defenseModifier
                 localCharacter.magicResistanceModifier = magicResistanceModifier
                 
+                // Apply the user's settings
+                let darkMode = document.get("darkmode") as! Bool
+                localCharacter.darkMode = darkMode
+                
                 // For Testing:
                 // localCharacter.printlocalCharacterDetailsToConsole()
                 game = "zIuUhRjKte6oUcvdrP4D"

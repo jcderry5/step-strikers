@@ -16,11 +16,12 @@ class SettingsViewController: UIViewController {
     var notificationsSwitch:UISwitch = UISwitch()
     var cameFromVC:UIViewController?
     var confirmationView:UIView?
+    var background:UIImageView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        assignBackground()
+        self.background = assignSwitchableBackground()
         
         // settings title
         var title = createLabel(x: 100, y: 100, w: 200, h: 100, font: "iso8", size: 40, text: "SETTINGS", align: .center)
@@ -177,6 +178,8 @@ class SettingsViewController: UIViewController {
                 print("dark mode switch turned on")
                 let appDelegate = UIApplication.shared.windows.first
                 appDelegate?.overrideUserInterfaceStyle = .dark
+                localCharacter.darkMode = true
+                self.background?.image = UIImage(named: "Background-DarkMode")
             } else if sender == vibrationSwitch {
                 print("vibration switch turned on")
             } else if sender == notificationsSwitch {
@@ -192,6 +195,8 @@ class SettingsViewController: UIViewController {
                 print("dark mode switch turned off")
                 let appDelegate = UIApplication.shared.windows.first
                 appDelegate?.overrideUserInterfaceStyle = .light
+                localCharacter.darkMode = false
+                self.background?.image = UIImage(named: "Background")
             } else if sender == vibrationSwitch {
                 print("vibration switch turned off")
             } else if sender == notificationsSwitch {
