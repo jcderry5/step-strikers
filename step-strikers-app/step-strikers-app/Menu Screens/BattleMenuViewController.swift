@@ -11,9 +11,6 @@ import FirebaseFirestore
 class BattleMenuViewController: UIViewController {
     
     let buttonImg = UIImage(named: "Big choice Button")
-    
-    // Audio
-    let nonCombatBattleMusicFile: String = "Woodland Fantasy.mp3"
 
     override func viewDidLoad() {
         super.viewDidLoad()
