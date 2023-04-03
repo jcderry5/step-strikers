@@ -69,6 +69,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func loginPressed(_ sender: Any) {
+        playSoundEffect(fileName: menuSelectEffect)
         if self.usernameTextField!.text == "" {
             self.message.text = "Username not entered"
         } else if passwordTextField!.text == "" {
@@ -175,6 +176,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func signupPressed(_ sender: Any) {
+        playSoundEffect(fileName: menuSelectEffect)
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "signupVC") as! RegistrationViewController
         

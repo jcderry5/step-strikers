@@ -17,9 +17,6 @@ class StatsViewController: UIViewController {
     let cellId = "statsCell"
     var boostTotal = 3000
     var numTillBoost = 0
-    
-    // Audio
-    let nonCombatBattleMusicFile: String = "Woodland Fantasy.mp3"
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -158,6 +155,7 @@ class StatsViewController: UIViewController {
     }
 
     @objc func swipeLeft() {
+        playSoundEffect(fileName: menuSelectEffect)
         // Navigate to the INVENTORY screen
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "InventoryViewController") as! InventoryViewController

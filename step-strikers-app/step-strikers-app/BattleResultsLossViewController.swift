@@ -51,6 +51,7 @@ class BattleResultsLossViewController: UIViewController {
     }
     
     @objc func continuePressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         // route back to stats menu
         let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "StatsViewController") as! StatsViewController
