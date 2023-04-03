@@ -492,11 +492,7 @@ extension UIViewController {
     
     @objc func player1Selected(_ sender:UIButton!) {
         playSoundEffect(fileName: menuSelectEffect)
-<<<<<<< HEAD
         updateCurrTargetData(teamMemberIndex: 0)
-=======
-        updateCurrTargetData(teamMemberIndex: 1)
->>>>>>> 89b82e99c78c709656943ed88fcd28297122bf3b
         selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
             boxArrow[0].removeFromSuperview()
@@ -508,11 +504,7 @@ extension UIViewController {
     
     @objc func player2Selected(_ sender:UIButton!) {
         playSoundEffect(fileName: menuSelectEffect)
-<<<<<<< HEAD
         updateCurrTargetData(teamMemberIndex: 1)
-=======
-        updateCurrTargetData(teamMemberIndex: 2)
->>>>>>> 89b82e99c78c709656943ed88fcd28297122bf3b
         selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
             boxArrow[0].removeFromSuperview()
@@ -524,11 +516,7 @@ extension UIViewController {
     
     @objc func player3Selected(_ sender:UIButton!) {
         playSoundEffect(fileName: menuSelectEffect)
-<<<<<<< HEAD
         updateCurrTargetData(teamMemberIndex: 2)
-=======
-        updateCurrTargetData(teamMemberIndex: 3)
->>>>>>> 89b82e99c78c709656943ed88fcd28297122bf3b
         selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
             boxArrow[0].removeFromSuperview()
@@ -540,11 +528,7 @@ extension UIViewController {
     
     @objc func player4Selected(_ sender:UIButton!) {
         playSoundEffect(fileName: menuSelectEffect)
-<<<<<<< HEAD
         updateCurrTargetData(teamMemberIndex: 3)
-=======
-        updateCurrTargetData(teamMemberIndex: 4)
->>>>>>> 89b82e99c78c709656943ed88fcd28297122bf3b
         selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
             boxArrow[0].removeFromSuperview()
