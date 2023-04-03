@@ -176,9 +176,9 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
                 enemiesList[3].imageView.removeFromSuperview()
                 selectEnemyLabel.removeFromSuperview()
                 if boxArrow.isEmpty == false {
-                    boxArrow[0].removeFromSuperview()
-                    boxArrow[1].removeFromSuperview()
-                    boxArrow[2].removeFromSuperview()
+                    for index in boxArrow.indices {
+                        boxArrow[index].removeFromSuperview()
+                    }
                 }
                 // will need to resave if the player deselects, but if you do it here it'll override
                 
@@ -191,15 +191,15 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
                             selectRandomEnemy()
                         }
                         if boxArrow.isEmpty == false {
-                            boxArrow[0].removeFromSuperview()
-                            boxArrow[1].removeFromSuperview()
-                            boxArrow[2].removeFromSuperview()
+                            for index in boxArrow.indices {
+                                boxArrow[index].removeFromSuperview()
+                            }
                         }
                     } else {
                         if actionTargetsTeam() {
-                            playerButtons = drawPlayerButtons(player1: teamList[0].character_class, player2:    teamList[1].character_class, player3: teamList[2].character_class, player4: teamList[3].character_class)
+                            playerButtons = drawPlayerButtons()
                         } else {
-                            characterButtons = drawEnemiesButton(enemy1: enemiesList[0].character_class, enemy2: enemiesList[1].character_class, enemy3: enemiesList[2].character_class, enemy4: enemiesList[3].character_class)
+                            characterButtons = drawEnemiesButton()
                             checkAllEnemiesInvisible()
                         }
                     }
@@ -322,23 +322,23 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     }
     
     func selectRandomTeamMember() {
-        var randomMember = Int.random(in: 0...3)
+        var randomMember = Int.random(in: 1...teamList.count)
         if rowSelected?.name == "Animate the Dead" {
             // if action is animate the dead don't want to animate yourself on accident
             while teamList[randomMember].userName == localCharacter.userName {
-                randomMember = Int.random(in: 0...3)
+                randomMember = Int.random(in: 1...teamList.count)
             }
         }
         let blankButton = UIButton()
         blankButton.backgroundColor = .clear
         blankButton.setTitle("", for: .normal)
-        if randomMember == 0 {
+        if randomMember == 1 {
             player1Selected(blankButton)
-        } else if randomMember == 1 {
-            player2Selected(blankButton)
         } else if randomMember == 2 {
-            player3Selected(blankButton)
+            player2Selected(blankButton)
         } else if randomMember == 3 {
+            player3Selected(blankButton)
+        } else if randomMember == 4 {
             player4Selected(blankButton)
         }
         let seconds = 1.5
@@ -347,7 +347,6 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
             // Decide if the player needs to roll or not
              if(actionRequiresRoll()) {
                  let vc = storyboard.instantiateViewController(withIdentifier: "BattleRollViewController") as! BattleRollViewController
-                 vc.selectTargetInfo = (enemiesList[0].userName, enemiesList[1].userName, enemiesList[2].userName, enemiesList[3].userName, rowSelected!)
 
                  self.modalPresentationStyle = .fullScreen
                  vc.modalPresentationStyle = .fullScreen
@@ -368,10 +367,10 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         // TODO: when ready to finish battle as all enemies are dead uncomment this checker method
        // checkAllEnemiesDead()
        // edit change to enemy count instead of 4
-       var randomEnemy = Int.random(in: 1...4)
+        var randomEnemy = Int.random(in: 1...enemiesList.count)
         // while the enemy chosen is dead select new random enemy until an enemy that is not dead is chosen
         while enemiesList[randomEnemy].isDead {
-            randomEnemy = Int.random(in: 1...4)
+            randomEnemy = Int.random(in: 1...enemiesList.count)
         }
        let blankButton = UIButton()
        blankButton.backgroundColor = .clear

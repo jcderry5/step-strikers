@@ -27,7 +27,7 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        renderTeam(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
+        renderTeam(playerTeam: "4bDfA6dWfv8fRSdebjWI")
         displayEnemies(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
         // Do any additional setup after loading the view.
         // background images and view set up
@@ -120,16 +120,14 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
     
     // TODO: complete for when a row is selected to segue to Battle Item Select target screen
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath:IndexPath) {
-        print(enemiesList[0].name)
         if recentlyTapped == indexPath.row && selected == true {
             selected = false
-            playerButtons[0].removeFromSuperview()
-            playerButtons[1].removeFromSuperview()
-            playerButtons[2].removeFromSuperview()
-            playerButtons[3].removeFromSuperview()
-            boxArrow[0].removeFromSuperview()
-            boxArrow[1].removeFromSuperview()
-            boxArrow[2].removeFromSuperview()
+            for index in playerButtons.indices {
+                playerButtons[index].removeFromSuperview()
+            }
+            for index in boxArrow.indices {
+                boxArrow[index].removeFromSuperview()
+            }
             tableView.deselectRow(at: indexPath, animated:false)
         } else {
         selected = true
@@ -139,12 +137,12 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
                 
                 print("selected row")
                 if boxArrow.isEmpty == false {
-                    boxArrow[0].removeFromSuperview()
-                    boxArrow[1].removeFromSuperview()
-                    boxArrow[2].removeFromSuperview()
+                    for index in boxArrow.indices {
+                        boxArrow[index].removeFromSuperview()
+                    }
                 }
                 
-                playerButtons = drawPlayerButtons(player1: teamList[0].character_class, player2: teamList[1].character_class, player3: teamList[2].character_class, player4: teamList[3].character_class)
+                playerButtons = drawPlayerButtons()
 //                boxArrow = drawSelectBoxButtonArrowItem(x: 40, y: 130, width: 70, height: 150)
             }
         }
