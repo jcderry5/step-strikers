@@ -106,6 +106,13 @@ extension UIViewController {
         view.addSubview(notificationView)
     }
     
+    func checkDarkMode() {
+        if localCharacter.darkMode {
+            let appDelegate = UIApplication.shared.windows.first
+            appDelegate?.overrideUserInterfaceStyle = .dark
+        }
+    }
+    
     @objc private func pushPressed(_ sender:UIButton!) {
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "InventoryViewController") as! InventoryViewController

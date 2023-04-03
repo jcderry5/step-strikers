@@ -60,6 +60,7 @@ class StatsViewController: UIViewController {
             HealthKitViewController().getSteps()
         }
         
+        checkDarkMode()
         self.background = assignSwitchableBackground()
         createSettingsButton(x: 325, y: 800, width: 40, height: 40)
         

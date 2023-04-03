@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class SettingsViewController: UIViewController {
 
@@ -65,7 +66,6 @@ class SettingsViewController: UIViewController {
         backButton.addTarget(self, action:#selector(backButtonPressed), for:.touchUpInside)
         
         // delete account button
-        // TODO: add if player is in battle to dismiss this button from the subview
         let deleteButton = UIButton()
         deleteButton.frame = CGRect(x: 125, y:575, width: 150, height: 75)
         deleteButton.setTitle("DELETE ACCOUNT", for:UIControl.State.normal)
@@ -146,6 +146,12 @@ class SettingsViewController: UIViewController {
     }
 
     @objc func backButtonPressed(_ sender:UIButton!) {
+        // Update values in Firebase
+        Firestore.firestore().collection("players").document(localCharacter.userName).updateData([
+            "darkmode": darkModeSwitch.isOn,
+            "blood": bloodSwitch.isOn
+        ])
+        
         // Return to battle menu
         self.dismiss(animated: false)
     }
@@ -175,7 +181,6 @@ class SettingsViewController: UIViewController {
             if sender == bloodSwitch {
                 print("blood switch turned on")
                 localCharacter.blood = true
-                // TODO: Modify blood in Firebase
             } else if sender == darkModeSwitch {
                 print("dark mode switch turned on")
                 let appDelegate = UIApplication.shared.windows.first
