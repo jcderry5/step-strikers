@@ -159,6 +159,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 // Apply the user's settings
                 let darkMode = document.get("darkmode") as! Bool
                 localCharacter.darkMode = darkMode
+                let blood = document.get("blood") as! Bool
+                localCharacter.blood = blood
                 
                 // For Testing:
                 // localCharacter.printlocalCharacterDetailsToConsole()
