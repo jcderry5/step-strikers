@@ -164,7 +164,7 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
     
     override func viewDidAppear(_ animated: Bool) {
         if localCharacter.darkMode {
-            self.background?.image = UIImage(named: "Background-DarkMode")
+            self.background?.image = UIImage(named: "Background-darkmode")
         } else {
             self.background?.image = UIImage(named: "Background")
         }

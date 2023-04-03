@@ -13,7 +13,7 @@ extension UIViewController {
     func assignBackground() {
         var background = UIImage(named: "Background")
         if localCharacter != nil && localCharacter.darkMode {
-            background = UIImage(named: "Background-DarkMode")
+            background = UIImage(named: "Background-darkmode")
         }
         
         var imageView: UIImageView!
@@ -28,7 +28,7 @@ extension UIViewController {
     func assignSwitchableBackground() -> UIImageView {
         var background = UIImage(named: "Background")
         if localCharacter != nil && localCharacter.darkMode {
-            background = UIImage(named: "Background-DarkMode")
+            background = UIImage(named: "Background-darkmode")
         }
         
         var imageView: UIImageView!
