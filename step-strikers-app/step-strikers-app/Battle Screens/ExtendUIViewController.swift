@@ -256,13 +256,13 @@ extension UIViewController {
         var returnArray:[UIImageView]  = [UIImageView]()
         for (index, enemies) in enemiesList.enumerated() {
             var x = 0
-            if index == 1 {
+            if index == 0 {
                 x = 10
-            } else if index == 2 {
+            } else if index == 1 {
                 x = 100
-            } else if index == 3 {
+            } else if index == 2 {
                 x = 200
-            } else if index == 4 {
+            } else if index == 3 {
                 x = 290
             }
             let player1 = CharacterSprites(name: enemiesList[index].character_class)
@@ -283,31 +283,47 @@ extension UIViewController {
         self.view.addSubview(selectEnemyLabel)
         var returnArray:[UIButton] = [UIButton]()
         for (index, enemy) in enemiesList.enumerated() {
+            print("DEBUG: Index in drawEnemiesButton: \(index)")
             var x = 0
             if index == 0 {
+                print("Added player 1")
                 x = 10
-            } else if index == 1{
+                let player1 = CharacterSprites(name: enemiesList[index].character_class)
+                let player1Button = player1.drawButtonCharacter(controller: self, x: x, y: 400, width: 100, height: 100)
+                player1Button.addTarget(self, action:#selector(self.enemy1Selected(_:)), for: .touchUpInside)
+                if enemiesList[index].isInvisible == false && enemiesList[index].isDead == false {
+                            self.view.addSubview(player1Button)
+                }
+                returnArray.append(player1Button)
+            } else if index == 1 {
                 x = 100
+                let player2 = CharacterSprites(name: enemiesList[index].character_class)
+                let player2Button = player2.drawButtonCharacter(controller: self, x: x, y: 400, width: 100, height: 100)
+                player2Button.addTarget(self, action:#selector(self.enemy2Selected(_:)), for: .touchUpInside)
+                if enemiesList[index].isInvisible == false && enemiesList[index].isDead == false {
+                            self.view.addSubview(player2Button)
+                }
+                returnArray.append(player2Button)
             } else if index == 2 {
                 x = 200
+                let player3 = CharacterSprites(name: enemiesList[index].character_class)
+                let player3Button = player3.drawButtonCharacter(controller: self, x: x, y: 400, width: 100, height: 100)
+                player3Button.addTarget(self, action:#selector(self.enemy3Selected(_:)), for: .touchUpInside)
+                if enemiesList[index].isInvisible == false && enemiesList[index].isDead == false {
+                            self.view.addSubview(player3Button)
+                }
+                returnArray.append(player3Button)
             } else if index == 3 {
                 x = 290
+                let player4 = CharacterSprites(name: enemiesList[index].character_class)
+                let player4Button = player4.drawButtonCharacter(controller: self, x: x, y: 400, width: 100, height: 100)
+                player4Button.addTarget(self, action:#selector(self.enemy4Selected(_:)), for: .touchUpInside)
+                if enemiesList[index].isInvisible == false && enemiesList[index].isDead == false {
+                            self.view.addSubview(player4Button)
+                }
+                returnArray.append(player4Button)
             }
-            let player1 = CharacterSprites(name: enemiesList[index].character_class)
-            let player1Button = player1.drawButtonCharacter(controller: self, x: x, y: 400, width: 100, height: 100)
-            if index == 1 {
-                player1Button.addTarget(self, action:#selector(self.enemy1Selected(_:)), for: .touchUpInside)
-            } else if index == 2 {
-                player1Button.addTarget(self, action:#selector(self.enemy2Selected(_:)), for: .touchUpInside)
-            } else if index == 3 {
-                player1Button.addTarget(self, action:#selector(self.enemy3Selected(_:)), for: .touchUpInside)
-            } else if index == 4 {
-                player1Button.addTarget(self, action:#selector(self.enemy4Selected(_:)), for: .touchUpInside)
-            }
-            if enemiesList[index].isInvisible == false && enemiesList[index].isDead == false {
-                        self.view.addSubview(player1Button)
-            }
-            returnArray.append(player1Button)
+            
         }
         
         return returnArray
@@ -338,13 +354,13 @@ extension UIViewController {
             // self.view.safeAreaInsets.left+40, y: 140, width: 300, height: 300
             let player1Button = createButton(x: x, y: y, width: 70, height: 150, fontName: "munro", imageName: "", fontColor: UIColor.clear, buttonTitle: "player1")
             player1Button.backgroundColor = UIColor.clear
-            if index == 1 {
+            if index == 0 {
                 player1Button.addTarget(self, action:#selector(self.player1Selected(_:)), for: .touchUpInside)
-            } else if index == 2 {
+            } else if index == 1 {
                 player1Button.addTarget(self, action:#selector(self.player2Selected(_:)), for: .touchUpInside)
-            } else if index == 3 {
+            } else if index == 2 {
                 player1Button.addTarget(self, action:#selector(self.player3Selected(_:)), for: .touchUpInside)
-            } else if index == 4 {
+            } else if index == 3 {
                 player1Button.addTarget(self, action:#selector(self.player4Selected(_:)), for: .touchUpInside)
             }
             // cannot pick self if animate the dead
@@ -539,7 +555,6 @@ extension UIViewController {
             // Decide if the player needs to roll or not
             if(actionRequiresRoll()) {
                 let vc = storyboard.instantiateViewController(withIdentifier: "BattleRollViewController") as! BattleRollViewController
-                vc.selectTargetInfo = (enemiesList[0].userName, enemiesList[1].userName, enemiesList[2].userName, enemiesList[3].userName, rowSelected!)
                 
                 self.modalPresentationStyle = .fullScreen
                 vc.modalPresentationStyle = .fullScreen

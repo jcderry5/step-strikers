@@ -140,40 +140,38 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     // TODO: update with segue to select target view controller when pressed
     // TODO: update with real information about the action selected
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath:IndexPath) {
-        print(enemiesList[0].name)
         if recentlyTapped == indexPath.row && selected == true {
             selected = false
             if characterButtons.isEmpty == false {
-               characterButtons[0].removeFromSuperview()
-               characterButtons[1].removeFromSuperview()
-               characterButtons[2].removeFromSuperview()
-               characterButtons[3].removeFromSuperview()
+                for index in characterButtons.indices {
+                    characterButtons[index].removeFromSuperview()
+                }
            }
             selectEnemyLabel.removeFromSuperview()
             selectPlayerLabel.removeFromSuperview()
             
             if boxArrow.isEmpty == false {
-                boxArrow[0].removeFromSuperview()
-                boxArrow[1].removeFromSuperview()
-                boxArrow[2].removeFromSuperview()
+                for index in boxArrow.indices {
+                    boxArrow[index].removeFromSuperview()
+                }
             }
             tableView.deselectRow(at: indexPath, animated:false)
             if localCharacter.isBlind == false {
-                self.view.addSubview(enemiesList[0].imageView)
-                self.view.addSubview(enemiesList[1].imageView)
-                self.view.addSubview(enemiesList[2].imageView)
-                self.view.addSubview(enemiesList[3].imageView)
+                for index in enemiesList.indices {
+                    self.view.addSubview(enemiesList[index].imageView)
+                }
             }
         } else {
             selected = true
             rowSelected = actions[indexPath.row] // Actions stuct (holds
             recentlyTapped = indexPath.row
             if tableView == actionDisplay {
-                print("selected row")
-                enemiesList[0].imageView.removeFromSuperview()
-                enemiesList[1].imageView.removeFromSuperview()
-                enemiesList[2].imageView.removeFromSuperview()
-                enemiesList[3].imageView.removeFromSuperview()
+                for index in enemiesList.indices {
+                    if enemiesList[index].isDead == false {
+                        enemiesList[index].imageView.removeFromSuperview()
+                    }
+                    
+                }
                 selectEnemyLabel.removeFromSuperview()
                 if boxArrow.isEmpty == false {
                     for index in boxArrow.indices {
@@ -197,6 +195,9 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
                         }
                     } else {
                         if actionTargetsTeam() {
+                            for index in enemiesList.indices {
+                                self.view.addSubview(enemiesList[index].imageView)
+                            }
                             playerButtons = drawPlayerButtons()
                         } else {
                             characterButtons = drawEnemiesButton()
@@ -271,13 +272,22 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     }
     
     func createStatsArray() {
-        // TODO: update all instances of this method
-        header.append(StatsHeaderRow(names: [teamList[0].userName, teamList[1].userName, teamList[2].userName, teamList[3].userName]))
+        var nameArray:[String] = [String]()
+        var healthPoints:[Int] = [Int]()
+        var spellPoints:[Int] = [Int]()
+        var staminaPoints:[Int] = [Int]()
+        for member in teamList {
+            nameArray.append(member.userName)
+            healthPoints.append(member.health)
+            spellPoints.append(member.spellPoints)
+            staminaPoints.append(member.stamina)
+        }
+        header.append(StatsHeaderRow(names: nameArray))
         // extra to account for header messing everything up
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [teamList[0].health, teamList[1].health, teamList[2].health, teamList[3].health] , totalPoints: [1,2,3,4]))
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [teamList[0].health, teamList[1].health, teamList[2].health, teamList[3].health] , totalPoints: [1,2,3,4]))
-        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
-        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points:[1,2,3,4] , totalPoints: [1,2,3,4]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: [30, 30, 30, 30]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: [30, 30, 30, 30]))
+        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: spellPoints, totalPoints: [30, 30, 30, 30]))
+        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points: staminaPoints, totalPoints: [30, 30, 30, 30]))
     }
     
 

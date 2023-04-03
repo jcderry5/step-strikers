@@ -64,7 +64,7 @@ class StatsHeaderTableViewCell: UITableViewCell {
         addSubview(player3)
         addSubview(player4)
         // anchors the two strings based on their relative position within the cell and each other
-        player1.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 20, paddingBottom: 5, paddingRight: 5, width: 40, height: 0, enableInsets: false)
+        player1.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 5, width: 60, height: 0, enableInsets: false)
         player2.anchor(top: topAnchor, left: player1.rightAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 20, paddingBottom: 5, paddingRight: 40, width: 60, height: 0, enableInsets: false)
         player3.anchor(top: topAnchor, left: player2.rightAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 20, paddingBottom: 5, paddingRight: 0, width: 60, height: 0, enableInsets: false)
         player4.anchor(top: topAnchor, left: player3.rightAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 20, paddingBottom: 5, paddingRight: 0, width: 60, height: 0, enableInsets: false)

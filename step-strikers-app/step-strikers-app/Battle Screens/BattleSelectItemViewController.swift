@@ -27,7 +27,7 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        renderTeam(playerTeam: "4bDfA6dWfv8fRSdebjWI")
+//        renderTeam(playerTeam: "4bDfA6dWfv8fRSdebjWI")
         displayEnemies(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
         // Do any additional setup after loading the view.
         // background images and view set up
@@ -173,11 +173,21 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
     }
 
     func createStatsArray() {
-        header.append(StatsHeaderRow(names: ["Host", "Player 1", "Player 2", "Player 3"]))
+        var nameArray:[String] = [String]()
+        var healthPoints:[Int] = [Int]()
+        var spellPoints:[Int] = [Int]()
+        var staminaPoints:[Int] = [Int]()
+        for member in teamList {
+            nameArray.append(member.userName)
+            healthPoints.append(member.health)
+            spellPoints.append(member.spellPoints)
+            staminaPoints.append(member.stamina)
+        }
+        header.append(StatsHeaderRow(names: nameArray))
         // extra to account for header messing everything up
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
-        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
-        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points:[1,2,3,4] , totalPoints: [1,2,3,4]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: [30, 30, 30, 30]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: [30, 30, 30, 30]))
+        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: spellPoints, totalPoints: [30, 30, 30, 30]))
+        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points: staminaPoints, totalPoints: [30, 30, 30, 30]))
     }
 }

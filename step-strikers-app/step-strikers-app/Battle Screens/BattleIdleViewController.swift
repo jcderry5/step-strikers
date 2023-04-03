@@ -189,12 +189,22 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func createStatsArray() {
-        header.append(StatsHeaderRow(names: [teamList[0].userName, teamList[1].userName, teamList[2].userName, teamList[3].userName]))
+        var nameArray:[String] = [String]()
+        var healthPoints:[Int] = [Int]()
+        var spellPoints:[Int] = [Int]()
+        var staminaPoints:[Int] = [Int]()
+        for member in teamList {
+            nameArray.append(member.userName)
+            healthPoints.append(member.health)
+            spellPoints.append(member.spellPoints)
+            staminaPoints.append(member.stamina)
+        }
+        header.append(StatsHeaderRow(names: nameArray))
         // extra to account for header messing everything up
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [teamList[0].health, teamList[1].health, teamList[2].health, teamList[3].health] , totalPoints: [1,2,3,4]))
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [teamList[0].health, teamList[1].health, teamList[2].health, teamList[3].health] , totalPoints: [1,2,3,4]))
-        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
-        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points:[teamList[0].stamina, teamList[1].stamina, teamList[2].stamina, teamList[3].stamina] , totalPoints: [1,2,3,4]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: [30, 30, 30, 30]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: [30, 30, 30, 30]))
+        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: spellPoints, totalPoints: [30, 30, 30, 30]))
+        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points: staminaPoints, totalPoints: [30, 30, 30, 30]))
     }
     
     func updateLists() {
