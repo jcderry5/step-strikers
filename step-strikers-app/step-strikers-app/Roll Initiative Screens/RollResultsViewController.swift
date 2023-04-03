@@ -8,8 +8,6 @@
 import UIKit
 import FirebaseFirestore
 
-let battleMusicFile: String = "Brirfing_theme.mp3"
-
 class RollResultsViewController: UIViewController {
     var listener: ListenerRegistration!
 
@@ -82,6 +80,7 @@ class RollResultsViewController: UIViewController {
 
     
     @objc func rollDicePressed(_ sender:UIButton) {
+        playSoundEffect(fileName: menuSelectEffect)
         let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let docRef = Firestore.firestore().collection("orders").document(game)
         docRef.getDocument {(document, error) in

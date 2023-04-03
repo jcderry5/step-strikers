@@ -124,7 +124,7 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     @objc func onSegmentChanged(_ sender: UISegmentedControl!) {
-        // TODO: Combine duplicate weapons/armor/items into one inventoryObj (quantity counter)
+        playSoundEffect(fileName: menuSelectEffect)
         // Replace tableview cells depending on selected index
         inventoryArr.removeAll()
         switch segCtrl.selectedSegmentIndex {
@@ -171,6 +171,7 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     @objc func swipeLeft() {
+        playSoundEffect(fileName: menuSelectEffect)
         // Navigate to BATTLE MENU
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "BattleMenuViewController") as! BattleMenuViewController
@@ -181,6 +182,7 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     @objc func swipeRight() {
+        playSoundEffect(fileName: menuSelectEffect)
         // Navigate to STATS MENU
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "StatsViewController") as! StatsViewController

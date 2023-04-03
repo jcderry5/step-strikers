@@ -13,9 +13,6 @@ class PartyMenuNonHostViewController: UIViewController {
     var labelText:NSMutableAttributedString?
     var partyCode = ""
     
-    // Audio
-    let partyMenuMusicFile: String = "Haply.mp3"
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -147,6 +144,7 @@ class PartyMenuNonHostViewController: UIViewController {
     }
     
     @objc func leavePressed(_ sender: Any) {
+        playSoundEffect(fileName: menuSelectEffect)
         // remove player from the team on firebase
         let docRef = Firestore.firestore().collection("teams").document(self.partyCode)
         docRef.getDocument { (document, error) in

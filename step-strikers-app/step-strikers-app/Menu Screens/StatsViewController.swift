@@ -164,6 +164,7 @@ class StatsViewController: UIViewController {
     }
 
     @objc func swipeLeft() {
+        playSoundEffect(fileName: menuSelectEffect)
         // Navigate to the INVENTORY screen
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "InventoryViewController") as! InventoryViewController

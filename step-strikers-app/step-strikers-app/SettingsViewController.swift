@@ -152,15 +152,18 @@ class SettingsViewController: UIViewController {
             "blood": bloodSwitch.isOn
         ])
         
+        playSoundEffect(fileName: menuSelectEffect)
         // Return to battle menu
         self.dismiss(animated: false)
     }
     
     @objc func deleteButtonPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         confirmationView = displayConfirmation()
     }
     
     @objc func confirmPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         // save or delete things here!
         
         // switch to registration screen
@@ -173,10 +176,12 @@ class SettingsViewController: UIViewController {
     }
     
     @objc func xPressed(_ sender: UIButton) {
+        playSoundEffect(fileName: menuSelectEffect)
         confirmationView?.removeFromSuperview()
     }
     
     @objc func switchStatedidChange(_ sender:UISwitch!) {
+        playSoundEffect(fileName: menuSelectEffect)
         if (sender.isOn == true) {
             if sender == bloodSwitch {
                 print("blood switch turned on")
@@ -219,6 +224,7 @@ class SettingsViewController: UIViewController {
     }
     
     @objc func sliderValueDidChange(_ sender:UISlider!) {
+        playSoundEffect(fileName: menuSelectEffect)
         // adjust volume here based on sender.value
         print("slider value changed")
         print("Slider value is \(sender.value)")

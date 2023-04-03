@@ -136,6 +136,7 @@ class TeamMatchViewController: UIViewController, UITableViewDelegate, UITableVie
         // remove your team from the match list
         Firestore.firestore().collection("matchable_teams").document("teams").updateData(["teams": FieldValue.arrayRemove([self.partyCode])])
         
+        playSoundEffect(fileName: menuSelectEffect)
         // set to battle menu here
         // TODO: set party menu as vc to switch to
         let sb = UIStoryboard(name: "Main", bundle: nil)
@@ -146,10 +147,9 @@ class TeamMatchViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     @objc func confirmPressed(_ sender:UIButton!) {
-        // remove your team from match list
-        Firestore.firestore().collection("matchable_teams").document("teams").updateData(["teams": FieldValue.arrayRemove(["\(self.partyCode)-\(numPlayers)"])])
-        
-        print("DEBUG: tried to remove \(self.partyCode)-\(numPlayers)")
+        playSoundEffect(fileName: menuSelectEffect)
+        // remove your team from team list
+        Firestore.firestore().collection("matchable_teams").document("teams").updateData(["teams": FieldValue.arrayRemove([self.partyCode])])
 
         // move to roll initiative screen
         let sb = UIStoryboard(name: "Main", bundle: nil)

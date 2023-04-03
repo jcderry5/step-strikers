@@ -66,6 +66,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate {
 
     
     @objc func registerPressed() {
+        playSoundEffect(fileName: menuSelectEffect)
         // TODO: Register credentials to Firebase and navigate to Stats screen
         if self.usernameTextField!.text == "" {
             // TODO: @Nick don't print this, display it on the screen
@@ -97,6 +98,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func signInPressed() {
+        playSoundEffect(fileName: menuSelectEffect)
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "loginVC") as! LoginViewController
 

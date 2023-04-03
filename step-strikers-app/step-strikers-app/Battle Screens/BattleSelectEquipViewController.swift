@@ -115,6 +115,7 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
     }
     
     @objc func tableView(_ tableView: UITableView, didSelectRowAt indexPath:IndexPath) {
+        playSoundEffect(fileName: menuSelectEffect)
         if recentlyTapped == indexPath.row && selected == true {
             selected = false
             tableView.deselectRow(at: indexPath, animated: false)
