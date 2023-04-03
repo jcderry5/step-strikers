@@ -673,7 +673,7 @@
 				CODE_SIGN_ENTITLEMENTS = "step-strikers-app/step-strikers-app.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = CSYW58SF6X;
+				DEVELOPMENT_TEAM = GZKR6345ZK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "step-strikers-app/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -703,7 +703,7 @@
 				CODE_SIGN_ENTITLEMENTS = "step-strikers-app/step-strikers-app.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = CSYW58SF6X;
+				DEVELOPMENT_TEAM = GZKR6345ZK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "step-strikers-app/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
