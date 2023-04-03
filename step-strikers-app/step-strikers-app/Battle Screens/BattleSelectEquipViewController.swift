@@ -25,7 +25,6 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
     override func viewDidLoad() {
         super.viewDidLoad()
         displayEnemies(enemyTeam:  "4bDfA6dWfv8fRSdebjWI")
-        renderTeam(enemyTeam:  "4bDfA6dWfv8fRSdebjWI")
         // Do any additional setup after loading the view.
         
         // background view items based on which submenu is being viewed
