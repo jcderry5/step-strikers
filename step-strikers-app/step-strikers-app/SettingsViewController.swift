@@ -180,6 +180,7 @@ class SettingsViewController: UIViewController {
                 appDelegate?.overrideUserInterfaceStyle = .dark
                 localCharacter.darkMode = true
                 self.background?.image = UIImage(named: "Background-DarkMode")
+                // TODO: Modify darkmode value in Firebase
             } else if sender == vibrationSwitch {
                 print("vibration switch turned on")
             } else if sender == notificationsSwitch {
@@ -197,6 +198,7 @@ class SettingsViewController: UIViewController {
                 appDelegate?.overrideUserInterfaceStyle = .light
                 localCharacter.darkMode = false
                 self.background?.image = UIImage(named: "Background")
+                // TODO: Modify darkmode value in Firebase
             } else if sender == vibrationSwitch {
                 print("vibration switch turned off")
             } else if sender == notificationsSwitch {
