@@ -278,16 +278,21 @@ class Rogue: RPGCharacter {
 }
 
 func actionRequiresEnemy() -> Bool {
+    
+    guard rowSelected != nil else {
+        return false
+    }
+
     let actionSelected = rowSelected?.name
     
-    print("DEBUG: \(actionSelected)")
+    print("DEBUG: \(String(describing: actionSelected))")
     
     switch actionSelected {
     case "Fight", "Action Surge", "Insight", "Frost Bite", "Mage Hand", "Shield", "Sleep", "Animate the Dead", "Heal", "Bardic Inspiration", "Vicious Mockery", "Blindness", "Invisibility":
-        print("DEBUG: \(actionSelected) returns true")
+        print("DEBUG: \(String(describing: actionSelected)) returns true")
         return true
     default:
-        print("DEBUG: \(actionSelected) returns false")
+        print("DEBUG: \(String(describing: actionSelected)) returns false")
         return false
     }
 }

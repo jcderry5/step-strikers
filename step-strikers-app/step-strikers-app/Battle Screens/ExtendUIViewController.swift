@@ -483,7 +483,7 @@ extension UIViewController {
     }
     
     @objc func player1Selected(_ sender:UIButton!) {
-        updateCurrTargetData(teamMemberIndex: 1)
+        updateCurrTargetData(teamMemberIndex: 0)
         selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
             boxArrow[0].removeFromSuperview()
@@ -494,7 +494,7 @@ extension UIViewController {
     }
     
     @objc func player2Selected(_ sender:UIButton!) {
-        updateCurrTargetData(teamMemberIndex: 2)
+        updateCurrTargetData(teamMemberIndex: 1)
         selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
             boxArrow[0].removeFromSuperview()
@@ -505,7 +505,7 @@ extension UIViewController {
     }
     
     @objc func player3Selected(_ sender:UIButton!) {
-        updateCurrTargetData(teamMemberIndex: 3)
+        updateCurrTargetData(teamMemberIndex: 2)
         selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
             boxArrow[0].removeFromSuperview()
@@ -516,7 +516,7 @@ extension UIViewController {
     }
     
     @objc func player4Selected(_ sender:UIButton!) {
-        updateCurrTargetData(teamMemberIndex: 4)
+        updateCurrTargetData(teamMemberIndex: 3)
         selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
             boxArrow[0].removeFromSuperview()
