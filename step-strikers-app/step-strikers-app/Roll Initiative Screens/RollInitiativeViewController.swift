@@ -16,7 +16,7 @@ class RollInitiativeViewController: UIViewController {
         assignBackground()
         rollD20()
         
-        renderTeam(playerTeam: "4bDfA6dWfv8fRSdebjWI")
+        renderTeam(playerTeam: team)
     }
     
     func createDiceButton() -> UIButton {

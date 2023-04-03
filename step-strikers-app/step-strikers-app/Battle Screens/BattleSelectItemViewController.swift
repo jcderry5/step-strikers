@@ -28,7 +28,7 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
     override func viewDidLoad() {
         super.viewDidLoad()
 //        renderTeam(playerTeam: "4bDfA6dWfv8fRSdebjWI")
-        displayEnemies(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
+        displayEnemies(enemyTeam:  enemyTeam)
         // Do any additional setup after loading the view.
         // background images and view set up
         assignBackground()

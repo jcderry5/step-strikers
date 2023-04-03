@@ -12,14 +12,22 @@ class StatsTableViewCell : UITableViewCell {
     // stores the values of the action struct in the label's text fields
     var stats : StatsRow? {
         didSet {
-            statImage0.image = stats?.imageName
-            statImage1.image = stats?.imageName
-            statImage2.image = stats?.imageName
-            statImage3.image = stats?.imageName
-            pointDisplay0.text = "\(String(describing: stats!.points[0])) / \(String(describing: stats!.totalPoints[0]))"
-            pointDisplay1.text = "\(String(describing: stats!.points[1])) / \(String(describing: stats!.totalPoints[1]))"
-            pointDisplay2.text = "\(String(describing: stats!.points[2])) / \(String(describing: stats!.totalPoints[2]))"
-            pointDisplay3.text = "\(String(describing: stats!.points[3])) / \(String(describing: stats!.totalPoints[3]))"
+            for index in stats!.points.indices {
+                if index == 0 {
+                    statImage0.image = stats?.imageName
+                    pointDisplay0.text = "\(String(describing: stats!.points[0])) / \(String(describing: stats!.totalPoints[0]))"
+                } else if index == 1 {
+                    statImage1.image = stats?.imageName
+                    pointDisplay1.text = "\(String(describing: stats!.points[1])) / \(String(describing: stats!.totalPoints[1]))"
+
+                } else if index == 2 {
+                    statImage2.image = stats?.imageName
+                    pointDisplay2.text = "\(String(describing: stats!.points[2])) / \(String(describing: stats!.totalPoints[2]))"
+                } else if index == 3 {
+                    statImage3.image = stats?.imageName
+                    pointDisplay3.text = "\(String(describing: stats!.points[3])) / \(String(describing: stats!.totalPoints[3]))"
+                }
+            }
         }
     }
     

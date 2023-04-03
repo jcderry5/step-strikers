@@ -15,6 +15,7 @@ var currTarget: CurrTargetData = CurrTargetData(name: "EmptyPlayer", userName: "
 var actions: [Action] = [Action]()
 var game: String = ""
 var team:String = ""
+var enemyTeam:String = ""
 
 class BattleSelectActionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -36,7 +37,7 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     override func viewDidLoad() {
         super.viewDidLoad()
 //        renderTeam(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
-        displayEnemies(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
+        displayEnemies(enemyTeam: enemyTeam)
         // puts full screen image as background of view controller
         // sets up the background images of the view controller
         // THESE NEED TO HAPPEN IN ORDER!!!!

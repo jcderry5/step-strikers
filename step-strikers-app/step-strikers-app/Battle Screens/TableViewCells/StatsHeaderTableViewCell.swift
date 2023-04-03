@@ -11,10 +11,17 @@ class StatsHeaderTableViewCell: UITableViewCell {
     // stores the values of the action struct in the label's text fields
     var head : StatsHeaderRow? {
         didSet {
-            player1.text = "\(head!.names[0])"
-            player2.text = "\(head!.names[1])"
-            player3.text = "\(head!.names[2])"
-            player4.text = "\(head!.names[3])"
+            for index in head!.names.indices {
+                if index == 0 {
+                    player1.text = "\(head!.names[0])"
+                } else if index == 1 {
+                    player2.text = "\(head!.names[1])"
+                } else if index == 2 {
+                    player3.text = "\(head!.names[2])"
+                } else if index == 3 {
+                    player4.text = "\(head!.names[3])"
+                }
+            }
         }
     }
     
