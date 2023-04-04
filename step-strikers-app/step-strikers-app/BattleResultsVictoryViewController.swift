@@ -13,6 +13,8 @@ class BattleResultsVictoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let loot = randomWinnerItemDrop(newOwner: localCharacter)
+        
         assignBackground()
 
         // Do any additional setup after loading the view.
@@ -29,23 +31,23 @@ class BattleResultsVictoryViewController: UIViewController {
         // enemy 1
         // TODO: add enemeiesList[index].character_class when previous vc's are functional
         // adding now will break everything
-        let enemy1 = CharacterSprites(name: "Bard")
-        let enemy1Image = enemy1.drawCharacter(view: self.view, x: 10, y: 500, width: 100, height:120, isInvisible: false, isDead: false)
-        
-        // enemy 2
-        let enemy2 = CharacterSprites(name: "Rogue")
-        let enemy2Image = enemy2.drawCharacter(view: self.view, x: 100, y: 500, width: 100, height: 120, isInvisible: false, isDead: false)
-        
-        // enemy 3
-        let enemy3 = CharacterSprites(name: "Fighter")
-        let enemy3Image =  enemy3.drawCharacter(view: self.view, x: 200, y: 500, width: 100, height: 120, isInvisible: false, isDead: false)
-        
-        // enemy  4
-        let enemy4 = CharacterSprites(name: "Wizard")
-        let enemy4Image = enemy4.drawCharacter(view: self.view, x: 290, y: 500, width: 100, height: 120, isInvisible: false, isDead: false)
+        for (index, enemy) in enemiesList.enumerated() {
+            var x = 10
+            let drawEnemy = CharacterSprites(name: "Bard")
+            if index == 0 {
+                x = 10
+            } else if index == 1 {
+                x = 100
+            } else if index == 2 {
+                x = 200
+            } else if index == 3 {
+                x = 290
+            }
+            let enemyImage = drawEnemy.drawCharacter(view: self.view, x: x, y: 500, width: 100, height:120, isInvisible: false, isDead: false)
+        }
         
         // items collected list
-        var itemsCollected = createLabel(x: 50, y: 575, w: 300, h: 200, font: "munro", size: 25, text: "Items Collected:\n -Potion of healing\n -Elixir of Magic", align: .center)
+        var itemsCollected = createLabel(x: 50, y: 575, w: 300, h: 200, font: "munro", size: 25, text: "Items Collected:\n -\(loot[0])\n -\(loot[1])\n -\(loot[2]) ", align: .center)
         itemsCollected.lineBreakMode = .byWordWrapping
         itemsCollected.numberOfLines = 0
         

@@ -59,6 +59,10 @@ class RPGCharacter {
     var hasAdvantage: Bool = false
     var hasDisadvantage: Bool = false
     
+    // Settings Variables
+    var darkMode = false
+    var blood = true
+    
     init(characterName: String, userName: String, health: Int,
          stamina: Int, dead: Bool, asleep: Bool, blind: Bool, invisible: Bool, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item], inventoryQuantities: [String:Int]){
         self.characterName = characterName
@@ -318,10 +322,18 @@ func increaseTargetHealth(amtHealed: Int) {
 
 func decreaseTargetHealth(amtDamage: Int){
     currTarget.health -= amtDamage
-    print("DEBUG: \(currTarget.userName)'s health is was \(currTarget.health + amtDamage) and is now \(currTarget.health)")
-    if currTarget.health < 0 {
+    if currTarget.health <= 0 {
         currTarget.health = 0
         currTarget.isDead = true
+        
+        // set currTarget to dead in enemiesList
+        for i in 0..<enemiesList.count {
+            if enemiesList[i].userName == currTarget.userName {
+                enemiesList[i].isDead = true
+                break
+            }
+        }
+        
         let message = "\(localCharacter.characterName) has just killed \(currTarget.name)!"
         messageLog.addToMessageLog(message: message)
     }

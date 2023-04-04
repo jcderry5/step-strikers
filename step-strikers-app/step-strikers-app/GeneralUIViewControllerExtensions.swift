@@ -11,7 +11,11 @@ import FirebaseFirestore
 extension UIViewController {
     
     func assignBackground() {
-        let background = UIImage(named: "Background")
+        var background = UIImage(named: "Background")
+        if localCharacter != nil && localCharacter.darkMode {
+            background = UIImage(named: "Background-darkmode")
+        }
+        
         var imageView: UIImageView!
         imageView = UIImageView(frame: self.view.frame)
         imageView.clipsToBounds = true
@@ -19,6 +23,23 @@ extension UIViewController {
         imageView.center = view.center
         view.addSubview(imageView)
         view.sendSubviewToBack(imageView)
+    }
+    
+    func assignSwitchableBackground() -> UIImageView {
+        var background = UIImage(named: "Background")
+        if localCharacter != nil && localCharacter.darkMode {
+            background = UIImage(named: "Background-darkmode")
+        }
+        
+        var imageView: UIImageView!
+        imageView = UIImageView(frame: self.view.frame)
+        imageView.clipsToBounds = true
+        imageView.image = background
+        imageView.center = view.center
+        view.addSubview(imageView)
+        view.sendSubviewToBack(imageView)
+        
+        return imageView
     }
     
     func createLabel(x:Int, y:Int, w:Int, h:Int, font:String, size:CGFloat, text:String, align:NSTextAlignment) -> UILabel {
@@ -83,6 +104,13 @@ extension UIViewController {
         push.addTarget(self, action:#selector(pushPressed), for:.touchUpInside)
         notificationView.addSubview(push)
         view.addSubview(notificationView)
+    }
+    
+    func checkDarkMode() {
+        if localCharacter.darkMode {
+            let appDelegate = UIApplication.shared.windows.first
+            appDelegate?.overrideUserInterfaceStyle = .dark
+        }
     }
     
     @objc private func pushPressed(_ sender:UIButton!) {

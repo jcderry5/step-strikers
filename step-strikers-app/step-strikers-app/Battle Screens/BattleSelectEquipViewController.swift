@@ -29,7 +29,7 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        displayEnemies(enemyTeam:  "4bDfA6dWfv8fRSdebjWI")
+        displayEnemies(enemyTeam: enemyTeam)
         // Do any additional setup after loading the view.
         
         // background view items based on which submenu is being viewed
@@ -39,7 +39,6 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
         let selectedButton:String = "Selected Action Button"
         let unselectedButton:String = "Unselected action button"
         createBattleActionButtons(actionSelected: unselectedButton, itemSelected: unselectedButton, equipSelected: selectedButton)
-        createSettingsButton(x: 10, y: 50, width: 40, height: 40)
         
         // create characters
         // will need to change "name" based on what the enemy players are
@@ -302,13 +301,22 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
     }
     
     func createStatsArray() {
-        // TODO: redo this to take in the values from kelly's function in uiviewcontroller extension
-        header.append(StatsHeaderRow(names: [teamList[0].userName, teamList[1].userName, teamList[2].userName, teamList[3].userName]))
+        var nameArray:[String] = [String]()
+        var healthPoints:[Int] = [Int]()
+        var spellPoints:[Int] = [Int]()
+        var staminaPoints:[Int] = [Int]()
+        for member in teamList {
+            nameArray.append(member.userName)
+            healthPoints.append(member.health)
+            spellPoints.append(member.spellPoints)
+            staminaPoints.append(member.stamina)
+        }
+        header.append(StatsHeaderRow(names: nameArray))
         // extra to account for header messing everything up
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [teamList[0].health, teamList[1].health, teamList[2].health, teamList[3].health] , totalPoints: [1,2,3,4]))
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [teamList[0].health, teamList[1].health, teamList[2].health, teamList[3].health] , totalPoints: [1,2,3,4]))
-        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
-        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points:[1,2,3,4] , totalPoints: [1,2,3,4]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: [30, 30, 30, 30]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: [30, 30, 30, 30]))
+        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: spellPoints, totalPoints: [30, 30, 30, 30]))
+        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points: staminaPoints, totalPoints: [30, 30, 30, 30]))
     }
 
 }

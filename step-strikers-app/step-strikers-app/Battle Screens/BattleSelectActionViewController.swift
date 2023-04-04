@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 var boxArrow: [AnyObject] = [AnyObject]()
 var rowSelected:Action?
@@ -17,6 +18,7 @@ var currTarget: CurrTargetData = CurrTargetData(name: "EmptyPlayer", userName: "
 var actions: [Action] = [Action]()
 var game: String = ""
 var team:String = ""
+var enemyTeam:String = ""
 
 class BattleSelectActionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -39,8 +41,49 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        renderTeam(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
-        displayEnemies(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
+        
+        // check if game is already over
+        if checkAllEnemiesDead() {
+            Firestore.firestore().collection("games").document(game).setData([
+                "game_over": true,
+                "game_winner": team
+            ], merge: true)
+            
+            let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = sb.instantiateViewController(withIdentifier: "BattleResultsVictoryViewController") as! BattleResultsVictoryViewController
+            
+            self.modalPresentationStyle = .fullScreen
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: false)
+        }
+        let gameRef = Firestore.firestore().collection("games").document(game)
+        gameRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                if document.get("game_over") as! Bool {
+                    if document.get("game_winner") as! String == team {
+                        // you win!
+                        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                        let vc = sb.instantiateViewController(withIdentifier: "BattleResultsVictoryViewController") as! BattleResultsVictoryViewController
+                        
+                        self.modalPresentationStyle = .fullScreen
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: false)
+                        
+                    } else {
+                        // you lose
+                        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                        let vc = sb.instantiateViewController(withIdentifier: "BattleResultsLossViewController") as! BattleResultsLossViewController
+                        
+                        self.modalPresentationStyle = .fullScreen
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: false)
+                    }
+                }
+            }
+        }
+        
+        
+        displayEnemies(enemyTeam: enemyTeam)
         // puts full screen image as background of view controller
         // sets up the background images of the view controller
         // THESE NEED TO HAPPEN IN ORDER!!!!
@@ -50,7 +93,6 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         let selectedButton:String = "Selected Action Button"
         let unselectedButton:String = "Unselected action button"
         createBattleActionButtons(actionSelected: selectedButton, itemSelected: unselectedButton, equipSelected: unselectedButton)
-        createSettingsButton(x: 10, y: 50, width: 40, height: 40)
         
         // create a Table View that displays the action menu, and when pressed does something
         // the array of all the action a player can do
@@ -151,45 +193,43 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     // TODO: update with segue to select target view controller when pressed
     // TODO: update with real information about the action selected
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath:IndexPath) {
-        print(enemiesList[0].name)
         if recentlyTapped == indexPath.row && selected == true {
             selected = false
             if characterButtons.isEmpty == false {
-               characterButtons[0].removeFromSuperview()
-               characterButtons[1].removeFromSuperview()
-               characterButtons[2].removeFromSuperview()
-               characterButtons[3].removeFromSuperview()
+                for index in characterButtons.indices {
+                    characterButtons[index].removeFromSuperview()
+                }
            }
             selectEnemyLabel.removeFromSuperview()
             selectPlayerLabel.removeFromSuperview()
             
             if boxArrow.isEmpty == false {
-                boxArrow[0].removeFromSuperview()
-                boxArrow[1].removeFromSuperview()
-                boxArrow[2].removeFromSuperview()
+                for index in boxArrow.indices {
+                    boxArrow[index].removeFromSuperview()
+                }
             }
             tableView.deselectRow(at: indexPath, animated:false)
             if localCharacter.isBlind == false {
-                self.view.addSubview(enemiesList[0].imageView)
-                self.view.addSubview(enemiesList[1].imageView)
-                self.view.addSubview(enemiesList[2].imageView)
-                self.view.addSubview(enemiesList[3].imageView)
+                for index in enemiesList.indices {
+                    self.view.addSubview(enemiesList[index].imageView)
+                }
             }
         } else {
             selected = true
             rowSelected = actions[indexPath.row] // Actions stuct (holds
             recentlyTapped = indexPath.row
             if tableView == actionDisplay {
-                print("selected row")
-                enemiesList[0].imageView.removeFromSuperview()
-                enemiesList[1].imageView.removeFromSuperview()
-                enemiesList[2].imageView.removeFromSuperview()
-                enemiesList[3].imageView.removeFromSuperview()
+                for index in enemiesList.indices {
+                    if enemiesList[index].isDead == false {
+                        enemiesList[index].imageView.removeFromSuperview()
+                    }
+                    
+                }
                 selectEnemyLabel.removeFromSuperview()
                 if boxArrow.isEmpty == false {
-                    boxArrow[0].removeFromSuperview()
-                    boxArrow[1].removeFromSuperview()
-                    boxArrow[2].removeFromSuperview()
+                    for index in boxArrow.indices {
+                        boxArrow[index].removeFromSuperview()
+                    }
                 }
                 // will need to resave if the player deselects, but if you do it here it'll override
                 
@@ -202,15 +242,18 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
                             selectRandomEnemy()
                         }
                         if boxArrow.isEmpty == false {
-                            boxArrow[0].removeFromSuperview()
-                            boxArrow[1].removeFromSuperview()
-                            boxArrow[2].removeFromSuperview()
+                            for index in boxArrow.indices {
+                                boxArrow[index].removeFromSuperview()
+                            }
                         }
                     } else {
                         if actionTargetsTeam() {
-                            playerButtons = drawPlayerButtons(player1: teamList[0].character_class, player2:    teamList[1].character_class, player3: teamList[2].character_class, player4: teamList[3].character_class)
+                            for index in enemiesList.indices {
+                                self.view.addSubview(enemiesList[index].imageView)
+                            }
+                            playerButtons = drawPlayerButtons()
                         } else {
-                            characterButtons = drawEnemiesButton(enemy1: enemiesList[0].character_class, enemy2: enemiesList[1].character_class, enemy3: enemiesList[2].character_class, enemy4: enemiesList[3].character_class)
+                            characterButtons = drawEnemiesButton()
                             checkAllEnemiesInvisible()
                         }
                     }
@@ -369,13 +412,22 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     }
     
     func createStatsArray() {
-        // TODO: update all instances of this method
-        header.append(StatsHeaderRow(names: [teamList[0].userName, teamList[1].userName, teamList[2].userName, teamList[3].userName]))
+        var nameArray:[String] = [String]()
+        var healthPoints:[Int] = [Int]()
+        var spellPoints:[Int] = [Int]()
+        var staminaPoints:[Int] = [Int]()
+        for member in teamList {
+            nameArray.append(member.userName)
+            healthPoints.append(member.health)
+            spellPoints.append(member.spellPoints)
+            staminaPoints.append(member.stamina)
+        }
+        header.append(StatsHeaderRow(names: nameArray))
         // extra to account for header messing everything up
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [teamList[0].health, teamList[1].health, teamList[2].health, teamList[3].health] , totalPoints: [1,2,3,4]))
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [teamList[0].health, teamList[1].health, teamList[2].health, teamList[3].health] , totalPoints: [1,2,3,4]))
-        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
-        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points:[1,2,3,4] , totalPoints: [1,2,3,4]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: [30, 30, 30, 30]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: [30, 30, 30, 30]))
+        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: spellPoints, totalPoints: [30, 30, 30, 30]))
+        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points: staminaPoints, totalPoints: [30, 30, 30, 30]))
     }
     
 
@@ -383,18 +435,6 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
        if enemiesList[0].isInvisible && enemiesList[1].isInvisible && enemiesList[2].isInvisible && enemiesList[3].isInvisible {
            selectRandomEnemy()
        }
-    }
-
-    func checkAllEnemiesDead() {
-        if enemiesList[0].isDead && enemiesList[1].isDead && enemiesList[2].isDead && enemiesList[3].isDead {
-                // segue to battle results screen?
-                // probably victory since all enemies are dead
-            let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "BattleResultsVictoryViewController") as! BattleResultsVictoryViewController
-            self.modalPresentationStyle = .fullScreen
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc,animated: false)
-        }
     }
     
     func checkDeadOrAsleep() {
@@ -420,23 +460,23 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     }
     
     func selectRandomTeamMember() {
-        var randomMember = Int.random(in: 0...3)
+        var randomMember = Int.random(in: 1...teamList.count)
         if rowSelected?.name == "Animate the Dead" {
             // if action is animate the dead don't want to animate yourself on accident
             while teamList[randomMember].userName == localCharacter.userName {
-                randomMember = Int.random(in: 0...3)
+                randomMember = Int.random(in: 1...teamList.count)
             }
         }
         let blankButton = UIButton()
         blankButton.backgroundColor = .clear
         blankButton.setTitle("", for: .normal)
-        if randomMember == 0 {
+        if randomMember == 1 {
             player1Selected(blankButton)
-        } else if randomMember == 1 {
-            player2Selected(blankButton)
         } else if randomMember == 2 {
-            player3Selected(blankButton)
+            player2Selected(blankButton)
         } else if randomMember == 3 {
+            player3Selected(blankButton)
+        } else if randomMember == 4 {
             player4Selected(blankButton)
         }
         let seconds = 1.5
@@ -445,7 +485,6 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
             // Decide if the player needs to roll or not
              if(actionRequiresRoll()) {
                  let vc = storyboard.instantiateViewController(withIdentifier: "BattleRollViewController") as! BattleRollViewController
-                 vc.selectTargetInfo = (enemiesList[0].userName, enemiesList[1].userName, enemiesList[2].userName, enemiesList[3].userName, rowSelected!)
 
                  self.modalPresentationStyle = .fullScreen
                  vc.modalPresentationStyle = .fullScreen
@@ -466,10 +505,10 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         // TODO: when ready to finish battle as all enemies are dead uncomment this checker method
        // checkAllEnemiesDead()
        // edit change to enemy count instead of 4
-       var randomEnemy = Int.random(in: 1...4)
+        var randomEnemy = Int.random(in: 1...enemiesList.count)
         // while the enemy chosen is dead select new random enemy until an enemy that is not dead is chosen
         while enemiesList[randomEnemy].isDead {
-            randomEnemy = Int.random(in: 1...4)
+            randomEnemy = Int.random(in: 1...enemiesList.count)
         }
        let blankButton = UIButton()
        blankButton.backgroundColor = .clear
@@ -647,4 +686,13 @@ func performBattleAction(rollValue: Int? = nil) {
         }
     }
     endTurn(game: game, player: localCharacter.userName)
+}
+
+func checkAllEnemiesDead() -> Bool {
+    for enemy in enemiesList {
+        if !enemy.isDead {
+            return false
+        }
+    }
+    return true
 }
