@@ -16,7 +16,7 @@ class BattleResultsLossViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         // victory Title
-        let victory = createLabel(x: 50, y: 50, w: 300, h: 200, font: "iso8", size: 55, text: "YOU LOST", align: .center)
+        _ = createLabel(x: 50, y: 50, w: 300, h: 200, font: "iso8", size: 55, text: "YOU LOST", align: .center)
         
         // draw victory
         let skull = UIImage(named: "Skull")
@@ -24,24 +24,21 @@ class BattleResultsLossViewController: UIViewController {
         skullView.image = skull
         self.view.addSubview(skullView)
         
-        // draw sprites
-        // player 1
-        // TODO: add EnemiesList[index].character_class when previous vc's are functional
-        // adding now will break everything
-        let player1 = CharacterSprites(name: "Skeleton")
-        let player1Image = player1.drawCharacter(view: self.view, x: 10, y: 550, width: 100, height:100, isInvisible: false, isDead: true)
-        
-        // player 2
-        let player2 = CharacterSprites(name:  "Skeleton")
-        let player2Image = player2.drawCharacter(view: self.view, x: 100, y: 550, width: 100, height: 100, isInvisible: false, isDead: true)
-        
-        // player 3
-        let player3 = CharacterSprites(name:  "Skeleton")
-        let player3Image =  player3.drawCharacter(view: self.view, x: 200, y: 550, width: 100, height: 100, isInvisible: false, isDead: true)
-        
-        // player  4
-        let player4 = CharacterSprites(name:  "Skeleton")
-        let player4Image = player4.drawCharacter(view: self.view, x: 290, y: 550, width: 100, height: 100, isInvisible: false, isDead: true)
+        // draw skeletons
+        for (index, _) in enemiesList.enumerated() {
+            var x = 10
+            let drawEnemy = CharacterSprites(name: "Skeleton")
+            if index == 0 {
+                x = 10
+            } else if index == 1 {
+                x = 100
+            } else if index == 2 {
+                x = 200
+            } else if index == 3 {
+                x = 290
+            }
+            _ = drawEnemy.drawCharacter(view: self.view, x: x, y: 550, width: 100, height:100, isInvisible: false, isDead: true)
+        }
         
         let bigButton = UIImage(named: "Big choice Button")
         let continueButton = createButton(x: 100, y: 725, w: 200, h: 75, text: "CONTINUE", fontSize: 30, normalImage: bigButton!, highlightedImage: bigButton!)
