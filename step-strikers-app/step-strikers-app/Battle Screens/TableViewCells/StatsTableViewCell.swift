@@ -12,14 +12,22 @@ class StatsTableViewCell : UITableViewCell {
     // stores the values of the action struct in the label's text fields
     var stats : StatsRow? {
         didSet {
-            statImage0.image = stats?.imageName
-            statImage1.image = stats?.imageName
-            statImage2.image = stats?.imageName
-            statImage3.image = stats?.imageName
-            pointDisplay0.text = "\(String(describing: stats!.points[0])) / \(String(describing: stats!.totalPoints[0]))"
-            pointDisplay1.text = "\(String(describing: stats!.points[1])) / \(String(describing: stats!.totalPoints[1]))"
-            pointDisplay2.text = "\(String(describing: stats!.points[2])) / \(String(describing: stats!.totalPoints[2]))"
-            pointDisplay3.text = "\(String(describing: stats!.points[3])) / \(String(describing: stats!.totalPoints[3]))"
+            for index in stats!.points.indices {
+                if index == 0 {
+                    statImage0.image = stats?.imageName
+                    pointDisplay0.text = "\(String(describing: stats!.points[0])) / \(String(describing: stats!.totalPoints[0]))"
+                } else if index == 1 {
+                    statImage1.image = stats?.imageName
+                    pointDisplay1.text = "\(String(describing: stats!.points[1])) / \(String(describing: stats!.totalPoints[1]))"
+
+                } else if index == 2 {
+                    statImage2.image = stats?.imageName
+                    pointDisplay2.text = "\(String(describing: stats!.points[2])) / \(String(describing: stats!.totalPoints[2]))"
+                } else if index == 3 {
+                    statImage3.image = stats?.imageName
+                    pointDisplay3.text = "\(String(describing: stats!.points[3])) / \(String(describing: stats!.totalPoints[3]))"
+                }
+            }
         }
     }
     
@@ -62,7 +70,7 @@ class StatsTableViewCell : UITableViewCell {
     
     private let pointDisplay0 : UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "munro", size: 15)
+        label.font = UIFont(name: "munro", size: 12)
         label.textAlignment = .right
         label.textColor = .black
         label.contentMode = .scaleAspectFit
@@ -71,7 +79,7 @@ class StatsTableViewCell : UITableViewCell {
     
     private let pointDisplay1 : UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "munro", size: 15)
+        label.font = UIFont(name: "munro", size: 12)
         label.textAlignment = .right
         label.textColor = .black
         label.lineBreakMode = .byWordWrapping
@@ -81,7 +89,7 @@ class StatsTableViewCell : UITableViewCell {
     
     private let pointDisplay2 : UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "munro", size: 15)
+        label.font = UIFont(name: "munro", size: 12)
         label.textAlignment = .right
         label.textColor = .black
         return label
@@ -89,7 +97,7 @@ class StatsTableViewCell : UITableViewCell {
     
     private let pointDisplay3 : UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "munro", size: 15)
+        label.font = UIFont(name: "munro", size: 12)
         label.textAlignment = .right
         label.textColor = .black
         return label
@@ -109,13 +117,13 @@ class StatsTableViewCell : UITableViewCell {
         addSubview(pointDisplay3)
         // anchors the two strings based on their relative position within the cell and each other
         statImage0.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 0, width: 20, height: 0, enableInsets: false)
-        pointDisplay0.anchor(top: topAnchor, left: statImage0.rightAnchor, bottom: bottomAnchor, right: statImage1.leftAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 20, width: 35, height: 0, enableInsets: false)
-        statImage1.anchor(top: topAnchor, left: pointDisplay0.rightAnchor, bottom: bottomAnchor, right: pointDisplay1.leftAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 0, width: 20, height: 0, enableInsets: false)
-        pointDisplay1.anchor(top: topAnchor, left: statImage1.rightAnchor, bottom: bottomAnchor, right: statImage2.leftAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 20, width: 35, height: 0, enableInsets: false)
-        statImage2.anchor(top: topAnchor, left: pointDisplay1.rightAnchor, bottom: bottomAnchor, right: pointDisplay2.leftAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 0, width: 20, height: 0, enableInsets: false)
-        pointDisplay2.anchor(top: topAnchor, left: statImage2.rightAnchor, bottom: bottomAnchor, right: statImage3.leftAnchor, paddingTop: 5, paddingLeft: 0, paddingBottom: 5, paddingRight: 20, width: 35, height: 0, enableInsets: false)
+        pointDisplay0.anchor(top: topAnchor, left: statImage0.rightAnchor, bottom: bottomAnchor, right: statImage1.leftAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 10, width: 40, height: 0, enableInsets: false)
+        statImage1.anchor(top: topAnchor, left: pointDisplay0.rightAnchor, bottom: bottomAnchor, right: pointDisplay1.leftAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 5, width: 20, height: 0, enableInsets: false)
+        pointDisplay1.anchor(top: topAnchor, left: statImage1.rightAnchor, bottom: bottomAnchor, right: statImage2.leftAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 10, width: 40, height: 0, enableInsets: false)
+        statImage2.anchor(top: topAnchor, left: pointDisplay1.rightAnchor, bottom: bottomAnchor, right: pointDisplay2.leftAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 5, width: 20, height: 0, enableInsets: false)
+        pointDisplay2.anchor(top: topAnchor, left: statImage2.rightAnchor, bottom: bottomAnchor, right: statImage3.leftAnchor, paddingTop: 5, paddingLeft: 0, paddingBottom: 5, paddingRight: 10, width: 40, height: 0, enableInsets: false)
         statImage3.anchor(top: topAnchor, left: pointDisplay2.rightAnchor, bottom: bottomAnchor, right: pointDisplay3.leftAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 0, width: 20, height: 0, enableInsets: false)
-        pointDisplay3.anchor(top: topAnchor, left: statImage3.rightAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 0, paddingBottom: 5, paddingRight: 5, width: 35, height: 0, enableInsets: false)
+        pointDisplay3.anchor(top: topAnchor, left: statImage3.rightAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 5, paddingLeft: 0, paddingBottom: 5, paddingRight: 5, width: 40, height: 0, enableInsets: false)
     }
     
     required init?(coder aDecoder: NSCoder) {

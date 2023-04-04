@@ -92,6 +92,7 @@ class TeamMatchViewController: UIViewController, UITableViewDelegate, UITableVie
         let docRef = Firestore.firestore().collection("teams").document(self.partyCode)
         docRef.getDocument { (document, error) in
             if let document = document, document.exists {
+                enemyTeam = document.get("enemy_team") as! String
                 game = document.get("game_id") as! String
                 print("game \(game)")
             } else {
