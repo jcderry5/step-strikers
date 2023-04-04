@@ -470,8 +470,11 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
 struct CharacterSprites {
     var name:String
     
-    func drawCharacter(view:UIView, x:Int, y:Int, width:Int, height:Int, isInvisible:Bool, isDead:Bool) -> UIImageView!{
-        let image = UIImage(named:name)
+    func drawCharacter(view:UIView, x:Int, y:Int, width:Int, height:Int, isInvisible:Bool, isHurt:Bool, isDead:Bool) -> UIImageView!{
+        var image = UIImage(named:name)
+        if localCharacter.blood {
+            image = UIImage(named:name+"-Blood")
+        }
         var imageView: UIImageView!
         imageView = UIImageView(frame: CGRect(x:x, y: y, width: width, height: height))
         imageView.image = image
@@ -487,7 +490,10 @@ struct CharacterSprites {
     }
     
     func drawButtonCharacter(controller:UIViewController, x:Int, y:Int, width:Int, height:Int) -> UIButton {
-        let imageName = name
+        var imageName = name
+        if localCharacter.blood {
+            imageName = "\(name)-Blood"
+        }
         let characterButton = controller.createButton(x:x, y:y, width:width, height:height, fontName: "munro", imageName:imageName, fontColor: UIColor.black, buttonTitle:"")
         return characterButton
     }

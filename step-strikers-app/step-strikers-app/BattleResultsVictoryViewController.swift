@@ -41,7 +41,7 @@ class BattleResultsVictoryViewController: UIViewController {
             } else if index == 3 {
                 x = 290
             }
-            let enemyImage = drawEnemy.drawCharacter(view: self.view, x: x, y: 500, width: 100, height:120, isInvisible: false, isDead: false)
+            let enemyImage = drawEnemy.drawCharacter(view: self.view, x: x, y: 500, width: 100, height:120, isInvisible: false, isHurt:false, isDead: false)
         }
         
         // items collected list

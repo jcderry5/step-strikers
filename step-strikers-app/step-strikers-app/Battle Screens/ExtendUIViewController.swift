@@ -191,11 +191,12 @@ extension UIViewController {
                     let player1Image:UIImageView?
                     player1Image = UIImageView()
                     player1Image!.backgroundColor = .clear
+                    var isHurt = health < localCharacter.maxHealth/2
                     
                     // don't show enemies if the current player is blind dead or asleep
                     if localCharacter.isBlind == false && localCharacter.isDead == false && localCharacter.isAsleep == false {
                         let player1 = CharacterSprites(name: character_class)
-                        let player1Image = player1.drawCharacter(view: self.view, x: xValues[count], y: 400, width: 100, height: 100, isInvisible: isInvisible, isDead: isDead)
+                        let player1Image = player1.drawCharacter(view: self.view, x: xValues[count], y: 400, width: 100, height: 100, isInvisible: isInvisible, isHurt: isHurt, isDead: isDead)
                         enemiesList[count].imageView = player1Image!
                     }
                     
@@ -266,7 +267,8 @@ extension UIViewController {
                 x = 290
             }
             let player1 = CharacterSprites(name: enemiesList[index].character_class)
-            let player1Image = player1.drawCharacter(view: self.view, x: 10, y: 400, width: 100, height: 100, isInvisible: enemiesList[index].isInvisible, isDead: enemiesList[index].isDead)!
+            var isHurt = enemiesList[index].health < localCharacter.maxHealth/2
+            let player1Image = player1.drawCharacter(view: self.view, x: 10, y: 400, width: 100, height: 100, isInvisible: enemiesList[index].isInvisible, isHurt: isHurt, isDead: enemiesList[index].isDead)!
             returnArray.append(player1Image)
         }
         
@@ -290,6 +292,9 @@ extension UIViewController {
                 x = 10
                 let player1 = CharacterSprites(name: enemiesList[index].character_class)
                 let player1Button = player1.drawButtonCharacter(controller: self, x: x, y: 400, width: 100, height: 100)
+                if enemiesList[index].health < localCharacter.maxHealth/2 {
+                    player1Button.setBackgroundImage(UIImage(named:"\(enemiesList[index].character_class)-Hurt"), for: UIControl.State.normal)
+                }
                 player1Button.addTarget(self, action:#selector(self.enemy1Selected(_:)), for: .touchUpInside)
                 if enemiesList[index].isInvisible == false && enemiesList[index].isDead == false {
                             self.view.addSubview(player1Button)
@@ -299,6 +304,9 @@ extension UIViewController {
                 x = 100
                 let player2 = CharacterSprites(name: enemiesList[index].character_class)
                 let player2Button = player2.drawButtonCharacter(controller: self, x: x, y: 400, width: 100, height: 100)
+                if enemiesList[index].health < localCharacter.maxHealth/2 {
+                    player2Button.setBackgroundImage(UIImage(named:"\(enemiesList[index].character_class)-Hurt"), for: UIControl.State.normal)
+                }
                 player2Button.addTarget(self, action:#selector(self.enemy2Selected(_:)), for: .touchUpInside)
                 if enemiesList[index].isInvisible == false && enemiesList[index].isDead == false {
                             self.view.addSubview(player2Button)
@@ -308,6 +316,9 @@ extension UIViewController {
                 x = 200
                 let player3 = CharacterSprites(name: enemiesList[index].character_class)
                 let player3Button = player3.drawButtonCharacter(controller: self, x: x, y: 400, width: 100, height: 100)
+                if enemiesList[index].health < localCharacter.maxHealth/2 {
+                    player3Button.setBackgroundImage(UIImage(named:"\(enemiesList[index].character_class)-Hurt"), for: UIControl.State.normal)
+                }
                 player3Button.addTarget(self, action:#selector(self.enemy3Selected(_:)), for: .touchUpInside)
                 if enemiesList[index].isInvisible == false && enemiesList[index].isDead == false {
                             self.view.addSubview(player3Button)
@@ -317,6 +328,9 @@ extension UIViewController {
                 x = 290
                 let player4 = CharacterSprites(name: enemiesList[index].character_class)
                 let player4Button = player4.drawButtonCharacter(controller: self, x: x, y: 400, width: 100, height: 100)
+                if enemiesList[index].health < localCharacter.maxHealth/2 {
+                    player4Button.setBackgroundImage(UIImage(named:"\(enemiesList[index].character_class)-Hurt"), for: UIControl.State.normal)
+                }
                 player4Button.addTarget(self, action:#selector(self.enemy4Selected(_:)), for: .touchUpInside)
                 if enemiesList[index].isInvisible == false && enemiesList[index].isDead == false {
                             self.view.addSubview(player4Button)
