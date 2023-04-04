@@ -6,6 +6,7 @@
 //
 
 // TODO: Decide what ends a turn
+import FirebaseFirestore
 
 let smallAmountOfRestoration: Int = 5
 let moderateAmountOfRestoration: Int = 10
@@ -99,32 +100,41 @@ func postItemUseActions(itemUsed: Item, message: String) {
     messageLog.addToMessageLog(message: message)
 }
 
-func randomWinnerItemDrop(newOwner: RPGCharacter) -> (Weapon, Armor, Item) {
+func randomWinnerItemDrop(newOwner: RPGCharacter) -> [String] {
     
     // 1. New Weapon
-    var tempString: String = allWeapons[Int.random(in: 0...allWeapons.count)]
+    var tempString: String = allWeapons[Int.random(in: 0..<allWeapons.count)]
     var newWeapon: Weapon = rebuildWeapon(weaponName: tempString, useCount: 0)
     while !newWeapon.checkIfProficient(wielderClass: newOwner.getCharacterClass()) {
-        tempString = allWeapons[Int.random(in: 0...allWeapons.count)]
+        tempString = allWeapons[Int.random(in: 0..<allWeapons.count)]
         newWeapon = rebuildWeapon(weaponName: tempString, useCount: 0)
     }
+    newOwner.addToInventory(weaponObject: newWeapon)
     
     // 2. New Armor
-    tempString = allArmor[Int.random(in: 0...allArmor.count)]
+    tempString = allArmor[Int.random(in: 0..<allArmor.count)]
     var newArmor: Armor = rebuildArmor(armorName: tempString, useCount: 0)
     // Only non-Wizards have suited Armor, Wizards will get whatever
     if !(newOwner is Wizard) {
         while !newArmor.checkIfSuited(wearerCharacterType: newOwner.characterName) {
-            tempString = allArmor[Int.random(in: 0...allArmor.count)]
+            tempString = allArmor[Int.random(in: 0..<allArmor.count)]
             newArmor = rebuildArmor(armorName: tempString, useCount: 0)
         }
     }
+    newOwner.addToInventory(armorObject: newArmor)
     
     // 3. New Item
-    tempString = allItems[Int.random(in: 0...allItems.count)]
+    tempString = allItems[Int.random(in: 0..<allItems.count)]
     let newItem: Item = rebuildItem(itemName: tempString, owner: newOwner)
+    newOwner.addToInventory(itemObject: newItem)
     
-    return (newWeapon: newWeapon, newArmor: newArmor, newItem: newItem)
+    // write your cool new items to firebase
+//    Firestore.firestore().collection("players").document(newOwner.userName).updateData([
+//        "weapon_inventory": FieldValue.arrayUnion(getConstructedName(weapon: newWeapon)),
+//        "armor_inventory": FieldValue.arrayUnion(getConstructedName(armor: newArmor)),
+//        "item_inventory": FieldValue.arrayUnion(newItem.name)])
+    
+    return [newWeapon.name, newArmor.name, newItem.name]
 }
 
 protocol Item {

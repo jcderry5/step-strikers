@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 var boxArrow: [AnyObject] = [AnyObject]()
 var rowSelected:Action?
@@ -36,7 +37,48 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        renderTeam(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
+        
+        // check if game is already over
+        if checkAllEnemiesDead() {
+            Firestore.firestore().collection("games").document(game).setData([
+                "game_over": true,
+                "game_winner": team
+            ], merge: true)
+            
+            let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = sb.instantiateViewController(withIdentifier: "BattleResultsVictoryViewController") as! BattleResultsVictoryViewController
+            
+            self.modalPresentationStyle = .fullScreen
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: false)
+        }
+        let gameRef = Firestore.firestore().collection("games").document(game)
+        gameRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                if document.get("game_over") as! Bool {
+                    if document.get("game_winner") as! String == team {
+                        // you win!
+                        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                        let vc = sb.instantiateViewController(withIdentifier: "BattleResultsVictoryViewController") as! BattleResultsVictoryViewController
+                        
+                        self.modalPresentationStyle = .fullScreen
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: false)
+                        
+                    } else {
+                        // you lose
+                        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                        let vc = sb.instantiateViewController(withIdentifier: "BattleResultsLossViewController") as! BattleResultsLossViewController
+                        
+                        self.modalPresentationStyle = .fullScreen
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: false)
+                    }
+                }
+            }
+        }
+        
+        
         displayEnemies(enemyTeam: enemyTeam)
         // puts full screen image as background of view controller
         // sets up the background images of the view controller
@@ -296,18 +338,6 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
            selectRandomEnemy()
        }
     }
-
-    func checkAllEnemiesDead() {
-        if enemiesList[0].isDead && enemiesList[1].isDead && enemiesList[2].isDead && enemiesList[3].isDead {
-                // segue to battle results screen?
-                // probably victory since all enemies are dead
-            let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "BattleResultsVictoryViewController") as! BattleResultsVictoryViewController
-            self.modalPresentationStyle = .fullScreen
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc,animated: false)
-        }
-    }
     
     func checkDeadOrAsleep() {
         print(localCharacter.isDead)
@@ -558,4 +588,13 @@ func performBattleAction(rollValue: Int? = nil) {
         }
     }
     endTurn(game: game, player: localCharacter.userName)
+}
+
+func checkAllEnemiesDead() -> Bool {
+    for enemy in enemiesList {
+        if !enemy.isDead {
+            return false
+        }
+    }
+    return true
 }

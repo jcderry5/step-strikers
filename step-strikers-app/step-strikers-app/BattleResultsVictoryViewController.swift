@@ -13,6 +13,8 @@ class BattleResultsVictoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let loot = randomWinnerItemDrop(newOwner: localCharacter)
+        
         assignBackground()
 
         // Do any additional setup after loading the view.
@@ -45,7 +47,7 @@ class BattleResultsVictoryViewController: UIViewController {
         }
         
         // items collected list
-        var itemsCollected = createLabel(x: 50, y: 575, w: 300, h: 200, font: "munro", size: 25, text: "Items Collected:\n -Potion of healing\n -Elixir of Magic", align: .center)
+        var itemsCollected = createLabel(x: 50, y: 575, w: 300, h: 200, font: "munro", size: 25, text: "Items Collected:\n -\(loot[0])\n -\(loot[1])\n -\(loot[2]) ", align: .center)
         itemsCollected.lineBreakMode = .byWordWrapping
         itemsCollected.numberOfLines = 0
         

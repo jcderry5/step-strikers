@@ -20,6 +20,34 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // check if game is already over
+        let gameRef = Firestore.firestore().collection("games").document(game)
+        gameRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                if document.get("game_over") as! Bool {
+                    if document.get("game_winner") as! String == team {
+                        // you win!
+                        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                        let vc = sb.instantiateViewController(withIdentifier: "BattleResultsVictoryViewController") as! BattleResultsVictoryViewController
+                        
+                        self.modalPresentationStyle = .fullScreen
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: false)
+                        
+                    } else {
+                        // you lose
+                        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                        let vc = sb.instantiateViewController(withIdentifier: "BattleResultsLossViewController") as! BattleResultsLossViewController
+                        
+                        self.modalPresentationStyle = .fullScreen
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: false)
+                    }
+                }
+            }
+        }
+        
         displayEnemies(enemyTeam: enemyTeam)
         // Do any additional setup after loading the view.
         // background images and view set up
@@ -93,6 +121,8 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
         refreshStats()
         // listen for when it's your turn
         segueWhenTurn()
+        // listen for when game is over
+        checkGameOver()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -233,6 +263,10 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
                 
                 let data = document2.data()
                 enemiesList[i].health = data!["health"] as! Int
+                enemiesList[i].isBlind = data!["is_blind"] as! Bool
+                enemiesList[i].isDead = data!["is_dead"] as! Bool
+                enemiesList[i].isSleep = data!["is_asleep"] as! Bool
+                enemiesList[i].isInvisible = data!["is_invisible"] as! Bool
             }
         }
         
@@ -271,7 +305,6 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
                         return
                     }
                     
-                    
                     if !first {
                         DispatchQueue.main.async {
                             self.updateLists()
@@ -295,6 +328,41 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
                         }
                     } else {
                         first = false
+                    }
+                }
+            }
+        }
+    }
+    
+    func checkGameOver() {
+        let docRef = Firestore.firestore().collection("game").document(game)
+        docRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                docRef.addSnapshotListener {
+                    documentSnapshot, error in guard let document = documentSnapshot else {
+                        print("Error fetching document: \(error!)")
+                        return
+                    }
+                    if document.get("game_over") as! Bool {
+                        print("DEBUG: game over")
+                        if document.get("winning_team") as! String == team {
+                            // you win!
+                            let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                            let vc = sb.instantiateViewController(withIdentifier: "BattleResultsVictoryViewController") as! BattleResultsVictoryViewController
+                            
+                            self.modalPresentationStyle = .fullScreen
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: false)
+                            
+                        } else {
+                            // you lose
+                            let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                            let vc = sb.instantiateViewController(withIdentifier: "BattleResultsLossViewController") as! BattleResultsLossViewController
+                            
+                            self.modalPresentationStyle = .fullScreen
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: false)
+                        }
                     }
                 }
             }
