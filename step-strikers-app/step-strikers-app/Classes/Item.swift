@@ -129,10 +129,10 @@ func randomWinnerItemDrop(newOwner: RPGCharacter) -> [String] {
     newOwner.addToInventory(itemObject: newItem)
     
     // write your cool new items to firebase
-//    Firestore.firestore().collection("players").document(newOwner.userName).updateData([
-//        "weapon_inventory": FieldValue.arrayUnion(getConstructedName(weapon: newWeapon)),
-//        "armor_inventory": FieldValue.arrayUnion(getConstructedName(armor: newArmor)),
-//        "item_inventory": FieldValue.arrayUnion(newItem.name)])
+    Firestore.firestore().collection("players").document(newOwner.userName).updateData([
+        "weapon_inventory": FieldValue.arrayUnion([getConstructedName(weapon: newWeapon)]),
+        "armor_inventory": FieldValue.arrayUnion([getConstructedName(armor: newArmor)]),
+        "item_inventory": FieldValue.arrayUnion([newItem.name])])
     
     return [newWeapon.name, newArmor.name, newItem.name]
 }
