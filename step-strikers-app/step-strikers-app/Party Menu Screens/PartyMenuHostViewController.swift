@@ -13,6 +13,7 @@ class PartyMenuHostViewController: UIViewController {
 
     var labelText:NSMutableAttributedString?
     var partyCode = ""
+    var numPlayers = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +46,7 @@ class PartyMenuHostViewController: UIViewController {
                     }
 
                     let players = document.get("players") as! [String]
+                    self.numPlayers = players.count
                     joinedLabel.0.removeFromSuperview()
                     joinedLabel = self.displayJoinedMembers()
                     for player in players {
@@ -122,7 +124,7 @@ class PartyMenuHostViewController: UIViewController {
     
     @objc func readyPressed(_ sender: Any) {
         // signal that team is ready to be matched
-        Firestore.firestore().collection("matchable_teams").document("teams").updateData(["teams": FieldValue.arrayUnion([self.partyCode])])
+        Firestore.firestore().collection("matchable_teams").document("teams").updateData(["teams": FieldValue.arrayUnion(["\(self.partyCode)-\(numPlayers)"])])
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "TeamMatchViewController") as! TeamMatchViewController
         vc.numPlayers = self.numPlayers

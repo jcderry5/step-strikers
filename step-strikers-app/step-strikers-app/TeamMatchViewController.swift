@@ -133,16 +133,16 @@ class TeamMatchViewController: UIViewController, UITableViewDelegate, UITableVie
     }
 
     @objc func backButtonPressed(_ sender:UIButton!) {
-        print("Back button pressed")
+        // remove your team from the match list
+        Firestore.firestore().collection("matchable_teams").document("teams").updateData(["teams": FieldValue.arrayRemove([self.partyCode])])
+        
         // set to battle menu here
         // TODO: set party menu as vc to switch to
-        /*
         let sb = UIStoryboard(name: "Main", bundle: nil)
-        let vc = sb.instantiateViewController(withIdentifier: "PartyMenuHostViewController") as! PartyMenuHostViewController
+        let vc = sb.instantiateViewController(withIdentifier: "BattleMenuViewController") as! BattleMenuViewController
         self.modalPresentationStyle = .fullScreen
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated:false)
-         */
     }
     
     @objc func confirmPressed(_ sender:UIButton!) {
