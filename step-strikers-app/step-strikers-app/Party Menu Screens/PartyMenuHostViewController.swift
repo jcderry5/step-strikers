@@ -129,6 +129,7 @@ class PartyMenuHostViewController: UIViewController {
         let vc = sb.instantiateViewController(withIdentifier: "TeamMatchViewController") as! TeamMatchViewController
 
         vc.partyCode = self.partyCode
+        vc.numPlayers = self.numPlayers
         self.modalPresentationStyle = .fullScreen
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: false)
