@@ -34,7 +34,6 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
         let selectedButton:String = "Selected Action Button"
         let unselectedButton:String = "Unselected action button"
         createBattleActionButtons(actionSelected: unselectedButton, itemSelected: unselectedButton, equipSelected: selectedButton)
-        createSettingsButton(x: 10, y: 50, width: 40, height: 40)
         
         // create characters
         // will need to change "name" based on what the enemy players are

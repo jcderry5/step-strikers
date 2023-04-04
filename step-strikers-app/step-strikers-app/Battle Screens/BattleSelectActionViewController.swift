@@ -46,7 +46,6 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         let selectedButton:String = "Selected Action Button"
         let unselectedButton:String = "Unselected action button"
         createBattleActionButtons(actionSelected: selectedButton, itemSelected: unselectedButton, equipSelected: unselectedButton)
-        createSettingsButton(x: 10, y: 50, width: 40, height: 40)
         
         // create a Table View that displays the action menu, and when pressed does something
         // the array of all the action a player can do
