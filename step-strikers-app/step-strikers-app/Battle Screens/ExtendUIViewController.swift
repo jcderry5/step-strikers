@@ -414,6 +414,7 @@ extension UIViewController {
     // will transder to BattleSelectActionViewController
     // will do even if you are already on it
     @objc func actionButtonPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         rowItemSelected = nil // to acoid an item being here
         // storyboard
         let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
@@ -427,6 +428,7 @@ extension UIViewController {
     
     // will transfer to BattleSelectItemViewController
     @objc func itemButtonPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         rowSelected = nil // to avoid an action being held here
         let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "BattleSelectItemViewController") as! BattleSelectItemViewController
@@ -437,6 +439,7 @@ extension UIViewController {
     
     // will transfer to BattleSelectEquipViewController
     @objc func equipButtonPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         // avoid these holding actions and items
         rowSelected = nil
         rowItemSelected = nil
@@ -450,6 +453,7 @@ extension UIViewController {
     
     // please dont make separate storyboards for all the types of boards right now
     @objc func settingsButtonPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         let sb = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
 
@@ -459,6 +463,7 @@ extension UIViewController {
     }
     
     @objc func enemy1Selected(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         updateCurrTargetData(enemyIndex: 0)
         // if enemy 1 is selected use enemiesList[0].variableName
         selectEnemyLabel.removeFromSuperview()
@@ -471,6 +476,7 @@ extension UIViewController {
     }
     
     @objc func enemy2Selected(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         updateCurrTargetData(enemyIndex: 1)
         selectEnemyLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
@@ -482,6 +488,7 @@ extension UIViewController {
     }
 
     @objc func enemy3Selected(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         updateCurrTargetData(enemyIndex: 2)
         selectEnemyLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
@@ -493,6 +500,7 @@ extension UIViewController {
     }
     
     @objc func enemy4Selected(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         updateCurrTargetData(enemyIndex: 3)
         selectEnemyLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
@@ -504,6 +512,7 @@ extension UIViewController {
     }
     
     @objc func player1Selected(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         updateCurrTargetData(teamMemberIndex: 0)
         selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
@@ -515,6 +524,7 @@ extension UIViewController {
     }
     
     @objc func player2Selected(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         updateCurrTargetData(teamMemberIndex: 1)
         selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
@@ -526,6 +536,7 @@ extension UIViewController {
     }
     
     @objc func player3Selected(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         updateCurrTargetData(teamMemberIndex: 2)
         selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
@@ -537,6 +548,7 @@ extension UIViewController {
     }
     
     @objc func player4Selected(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         updateCurrTargetData(teamMemberIndex: 3)
         selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
@@ -548,6 +560,7 @@ extension UIViewController {
     }
     
     @objc func enemyBoxSelected(_ sender:UIButton, event: UIEvent) {
+        playSoundEffect(fileName: menuSelectEffect)
         let touch: UITouch = event.allTouches!.first!
         if (touch.tapCount == 2) {
             // save the variables after you know its a double tap
@@ -572,6 +585,7 @@ extension UIViewController {
     }
     
     @objc func playerBoxSelected(_ sender:UIButton, event: UIEvent) {
+        playSoundEffect(fileName: menuSelectEffect)
         let touch: UITouch = event.allTouches!.first!
         if (touch.tapCount == 2) {
             let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)

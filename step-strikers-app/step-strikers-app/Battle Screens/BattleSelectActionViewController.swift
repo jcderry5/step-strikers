@@ -284,6 +284,7 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     }
     
     @objc func helpButtonPressed(_ sender: UIButton) {
+        playSoundEffect(fileName: menuSelectEffect)
         helpPopUp?.removeFromSuperview()
         
         // view to display
@@ -322,6 +323,7 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     
     // long press on action from action table
     @objc func helpPressed(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        playSoundEffect(fileName: menuSelectEffect)
         var actionName:String = " "
         if longPressGestureRecognizer.state == .began {
             let touchPoint = longPressGestureRecognizer.location(in: actionDisplay)
@@ -366,6 +368,7 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
 
     // x pressed on the help button
     @objc func xPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         // remove pop up
         helpPopUp?.removeFromSuperview()
     }
@@ -653,16 +656,22 @@ func performBattleAction(rollValue: Int? = nil) {
     } else if (localCharacter.getCharacterClass() == "Wizard") {
         switch actionPerformed {
         case "Frost Bite":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Wizard).castFrostbite(rollValue: rollValue!)
         case "Mage Hand":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Wizard).castMageHand(rollValue: rollValue!)
         case "Shield":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Wizard).castShield()
         case "Sleep":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Wizard).sleep(rollValue: rollValue!)
         case "Animate the Dead":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Wizard).castAnimateDead()
         case "Heal":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Wizard).heal(amtToHeal: rollValue!)
         default:
             localCharacter.fight(rollValue: rollValue!)
@@ -670,16 +679,22 @@ func performBattleAction(rollValue: Int? = nil) {
     } else if (localCharacter.getCharacterClass() == "Bard") {
         switch actionPerformed {
         case "Mage Hand":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Bard).castMageHand(rollValue: rollValue!)
         case "Bardic Inspiration":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Bard).castBardicInspiration()
         case "Vicious Mockery":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Bard).castViciousMockery(rollValue: rollValue!)
         case "Blindness":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Bard).castBlindness(rollValue: rollValue!)
         case "Invisibility":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Bard).castInvisibility()
         case "Motivational Speech":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Bard).castMotivationalSpeech()
         default:
             localCharacter.fight(rollValue: rollValue!)

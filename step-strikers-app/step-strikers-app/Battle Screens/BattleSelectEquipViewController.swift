@@ -126,6 +126,7 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
     }
     
     @objc func tableView(_ tableView: UITableView, didSelectRowAt indexPath:IndexPath) {
+        playSoundEffect(fileName: menuSelectEffect)
         if recentlyTapped == indexPath.row && selected == true {
             selected = false
             tableView.deselectRow(at: indexPath, animated: false)
@@ -145,6 +146,7 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
     }
     
     @objc func tableView(_ tableView: UITableView, heightForRowAt indexPath:IndexPath) -> CGFloat {
+        playSoundEffect(fileName: menuSelectEffect)
         if tableView == statsDisplay {
             return 30
         } else {
@@ -157,6 +159,7 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
     }
     
     @objc func helpButtonPressed(_ sender: UIButton) {
+        playSoundEffect(fileName: menuSelectEffect)
         helpPopUp?.removeFromSuperview()
         
         // view to display
@@ -195,6 +198,7 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
     
     // long press on action from action table
     @objc func helpPressed(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        playSoundEffect(fileName: menuSelectEffect)
         var equipName:String = " "
         if longPressGestureRecognizer.state == .began {
             let touchPoint = longPressGestureRecognizer.location(in: equipDisplay)
@@ -238,6 +242,7 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
 
     // x pressed on the help button
     @objc func xPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         // remove pop up
         helpPopUp?.removeFromSuperview()
     }

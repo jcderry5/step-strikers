@@ -34,6 +34,16 @@
 		649A4B3C29AACB4100377575 /* Caster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649A4B3B29AACB4100377575 /* Caster.swift */; };
 		649A4B3E29AACBEA00377575 /* CharacterClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649A4B3D29AACBEA00377575 /* CharacterClasses.swift */; };
 		649A4B4029AAD36B00377575 /* CharacterClassUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649A4B3F29AAD36B00377575 /* CharacterClassUnitTests.swift */; };
+		649F971C29DE244400BCB8E8 /* Nat1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 649F971329DE244400BCB8E8 /* Nat1.mp3 */; };
+		649F971D29DE244400BCB8E8 /* Haply.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 649F971429DE244400BCB8E8 /* Haply.mp3 */; };
+		649F971E29DE244500BCB8E8 /* Nat20.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 649F971529DE244400BCB8E8 /* Nat20.mp3 */; };
+		649F971F29DE244500BCB8E8 /* TurnStarted.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 649F971629DE244400BCB8E8 /* TurnStarted.mp3 */; };
+		649F972029DE244500BCB8E8 /* Brirfing_theme.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 649F971729DE244400BCB8E8 /* Brirfing_theme.mp3 */; };
+		649F972129DE244500BCB8E8 /* Woodland Fantasy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 649F971829DE244400BCB8E8 /* Woodland Fantasy.mp3 */; };
+		649F972229DE244500BCB8E8 /* RollDieAudio.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 649F971929DE244400BCB8E8 /* RollDieAudio.mp3 */; };
+		649F972329DE244500BCB8E8 /* MenuSelect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 649F971A29DE244400BCB8E8 /* MenuSelect.mp3 */; };
+		649F972429DE244500BCB8E8 /* CastSpell.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 649F971B29DE244400BCB8E8 /* CastSpell.mp3 */; };
+		649F972629DE245F00BCB8E8 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649F972529DE245F00BCB8E8 /* Audio.swift */; };
 		64A2876029A4211D00922509 /* Adventurer.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64A2875D29A4211D00922509 /* Adventurer.ttf */; };
 		64A2876129A4211D00922509 /* munro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64A2875E29A4211D00922509 /* munro.ttf */; };
 		64A2876229A4211D00922509 /* iso8.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64A2875F29A4211D00922509 /* iso8.ttf */; };
@@ -114,6 +124,16 @@
 		649A4B3B29AACB4100377575 /* Caster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Caster.swift; sourceTree = "<group>"; };
 		649A4B3D29AACBEA00377575 /* CharacterClasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterClasses.swift; sourceTree = "<group>"; };
 		649A4B3F29AAD36B00377575 /* CharacterClassUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterClassUnitTests.swift; sourceTree = "<group>"; };
+		649F971329DE244400BCB8E8 /* Nat1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Nat1.mp3; sourceTree = "<group>"; };
+		649F971429DE244400BCB8E8 /* Haply.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Haply.mp3; sourceTree = "<group>"; };
+		649F971529DE244400BCB8E8 /* Nat20.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Nat20.mp3; sourceTree = "<group>"; };
+		649F971629DE244400BCB8E8 /* TurnStarted.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = TurnStarted.mp3; sourceTree = "<group>"; };
+		649F971729DE244400BCB8E8 /* Brirfing_theme.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Brirfing_theme.mp3; sourceTree = "<group>"; };
+		649F971829DE244400BCB8E8 /* Woodland Fantasy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Woodland Fantasy.mp3"; sourceTree = "<group>"; };
+		649F971929DE244400BCB8E8 /* RollDieAudio.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = RollDieAudio.mp3; sourceTree = "<group>"; };
+		649F971A29DE244400BCB8E8 /* MenuSelect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = MenuSelect.mp3; sourceTree = "<group>"; };
+		649F971B29DE244400BCB8E8 /* CastSpell.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CastSpell.mp3; sourceTree = "<group>"; };
+		649F972529DE245F00BCB8E8 /* Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
 		64A2875D29A4211D00922509 /* Adventurer.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Adventurer.ttf; sourceTree = "<group>"; };
 		64A2875E29A4211D00922509 /* munro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = munro.ttf; sourceTree = "<group>"; };
 		64A2875F29A4211D00922509 /* iso8.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = iso8.ttf; sourceTree = "<group>"; };
@@ -213,6 +233,7 @@
 			isa = PBXGroup;
 			children = (
 				646AB40829B65D9300184DB4 /* step-strikers-app.entitlements */,
+				649F970029DE23A300BCB8E8 /* Audio Files */,
 				646DD2B829A6B68C001FB2BB /* Classes */,
 				643651072991AA260017AA0E /* AppDelegate.swift */,
 				82E457B529AEFB5E006A8DB5 /* GeneralUIViewControllerExtensions.swift */,
@@ -243,6 +264,7 @@
 		646DD2B829A6B68C001FB2BB /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				649F972529DE245F00BCB8E8 /* Audio.swift */,
 				646DD2BB29A6B6F2001FB2BB /* RPGCharacter.swift */,
 				646DD2B929A6B6DB001FB2BB /* Game.swift */,
 				646DD2BD29A6B6FC001FB2BB /* Weapon.swift */,
@@ -276,6 +298,22 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		649F970029DE23A300BCB8E8 /* Audio Files */ = {
+			isa = PBXGroup;
+			children = (
+				649F971729DE244400BCB8E8 /* Brirfing_theme.mp3 */,
+				649F971B29DE244400BCB8E8 /* CastSpell.mp3 */,
+				649F971429DE244400BCB8E8 /* Haply.mp3 */,
+				649F971A29DE244400BCB8E8 /* MenuSelect.mp3 */,
+				649F971329DE244400BCB8E8 /* Nat1.mp3 */,
+				649F971529DE244400BCB8E8 /* Nat20.mp3 */,
+				649F971929DE244400BCB8E8 /* RollDieAudio.mp3 */,
+				649F971629DE244400BCB8E8 /* TurnStarted.mp3 */,
+				649F971829DE244400BCB8E8 /* Woodland Fantasy.mp3 */,
+			);
+			path = "Audio Files";
 			sourceTree = "<group>";
 		};
 		64A2876329A4262900922509 /* custom fonts */ = {
@@ -432,12 +470,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				64A2876229A4211D00922509 /* iso8.ttf in Resources */,
+				649F972029DE244500BCB8E8 /* Brirfing_theme.mp3 in Resources */,
 				643651142991AA280017AA0E /* LaunchScreen.storyboard in Resources */,
+				649F971E29DE244500BCB8E8 /* Nat20.mp3 in Resources */,
+				649F971F29DE244500BCB8E8 /* TurnStarted.mp3 in Resources */,
+				649F971C29DE244400BCB8E8 /* Nat1.mp3 in Resources */,
+				649F972429DE244500BCB8E8 /* CastSpell.mp3 in Resources */,
 				EBC206852995777D00DEB48C /* GoogleService-Info.plist in Resources */,
+				649F972129DE244500BCB8E8 /* Woodland Fantasy.mp3 in Resources */,
 				64A2876129A4211D00922509 /* munro.ttf in Resources */,
 				643651112991AA280017AA0E /* Assets.xcassets in Resources */,
+				649F971D29DE244400BCB8E8 /* Haply.mp3 in Resources */,
 				64A2876029A4211D00922509 /* Adventurer.ttf in Resources */,
 				6436510F2991AA270017AA0E /* Main.storyboard in Resources */,
+				649F972329DE244500BCB8E8 /* MenuSelect.mp3 in Resources */,
+				649F972229DE244500BCB8E8 /* RollDieAudio.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -479,6 +526,7 @@
 				646DD2C029A6B70A001FB2BB /* Armor.swift in Sources */,
 				82490AF129A81F5800ECBFD7 /* RegistrationViewController.swift in Sources */,
 				64CD580529AFBD69002F4F5A /* BattleTableStructs.swift in Sources */,
+				649F972629DE245F00BCB8E8 /* Audio.swift in Sources */,
 				641220E829B0228400561860 /* RollResultsViewController.swift in Sources */,
 				82407B8229B7142F00324EAB /* SelectBardViewController.swift in Sources */,
 				646DD2C229A6B721001FB2BB /* Item.swift in Sources */,

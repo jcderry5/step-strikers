@@ -60,6 +60,7 @@ class StatsViewController: UIViewController {
             HealthKitViewController().getSteps()
         }
         
+        playBackgroundAudio(fileName: nonCombatBattleMusicFile)
         checkDarkMode()
         self.background = assignSwitchableBackground()
         createSettingsButton(x: 325, y: 800, width: 40, height: 40)
@@ -161,6 +162,7 @@ class StatsViewController: UIViewController {
     }
 
     @objc func swipeLeft() {
+        playSoundEffect(fileName: menuSelectEffect)
         // Navigate to the INVENTORY screen
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "InventoryViewController") as! InventoryViewController
