@@ -481,6 +481,10 @@ struct CharacterSprites {
         if localCharacter.blood {
             image = UIImage(named:name+"-Blood")
         }
+        if isHurt {
+            print("Is Hurt")
+            image = UIImage(named:name+"-Hurt")
+        }
         var imageView: UIImageView!
         imageView = UIImageView(frame: CGRect(x:x, y: y, width: width, height: height))
         imageView.image = image

@@ -191,7 +191,7 @@ extension UIViewController {
                     let player1Image:UIImageView?
                     player1Image = UIImageView()
                     player1Image!.backgroundColor = .clear
-                    var isHurt = health < localCharacter.maxHealth/2
+                    var isHurt = health <= getMaxHealth(characterClass: character_class)/2
                     
                     // don't show enemies if the current player is blind dead or asleep
                     if localCharacter.isBlind == false && localCharacter.isDead == false && localCharacter.isAsleep == false {
@@ -267,7 +267,8 @@ extension UIViewController {
                 x = 290
             }
             let player1 = CharacterSprites(name: enemiesList[index].character_class)
-            var isHurt = enemiesList[index].health < localCharacter.maxHealth/2
+            var isHurt = enemiesList[index].health <= getMaxHealth(characterClass: enemiesList[index].character_class)/2
+            print("Is it hurt? : \(isHurt) \(enemiesList[index].health)")
             let player1Image = player1.drawCharacter(view: self.view, x: 10, y: 400, width: 100, height: 100, isInvisible: enemiesList[index].isInvisible, isHurt: isHurt, isDead: enemiesList[index].isDead)!
             returnArray.append(player1Image)
         }

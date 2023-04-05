@@ -33,7 +33,7 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         let xValues = [10,100,200,290]
         for index in 0...(enemiesList.count-1) {
             let enemies = enemiesList[index]
-            var isHurt = enemies.health < localCharacter.maxHealth/2
+            var isHurt = enemies.health <= getMaxHealth(characterClass: enemies.character_class)/2
             let character = CharacterSprites(name: enemies.character_class)
             character.drawCharacter(view: self.view, x: xValues[index], y: 400, width: 100, height: 100, isInvisible: enemies.isInvisible, isHurt:isHurt, isDead: enemies.isDead)
         }
