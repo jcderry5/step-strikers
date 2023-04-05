@@ -16,6 +16,7 @@ class TeamMatchViewController: UIViewController, UITableViewDelegate, UITableVie
     var confirmDisplay:UIView = UIView()
     var backButton:UIButton = UIButton()
     var partyCode = ""
+    var numPlayers = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -146,7 +147,9 @@ class TeamMatchViewController: UIViewController, UITableViewDelegate, UITableVie
     
     @objc func confirmPressed(_ sender:UIButton!) {
         // remove your team from match list
-        Firestore.firestore().collection("matchable_teams").document("teams").updateData(["teams": FieldValue.arrayRemove([self.partyCode])])
+        Firestore.firestore().collection("matchable_teams").document("teams").updateData(["teams": FieldValue.arrayRemove(["\(self.partyCode)-\(numPlayers)"])])
+        
+        print("DEBUG: tried to remove \(self.partyCode)-\(numPlayers)")
 
         // move to roll initiative screen
         let sb = UIStoryboard(name: "Main", bundle: nil)
