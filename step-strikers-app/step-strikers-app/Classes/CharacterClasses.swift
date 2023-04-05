@@ -278,16 +278,17 @@ class Rogue: RPGCharacter {
 }
 
 func actionRequiresEnemy() -> Bool {
-    let actionSelected = rowSelected?.name
     
-    print("DEBUG: \(actionSelected)")
+    guard rowSelected != nil else {
+        return false
+    }
+
+    let actionSelected = rowSelected?.name
     
     switch actionSelected {
     case "Fight", "Action Surge", "Insight", "Frost Bite", "Mage Hand", "Shield", "Sleep", "Animate the Dead", "Heal", "Bardic Inspiration", "Vicious Mockery", "Blindness", "Invisibility":
-        print("DEBUG: \(actionSelected) returns true")
         return true
     default:
-        print("DEBUG: \(actionSelected) returns false")
         return false
     }
 }
@@ -337,5 +338,153 @@ func isAnimateDead() -> Bool {
         return true
     default:
         return false
+    }
+}
+
+// based on the actionName return the description for that action
+func actionDescription(actionName: String) -> String {
+    switch actionName {
+    case "Fight":
+        return "Attack your target using the weapon you are currently wielding."
+    case "Frost Bite":
+        return "Cast a spell against your target for up to six points of damage"
+    case "Mage Hand":
+        return "Take the current weapon from an enemy and wield it"
+    case "Shield":
+        return "Boost the defense modifier of one of your teammates"
+    case "Sleep":
+        return "Put an enemy to sleep causing them to skip their next turn"
+    case "Animate the Dead":
+        return "Revive a dead teammate to 1HP"
+    case "Heal":
+        return "Heal a teammate for up to 8HP"
+    case "Uncanny Dodge":
+        return "Take a turn to increase your defense modifier"
+    case "Hone Skill":
+        return "Take a turn to increase your attack modifier"
+    case "Insight":
+        return "View the stats for one of your enemies"
+    case "Allsight":
+        return "View the stats for all of your enemies"
+    case "Second Wind":
+        return "Take a turn to rest for +10 Health"
+    case "Action Surge":
+        return "Attack your target using your current weapon with the chance to double the damage you deal"
+    case "Sharpen Weapon":
+        return "Take a turn to increase your attack modifier"
+    case "Bardic Inspiration":
+        return "Inspire a teammate giving them advantage on their next roll"
+    case "Vicious Mockery":
+        return "Mock an enemy giving them disadvantage on their next roll"
+    case "Blindness":
+        return "Blind an enemy taking away the choice to select their target on their next turn"
+    case "Invisibility":
+        return "Make a teammate invisible, preventing them from being targeted until after their next turn"
+    case "Motivational Speech":
+        return "Inspire your entire team, giving your entire team advantage on their next roll"
+    default:
+        return ""
+    }
+}
+
+func itemDescription(itemName:String) -> String {
+    switch itemName {
+    case "Potion of Healing":
+        return "Restores a small amount of health"
+    case "Elixir of Magic":
+        return "Restores a small amount of magic"
+    case "Energy Powder":
+        return "Restores a small amount of stamina"
+    case "Antidote":
+        return "Cures blindess"
+    case "Awakening":
+        return "Wakes up the target"
+    case "Potion of Greater Healing":
+        return "Restores a moderate amount of health"
+    case "Elixir of Great Magic":
+        return "Restores a moderate amount of magic"
+    case "Energy Pill":
+        return "Restores a moderate amount of stamina"
+    case "Resurrection Stone":
+        return "Revives the target with small healing"
+    case "Four-leaf Clover":
+        return "+2 to attack roll"
+    case "Leather Armor Pad":
+        return "Increase defense by a small amount"
+    case "Feather of Vigor":
+        return "Increase attack by a small amount"
+    case "Scroll of Resistance":
+        return "Increases magic resistance by a small amount"
+    case "Potion of Superior Healing":
+        return "Restores a large amount of health"
+    case "Elixir of Superior Magic":
+        return "Restores a large amount of magic"
+    case "Energy Root":
+        return "Restores a large amount of stamina"
+    case "Revival Crystal":
+        return "Revives the target with moderate healing"
+    case "Five-leaf Clover":
+        return "+4 to attack roll"
+    case "Metal Armor Pad":
+        return "Increase defense by a moderate amount"
+    case "Vial of Vigor":
+        return "Increase attack by a moderate amount"
+    case "Scroll of Greater Resistance":
+        return "Increases magic resistance by a moderate amount"
+    case "Potion of Vitality":
+        return "Fully restores health"
+    case "Elixir of Sorcery":
+        return "Fully restores magic"
+    case "Energy Sap":
+        return "Fully restores stamina"
+    case "Miracle of Life":
+        return "Revives target with full health"
+    case "Seven-leaf Clover":
+        return "Attack is guaranteed to hit"
+    case "Heart of Iron":
+        return "Prevents the uder from taking damage. Lasts 1 turn"
+    default:
+        return ""
+    }
+}
+
+func equipDescription(equipName:String) -> String {
+    switch equipName {
+    case "Fists":
+        return "deals 2 damage at the cost of 0 stamina"
+    case "Dagger":
+        return "deals 4 damage at the cost of 3 stamina"
+    case "Darts":
+        return "deals 5 damage at the cost of 4 stamina"
+    case "Cross-Bow":
+        return "deals 8 damage at the cost of 5 stamina"
+    case "Rapier":
+        return "deals 8 damage at the cost of 5 stamina"
+    case "Short Sword":
+        return "deals 6 damage at the cost of 4 stamina"
+    case "Long Bow":
+        return "deals 8 damage at the cost of 6 stamina"
+    case "Hand Axe":
+        return "deals 6 damage at the cost of 5 stamina"
+    case "Battle Axe":
+        return "deals 10 damage at the cost of 8 stamina"
+    case "Long Sword":
+        return "deals 8 damage at the cost of 5 stamina"
+    case "Leather":
+        return "equips you with 11 AC"
+    case "Padded":
+        return "equips you with 11 AC"
+    case "Studded Leather":
+        return "equips you with 12 AC"
+    case "Chainmail":
+        return "equips you with 16 AC"
+    case "Shield":
+        return "equips you with 2 AC"
+    case "Leather Armor":
+        return "equips you with 11 AC"
+    case "No Armor":
+        return "equips you with 0 AC"
+    default:
+        return ""
     }
 }

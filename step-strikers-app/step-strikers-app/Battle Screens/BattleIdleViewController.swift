@@ -20,13 +20,40 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        displayEnemies(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
+        
+        // check if game is already over
+        let gameRef = Firestore.firestore().collection("games").document(game)
+        gameRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                if document.get("game_over") as! Bool {
+                    if document.get("game_winner") as! String == team {
+                        // you win!
+                        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                        let vc = sb.instantiateViewController(withIdentifier: "BattleResultsVictoryViewController") as! BattleResultsVictoryViewController
+                        
+                        self.modalPresentationStyle = .fullScreen
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: false)
+                        
+                    } else {
+                        // you lose
+                        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                        let vc = sb.instantiateViewController(withIdentifier: "BattleResultsLossViewController") as! BattleResultsLossViewController
+                        
+                        self.modalPresentationStyle = .fullScreen
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: false)
+                    }
+                }
+            }
+        }
+        
+        displayEnemies(enemyTeam: enemyTeam)
         // Do any additional setup after loading the view.
         // background images and view set up
         assignBackground()
         createBattleActionMenu()
         createBattleStatsDisplay()
-        createSettingsButton(x: 10, y: 50, width: 40, height: 40)
         
         // stats menu
         createStatsArray()
@@ -94,6 +121,8 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
         refreshStats()
         // listen for when it's your turn
         segueWhenTurn()
+        // listen for when game is over
+        checkGameOver()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -189,12 +218,22 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func createStatsArray() {
-        header.append(StatsHeaderRow(names: [teamList[0].userName, teamList[1].userName, teamList[2].userName, teamList[3].userName]))
+        var nameArray:[String] = [String]()
+        var healthPoints:[Int] = [Int]()
+        var spellPoints:[Int] = [Int]()
+        var staminaPoints:[Int] = [Int]()
+        for member in teamList {
+            nameArray.append(member.userName)
+            healthPoints.append(member.health)
+            spellPoints.append(member.spellPoints)
+            staminaPoints.append(member.stamina)
+        }
+        header.append(StatsHeaderRow(names: nameArray))
         // extra to account for header messing everything up
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [teamList[0].health, teamList[1].health, teamList[2].health, teamList[3].health] , totalPoints: [1,2,3,4]))
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [teamList[0].health, teamList[1].health, teamList[2].health, teamList[3].health] , totalPoints: [1,2,3,4]))
-        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
-        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points:[teamList[0].stamina, teamList[1].stamina, teamList[2].stamina, teamList[3].stamina] , totalPoints: [1,2,3,4]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: [30, 30, 30, 30]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: [30, 30, 30, 30]))
+        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: spellPoints, totalPoints: [30, 30, 30, 30]))
+        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points: staminaPoints, totalPoints: [30, 30, 30, 30]))
     }
     
     func updateLists() {
@@ -224,6 +263,10 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
                 
                 let data = document2.data()
                 enemiesList[i].health = data!["health"] as! Int
+                enemiesList[i].isBlind = data!["is_blind"] as! Bool
+                enemiesList[i].isDead = data!["is_dead"] as! Bool
+                enemiesList[i].isSleep = data!["is_asleep"] as! Bool
+                enemiesList[i].isInvisible = data!["is_invisible"] as! Bool
             }
         }
         
@@ -234,10 +277,18 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
             }
             statsDisplay.beginUpdates()
             self.stats.removeAll()
-            self.stats.append(StatsRow(imageName: UIImage(named: "health"), points: [teamList[0].health, teamList[1].health, teamList[2].health, teamList[3].health] , totalPoints: [1,2,3,4]))
-            self.stats.append(StatsRow(imageName: UIImage(named: "health"), points: [teamList[0].health, teamList[1].health, teamList[2].health, teamList[3].health] , totalPoints: [1,2,3,4]))
-            self.stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
-            self.stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points:[teamList[0].stamina, teamList[1].stamina, teamList[2].stamina, teamList[3].stamina] , totalPoints: [1,2,3,4]))
+            var healthPoints:[Int] = [Int]()
+            var spellPoints:[Int] = [Int]()
+            var staminaPoints:[Int] = [Int]()
+            for member in teamList {
+                healthPoints.append(member.health)
+                spellPoints.append(member.spellPoints)
+                staminaPoints.append(member.stamina)
+            }
+            self.stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: [30, 30, 30, 30]))
+            self.stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: [30, 30, 30, 30]))
+            self.stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: spellPoints, totalPoints: [30, 30, 30, 30]))
+            self.stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points: staminaPoints, totalPoints: [30, 30, 30, 30]))
             statsDisplay.reloadData()
             statsDisplay.endUpdates()
         }
@@ -253,7 +304,6 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
                         print("Error fetching document: \(error!)")
                         return
                     }
-                    
                     
                     if !first {
                         DispatchQueue.main.async {
@@ -278,6 +328,41 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
                         }
                     } else {
                         first = false
+                    }
+                }
+            }
+        }
+    }
+    
+    func checkGameOver() {
+        let docRef = Firestore.firestore().collection("game").document(game)
+        docRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                docRef.addSnapshotListener {
+                    documentSnapshot, error in guard let document = documentSnapshot else {
+                        print("Error fetching document: \(error!)")
+                        return
+                    }
+                    if document.get("game_over") as! Bool {
+                        print("DEBUG: game over")
+                        if document.get("winning_team") as! String == team {
+                            // you win!
+                            let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                            let vc = sb.instantiateViewController(withIdentifier: "BattleResultsVictoryViewController") as! BattleResultsVictoryViewController
+                            
+                            self.modalPresentationStyle = .fullScreen
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: false)
+                            
+                        } else {
+                            // you lose
+                            let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                            let vc = sb.instantiateViewController(withIdentifier: "BattleResultsLossViewController") as! BattleResultsLossViewController
+                            
+                            self.modalPresentationStyle = .fullScreen
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: false)
+                        }
                     }
                 }
             }

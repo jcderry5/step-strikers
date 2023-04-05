@@ -8,6 +8,7 @@
 import UIKit
 
 var rowItemSelected:Items?
+var itemLongPressed:Items?
 
 class BattleSelectItemViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -24,11 +25,13 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
     var selected:Bool = false
     var characters: [UIImageView] = [UIImageView]()
     var playerButtons: [UIButton] = [UIButton]()
+    var helpPopUp: UIView?
+    var helpButton: UIButton?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        renderTeam(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
-        displayEnemies(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
+//        renderTeam(playerTeam: "4bDfA6dWfv8fRSdebjWI")
+        displayEnemies(enemyTeam:  enemyTeam)
         // Do any additional setup after loading the view.
         // background images and view set up
         assignBackground()
@@ -37,7 +40,6 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
         let selectedButton:String = "Selected Action Button"
         let unselectedButton:String = "Unselected action button"
         createBattleActionButtons(actionSelected: unselectedButton, itemSelected: selectedButton, equipSelected: unselectedButton)
-        createSettingsButton(x: 10, y: 50, width: 40, height: 40)
         
         // create characters
         // will need to change "name" based on what the enemy players are
@@ -57,6 +59,9 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
         // sets the background of the table to transparent
         itemDisplay.backgroundColor = UIColor.clear
         itemDisplay.delegate = self
+        // long press for description
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(helpPressed))
+        itemDisplay.addGestureRecognizer(longPress)
         self.view.addSubview(itemDisplay)
         
         // stats menu
@@ -76,6 +81,10 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
         // get rid of grey separator line in between rows
         statsDisplay.separatorColor = UIColor.clear
         self.view.addSubview(statsDisplay)
+        
+        helpButton = createButton(x: 300, y: 300, width: 50, height: 50, fontName: "munro", imageName: "helpbutton", fontColor: .black, buttonTitle: "")
+        helpButton!.addTarget(self, action:#selector(helpButtonPressed), for:.touchUpInside)
+        self.view.addSubview(helpButton!)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -120,16 +129,16 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
     
     // TODO: complete for when a row is selected to segue to Battle Item Select target screen
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath:IndexPath) {
+        helpPopUp?.removeFromSuperview()
         print(enemiesList[0].name)
         if recentlyTapped == indexPath.row && selected == true {
             selected = false
-            playerButtons[0].removeFromSuperview()
-            playerButtons[1].removeFromSuperview()
-            playerButtons[2].removeFromSuperview()
-            playerButtons[3].removeFromSuperview()
-            boxArrow[0].removeFromSuperview()
-            boxArrow[1].removeFromSuperview()
-            boxArrow[2].removeFromSuperview()
+            for index in playerButtons.indices {
+                playerButtons[index].removeFromSuperview()
+            }
+            for index in boxArrow.indices {
+                boxArrow[index].removeFromSuperview()
+            }
             tableView.deselectRow(at: indexPath, animated:false)
         } else {
         selected = true
@@ -139,12 +148,12 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
                 
                 print("selected row")
                 if boxArrow.isEmpty == false {
-                    boxArrow[0].removeFromSuperview()
-                    boxArrow[1].removeFromSuperview()
-                    boxArrow[2].removeFromSuperview()
+                    for index in boxArrow.indices {
+                        boxArrow[index].removeFromSuperview()
+                    }
                 }
                 
-                playerButtons = drawPlayerButtons(player1: teamList[0].character_class, player2: teamList[1].character_class, player3: teamList[2].character_class, player4: teamList[3].character_class)
+                playerButtons = drawPlayerButtons()
 //                boxArrow = drawSelectBoxButtonArrowItem(x: 40, y: 130, width: 70, height: 150)
             }
         }
@@ -161,6 +170,93 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
         
         return UITableView.automaticDimension
     }
+    
+    @objc func helpButtonPressed(_ sender: UIButton) {
+        helpPopUp?.removeFromSuperview()
+        
+        // view to display
+        let popView = UIView(frame: CGRect(x: 50, y: 350, width: 300, height: 200))
+        popView.backgroundColor = UIColor(red: 0.941, green: 0.851, blue: 0.690, alpha: 1.0)
+        
+        // label based on blind or invisible
+        var label = UILabel(frame: CGRect(x: 25, y: 5, width: 250, height: 200))
+        label.text = ""
+        for (index, item) in items.enumerated() {
+            let itemDescription = itemDescription(itemName: item.name!)
+            label.text!.append("\(item.name!): \(itemDescription)\n")
+        }
+        label.font = UIFont(name: "munro", size: 15)
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 0
+        label.textColor = UIColor.black
+        label.backgroundColor = UIColor.clear
+        popView.addSubview(label)
+        
+        // x button
+        let xButton = UIButton(frame: CGRect(x: 270, y: 10, width: 20, height: 15))
+        xButton.setTitle("x", for: UIControl.State.normal)
+        xButton.backgroundColor = UIColor.clear
+        xButton.titleLabel!.font = UIFont(name: "American Typewriter", size: 20)
+        xButton.setTitleColor(UIColor.black, for: UIControl.State.normal)
+        xButton.addTarget(self, action: #selector(xPressed), for: .touchUpInside)
+        popView.addSubview(xButton)
+        
+        // popView border
+        popView.layer.borderWidth = 1.0
+        popView.layer.borderColor = UIColor.black.cgColor
+        helpPopUp = popView
+        self.view.addSubview(helpPopUp!)
+    }
+    
+    // long press on action from action table
+    @objc func helpPressed(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        var itemName:String = " "
+        if longPressGestureRecognizer.state == .began {
+            let touchPoint = longPressGestureRecognizer.location(in: itemDisplay)
+            if let indexPath = itemDisplay.indexPathForRow(at: touchPoint){
+                helpPopUp?.removeFromSuperview()
+                itemName = items[indexPath.row].name!
+                itemLongPressed = items[indexPath.row]
+                
+                // view to display
+                let popView = UIView(frame: CGRect(x: 50, y: 350, width: 300, height: 200))
+                popView.backgroundColor = UIColor(red: 0.941, green: 0.851, blue: 0.690, alpha: 1.0)
+                
+                // label based on blind or invisible
+                let label = UILabel(frame: CGRect(x: 25, y: 5, width: 250, height: 200))
+                let itemDescription = itemDescription(itemName: itemName)
+                label.text = "\(itemName): \(itemDescription)"
+                label.font = UIFont(name: "munro", size: 20)
+                label.lineBreakMode = .byWordWrapping
+                label.numberOfLines = 0
+                label.textColor = UIColor.black
+                label.backgroundColor = UIColor.clear
+                popView.addSubview(label)
+                
+                // x button
+                let xButton = UIButton(frame: CGRect(x: 270, y: 10, width: 20, height: 15))
+                xButton.setTitle("x", for: UIControl.State.normal)
+                xButton.backgroundColor = UIColor.clear
+                xButton.titleLabel!.font = UIFont(name: "American Typewriter", size: 20)
+                xButton.setTitleColor(UIColor.black, for: UIControl.State.normal)
+                xButton.addTarget(self, action: #selector(xPressed), for: .touchUpInside)
+                popView.addSubview(xButton)
+
+                // popView border
+                popView.layer.borderWidth = 1.0
+                popView.layer.borderColor = UIColor.black.cgColor
+                helpPopUp = popView
+                self.view.addSubview(helpPopUp!)
+            }
+        }
+
+    }
+
+    // x pressed on the help button
+    @objc func xPressed(_ sender:UIButton!) {
+        // remove pop up
+        helpPopUp?.removeFromSuperview()
+    }
 
     // TODO: Update with actual item data
     func createItemArray() {
@@ -175,11 +271,21 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
     }
 
     func createStatsArray() {
-        header.append(StatsHeaderRow(names: ["Host", "Player 1", "Player 2", "Player 3"]))
+        var nameArray:[String] = [String]()
+        var healthPoints:[Int] = [Int]()
+        var spellPoints:[Int] = [Int]()
+        var staminaPoints:[Int] = [Int]()
+        for member in teamList {
+            nameArray.append(member.userName)
+            healthPoints.append(member.health)
+            spellPoints.append(member.spellPoints)
+            staminaPoints.append(member.stamina)
+        }
+        header.append(StatsHeaderRow(names: nameArray))
         // extra to account for header messing everything up
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
-        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: [1,2,3,4] , totalPoints: [1,2,3,4]))
-        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points:[1,2,3,4] , totalPoints: [1,2,3,4]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: [30, 30, 30, 30]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: [30, 30, 30, 30]))
+        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: spellPoints, totalPoints: [30, 30, 30, 30]))
+        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points: staminaPoints, totalPoints: [30, 30, 30, 30]))
     }
 }

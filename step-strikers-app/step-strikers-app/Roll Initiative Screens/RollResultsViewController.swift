@@ -19,7 +19,7 @@ class RollResultsViewController: UIViewController {
         d20.backgroundColor = UIColor.clear
         d20.addTarget(self, action:#selector(self.rollDicePressed(_:)), for: .touchUpInside)
         self.view.addSubview(d20)
-        renderEnemies(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
+        renderEnemies(enemyTeam: enemyTeam)
         displayIntiative()
     }
     

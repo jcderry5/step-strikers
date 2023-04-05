@@ -27,11 +27,13 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
     
     var segCtrl:UISegmentedControl = UISegmentedControl()
     
+    var background:UIImageView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.isUserInteractionEnabled = true
         
-        assignBackground()
+        self.background = assignSwitchableBackground()
         createSettingsButton(x: 325, y: 800, width: 40, height: 40)
         
         // Create menu title label
@@ -79,7 +81,7 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
         var quantities = localCharacter.inventoryQuantities
         for weapon in weaponsArr {
             if weapon.name != "Fists" && quantities.keys.contains(weapon.name) {
-                inventoryArr.append(InventoryStruct(name: weapon.name, image: UIImage(named:weapon.name) ?? UIImage(named:"battle axe")!, quantity: quantities[weapon.name]!))
+                inventoryArr.append(InventoryStruct(name: weapon.name, image: UIImage(named:weapon.name) ?? UIImage(named:"Battle Axe")!, quantity: quantities[weapon.name]!))
                 quantities.removeValue(forKey: weapon.name)
             }
         }
@@ -131,7 +133,7 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
             var quantities = localCharacter.inventoryQuantities
             for weapon in weaponsArr {
                 if weapon.name != "Fists" && quantities.keys.contains(weapon.name) {
-                    inventoryArr.append(InventoryStruct(name: weapon.name, image: UIImage(named:weapon.name) ?? UIImage(named:"battle axe")!, quantity: quantities[weapon.name]!))
+                    inventoryArr.append(InventoryStruct(name: weapon.name, image: UIImage(named:weapon.name) ?? UIImage(named:"Battle Axe")!, quantity: quantities[weapon.name]!))
                     quantities.removeValue(forKey: weapon.name)
                 }
             }
@@ -140,7 +142,7 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
             var quantities = localCharacter.inventoryQuantities
             for armor in armorArr {
                 if armor.name != "No Armor" && quantities.keys.contains(armor.name) {
-                    inventoryArr.append(InventoryStruct(name: armor.name, image: UIImage(named:armor.name) ?? UIImage(named:"battle axe")!, quantity: quantities[armor.name]!))
+                    inventoryArr.append(InventoryStruct(name: armor.name, image: UIImage(named:armor.name) ?? UIImage(named:"Battle Axe")!, quantity: quantities[armor.name]!))
                     quantities.removeValue(forKey: armor.name)
                 }
             }
@@ -149,7 +151,7 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
             var quantities = localCharacter.inventoryQuantities
             for item in itemsArr {
                 if quantities.keys.contains(item.name) {
-                    inventoryArr.append(InventoryStruct(name: item.name, image: UIImage(named:item.name) ?? UIImage(named:"battle axe")!, quantity: quantities[item.name]!))
+                    inventoryArr.append(InventoryStruct(name: item.name, image: UIImage(named:item.name) ?? UIImage(named:"Battle Axe")!, quantity: quantities[item.name]!))
                     quantities.removeValue(forKey: item.name)
                 }
             }
@@ -158,6 +160,14 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
         }
         
         inventoryTable.reloadData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if localCharacter.darkMode {
+            self.background?.image = UIImage(named: "Background-darkmode")
+        } else {
+            self.background?.image = UIImage(named: "Background")
+        }
     }
     
     @objc func swipeLeft() {

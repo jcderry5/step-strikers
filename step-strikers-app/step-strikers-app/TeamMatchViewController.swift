@@ -16,6 +16,7 @@ class TeamMatchViewController: UIViewController, UITableViewDelegate, UITableVie
     var confirmDisplay:UIView = UIView()
     var backButton:UIButton = UIButton()
     var partyCode = ""
+    var numPlayers = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,9 +27,6 @@ class TeamMatchViewController: UIViewController, UITableViewDelegate, UITableVie
         // giant party code text
         var chooseOpponentLabel = createLabel(x: 10, y: 25, w: 375, h: 200, font: "iso8", size: 40, text: "WAITING FOR OPPONENT", align: .center)
         chooseOpponentLabel.numberOfLines = 0
-
-        // add settings button to bottom right corner
-        createSettingsButton(x: 325, y: 775, width: 40, height: 40)
         
         // create the back button to go to battle meny again
         backButton = UIButton()
@@ -95,6 +93,7 @@ class TeamMatchViewController: UIViewController, UITableViewDelegate, UITableVie
         let docRef = Firestore.firestore().collection("teams").document(self.partyCode)
         docRef.getDocument { (document, error) in
             if let document = document, document.exists {
+                enemyTeam = document.get("enemy_team") as! String
                 game = document.get("game_id") as! String
                 print("game \(game)")
             } else {
@@ -134,21 +133,23 @@ class TeamMatchViewController: UIViewController, UITableViewDelegate, UITableVie
     }
 
     @objc func backButtonPressed(_ sender:UIButton!) {
-        print("Back button pressed")
+        // remove your team from the match list
+        Firestore.firestore().collection("matchable_teams").document("teams").updateData(["teams": FieldValue.arrayRemove([self.partyCode])])
+        
         // set to battle menu here
         // TODO: set party menu as vc to switch to
-        /*
         let sb = UIStoryboard(name: "Main", bundle: nil)
-        let vc = sb.instantiateViewController(withIdentifier: "PartyMenuHostViewController") as! PartyMenuHostViewController
+        let vc = sb.instantiateViewController(withIdentifier: "BattleMenuViewController") as! BattleMenuViewController
         self.modalPresentationStyle = .fullScreen
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated:false)
-         */
     }
     
     @objc func confirmPressed(_ sender:UIButton!) {
-        // remove your team from team list
-        Firestore.firestore().collection("matchable_teams").document("teams").updateData(["teams": FieldValue.arrayRemove([self.partyCode])])
+        // remove your team from match list
+        Firestore.firestore().collection("matchable_teams").document("teams").updateData(["teams": FieldValue.arrayRemove(["\(self.partyCode)-\(numPlayers)"])])
+        
+        print("DEBUG: tried to remove \(self.partyCode)-\(numPlayers)")
 
         // move to roll initiative screen
         let sb = UIStoryboard(name: "Main", bundle: nil)

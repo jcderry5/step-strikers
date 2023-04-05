@@ -14,6 +14,8 @@ class StatsViewController: UIViewController {
     let cellId = "statsCell"
     var boostTotal = 3000
     var numTillBoost = 0
+    
+    var background:UIImageView?
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -91,7 +93,8 @@ class StatsViewController: UIViewController {
             HealthKitViewController().getSteps()
         }
         
-        assignBackground()
+        checkDarkMode()
+        self.background = assignSwitchableBackground()
         createSettingsButton(x: 325, y: 800, width: 40, height: 40)
         
         // Create menu title label
@@ -166,6 +169,14 @@ class StatsViewController: UIViewController {
         let swipeLeft = UISwipeGestureRecognizer(target:self, action: #selector(swipeLeft))
         swipeLeft.direction = .left
         swipeView.addGestureRecognizer(swipeLeft)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if localCharacter.darkMode {
+            self.background?.image = UIImage(named: "Background-darkmode")
+        } else {
+            self.background?.image = UIImage(named: "Background")
+        }
     }
     
     func dataTypesToWrite() -> NSSet{

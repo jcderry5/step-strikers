@@ -206,20 +206,20 @@ extension UIViewController {
         print("The number of enemies are \(enemiesList.count)")
     }
     
-    func renderTeam(enemyTeam: String) {
+    func renderTeam(playerTeam: String) {
         teamList.removeAll()
         var count:Int = 0
         let xValues = [10,100,200,290]
         // TODO: update with team reference
-        let enemiesRef = Firestore.firestore().collection("teams").document(enemyTeam)
-        enemiesRef.getDocument { (document, error) in
+        let playerRef = Firestore.firestore().collection("teams").document(playerTeam)
+        playerRef.getDocument { (document, error) in
             guard let document = document, document.exists else {
                 print("This team does not exist")
                 return
             }
-            let enemies = document.get("players") as! [String]
-            for enemy in enemies {
-                let gameRef = Firestore.firestore().collection("players").document(enemy)
+            let players = document.get("players") as! [String]
+            for player in players {
+                let gameRef = Firestore.firestore().collection("players").document(player)
                 gameRef.getDocument { (document2, error) in
                     guard let document2 = document2, document2.exists else {
                         print("This player does not exist")
@@ -235,7 +235,7 @@ extension UIViewController {
                     let defenseModifier = data!["defense_modifier"] as! Int
                     let spellPoints = data!["spell_points"] as! Int
                     let currStamina = data!["stamina"] as! Int
-                    let userName = enemy
+                    let userName = player
                     
                     
                     teamList.append(TeamData(userName: userName, name: name, character_class: character_class, health: health, isBlind: isBlind, isInvisible: isInvisible, hasAdvantage: hasAdvantage, defenseModifier: defenseModifier, spellPoints: spellPoints, stamina: currStamina))
@@ -248,108 +248,129 @@ extension UIViewController {
     // draw the static characters for the enemies with just their names
     // the parameter strings need to match the image asset names like "Fighter", "Rogue", "Bard", "Wizard"
     // nothing will show up if you dont use one of those!!!
-    func drawEnemies(enemy1:String, enemy2:String, enemy3:String, enemy4:String) -> [UIImageView] {
+    func drawEnemies() -> [UIImageView] {
         // do not change the x y width and height for any of the characters
         // will need to change "name" based on what the enemy players are
         // but that should be dealt with before you call the methods and use the names as the parameter
         //        print(enemiesList[0].name)
-        // player 1
-        let player1 = CharacterSprites(name: enemiesList[0].character_class)
-        let player1Image = player1.drawCharacter(view: self.view, x: 10, y: 400, width: 100, height: 100, isInvisible: enemiesList[0].isInvisible, isDead: enemiesList[0].isDead)
+        var returnArray:[UIImageView]  = [UIImageView]()
+        for (index, enemies) in enemiesList.enumerated() {
+            var x = 0
+            if index == 0 {
+                x = 10
+            } else if index == 1 {
+                x = 100
+            } else if index == 2 {
+                x = 200
+            } else if index == 3 {
+                x = 290
+            }
+            let player1 = CharacterSprites(name: enemiesList[index].character_class)
+            let player1Image = player1.drawCharacter(view: self.view, x: 10, y: 400, width: 100, height: 100, isInvisible: enemiesList[index].isInvisible, isDead: enemiesList[index].isDead)!
+            returnArray.append(player1Image)
+        }
         
-        // player 2
-        let player2 = CharacterSprites(name: enemy2)
-        let player2Image = player2.drawCharacter(view: self.view, x: 100, y: 400, width: 100, height: 100, isInvisible: enemiesList[1].isInvisible, isDead: enemiesList[1].isDead)
-        
-        // player 3
-        let player3 = CharacterSprites(name: enemy3)
-        let player3Image =  player3.drawCharacter(view: self.view, x: 200, y: 400, width: 100, height: 100, isInvisible: enemiesList[2].isInvisible, isDead: enemiesList[2].isDead)
-        
-        // player  4
-        let player4 = CharacterSprites(name: enemy4)
-        let player4Image = player4.drawCharacter(view: self.view, x: 290, y: 400, width: 100, height: 100, isInvisible: enemiesList[3].isInvisible, isDead: enemiesList[3].isDead)
-        
-        return [player1Image!, player2Image!, player3Image!, player4Image!]
+        return returnArray
     }
     
     // this method draw the enemy characters as selectable buttons for the select target screens
     // still need to work out the corresponding button methods and what they need as parameters
-    func drawEnemiesButton(enemy1:String, enemy2:String, enemy3:String, enemy4:String) -> [UIButton] {
+    func drawEnemiesButton() -> [UIButton] {
         // select character label
         selectEnemyLabel = UILabel(frame: CGRect(x:100, y: 300, width:200, height:100))
         selectEnemyLabel.text = ("Select an Enemy")
         selectEnemyLabel.font = UIFont(name: "munro", size: 30)
         self.view.addSubview(selectEnemyLabel)
-        // will need to change "name" based on what the enemy players are
-        // player 1
-        let player1 = CharacterSprites(name: enemy1)
-        let player1Button = player1.drawButtonCharacter(controller: self, x: 10, y: 400, width: 100, height: 100)
-        // need to change to a method that does whatever happens when enemy 1 is pressed
-        player1Button.addTarget(self, action:#selector(self.enemy1Selected(_:)), for: .touchUpInside)
-        if enemiesList[0].isInvisible == false && enemiesList[0].isDead == false {
-                    self.view.addSubview(player1Button)
+        var returnArray:[UIButton] = [UIButton]()
+        for (index, enemy) in enemiesList.enumerated() {
+            print("DEBUG: Index in drawEnemiesButton: \(index)")
+            var x = 0
+            if index == 0 {
+                print("Added player 1")
+                x = 10
+                let player1 = CharacterSprites(name: enemiesList[index].character_class)
+                let player1Button = player1.drawButtonCharacter(controller: self, x: x, y: 400, width: 100, height: 100)
+                player1Button.addTarget(self, action:#selector(self.enemy1Selected(_:)), for: .touchUpInside)
+                if enemiesList[index].isInvisible == false && enemiesList[index].isDead == false {
+                            self.view.addSubview(player1Button)
+                }
+                returnArray.append(player1Button)
+            } else if index == 1 {
+                x = 100
+                let player2 = CharacterSprites(name: enemiesList[index].character_class)
+                let player2Button = player2.drawButtonCharacter(controller: self, x: x, y: 400, width: 100, height: 100)
+                player2Button.addTarget(self, action:#selector(self.enemy2Selected(_:)), for: .touchUpInside)
+                if enemiesList[index].isInvisible == false && enemiesList[index].isDead == false {
+                            self.view.addSubview(player2Button)
+                }
+                returnArray.append(player2Button)
+            } else if index == 2 {
+                x = 200
+                let player3 = CharacterSprites(name: enemiesList[index].character_class)
+                let player3Button = player3.drawButtonCharacter(controller: self, x: x, y: 400, width: 100, height: 100)
+                player3Button.addTarget(self, action:#selector(self.enemy3Selected(_:)), for: .touchUpInside)
+                if enemiesList[index].isInvisible == false && enemiesList[index].isDead == false {
+                            self.view.addSubview(player3Button)
+                }
+                returnArray.append(player3Button)
+            } else if index == 3 {
+                x = 290
+                let player4 = CharacterSprites(name: enemiesList[index].character_class)
+                let player4Button = player4.drawButtonCharacter(controller: self, x: x, y: 400, width: 100, height: 100)
+                player4Button.addTarget(self, action:#selector(self.enemy4Selected(_:)), for: .touchUpInside)
+                if enemiesList[index].isInvisible == false && enemiesList[index].isDead == false {
+                            self.view.addSubview(player4Button)
+                }
+                returnArray.append(player4Button)
+            }
+            
         }
         
-        // player 2
-        let player2 = CharacterSprites(name: enemy2)
-        //        player2.drawCharacter(view: self.view, x: 100, y: 400, width: 100, height: 100)
-        let player2Button = player2.drawButtonCharacter(controller: self, x: 100, y: 400, width: 100, height: 100)
-        player2Button.addTarget(self, action:#selector(self.enemy2Selected(_:)), for: .touchUpInside)
-        if enemiesList[1].isInvisible == false && enemiesList[1].isDead == false {
-            self.view.addSubview(player2Button)
-        }
-        
-        // player 3
-        let player3 = CharacterSprites(name: enemy3)
-        let player3Button = player3.drawButtonCharacter(controller: self, x: 200, y: 400, width: 100, height: 100)
-        player3Button.addTarget(self, action:#selector(self.enemy3Selected(_:)), for: .touchUpInside)
-        if enemiesList[2].isInvisible == false && enemiesList[2].isDead == false {
-            self.view.addSubview(player3Button)
-        }
-        
-        // player  4
-        let player4 = CharacterSprites(name: enemy4)
-        let player4Button = player4.drawButtonCharacter(controller: self, x: 290, y: 400, width: 100, height: 100)
-        player4Button.addTarget(self, action:#selector(self.enemy4Selected(_:)), for: .touchUpInside)
-        if enemiesList[3].isInvisible == false && enemiesList[3].isDead == false {
-            self.view.addSubview(player4Button)
-        }
-        
-        return [player1Button, player2Button, player3Button, player4Button]
+        return returnArray
     }
     
-    func drawPlayerButtons(player1:String, player2:String, player3:String, player4:String) -> [UIButton] {
+    func drawPlayerButtons() -> [UIButton] {
+        var returnArray: [UIButton] = [UIButton]()
         // label indicating to pick a player to give item to
         selectPlayerLabel = UILabel(frame: CGRect(x: 50, y: 80, width: 300, height: 75))
         selectPlayerLabel.text = "Select a team member to give item to"
         selectPlayerLabel.font = UIFont(name: "munro", size: 18)
         selectPlayerLabel.textAlignment = .center
         self.view.addSubview(selectPlayerLabel)
-        // self.view.safeAreaInsets.left+40, y: 140, width: 300, height: 300
-        let player1Button = createButton(x: 40, y: 140, width: 70, height: 150, fontName: "munro", imageName: "", fontColor: UIColor.clear, buttonTitle: "player1")
-        player1Button.backgroundColor = UIColor.clear
-        player1Button.addTarget(self, action:#selector(self.player1Selected(_:)), for: .touchUpInside)
-        // cannot pick self if animate the dead
-        if isAnimateDead() == false {
-            self.view.addSubview(player1Button)
+        
+        for (index, teamMember) in teamList.enumerated() {
+            var x = 40
+            var y = 70
+            if index == 1 {
+                x = 120
+                y = 60
+            } else if index == 2 {
+                x = 200
+                y = 60
+            } else if index == 3 {
+                x = 270
+                y = 70
+            }
+            // self.view.safeAreaInsets.left+40, y: 140, width: 300, height: 300
+            let player1Button = createButton(x: x, y: y, width: 70, height: 150, fontName: "munro", imageName: "", fontColor: UIColor.clear, buttonTitle: "player1")
+            player1Button.backgroundColor = UIColor.clear
+            if index == 0 {
+                player1Button.addTarget(self, action:#selector(self.player1Selected(_:)), for: .touchUpInside)
+            } else if index == 1 {
+                player1Button.addTarget(self, action:#selector(self.player2Selected(_:)), for: .touchUpInside)
+            } else if index == 2 {
+                player1Button.addTarget(self, action:#selector(self.player3Selected(_:)), for: .touchUpInside)
+            } else if index == 3 {
+                player1Button.addTarget(self, action:#selector(self.player4Selected(_:)), for: .touchUpInside)
+            }
+            // cannot pick self if animate the dead
+            if isAnimateDead() == false {
+                self.view.addSubview(player1Button)
+            }
+            returnArray.append(player1Button)
         }
         
-        let player2Button = createButton(x: 120, y: 140, width: 60, height: 150, fontName: "munro", imageName: "", fontColor: UIColor.clear, buttonTitle: "")
-        player2Button.backgroundColor = UIColor.clear
-        player2Button.addTarget(self, action:#selector(self.player2Selected(_:)), for: .touchUpInside)
-        self.view.addSubview(player2Button)
-        
-        let player3Button = createButton(x: 200, y: 140, width: 60, height: 150, fontName: "munro", imageName: "", fontColor: UIColor.clear, buttonTitle: "")
-        player3Button.backgroundColor = UIColor.clear
-        player3Button.addTarget(self, action:#selector(self.player3Selected(_:)), for: .touchUpInside)
-        self.view.addSubview(player3Button)
-        
-        let player4Button = createButton(x: 270, y: 140, width: 70, height: 150, fontName: "munro", imageName: "", fontColor: UIColor.clear, buttonTitle: "")
-        player4Button.backgroundColor = UIColor.clear
-        player4Button.addTarget(self, action:#selector(self.player4Selected(_:)), for: .touchUpInside)
-        self.view.addSubview(player4Button)
-        
-        return [player1Button, player2Button, player3Button, player4Button]
+        return returnArray
     }
     
     func drawSelectBoxButtonArrowItem(x:Int, y:Int, width:Int, height:Int) -> [AnyObject] {
@@ -483,7 +504,7 @@ extension UIViewController {
     }
     
     @objc func player1Selected(_ sender:UIButton!) {
-        updateCurrTargetData(teamMemberIndex: 1)
+        updateCurrTargetData(teamMemberIndex: 0)
         selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
             boxArrow[0].removeFromSuperview()
@@ -494,7 +515,7 @@ extension UIViewController {
     }
     
     @objc func player2Selected(_ sender:UIButton!) {
-        updateCurrTargetData(teamMemberIndex: 2)
+        updateCurrTargetData(teamMemberIndex: 1)
         selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
             boxArrow[0].removeFromSuperview()
@@ -505,7 +526,7 @@ extension UIViewController {
     }
     
     @objc func player3Selected(_ sender:UIButton!) {
-        updateCurrTargetData(teamMemberIndex: 3)
+        updateCurrTargetData(teamMemberIndex: 2)
         selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
             boxArrow[0].removeFromSuperview()
@@ -516,7 +537,7 @@ extension UIViewController {
     }
     
     @objc func player4Selected(_ sender:UIButton!) {
-        updateCurrTargetData(teamMemberIndex: 4)
+        updateCurrTargetData(teamMemberIndex: 3)
         selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
             boxArrow[0].removeFromSuperview()
@@ -534,7 +555,6 @@ extension UIViewController {
             // Decide if the player needs to roll or not
             if(actionRequiresRoll()) {
                 let vc = storyboard.instantiateViewController(withIdentifier: "BattleRollViewController") as! BattleRollViewController
-                vc.selectTargetInfo = (enemiesList[0].userName, enemiesList[1].userName, enemiesList[2].userName, enemiesList[3].userName, rowSelected!)
                 
                 self.modalPresentationStyle = .fullScreen
                 vc.modalPresentationStyle = .fullScreen
