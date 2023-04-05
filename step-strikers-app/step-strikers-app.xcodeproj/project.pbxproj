@@ -218,10 +218,7 @@
 				82E457B529AEFB5E006A8DB5 /* GeneralUIViewControllerExtensions.swift */,
 				643651092991AA260017AA0E /* SceneDelegate.swift */,
 				6436510D2991AA270017AA0E /* Main.storyboard */,
-				82407B7D29B6D97100324EAB /* SelectFighterViewController.swift */,
-				82407B7F29B7140500324EAB /* SelectWizardViewController.swift */,
-				82407B8129B7142F00324EAB /* SelectBardViewController.swift */,
-				82407B8329B7143F00324EAB /* SelectRogueViewController.swift */,
+				8242F8A629DCF98000F4226D /* Class Selection Screens */,
 				640BCE0A29B52A5100035CBC /* BattleResultsLossViewController.swift */,
 				640BCE0C29B52A5F00035CBC /* BattleResultsVictoryViewController.swift */,
 				646AB40929B65E5E00184DB4 /* HealthKitViewController.swift */,
@@ -327,6 +324,17 @@
 				82E457C129B1730B006A8DB5 /* StatsViewController.swift */,
 			);
 			path = "Menu Screens";
+			sourceTree = "<group>";
+		};
+		8242F8A629DCF98000F4226D /* Class Selection Screens */ = {
+			isa = PBXGroup;
+			children = (
+				82407B7D29B6D97100324EAB /* SelectFighterViewController.swift */,
+				82407B7F29B7140500324EAB /* SelectWizardViewController.swift */,
+				82407B8129B7142F00324EAB /* SelectBardViewController.swift */,
+				82407B8329B7143F00324EAB /* SelectRogueViewController.swift */,
+			);
+			path = "Class Selection Screens";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

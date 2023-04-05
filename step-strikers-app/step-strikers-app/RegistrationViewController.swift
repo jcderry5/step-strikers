@@ -13,6 +13,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate {
     var usernameTextField:UITextField?
     var passwordTextField:UITextField?
     var confirmPasswordTextField:UITextField?
+    var message:UILabel = UILabel()
     
     let buttonImg = UIImage(named:"Menu Button")
     let selectedImg = UIImage(named:"Selected Menu Button")
@@ -41,6 +42,10 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate {
         let confirmPassword = createTextField(x:154, y:423, w:202, h:34, secured:true)
         self.confirmPasswordTextField = confirmPassword!
         confirmPassword?.text = ""
+        
+        // Invalid credentials label
+        self.message = createLabel(x: 55, y: 500, w: 297, h: 20, font:munro, size:18, text:"", align:.center)
+        self.message.textColor = .red
                 
         // Register button design
         let registerButton = createButton(x:116, y:560, w:160, h:100, text:"REGISTER", fontSize:24, normalImage:buttonImg!, highlightedImage:selectedImg!)
@@ -68,14 +73,11 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate {
     @objc func registerPressed() {
         // TODO: Register credentials to Firebase and navigate to Stats screen
         if self.usernameTextField!.text == "" {
-            // TODO: @Nick don't print this, display it on the screen
-            print("Username not entered")
+            self.message.text = "Username not entered"
         } else if passwordTextField!.text == "" {
-            // TODO: @Nick don't print this, display it on the screen
-            print("Password not entered")
+            self.message.text = "Password not entered"
         } else if passwordTextField!.text != confirmPasswordTextField!.text {
-            // TODO: @Nick don't print this, display it on the screen
-            print("Passwords are not matching")
+            self.message.text = "Passwords are not matching"
         } else {
             Firestore.firestore().collection("players").document(self.usernameTextField!.text!).setData([
                 "password": self.passwordTextField!.text!,
