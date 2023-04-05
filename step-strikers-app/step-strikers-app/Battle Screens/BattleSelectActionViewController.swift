@@ -297,7 +297,7 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
             let actionDescription = actionDescription(actionName: action.name!)
             label.text!.append("\(action.name!): \(actionDescription)\n")
         }
-        label.font = UIFont(name: "munro", size: 15)
+        label.font = UIFont(name: "munro", size: 12)
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         label.textColor = UIColor.black
