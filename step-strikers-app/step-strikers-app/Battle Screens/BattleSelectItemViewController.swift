@@ -8,6 +8,7 @@
 import UIKit
 
 var rowItemSelected:Items?
+var itemLongPressed:Items?
 
 class BattleSelectItemViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -24,6 +25,8 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
     var selected:Bool = false
     var characters: [UIImageView] = [UIImageView]()
     var playerButtons: [UIButton] = [UIButton]()
+    var helpPopUp: UIView?
+    var helpButton: UIButton?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +59,9 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
         // sets the background of the table to transparent
         itemDisplay.backgroundColor = UIColor.clear
         itemDisplay.delegate = self
+        // long press for description
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(helpPressed))
+        itemDisplay.addGestureRecognizer(longPress)
         self.view.addSubview(itemDisplay)
         
         // stats menu
@@ -75,6 +81,10 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
         // get rid of grey separator line in between rows
         statsDisplay.separatorColor = UIColor.clear
         self.view.addSubview(statsDisplay)
+        
+        helpButton = createButton(x: 300, y: 300, width: 50, height: 50, fontName: "munro", imageName: "helpbutton", fontColor: .black, buttonTitle: "")
+        helpButton!.addTarget(self, action:#selector(helpButtonPressed), for:.touchUpInside)
+        self.view.addSubview(helpButton!)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -119,6 +129,8 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
     
     // TODO: complete for when a row is selected to segue to Battle Item Select target screen
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath:IndexPath) {
+        helpPopUp?.removeFromSuperview()
+        print(enemiesList[0].name)
         if recentlyTapped == indexPath.row && selected == true {
             selected = false
             for index in playerButtons.indices {
@@ -157,6 +169,93 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
         }
         
         return UITableView.automaticDimension
+    }
+    
+    @objc func helpButtonPressed(_ sender: UIButton) {
+        helpPopUp?.removeFromSuperview()
+        
+        // view to display
+        let popView = UIView(frame: CGRect(x: 50, y: 350, width: 300, height: 200))
+        popView.backgroundColor = UIColor(red: 0.941, green: 0.851, blue: 0.690, alpha: 1.0)
+        
+        // label based on blind or invisible
+        var label = UILabel(frame: CGRect(x: 25, y: 5, width: 250, height: 200))
+        label.text = ""
+        for (index, item) in items.enumerated() {
+            let itemDescription = itemDescription(itemName: item.name!)
+            label.text!.append("\(item.name!): \(itemDescription)\n")
+        }
+        label.font = UIFont(name: "munro", size: 15)
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 0
+        label.textColor = UIColor.black
+        label.backgroundColor = UIColor.clear
+        popView.addSubview(label)
+        
+        // x button
+        let xButton = UIButton(frame: CGRect(x: 270, y: 10, width: 20, height: 15))
+        xButton.setTitle("x", for: UIControl.State.normal)
+        xButton.backgroundColor = UIColor.clear
+        xButton.titleLabel!.font = UIFont(name: "American Typewriter", size: 20)
+        xButton.setTitleColor(UIColor.black, for: UIControl.State.normal)
+        xButton.addTarget(self, action: #selector(xPressed), for: .touchUpInside)
+        popView.addSubview(xButton)
+        
+        // popView border
+        popView.layer.borderWidth = 1.0
+        popView.layer.borderColor = UIColor.black.cgColor
+        helpPopUp = popView
+        self.view.addSubview(helpPopUp!)
+    }
+    
+    // long press on action from action table
+    @objc func helpPressed(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        var itemName:String = " "
+        if longPressGestureRecognizer.state == .began {
+            let touchPoint = longPressGestureRecognizer.location(in: itemDisplay)
+            if let indexPath = itemDisplay.indexPathForRow(at: touchPoint){
+                helpPopUp?.removeFromSuperview()
+                itemName = items[indexPath.row].name!
+                itemLongPressed = items[indexPath.row]
+                
+                // view to display
+                let popView = UIView(frame: CGRect(x: 50, y: 350, width: 300, height: 200))
+                popView.backgroundColor = UIColor(red: 0.941, green: 0.851, blue: 0.690, alpha: 1.0)
+                
+                // label based on blind or invisible
+                let label = UILabel(frame: CGRect(x: 25, y: 5, width: 250, height: 200))
+                let itemDescription = itemDescription(itemName: itemName)
+                label.text = "\(itemName): \(itemDescription)"
+                label.font = UIFont(name: "munro", size: 20)
+                label.lineBreakMode = .byWordWrapping
+                label.numberOfLines = 0
+                label.textColor = UIColor.black
+                label.backgroundColor = UIColor.clear
+                popView.addSubview(label)
+                
+                // x button
+                let xButton = UIButton(frame: CGRect(x: 270, y: 10, width: 20, height: 15))
+                xButton.setTitle("x", for: UIControl.State.normal)
+                xButton.backgroundColor = UIColor.clear
+                xButton.titleLabel!.font = UIFont(name: "American Typewriter", size: 20)
+                xButton.setTitleColor(UIColor.black, for: UIControl.State.normal)
+                xButton.addTarget(self, action: #selector(xPressed), for: .touchUpInside)
+                popView.addSubview(xButton)
+
+                // popView border
+                popView.layer.borderWidth = 1.0
+                popView.layer.borderColor = UIColor.black.cgColor
+                helpPopUp = popView
+                self.view.addSubview(helpPopUp!)
+            }
+        }
+
+    }
+
+    // x pressed on the help button
+    @objc func xPressed(_ sender:UIButton!) {
+        // remove pop up
+        helpPopUp?.removeFromSuperview()
     }
 
     // TODO: Update with actual item data

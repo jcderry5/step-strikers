@@ -6,9 +6,12 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 var boxArrow: [AnyObject] = [AnyObject]()
 var rowSelected:Action?
+
+var actionLongPressed:Action?
 
 // Dummy currTarget, until gets set by action
 var currTarget: CurrTargetData = CurrTargetData(name: "EmptyPlayer", userName: "emptyPlayer", character_class: "Fighter", health: 30, armor: NoArmor(), modifiedArmorClass: 0, attackModifier: 0, defenseModifier: 0, armorInInventory: [NoArmor()], isBlind: false, isDead: false, isSleep: false, isInvisible: false, magicResistanceModifier: 0, currWeapon: Fists(), weaponInventory: [Fists()], hasAdvantage: false, hasDisadvantage: false, currStamina: 0)
@@ -33,10 +36,53 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     var recentlyTapped:Int = 1000
     var playerButtons: [UIButton] = [UIButton]()
     var selected:Bool = false
+    var helpPopUp: UIView?
+    var helpButton: UIButton?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        renderTeam(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
+        
+        // check if game is already over
+        if checkAllEnemiesDead() {
+            Firestore.firestore().collection("games").document(game).setData([
+                "game_over": true,
+                "game_winner": team
+            ], merge: true)
+            
+            let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = sb.instantiateViewController(withIdentifier: "BattleResultsVictoryViewController") as! BattleResultsVictoryViewController
+            
+            self.modalPresentationStyle = .fullScreen
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: false)
+        }
+        let gameRef = Firestore.firestore().collection("games").document(game)
+        gameRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                if document.get("game_over") as! Bool {
+                    if document.get("game_winner") as! String == team {
+                        // you win!
+                        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                        let vc = sb.instantiateViewController(withIdentifier: "BattleResultsVictoryViewController") as! BattleResultsVictoryViewController
+                        
+                        self.modalPresentationStyle = .fullScreen
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: false)
+                        
+                    } else {
+                        // you lose
+                        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                        let vc = sb.instantiateViewController(withIdentifier: "BattleResultsLossViewController") as! BattleResultsLossViewController
+                        
+                        self.modalPresentationStyle = .fullScreen
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: false)
+                    }
+                }
+            }
+        }
+        
+        
         displayEnemies(enemyTeam: enemyTeam)
         // puts full screen image as background of view controller
         // sets up the background images of the view controller
@@ -61,6 +107,9 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         actionDisplay.register(ActionTableViewCell.self, forCellReuseIdentifier: cellId)
         actionDisplay.delegate = self
         actionDisplay.backgroundColor = UIColor.clear
+        // long press for description
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(helpPressed))
+        actionDisplay.addGestureRecognizer(longPress)
         self.view.addSubview(actionDisplay)
         
         // stats menu
@@ -80,6 +129,10 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         // get rid of grey separator line in between rows
         statsDisplay.separatorColor = UIColor.clear
         self.view.addSubview(statsDisplay)
+        
+        helpButton = createButton(x: 300, y: 300, width: 50, height: 50, fontName: "munro", imageName: "helpbutton", fontColor: .black, buttonTitle: "")
+        helpButton!.addTarget(self, action:#selector(helpButtonPressed), for:.touchUpInside)
+        self.view.addSubview(helpButton!)
         
         // turn skipped if you are dead or asleep
         checkDeadOrAsleep()
@@ -230,6 +283,93 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         return UITableView.automaticDimension
     }
     
+    @objc func helpButtonPressed(_ sender: UIButton) {
+        helpPopUp?.removeFromSuperview()
+        
+        // view to display
+        let popView = UIView(frame: CGRect(x: 50, y: 350, width: 300, height: 200))
+        popView.backgroundColor = UIColor(red: 0.941, green: 0.851, blue: 0.690, alpha: 1.0)
+        
+        // label based on blind or invisible
+        var label = UILabel(frame: CGRect(x: 25, y: 5, width: 250, height: 200))
+        label.text = ""
+        for (index, action) in actions.enumerated() {
+            let actionDescription = actionDescription(actionName: action.name!)
+            label.text!.append("\(action.name!): \(actionDescription)\n")
+        }
+        label.font = UIFont(name: "munro", size: 12)
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 0
+        label.textColor = UIColor.black
+        label.backgroundColor = UIColor.clear
+        popView.addSubview(label)
+        
+        // x button
+        let xButton = UIButton(frame: CGRect(x: 270, y: 10, width: 20, height: 15))
+        xButton.setTitle("x", for: UIControl.State.normal)
+        xButton.backgroundColor = UIColor.clear
+        xButton.titleLabel!.font = UIFont(name: "American Typewriter", size: 20)
+        xButton.setTitleColor(UIColor.black, for: UIControl.State.normal)
+        xButton.addTarget(self, action: #selector(xPressed), for: .touchUpInside)
+        popView.addSubview(xButton)
+        
+        // popView border
+        popView.layer.borderWidth = 1.0
+        popView.layer.borderColor = UIColor.black.cgColor
+        helpPopUp = popView
+        self.view.addSubview(helpPopUp!)
+    }
+    
+    // long press on action from action table
+    @objc func helpPressed(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        var actionName:String = " "
+        if longPressGestureRecognizer.state == .began {
+            let touchPoint = longPressGestureRecognizer.location(in: actionDisplay)
+            if let indexPath = actionDisplay.indexPathForRow(at: touchPoint){
+                helpPopUp?.removeFromSuperview()
+                actionName = actions[indexPath.row].name!
+                actionLongPressed = actions[indexPath.row]
+                
+                // view to display
+                let popView = UIView(frame: CGRect(x: 50, y: 350, width: 300, height: 200))
+                popView.backgroundColor = UIColor(red: 0.941, green: 0.851, blue: 0.690, alpha: 1.0)
+                
+                // label based on blind or invisible
+                let label = UILabel(frame: CGRect(x: 25, y: 5, width: 250, height: 200))
+                let actionDescription = actionDescription(actionName: actionName)
+                label.text = "\(actionName): \(actionDescription)"
+                label.font = UIFont(name: "munro", size: 20)
+                label.lineBreakMode = .byWordWrapping
+                label.numberOfLines = 0
+                label.textColor = UIColor.black
+                label.backgroundColor = UIColor.clear
+                popView.addSubview(label)
+                
+                // x button
+                let xButton = UIButton(frame: CGRect(x: 270, y: 10, width: 20, height: 15))
+                xButton.setTitle("x", for: UIControl.State.normal)
+                xButton.backgroundColor = UIColor.clear
+                xButton.titleLabel!.font = UIFont(name: "American Typewriter", size: 20)
+                xButton.setTitleColor(UIColor.black, for: UIControl.State.normal)
+                xButton.addTarget(self, action: #selector(xPressed), for: .touchUpInside)
+                popView.addSubview(xButton)
+
+                // popView border
+                popView.layer.borderWidth = 1.0
+                popView.layer.borderColor = UIColor.black.cgColor
+                helpPopUp = popView
+                self.view.addSubview(helpPopUp!)
+            }
+        }
+
+    }
+
+    // x pressed on the help button
+    @objc func xPressed(_ sender:UIButton!) {
+        // remove pop up
+        helpPopUp?.removeFromSuperview()
+    }
+    
     func createActionArray() {
         actions.removeAll()
         // First: check if the fight action (possible for all characters) is possible
@@ -295,18 +435,6 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
        if enemiesList[0].isInvisible && enemiesList[1].isInvisible && enemiesList[2].isInvisible && enemiesList[3].isInvisible {
            selectRandomEnemy()
        }
-    }
-
-    func checkAllEnemiesDead() {
-        if enemiesList[0].isDead && enemiesList[1].isDead && enemiesList[2].isDead && enemiesList[3].isDead {
-                // segue to battle results screen?
-                // probably victory since all enemies are dead
-            let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "BattleResultsVictoryViewController") as! BattleResultsVictoryViewController
-            self.modalPresentationStyle = .fullScreen
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc,animated: false)
-        }
     }
     
     func checkDeadOrAsleep() {
@@ -558,4 +686,13 @@ func performBattleAction(rollValue: Int? = nil) {
         }
     }
     endTurn(game: game, player: localCharacter.userName)
+}
+
+func checkAllEnemiesDead() -> Bool {
+    for enemy in enemiesList {
+        if !enemy.isDead {
+            return false
+        }
+    }
+    return true
 }
