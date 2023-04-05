@@ -35,8 +35,6 @@ class CodeEntryViewController: UIViewController, UITextFieldDelegate {
         textField?.autocapitalizationType = .none
         self.view.addSubview(textField!)
         
-        // add settings button to bottom right corner
-        createSettingsButton(x: 325, y: 775, width: 40, height: 40)
         // create the back button to go to battle meny again
         let backButton = UIButton()
         backButton.frame = CGRect(x: 160, y:700, width:75, height:60)

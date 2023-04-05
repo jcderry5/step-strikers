@@ -80,7 +80,9 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate {
             self.message.text = "Passwords are not matching"
         } else {
             Firestore.firestore().collection("players").document(self.usernameTextField!.text!).setData([
-                "password": self.passwordTextField!.text!
+                "password": self.passwordTextField!.text!,
+                "darkmode": false,
+                "blood": true
             ]) { err in if let err = err {
                     print("Error writing document: \(err)")
                 }
