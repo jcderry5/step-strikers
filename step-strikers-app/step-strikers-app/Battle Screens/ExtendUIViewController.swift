@@ -292,7 +292,7 @@ extension UIViewController {
                 x = 10
                 let player1 = CharacterSprites(name: enemiesList[index].character_class)
                 let player1Button = player1.drawButtonCharacter(controller: self, x: x, y: 400, width: 100, height: 100)
-                if enemiesList[index].health < localCharacter.maxHealth/2 {
+                if enemiesList[index].health <= getMaxHealth(characterClass: enemiesList[index].character_class)/2 {
                     player1Button.setBackgroundImage(UIImage(named:"\(enemiesList[index].character_class)-Hurt"), for: UIControl.State.normal)
                 }
                 player1Button.addTarget(self, action:#selector(self.enemy1Selected(_:)), for: .touchUpInside)
@@ -304,7 +304,7 @@ extension UIViewController {
                 x = 100
                 let player2 = CharacterSprites(name: enemiesList[index].character_class)
                 let player2Button = player2.drawButtonCharacter(controller: self, x: x, y: 400, width: 100, height: 100)
-                if enemiesList[index].health < localCharacter.maxHealth/2 {
+                if enemiesList[index].health <= getMaxHealth(characterClass: enemiesList[index].character_class)/2 {
                     player2Button.setBackgroundImage(UIImage(named:"\(enemiesList[index].character_class)-Hurt"), for: UIControl.State.normal)
                 }
                 player2Button.addTarget(self, action:#selector(self.enemy2Selected(_:)), for: .touchUpInside)
@@ -316,7 +316,7 @@ extension UIViewController {
                 x = 200
                 let player3 = CharacterSprites(name: enemiesList[index].character_class)
                 let player3Button = player3.drawButtonCharacter(controller: self, x: x, y: 400, width: 100, height: 100)
-                if enemiesList[index].health < localCharacter.maxHealth/2 {
+                if enemiesList[index].health <= getMaxHealth(characterClass: enemiesList[index].character_class)/2 {
                     player3Button.setBackgroundImage(UIImage(named:"\(enemiesList[index].character_class)-Hurt"), for: UIControl.State.normal)
                 }
                 player3Button.addTarget(self, action:#selector(self.enemy3Selected(_:)), for: .touchUpInside)
@@ -328,7 +328,7 @@ extension UIViewController {
                 x = 290
                 let player4 = CharacterSprites(name: enemiesList[index].character_class)
                 let player4Button = player4.drawButtonCharacter(controller: self, x: x, y: 400, width: 100, height: 100)
-                if enemiesList[index].health < localCharacter.maxHealth/2 {
+                if enemiesList[index].health <= getMaxHealth(characterClass: enemiesList[index].character_class)/2{
                     player4Button.setBackgroundImage(UIImage(named:"\(enemiesList[index].character_class)-Hurt"), for: UIControl.State.normal)
                 }
                 player4Button.addTarget(self, action:#selector(self.enemy4Selected(_:)), for: .touchUpInside)
