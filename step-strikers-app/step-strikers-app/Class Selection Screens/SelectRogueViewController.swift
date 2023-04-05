@@ -17,6 +17,7 @@ class SelectRogueViewController: UIViewController {
     
     var nameField:UITextField?
     var userName = ""
+    var message:UILabel = UILabel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +35,10 @@ class SelectRogueViewController: UIViewController {
         let swipeRight = UISwipeGestureRecognizer(target:self, action:#selector(swipeRight))
         swipeRight.direction = .right
         swipeView.addGestureRecognizer(swipeRight)
+        
+        // Error label
+        message = createLabel(x: 61, y: 460, w: 270, h: 34, font: munro, size: 18, text: "", align: .center)
+        message.textColor = .red
         
         // Name text field
         nameField = createTextField(x: 61, y: 490, w: 270, h: 34, secured: false)
@@ -53,6 +58,12 @@ class SelectRogueViewController: UIViewController {
     }
     
     @objc func selectPressed(_ sender:UIButton!) {
+        // Display error message if a name was not given
+        if nameField?.text == "" {
+            message.text = "Please enter a name"
+            return
+        }
+        
         // create localCharacter
         let currWeapon = Fists(useCount: 0)
         let currArmor = NoArmor(useCount: 0)
