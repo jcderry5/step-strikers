@@ -106,18 +106,24 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         var healthPoints:[Int] = [Int]()
         var spellPoints:[Int] = [Int]()
         var staminaPoints:[Int] = [Int]()
+        var totalHealth:[Int] = [Int]()
+        var totalStamina:[Int] = [Int]()
+        var totalSpellPoints:[Int] = [Int]()
         for member in teamList {
             nameArray.append(member.userName)
             healthPoints.append(member.health)
             spellPoints.append(member.spellPoints)
             staminaPoints.append(member.stamina)
+            totalHealth.append(getMaxHealth(characterClass: member.character_class))
+            totalStamina.append(getMaxStamina(characterClass: member.character_class))
+            totalSpellPoints.append(getMaxSpellPoints(characterClass: member.character_class))
         }
         header.append(StatsHeaderRow(names: nameArray))
         // extra to account for header messing everything up
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: [30, 30, 30, 30]))
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: [30, 30, 30, 30]))
-        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: spellPoints, totalPoints: [30, 30, 30, 30]))
-        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points: staminaPoints, totalPoints: [30, 30, 30, 30]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: totalHealth))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: totalHealth))
+        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: spellPoints, totalPoints: totalStamina))
+        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points: staminaPoints, totalPoints: totalSpellPoints))
     }
     
     func displayRollingScreen() {
