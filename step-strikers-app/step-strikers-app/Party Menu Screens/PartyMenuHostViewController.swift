@@ -127,7 +127,6 @@ class PartyMenuHostViewController: UIViewController {
         Firestore.firestore().collection("matchable_teams").document("teams").updateData(["teams": FieldValue.arrayUnion(["\(self.partyCode)-\(numPlayers)"])])
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "TeamMatchViewController") as! TeamMatchViewController
-        vc.numPlayers = self.numPlayers
         vc.partyCode = self.partyCode
         self.modalPresentationStyle = .fullScreen
         vc.modalPresentationStyle = .fullScreen
