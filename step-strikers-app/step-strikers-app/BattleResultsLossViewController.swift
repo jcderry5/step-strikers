@@ -24,10 +24,7 @@ class BattleResultsLossViewController: UIViewController {
         skullView.image = skull
         self.view.addSubview(skullView)
         
-        // draw sprites
-        // player 1
-        // TODO: add EnemiesList[index].character_class when previous vc's are functional
-        // adding now will break everything
+        // draw skeletons
         for (index, enemy) in enemiesList.enumerated() {
             var x = 10
             let drawEnemy = CharacterSprites(name: "Skeleton")
@@ -40,7 +37,7 @@ class BattleResultsLossViewController: UIViewController {
             } else if index == 3 {
                 x = 290
             }
-            let enemyImage = drawEnemy.drawCharacter(view: self.view, x: x, y: 550, width: 100, height:100, isInvisible: false, isHurt:false, isDead: true)
+            let enemyImage = drawEnemy.drawCharacter(view: self.view, x: x, y: 550, width: 100, height:100, isInvisible: false, isHurt: false, isDead: true)
         }
         
         let bigButton = UIImage(named: "Big choice Button")
