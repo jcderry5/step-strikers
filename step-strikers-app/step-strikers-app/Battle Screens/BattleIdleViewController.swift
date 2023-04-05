@@ -9,6 +9,8 @@ import UIKit
 import FirebaseFirestore
 
 var messages:[String] = [String]()
+var readyForBattleVC = false
+
 class BattleIdleViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var selectTargetInfoItem :(String, String, String, String, Items)?
@@ -207,6 +209,7 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func updateLists() {
+        print("DEBUG: updating lists!")
         for i in 0..<teamList.count {
             let playerRef = Firestore.firestore().collection("players").document(teamList[i].userName)
             playerRef.getDocument { (document2, error) in
@@ -237,10 +240,10 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            print("DEBUG: reloading display")
-            for teamMember in teamList {
-                print("DEBUG: \(teamMember.userName)'s health is \(teamMember.health)")
-            }
+//            print("DEBUG: reloading display")
+//            for teamMember in teamList {
+//                print("DEBUG: \(teamMember.userName)'s health is \(teamMember.health)")
+//            }
             statsDisplay.beginUpdates()
             self.stats.removeAll()
             var healthPoints:[Int] = [Int]()
@@ -271,28 +274,33 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
                         return
                     }
                     
-                    
                     if !first {
-                        DispatchQueue.main.async {
-                            self.updateLists()
+//                        DispatchQueue.main.async {
                             
-                            let data = document.data()
-                            let order = data?["order"] as! [String]
+                        let data = document.data()
+                        let order = data?["order"] as! [String]
+                        
+                        self.updateLists()
+                        
+                        if order[0] == localCharacter.userName {
                             
-                            if order[0] == localCharacter.userName {
-                                
-                                sleep(2)
-                                
-                                // bring up battle VC
-                                let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                                let vc = sb.instantiateViewController(withIdentifier: "BattleSelectActionViewController") as! BattleSelectActionViewController
-                                
-                                self.modalPresentationStyle = .fullScreen
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: false)
-                                
+                            sleep(2)
+                            
+                            while !readyForBattleVC {
+                                print("DEBUG: ready for battle is \(readyForBattleVC)")
                             }
+                            // bring up battle VC
+                            let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                            let vc = sb.instantiateViewController(withIdentifier: "BattleSelectActionViewController") as! BattleSelectActionViewController
+                            
+                            self.modalPresentationStyle = .fullScreen
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: false)
+                            
+                        } else {
+                            readyForBattleVC = false
                         }
+//                        }
                     } else {
                         first = false
                     }

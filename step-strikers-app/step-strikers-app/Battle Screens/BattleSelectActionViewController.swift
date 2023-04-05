@@ -36,7 +36,6 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        renderTeam(enemyTeam: "4bDfA6dWfv8fRSdebjWI")
         displayEnemies(enemyTeam: enemyTeam)
         // puts full screen image as background of view controller
         // sets up the background images of the view controller
@@ -64,6 +63,10 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         self.view.addSubview(actionDisplay)
         
         // stats menu
+        print("DEBUG: about to create stats array in select action VC!")
+        for member in teamList {
+            print("DEBUG: \(member.userName)'s health is \(member.health)")
+        }
         createStatsArray()
         statsDisplay = UITableView(frame: CGRect(x: self.view.safeAreaInsets.left+40, y: 140, width: 300, height: 300))
         statsDisplay.translatesAutoresizingMaskIntoConstraints = false

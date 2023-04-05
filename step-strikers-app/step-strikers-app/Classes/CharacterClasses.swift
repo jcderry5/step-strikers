@@ -285,14 +285,10 @@ func actionRequiresEnemy() -> Bool {
 
     let actionSelected = rowSelected?.name
     
-    print("DEBUG: \(String(describing: actionSelected))")
-    
     switch actionSelected {
     case "Fight", "Action Surge", "Insight", "Frost Bite", "Mage Hand", "Shield", "Sleep", "Animate the Dead", "Heal", "Bardic Inspiration", "Vicious Mockery", "Blindness", "Invisibility":
-        print("DEBUG: \(String(describing: actionSelected)) returns true")
         return true
     default:
-        print("DEBUG: \(String(describing: actionSelected)) returns false")
         return false
     }
 }

@@ -66,7 +66,6 @@ func refreshStats() {
                 let data = document.data()
                 
                 localCharacter.currHealth = data!["health"] as! Int
-                print("DEBUG: reading update health \(localCharacter.currHealth)")
                 if localCharacter.currHealth <= 0 {
                     localCharacter.isDead = true
                 }
