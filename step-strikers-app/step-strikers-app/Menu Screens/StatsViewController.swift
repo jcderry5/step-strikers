@@ -166,7 +166,7 @@ class StatsViewController: UIViewController {
         })
         
         print("Creating timer")
-        self.timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true, block: { _ in
+        self.timer = Timer.scheduledTimer(withTimeInterval: 20, repeats: true, block: { _ in
             let healthStore = HKHealthStore()
             if HKHealthStore.isHealthDataAvailable(){
                 let writeDataTypes = self.dataTypesToWrite()
