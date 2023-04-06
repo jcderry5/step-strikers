@@ -42,12 +42,11 @@ class StatsViewController: UIViewController {
                             _ = self.createLabel(x: 130, y: 624, w: 253, h: 41, font: "munro", size: 28, text: "\(Int(trackBoost)) steps until boost", align: .left)
                             _ = self.createLabel(x: 130, y: 653, w: 253, h: 41, font: "munro", size: 28, text: "\(Int(steps)) taken today", align: .left)
                             
-                            if trackBoost == 0 {
-                                // Trigger a notification
-                                // TODO: Make sure step-tracking process can run while app is not open
-                                
+                            if steps == self.boostTotal{
                                 // Create popup notifying in-game users
-                                self.createNotification()
+                                DispatchQueue.main.async {
+                                    self.createNotification()
+                                }
                             }
                         }
                     }
@@ -61,7 +60,7 @@ class StatsViewController: UIViewController {
             _ = self.createLabel(x: 130, y: 624, w: 253, h: 41, font: "munro", size: 28, text: "\(Int(trackBoost)) steps until boost", align: .left)
             _ = self.createLabel(x: 130, y: 653, w: 253, h: 41, font: "munro", size: 28, text: "\(Int(steps)) taken today", align: .left)
             
-            if trackBoost == 0 {
+            if steps == self.boostTotal {
                 // Trigger a notification
                 // TODO: Make sure step-tracking process can run while app is not open
                 let content = UNMutableNotificationContent()
@@ -209,18 +208,38 @@ class StatsViewController: UIViewController {
         // Allow timers to fire when in background mode
         var bgTask:UIBackgroundTaskIdentifier!
         bgTask = UIApplication.shared.beginBackgroundTask(expirationHandler: {
-                UIApplication.shared.endBackgroundTask(bgTask)
-            })
+            UIApplication.shared.endBackgroundTask(bgTask)
+        })
         
         self.timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true, block: { _ in
-            let content = UNMutableNotificationContent()
-            content.title = "You found a new item!"
-            content.sound = UNNotificationSound.default
-            
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
-            let request = UNNotificationRequest(identifier: "myNotification", content: content, trigger: trigger)
-            
-            UNUserNotificationCenter.current().add(request)
+            let healthStore = HKHealthStore()
+            if HKHealthStore.isHealthDataAvailable(){
+                let writeDataTypes = self.dataTypesToWrite()
+                let readDataTypes = self.dataTypesToWrite()
+                
+                healthStore.requestAuthorization(toShare: writeDataTypes as? Set<HKSampleType>, read: readDataTypes as? Set<HKObjectType>, completion: { (success, error) in
+                    if(!success){
+                        print("error")
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        HealthKitViewController().getTodaysSteps() { sum in
+                            steps = Int(sum)
+                            if steps == self.boostTotal {
+                                // Send a notification
+                                let content = UNMutableNotificationContent()
+                                content.title = "You found a new item!"
+                                content.sound = UNNotificationSound.default
+                                
+                                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+                                let request = UNNotificationRequest(identifier: "myNotification", content: content, trigger: trigger)
+                                
+                                UNUserNotificationCenter.current().add(request)
+                            }
+                        }
+                    }
+                })
+            }
         })
     }
     
