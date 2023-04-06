@@ -172,6 +172,7 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
     }
     
     @objc func helpButtonPressed(_ sender: UIButton) {
+        playSoundEffect(fileName: menuSelectEffect)
         helpPopUp?.removeFromSuperview()
         
         // view to display
@@ -210,6 +211,7 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
     
     // long press on action from action table
     @objc func helpPressed(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        playSoundEffect(fileName: menuSelectEffect)
         var itemName:String = " "
         if longPressGestureRecognizer.state == .began {
             let touchPoint = longPressGestureRecognizer.location(in: itemDisplay)
@@ -254,6 +256,7 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
 
     // x pressed on the help button
     @objc func xPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         // remove pop up
         helpPopUp?.removeFromSuperview()
     }
