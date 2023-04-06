@@ -22,59 +22,35 @@ class StatsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // TODO: Pull steps info from firebase and display it here
-        if steps == 0 {
-            let healthStore = HKHealthStore()
-            if HKHealthStore.isHealthDataAvailable(){
-                let writeDataTypes = dataTypesToWrite()
-                let readDataTypes = dataTypesToWrite()
-                
-                healthStore.requestAuthorization(toShare: writeDataTypes as? Set<HKSampleType>, read: readDataTypes as? Set<HKObjectType>, completion: { (success, error) in
-                    if(!success){
-                        print("error")
-                        return
-                    }
-                    DispatchQueue.main.async {
-                        HealthKitViewController().getTodaysSteps() { sum in
-                            steps = Int(sum)
-                            var trackBoost:Int = 0
-                            let boostMod = steps / self.boostTotal + 1
-                            trackBoost = self.boostTotal * boostMod - steps
-                            _ = self.createLabel(x: 130, y: 624, w: 253, h: 41, font: "munro", size: 28, text: "\(Int(trackBoost)) steps until boost", align: .left)
-                            _ = self.createLabel(x: 130, y: 653, w: 253, h: 41, font: "munro", size: 28, text: "\(Int(steps)) taken today", align: .left)
-                            
-                            if steps == self.boostTotal{
-                                // Create popup notifying in-game users
-                                DispatchQueue.main.async {
-                                    self.createNotification()
-                                }
+        let healthStore = HKHealthStore()
+        if HKHealthStore.isHealthDataAvailable(){
+            let writeDataTypes = dataTypesToWrite()
+            let readDataTypes = dataTypesToWrite()
+            
+            healthStore.requestAuthorization(toShare: writeDataTypes as? Set<HKSampleType>, read: readDataTypes as? Set<HKObjectType>, completion: { (success, error) in
+                if(!success){
+                    print("error")
+                    return
+                }
+                DispatchQueue.main.async {
+                    HealthKitViewController().getTodaysSteps() { sum in
+                        steps = Int(sum)
+                        var trackBoost:Int = 0
+                        let boostMod = steps / self.boostTotal + 1
+                        trackBoost = self.boostTotal * boostMod - steps
+                        _ = self.createLabel(x: 130, y: 624, w: 253, h: 41, font: "munro", size: 28, text: "\(Int(trackBoost)) steps until boost", align: .left)
+                        _ = self.createLabel(x: 130, y: 653, w: 253, h: 41, font: "munro", size: 28, text: "\(Int(steps)) taken today", align: .left)
+                        
+                        if steps >= localCharacter.currMilestone {
+                            // Create popup notifying in-game users
+                            DispatchQueue.main.async {
+                                self.createNotification()
                             }
+                            localCharacter.currMilestone += 3000
                         }
                     }
-                })
-            }
-        } else {
-            var trackBoost:Int = 0
-            let boostMod = steps / self.boostTotal + 1
-            trackBoost = self.boostTotal * boostMod - steps
-            
-            _ = self.createLabel(x: 130, y: 624, w: 253, h: 41, font: "munro", size: 28, text: "\(Int(trackBoost)) steps until boost", align: .left)
-            _ = self.createLabel(x: 130, y: 653, w: 253, h: 41, font: "munro", size: 28, text: "\(Int(steps)) taken today", align: .left)
-            
-            if steps == self.boostTotal {
-                // Trigger a notification
-                // TODO: Make sure step-tracking process can run while app is not open
-                let content = UNMutableNotificationContent()
-                content.title = "You found a new item!"
-                content.sound = UNNotificationSound.default
-                
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
-                let request = UNNotificationRequest(identifier: "myNotification", content: content, trigger: trigger)
-                
-                UNUserNotificationCenter.current().add(request)
-                
-                // Create popup notifying in-game users
-                createNotification()
-            }
+                }
+            })
         }
     }
     
@@ -211,12 +187,13 @@ class StatsViewController: UIViewController {
             UIApplication.shared.endBackgroundTask(bgTask)
         })
         
+        print("Creating timer")
         self.timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true, block: { _ in
             let healthStore = HKHealthStore()
             if HKHealthStore.isHealthDataAvailable(){
                 let writeDataTypes = self.dataTypesToWrite()
                 let readDataTypes = self.dataTypesToWrite()
-                
+                 
                 healthStore.requestAuthorization(toShare: writeDataTypes as? Set<HKSampleType>, read: readDataTypes as? Set<HKObjectType>, completion: { (success, error) in
                     if(!success){
                         print("error")
@@ -225,16 +202,20 @@ class StatsViewController: UIViewController {
                     DispatchQueue.main.async {
                         HealthKitViewController().getTodaysSteps() { sum in
                             steps = Int(sum)
-                            if steps == self.boostTotal {
+                            print("\(steps) >= \(localCharacter.currMilestone)")
+                            if steps >= localCharacter.currMilestone {
                                 // Send a notification
+                                print("SENDING NOTIFICATION")
                                 let content = UNMutableNotificationContent()
                                 content.title = "You found a new item!"
                                 content.sound = UNNotificationSound.default
                                 
-                                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+                                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
                                 let request = UNNotificationRequest(identifier: "myNotification", content: content, trigger: trigger)
                                 
                                 UNUserNotificationCenter.current().add(request)
+                                
+                                localCharacter.currMilestone += 3000
                             }
                         }
                     }
@@ -244,6 +225,7 @@ class StatsViewController: UIViewController {
     }
     
     @objc func appMovedToForeground() {
+        print("Stopping timer")
         self.timer.invalidate()
     }
 }
