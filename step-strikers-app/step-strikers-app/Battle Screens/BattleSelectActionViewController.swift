@@ -441,13 +441,13 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     
 
     func checkAllEnemiesInvisible() {
-        var areAllDead: Bool = true
+        var areAllInvisible: Bool = true
         for enemies in enemiesList {
             if enemies.isInvisible == false {
-                areAllDead = false
+                areAllInvisible = false
             }
         }
-       if areAllDead {
+       if areAllInvisible {
            selectRandomEnemy()
        }
     }
