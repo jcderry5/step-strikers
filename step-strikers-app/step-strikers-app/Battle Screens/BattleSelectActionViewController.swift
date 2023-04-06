@@ -284,6 +284,7 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     }
     
     @objc func helpButtonPressed(_ sender: UIButton) {
+        playSoundEffect(fileName: menuSelectEffect)
         helpPopUp?.removeFromSuperview()
         
         // view to display
@@ -322,6 +323,7 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     
     // long press on action from action table
     @objc func helpPressed(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        playSoundEffect(fileName: menuSelectEffect)
         var actionName:String = " "
         if longPressGestureRecognizer.state == .began {
             let touchPoint = longPressGestureRecognizer.location(in: actionDisplay)
@@ -366,6 +368,7 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
 
     // x pressed on the help button
     @objc func xPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         // remove pop up
         helpPopUp?.removeFromSuperview()
     }
@@ -416,23 +419,35 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         var healthPoints:[Int] = [Int]()
         var spellPoints:[Int] = [Int]()
         var staminaPoints:[Int] = [Int]()
+        var totalHealth:[Int] = [Int]()
+        var totalStamina:[Int] = [Int]()
+        var totalSpellPoints:[Int] = [Int]()
         for member in teamList {
             nameArray.append(member.userName)
             healthPoints.append(member.health)
             spellPoints.append(member.spellPoints)
             staminaPoints.append(member.stamina)
+            totalHealth.append(getMaxHealth(characterClass: member.character_class))
+            totalStamina.append(getMaxStamina(characterClass: member.character_class))
+            totalSpellPoints.append(getMaxSpellPoints(characterClass: member.character_class))
         }
         header.append(StatsHeaderRow(names: nameArray))
         // extra to account for header messing everything up
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: [30, 30, 30, 30]))
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: [30, 30, 30, 30]))
-        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: spellPoints, totalPoints: [30, 30, 30, 30]))
-        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points: staminaPoints, totalPoints: [30, 30, 30, 30]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: totalHealth))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: totalHealth))
+        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: spellPoints, totalPoints: totalStamina))
+        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points: staminaPoints, totalPoints: totalSpellPoints))
     }
     
 
     func checkAllEnemiesInvisible() {
-       if enemiesList[0].isInvisible && enemiesList[1].isInvisible && enemiesList[2].isInvisible && enemiesList[3].isInvisible {
+        var areAllDead: Bool = true
+        for enemies in enemiesList {
+            if enemies.isInvisible == false {
+                areAllDead = false
+            }
+        }
+       if areAllDead {
            selectRandomEnemy()
        }
     }
@@ -598,8 +613,15 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
 struct CharacterSprites {
     var name:String
     
-    func drawCharacter(view:UIView, x:Int, y:Int, width:Int, height:Int, isInvisible:Bool, isDead:Bool) -> UIImageView!{
-        let image = UIImage(named:name)
+    func drawCharacter(view:UIView, x:Int, y:Int, width:Int, height:Int, isInvisible:Bool, isHurt:Bool, isDead:Bool) -> UIImageView!{
+        var image = UIImage(named:name)
+        if localCharacter.blood {
+            image = UIImage(named:name+"-Blood")
+        }
+        if isHurt {
+            print("Is Hurt")
+            image = UIImage(named:name+"-Hurt")
+        }
         var imageView: UIImageView!
         imageView = UIImageView(frame: CGRect(x:x, y: y, width: width, height: height))
         imageView.image = image
@@ -615,7 +637,10 @@ struct CharacterSprites {
     }
     
     func drawButtonCharacter(controller:UIViewController, x:Int, y:Int, width:Int, height:Int) -> UIButton {
-        let imageName = name
+        var imageName = name
+        if localCharacter.blood {
+            imageName = "\(name)-Blood"
+        }
         let characterButton = controller.createButton(x:x, y:y, width:width, height:height, fontName: "munro", imageName:imageName, fontColor: UIColor.black, buttonTitle:"")
         return characterButton
     }
@@ -653,16 +678,22 @@ func performBattleAction(rollValue: Int? = nil) {
     } else if (localCharacter.getCharacterClass() == "Wizard") {
         switch actionPerformed {
         case "Frost Bite":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Wizard).castFrostbite(rollValue: rollValue!)
         case "Mage Hand":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Wizard).castMageHand(rollValue: rollValue!)
         case "Shield":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Wizard).castShield()
         case "Sleep":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Wizard).sleep(rollValue: rollValue!)
         case "Animate the Dead":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Wizard).castAnimateDead()
         case "Heal":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Wizard).heal(amtToHeal: rollValue!)
         default:
             localCharacter.fight(rollValue: rollValue!)
@@ -670,16 +701,22 @@ func performBattleAction(rollValue: Int? = nil) {
     } else if (localCharacter.getCharacterClass() == "Bard") {
         switch actionPerformed {
         case "Mage Hand":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Bard).castMageHand(rollValue: rollValue!)
         case "Bardic Inspiration":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Bard).castBardicInspiration()
         case "Vicious Mockery":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Bard).castViciousMockery(rollValue: rollValue!)
         case "Blindness":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Bard).castBlindness(rollValue: rollValue!)
         case "Invisibility":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Bard).castInvisibility()
         case "Motivational Speech":
+            playSoundEffect(fileName: castSpellEffect)
             (localCharacter as! Bard).castMotivationalSpeech()
         default:
             localCharacter.fight(rollValue: rollValue!)

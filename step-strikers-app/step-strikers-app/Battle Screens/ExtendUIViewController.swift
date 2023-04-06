@@ -191,11 +191,12 @@ extension UIViewController {
                     let player1Image:UIImageView?
                     player1Image = UIImageView()
                     player1Image!.backgroundColor = .clear
+                    var isHurt = health <= getMaxHealth(characterClass: character_class)/2
                     
                     // don't show enemies if the current player is blind dead or asleep
                     if localCharacter.isBlind == false && localCharacter.isDead == false && localCharacter.isAsleep == false {
                         let player1 = CharacterSprites(name: character_class)
-                        let player1Image = player1.drawCharacter(view: self.view, x: xValues[count], y: 400, width: 100, height: 100, isInvisible: isInvisible, isDead: isDead)
+                        let player1Image = player1.drawCharacter(view: self.view, x: xValues[count], y: 400, width: 100, height: 100, isInvisible: isInvisible, isHurt: isHurt, isDead: isDead)
                         enemiesList[count].imageView = player1Image!
                     }
                     
@@ -266,7 +267,9 @@ extension UIViewController {
                 x = 290
             }
             let player1 = CharacterSprites(name: enemiesList[index].character_class)
-            let player1Image = player1.drawCharacter(view: self.view, x: 10, y: 400, width: 100, height: 100, isInvisible: enemiesList[index].isInvisible, isDead: enemiesList[index].isDead)!
+            var isHurt = enemiesList[index].health <= getMaxHealth(characterClass: enemiesList[index].character_class)/2
+            print("Is it hurt? : \(isHurt) \(enemiesList[index].health)")
+            let player1Image = player1.drawCharacter(view: self.view, x: 10, y: 400, width: 100, height: 100, isInvisible: enemiesList[index].isInvisible, isHurt: isHurt, isDead: enemiesList[index].isDead)!
             returnArray.append(player1Image)
         }
         
@@ -290,6 +293,9 @@ extension UIViewController {
                 x = 10
                 let player1 = CharacterSprites(name: enemiesList[index].character_class)
                 let player1Button = player1.drawButtonCharacter(controller: self, x: x, y: 400, width: 100, height: 100)
+                if enemiesList[index].health <= getMaxHealth(characterClass: enemiesList[index].character_class)/2 {
+                    player1Button.setBackgroundImage(UIImage(named:"\(enemiesList[index].character_class)-Hurt"), for: UIControl.State.normal)
+                }
                 player1Button.addTarget(self, action:#selector(self.enemy1Selected(_:)), for: .touchUpInside)
                 if enemiesList[index].isInvisible == false && enemiesList[index].isDead == false {
                             self.view.addSubview(player1Button)
@@ -299,6 +305,9 @@ extension UIViewController {
                 x = 100
                 let player2 = CharacterSprites(name: enemiesList[index].character_class)
                 let player2Button = player2.drawButtonCharacter(controller: self, x: x, y: 400, width: 100, height: 100)
+                if enemiesList[index].health <= getMaxHealth(characterClass: enemiesList[index].character_class)/2 {
+                    player2Button.setBackgroundImage(UIImage(named:"\(enemiesList[index].character_class)-Hurt"), for: UIControl.State.normal)
+                }
                 player2Button.addTarget(self, action:#selector(self.enemy2Selected(_:)), for: .touchUpInside)
                 if enemiesList[index].isInvisible == false && enemiesList[index].isDead == false {
                             self.view.addSubview(player2Button)
@@ -308,6 +317,9 @@ extension UIViewController {
                 x = 200
                 let player3 = CharacterSprites(name: enemiesList[index].character_class)
                 let player3Button = player3.drawButtonCharacter(controller: self, x: x, y: 400, width: 100, height: 100)
+                if enemiesList[index].health <= getMaxHealth(characterClass: enemiesList[index].character_class)/2 {
+                    player3Button.setBackgroundImage(UIImage(named:"\(enemiesList[index].character_class)-Hurt"), for: UIControl.State.normal)
+                }
                 player3Button.addTarget(self, action:#selector(self.enemy3Selected(_:)), for: .touchUpInside)
                 if enemiesList[index].isInvisible == false && enemiesList[index].isDead == false {
                             self.view.addSubview(player3Button)
@@ -317,6 +329,9 @@ extension UIViewController {
                 x = 290
                 let player4 = CharacterSprites(name: enemiesList[index].character_class)
                 let player4Button = player4.drawButtonCharacter(controller: self, x: x, y: 400, width: 100, height: 100)
+                if enemiesList[index].health <= getMaxHealth(characterClass: enemiesList[index].character_class)/2{
+                    player4Button.setBackgroundImage(UIImage(named:"\(enemiesList[index].character_class)-Hurt"), for: UIControl.State.normal)
+                }
                 player4Button.addTarget(self, action:#selector(self.enemy4Selected(_:)), for: .touchUpInside)
                 if enemiesList[index].isInvisible == false && enemiesList[index].isDead == false {
                             self.view.addSubview(player4Button)
@@ -414,6 +429,7 @@ extension UIViewController {
     // will transder to BattleSelectActionViewController
     // will do even if you are already on it
     @objc func actionButtonPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         rowItemSelected = nil // to acoid an item being here
         // storyboard
         let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
@@ -427,6 +443,7 @@ extension UIViewController {
     
     // will transfer to BattleSelectItemViewController
     @objc func itemButtonPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         rowSelected = nil // to avoid an action being held here
         let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "BattleSelectItemViewController") as! BattleSelectItemViewController
@@ -437,6 +454,7 @@ extension UIViewController {
     
     // will transfer to BattleSelectEquipViewController
     @objc func equipButtonPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         // avoid these holding actions and items
         rowSelected = nil
         rowItemSelected = nil
@@ -450,6 +468,7 @@ extension UIViewController {
     
     // please dont make separate storyboards for all the types of boards right now
     @objc func settingsButtonPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         let sb = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
 
@@ -459,6 +478,7 @@ extension UIViewController {
     }
     
     @objc func enemy1Selected(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         updateCurrTargetData(enemyIndex: 0)
         // if enemy 1 is selected use enemiesList[0].variableName
         selectEnemyLabel.removeFromSuperview()
@@ -471,6 +491,7 @@ extension UIViewController {
     }
     
     @objc func enemy2Selected(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         updateCurrTargetData(enemyIndex: 1)
         selectEnemyLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
@@ -482,6 +503,7 @@ extension UIViewController {
     }
 
     @objc func enemy3Selected(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         updateCurrTargetData(enemyIndex: 2)
         selectEnemyLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
@@ -493,6 +515,7 @@ extension UIViewController {
     }
     
     @objc func enemy4Selected(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         updateCurrTargetData(enemyIndex: 3)
         selectEnemyLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
@@ -504,6 +527,7 @@ extension UIViewController {
     }
     
     @objc func player1Selected(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         updateCurrTargetData(teamMemberIndex: 0)
         selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
@@ -515,6 +539,7 @@ extension UIViewController {
     }
     
     @objc func player2Selected(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         updateCurrTargetData(teamMemberIndex: 1)
         selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
@@ -526,6 +551,7 @@ extension UIViewController {
     }
     
     @objc func player3Selected(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         updateCurrTargetData(teamMemberIndex: 2)
         selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
@@ -537,6 +563,7 @@ extension UIViewController {
     }
     
     @objc func player4Selected(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         updateCurrTargetData(teamMemberIndex: 3)
         selectPlayerLabel.removeFromSuperview()
         if boxArrow.isEmpty == false {
@@ -548,6 +575,7 @@ extension UIViewController {
     }
     
     @objc func enemyBoxSelected(_ sender:UIButton, event: UIEvent) {
+        playSoundEffect(fileName: menuSelectEffect)
         let touch: UITouch = event.allTouches!.first!
         if (touch.tapCount == 2) {
             // save the variables after you know its a double tap
@@ -572,6 +600,7 @@ extension UIViewController {
     }
     
     @objc func playerBoxSelected(_ sender:UIButton, event: UIEvent) {
+        playSoundEffect(fileName: menuSelectEffect)
         let touch: UITouch = event.allTouches!.first!
         if (touch.tapCount == 2) {
             let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)

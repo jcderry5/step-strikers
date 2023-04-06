@@ -18,6 +18,7 @@ class BattleMenuViewController: UIViewController {
         super.viewDidLoad()
         view.isUserInteractionEnabled = true
         
+        playBackgroundAudio(fileName: nonCombatBattleMusicFile)
         self.background = assignSwitchableBackground()
         createSettingsButton(x: 325, y: 800, width: 40, height: 40)
         let icon = createImage(x: -4, y: 226, w: 400, h: 400, name: "icon")
@@ -48,6 +49,7 @@ class BattleMenuViewController: UIViewController {
     }
     
     @objc func createPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         // generate code
         let code = generateCode()
         team = code
@@ -72,6 +74,7 @@ class BattleMenuViewController: UIViewController {
     }
     
     @objc func joinPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "CodeEntryViewController") as! CodeEntryViewController
 
@@ -81,6 +84,7 @@ class BattleMenuViewController: UIViewController {
     }
     
     @objc func swipeRight() {
+        playSoundEffect(fileName: menuSelectEffect)
         // Navigate to the INVENTORY screen
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "InventoryViewController") as! InventoryViewController

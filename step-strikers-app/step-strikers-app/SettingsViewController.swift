@@ -33,11 +33,15 @@ class SettingsViewController: UIViewController {
         self.view.addSubview(volumeLabel)
         volumeSlider = createVolumeSlider()
         self.view.addSubview(volumeSlider)
+        volumeSlider.setValue(volumeLevel, animated: false)
         
         // blood switch
         var bloodLabel = createLabel(x: 50, y: 310, w: 100, h: 50, font: "munro", size: 25, text: "Blood:", align: .left)
         self.view.addSubview(bloodLabel)
         bloodSwitch = createToggleButton(x: 300, y: 320, width: 50, height: 50, state: false)
+        if localCharacter.blood {
+            bloodSwitch.setOn(true, animated: false)
+        }
         
         // dark mode switch
         var darkModeLabel = createLabel(x: 50, y: 370, w: 200, h: 50, font: "munro", size: 25, text: "Dark Mode:", align: .left)
@@ -146,6 +150,7 @@ class SettingsViewController: UIViewController {
     }
 
     @objc func backButtonPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         // Update values in Firebase
         Firestore.firestore().collection("players").document(localCharacter.userName).updateData([
             "darkmode": darkModeSwitch.isOn,
@@ -157,11 +162,13 @@ class SettingsViewController: UIViewController {
     }
     
     @objc func deleteButtonPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         confirmationView = displayConfirmation()
     }
     
     @objc func confirmPressed(_ sender:UIButton!) {
         // save or delete things here!
+        playSoundEffect(fileName: menuSelectEffect)
         
         // switch to registration screen
         let sb = UIStoryboard(name: "Main", bundle: nil)
@@ -173,14 +180,17 @@ class SettingsViewController: UIViewController {
     }
     
     @objc func xPressed(_ sender: UIButton) {
+        playSoundEffect(fileName: menuSelectEffect)
         confirmationView?.removeFromSuperview()
     }
     
     @objc func switchStatedidChange(_ sender:UISwitch!) {
+        playSoundEffect(fileName: menuSelectEffect)
         if (sender.isOn == true) {
             if sender == bloodSwitch {
                 print("blood switch turned on")
                 localCharacter.blood = true
+                bloodSwitch.setOn(true, animated: true)
             } else if sender == darkModeSwitch {
                 print("dark mode switch turned on")
                 let appDelegate = UIApplication.shared.windows.first
@@ -200,6 +210,7 @@ class SettingsViewController: UIViewController {
             if sender == bloodSwitch {
                 print("blood switch turned off")
                 localCharacter.blood = false
+                bloodSwitch.setOn(false, animated: true)
                 // TODO: Modify blood in Firebase
             } else if sender == darkModeSwitch {
                 print("dark mode switch turned off")
@@ -220,8 +231,7 @@ class SettingsViewController: UIViewController {
     
     @objc func sliderValueDidChange(_ sender:UISlider!) {
         // adjust volume here based on sender.value
-        print("slider value changed")
-        print("Slider value is \(sender.value)")
+        changeVolume(newVolumeLevel: sender.value)
     }
     
 }

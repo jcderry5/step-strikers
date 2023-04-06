@@ -172,6 +172,7 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
     }
     
     @objc func helpButtonPressed(_ sender: UIButton) {
+        playSoundEffect(fileName: menuSelectEffect)
         helpPopUp?.removeFromSuperview()
         
         // view to display
@@ -210,6 +211,7 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
     
     // long press on action from action table
     @objc func helpPressed(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        playSoundEffect(fileName: menuSelectEffect)
         var itemName:String = " "
         if longPressGestureRecognizer.state == .began {
             let touchPoint = longPressGestureRecognizer.location(in: itemDisplay)
@@ -254,6 +256,7 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
 
     // x pressed on the help button
     @objc func xPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         // remove pop up
         helpPopUp?.removeFromSuperview()
     }
@@ -275,17 +278,23 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
         var healthPoints:[Int] = [Int]()
         var spellPoints:[Int] = [Int]()
         var staminaPoints:[Int] = [Int]()
+        var totalHealth:[Int] = [Int]()
+        var totalStamina:[Int] = [Int]()
+        var totalSpellPoints:[Int] = [Int]()
         for member in teamList {
             nameArray.append(member.userName)
             healthPoints.append(member.health)
             spellPoints.append(member.spellPoints)
             staminaPoints.append(member.stamina)
+            totalHealth.append(getMaxHealth(characterClass: member.character_class))
+            totalStamina.append(getMaxStamina(characterClass: member.character_class))
+            totalSpellPoints.append(getMaxSpellPoints(characterClass: member.character_class))
         }
         header.append(StatsHeaderRow(names: nameArray))
         // extra to account for header messing everything up
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: [30, 30, 30, 30]))
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: [30, 30, 30, 30]))
-        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: spellPoints, totalPoints: [30, 30, 30, 30]))
-        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points: staminaPoints, totalPoints: [30, 30, 30, 30]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: totalHealth))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: totalHealth))
+        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: spellPoints, totalPoints: totalStamina))
+        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points: staminaPoints, totalPoints: totalSpellPoints))
     }
 }

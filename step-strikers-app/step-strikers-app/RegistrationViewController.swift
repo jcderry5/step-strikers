@@ -82,7 +82,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate {
 
     
     @objc func registerPressed() {
-        // TODO: Register credentials to Firebase and navigate to Stats screen
+        playSoundEffect(fileName: menuSelectEffect)
         if self.usernameTextField!.text == "" {
             self.message.text = "Username not entered"
         } else if passwordTextField!.text == "" {
@@ -110,6 +110,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func signInPressed() {
+        playSoundEffect(fileName: menuSelectEffect)
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "loginVC") as! LoginViewController
 

@@ -26,7 +26,9 @@ let maxStaminaPerClass = [
 
 let maxSpellPointsPerClass = [
     (characterClass: "Bard", maxSpellPoints: 30),
-    (characterClass: "Wizard", maxSpellPoints: 40)
+    (characterClass: "Wizard", maxSpellPoints: 40),
+    (characterClass: "Fighter", maxSpellPoints: 0),
+    (characterClass: "Rogue", maxSpellPoints: 0)
 ]
 
 class RPGCharacter {

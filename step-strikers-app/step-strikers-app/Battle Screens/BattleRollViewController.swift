@@ -33,8 +33,9 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         let xValues = [10,100,200,290]
         for index in 0...(enemiesList.count-1) {
             let enemies = enemiesList[index]
+            var isHurt = enemies.health <= getMaxHealth(characterClass: enemies.character_class)/2
             let character = CharacterSprites(name: enemies.character_class)
-            character.drawCharacter(view: self.view, x: xValues[index], y: 400, width: 100, height: 100, isInvisible: enemies.isInvisible, isDead: enemies.isDead)
+            character.drawCharacter(view: self.view, x: xValues[index], y: 400, width: 100, height: 100, isInvisible: enemies.isInvisible, isHurt:isHurt, isDead: enemies.isDead)
         }
         
         displayRollingScreen()
@@ -105,18 +106,24 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         var healthPoints:[Int] = [Int]()
         var spellPoints:[Int] = [Int]()
         var staminaPoints:[Int] = [Int]()
+        var totalHealth:[Int] = [Int]()
+        var totalStamina:[Int] = [Int]()
+        var totalSpellPoints:[Int] = [Int]()
         for member in teamList {
             nameArray.append(member.userName)
             healthPoints.append(member.health)
             spellPoints.append(member.spellPoints)
             staminaPoints.append(member.stamina)
+            totalHealth.append(getMaxHealth(characterClass: member.character_class))
+            totalStamina.append(getMaxStamina(characterClass: member.character_class))
+            totalSpellPoints.append(getMaxSpellPoints(characterClass: member.character_class))
         }
         header.append(StatsHeaderRow(names: nameArray))
         // extra to account for header messing everything up
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: [30, 30, 30, 30]))
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: [30, 30, 30, 30]))
-        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: spellPoints, totalPoints: [30, 30, 30, 30]))
-        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points: staminaPoints, totalPoints: [30, 30, 30, 30]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: totalHealth))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: totalHealth))
+        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: spellPoints, totalPoints: totalStamina))
+        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points: staminaPoints, totalPoints: totalSpellPoints))
     }
     
     func displayRollingScreen() {
@@ -145,11 +152,18 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     @objc func rollPressed(sender: UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         // Decide which type of die to roll
         var rollValue = 0
         if(actionRequiresRoll()) {
             rollValue = rollDie(sides: 20, withAdvantage: localCharacter.hasAdvantage, withDisadvantage: localCharacter.hasDisadvantage)
             // Replace advantage and disadvantage back to false
+            if rollValue == 1 {
+                playSoundEffect(fileName: natOneEffect)
+            } else if rollValue == 20 {
+                playSoundEffect(fileName: natTwentyEffect)
+            }
+            
             localCharacter.hasAdvantage = false
             localCharacter.hasDisadvantage = false
         }
@@ -180,6 +194,7 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     @objc func continuePressed(sender: UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         let sb = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
         
