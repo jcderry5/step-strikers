@@ -435,7 +435,13 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     
 
     func checkAllEnemiesInvisible() {
-       if enemiesList[0].isInvisible && enemiesList[1].isInvisible && enemiesList[2].isInvisible && enemiesList[3].isInvisible {
+        var areAllDead: Bool = true
+        for enemies in enemiesList {
+            if enemies.isInvisible == false {
+                areAllDead = false
+            }
+        }
+       if areAllDead {
            selectRandomEnemy()
        }
     }
