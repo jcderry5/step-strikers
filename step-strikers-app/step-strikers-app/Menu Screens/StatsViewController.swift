@@ -18,40 +18,14 @@ class StatsViewController: UIViewController {
     var background:UIImageView?
     var notificationCenter = NotificationCenter.default
     var timer:Timer!
+    
+    var stepsLabel:UILabel!
+    var boostLabel:UILabel!
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // TODO: Pull steps info from firebase and display it here
-        let healthStore = HKHealthStore()
-        if HKHealthStore.isHealthDataAvailable(){
-            let writeDataTypes = dataTypesToWrite()
-            let readDataTypes = dataTypesToWrite()
-            
-            healthStore.requestAuthorization(toShare: writeDataTypes as? Set<HKSampleType>, read: readDataTypes as? Set<HKObjectType>, completion: { (success, error) in
-                if(!success){
-                    print("error")
-                    return
-                }
-                DispatchQueue.main.async {
-                    HealthKitViewController().getTodaysSteps() { sum in
-                        steps = Int(sum)
-                        var trackBoost:Int = 0
-                        let boostMod = steps / self.boostTotal + 1
-                        trackBoost = self.boostTotal * boostMod - steps
-                        _ = self.createLabel(x: 130, y: 624, w: 253, h: 41, font: "munro", size: 28, text: "\(Int(trackBoost)) steps until boost", align: .left)
-                        _ = self.createLabel(x: 130, y: 653, w: 253, h: 41, font: "munro", size: 28, text: "\(Int(steps)) taken today", align: .left)
-                        
-                        if steps >= localCharacter.currMilestone {
-                            // Create popup notifying in-game users
-                            DispatchQueue.main.async {
-                                self.createNotification()
-                            }
-                            localCharacter.currMilestone += 3000
-                        }
-                    }
-                }
-            })
-        }
+        getStepsData()
     }
     
     override func viewDidLoad() {
@@ -127,6 +101,8 @@ class StatsViewController: UIViewController {
         
         // Display steps info
         _ = createImage(x: 25, y: 618, w: 75, h: 75, name: "brown boots")
+        self.stepsLabel = self.createLabel(x: 130, y: 653, w: 253, h: 41, font: "munro", size: 28, text: "", align: .left)
+        self.boostLabel = self.createLabel(x: 130, y: 624, w: 253, h: 41, font: "munro", size: 28, text: "", align: .left)
         
         // Swipe area
         _ = createImage(x: 140, y: 716, w: 112, h: 112, name: characterClass)
@@ -204,10 +180,8 @@ class StatsViewController: UIViewController {
                     DispatchQueue.main.async {
                         HealthKitViewController().getTodaysSteps() { sum in
                             steps = Int(sum)
-                            print("\(steps) >= \(localCharacter.currMilestone)")
                             if steps >= localCharacter.currMilestone {
                                 // Send a notification
-                                print("SENDING NOTIFICATION")
                                 let content = UNMutableNotificationContent()
                                 content.title = "You found a new item!"
                                 content.sound = UNNotificationSound.default
@@ -229,5 +203,40 @@ class StatsViewController: UIViewController {
     @objc func appMovedToForeground() {
         print("Stopping timer")
         self.timer.invalidate()
+        getStepsData()
+    }
+    
+    func getStepsData() {
+        let healthStore = HKHealthStore()
+        if HKHealthStore.isHealthDataAvailable(){
+            let writeDataTypes = dataTypesToWrite()
+            let readDataTypes = dataTypesToWrite()
+            
+            healthStore.requestAuthorization(toShare: writeDataTypes as? Set<HKSampleType>, read: readDataTypes as? Set<HKObjectType>, completion: { (success, error) in
+                if(!success){
+                    print("error")
+                    return
+                }
+                DispatchQueue.main.async {
+                    HealthKitViewController().getTodaysSteps() { sum in
+                        steps = Int(sum)
+                        var trackBoost:Int = 0
+                        let boostMod = steps / self.boostTotal + 1
+                        trackBoost = self.boostTotal * boostMod - steps
+                        
+                        self.stepsLabel.text = "\(Int(steps)) taken today"
+                        self.boostLabel.text = "\(Int(trackBoost)) steps until boost"
+                        
+                        if steps >= localCharacter.currMilestone {
+                            // Create popup notifying in-game users
+                            DispatchQueue.main.async {
+                                self.createNotification()
+                            }
+                            localCharacter.currMilestone += 3000
+                        }
+                    }
+                }
+            })
+        }
     }
 }
