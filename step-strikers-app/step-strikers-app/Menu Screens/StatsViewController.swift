@@ -16,6 +16,8 @@ class StatsViewController: UIViewController {
     var numTillBoost = 0
     
     var background:UIImageView?
+    var notificationCenter = NotificationCenter.default
+    var timer:Timer!
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -43,14 +45,6 @@ class StatsViewController: UIViewController {
                             if trackBoost == 0 {
                                 // Trigger a notification
                                 // TODO: Make sure step-tracking process can run while app is not open
-                                let content = UNMutableNotificationContent()
-                                content.title = "You found a new item!"
-                                content.sound = UNNotificationSound.default
-                                
-                                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
-                                let request = UNNotificationRequest(identifier: "myNotification", content: content, trigger: trigger)
-                                
-                                UNUserNotificationCenter.current().add(request)
                                 
                                 // Create popup notifying in-game users
                                 self.createNotification()
@@ -169,6 +163,10 @@ class StatsViewController: UIViewController {
         let swipeLeft = UISwipeGestureRecognizer(target:self, action: #selector(swipeLeft))
         swipeLeft.direction = .left
         swipeView.addGestureRecognizer(swipeLeft)
+        
+        // Track whenever app moves to the background
+        self.notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
+        self.notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -177,6 +175,10 @@ class StatsViewController: UIViewController {
         } else {
             self.background?.image = UIImage(named: "Background")
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.notificationCenter.removeObserver(self)
     }
     
     func dataTypesToWrite() -> NSSet{
@@ -201,5 +203,28 @@ class StatsViewController: UIViewController {
         self.modalPresentationStyle = .fullScreen
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: false)
+    }
+    
+    @objc func appMovedToBackground() {
+        // Allow timers to fire when in background mode
+        var bgTask:UIBackgroundTaskIdentifier!
+        bgTask = UIApplication.shared.beginBackgroundTask(expirationHandler: {
+                UIApplication.shared.endBackgroundTask(bgTask)
+            })
+        
+        self.timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true, block: { _ in
+            let content = UNMutableNotificationContent()
+            content.title = "You found a new item!"
+            content.sound = UNNotificationSound.default
+            
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+            let request = UNNotificationRequest(identifier: "myNotification", content: content, trigger: trigger)
+            
+            UNUserNotificationCenter.current().add(request)
+        })
+    }
+    
+    @objc func appMovedToForeground() {
+        self.timer.invalidate()
     }
 }
