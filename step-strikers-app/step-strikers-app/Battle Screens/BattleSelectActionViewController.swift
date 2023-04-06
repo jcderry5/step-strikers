@@ -419,18 +419,24 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         var healthPoints:[Int] = [Int]()
         var spellPoints:[Int] = [Int]()
         var staminaPoints:[Int] = [Int]()
+        var totalHealth:[Int] = [Int]()
+        var totalStamina:[Int] = [Int]()
+        var totalSpellPoints:[Int] = [Int]()
         for member in teamList {
             nameArray.append(member.userName)
             healthPoints.append(member.health)
             spellPoints.append(member.spellPoints)
             staminaPoints.append(member.stamina)
+            totalHealth.append(getMaxHealth(characterClass: member.character_class))
+            totalStamina.append(getMaxStamina(characterClass: member.character_class))
+            totalSpellPoints.append(getMaxSpellPoints(characterClass: member.character_class))
         }
         header.append(StatsHeaderRow(names: nameArray))
         // extra to account for header messing everything up
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: [30, 30, 30, 30]))
-        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: [30, 30, 30, 30]))
-        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: spellPoints, totalPoints: [30, 30, 30, 30]))
-        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points: staminaPoints, totalPoints: [30, 30, 30, 30]))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: totalHealth))
+        stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: totalHealth))
+        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: spellPoints, totalPoints: totalStamina))
+        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points: staminaPoints, totalPoints: totalSpellPoints))
     }
     
 
@@ -607,8 +613,15 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
 struct CharacterSprites {
     var name:String
     
-    func drawCharacter(view:UIView, x:Int, y:Int, width:Int, height:Int, isInvisible:Bool, isDead:Bool) -> UIImageView!{
-        let image = UIImage(named:name)
+    func drawCharacter(view:UIView, x:Int, y:Int, width:Int, height:Int, isInvisible:Bool, isHurt:Bool, isDead:Bool) -> UIImageView!{
+        var image = UIImage(named:name)
+        if localCharacter.blood {
+            image = UIImage(named:name+"-Blood")
+        }
+        if isHurt {
+            print("Is Hurt")
+            image = UIImage(named:name+"-Hurt")
+        }
         var imageView: UIImageView!
         imageView = UIImageView(frame: CGRect(x:x, y: y, width: width, height: height))
         imageView.image = image
@@ -624,7 +637,10 @@ struct CharacterSprites {
     }
     
     func drawButtonCharacter(controller:UIViewController, x:Int, y:Int, width:Int, height:Int) -> UIButton {
-        let imageName = name
+        var imageName = name
+        if localCharacter.blood {
+            imageName = "\(name)-Blood"
+        }
         let characterButton = controller.createButton(x:x, y:y, width:width, height:height, fontName: "munro", imageName:imageName, fontColor: UIColor.black, buttonTitle:"")
         return characterButton
     }

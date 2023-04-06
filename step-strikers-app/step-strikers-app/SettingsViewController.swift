@@ -39,6 +39,9 @@ class SettingsViewController: UIViewController {
         var bloodLabel = createLabel(x: 50, y: 310, w: 100, h: 50, font: "munro", size: 25, text: "Blood:", align: .left)
         self.view.addSubview(bloodLabel)
         bloodSwitch = createToggleButton(x: 300, y: 320, width: 50, height: 50, state: false)
+        if localCharacter.blood {
+            bloodSwitch.setOn(true, animated: false)
+        }
         
         // dark mode switch
         var darkModeLabel = createLabel(x: 50, y: 370, w: 200, h: 50, font: "munro", size: 25, text: "Dark Mode:", align: .left)
@@ -187,6 +190,7 @@ class SettingsViewController: UIViewController {
             if sender == bloodSwitch {
                 print("blood switch turned on")
                 localCharacter.blood = true
+                bloodSwitch.setOn(true, animated: true)
             } else if sender == darkModeSwitch {
                 print("dark mode switch turned on")
                 let appDelegate = UIApplication.shared.windows.first
@@ -206,6 +210,7 @@ class SettingsViewController: UIViewController {
             if sender == bloodSwitch {
                 print("blood switch turned off")
                 localCharacter.blood = false
+                bloodSwitch.setOn(false, animated: true)
                 // TODO: Modify blood in Firebase
             } else if sender == darkModeSwitch {
                 print("dark mode switch turned off")
