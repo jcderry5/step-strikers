@@ -16,7 +16,7 @@ class BattleResultsLossViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         // victory Title
-        let victory = createLabel(x: 50, y: 50, w: 300, h: 200, font: "iso8", size: 55, text: "YOU LOST", align: .center)
+        _ = createLabel(x: 50, y: 50, w: 300, h: 200, font: "iso8", size: 55, text: "YOU LOST", align: .center)
         
         // draw victory
         let skull = UIImage(named: "Skull")
@@ -37,6 +37,7 @@ class BattleResultsLossViewController: UIViewController {
             } else if index == 3 {
                 x = 290
             }
+
             let enemyImage = drawEnemy.drawCharacter(view: self.view, x: x, y: 550, width: 100, height:100, isInvisible: false, isHurt: false, isDead: true)
         }
         
@@ -48,6 +49,7 @@ class BattleResultsLossViewController: UIViewController {
     }
     
     @objc func continuePressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         // route back to stats menu
         let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "StatsViewController") as! StatsViewController

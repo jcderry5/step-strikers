@@ -18,6 +18,7 @@ class PartyMenuHostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        playBackgroundAudio(fileName: partyMenuMusicFile)
         assignBackground()
         // background faded shoe
         createImage(x: 0, y: 250, w: 375, h: 375, name: "Faded Emblem")
@@ -123,11 +124,11 @@ class PartyMenuHostViewController: UIViewController {
 //    }
     
     @objc func readyPressed(_ sender: Any) {
+        playSoundEffect(fileName: menuSelectEffect)
         // signal that team is ready to be matched
         Firestore.firestore().collection("matchable_teams").document("teams").updateData(["teams": FieldValue.arrayUnion(["\(self.partyCode)-\(numPlayers)"])])
         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "TeamMatchViewController") as! TeamMatchViewController
-
         vc.partyCode = self.partyCode
         vc.numPlayers = self.numPlayers
         self.modalPresentationStyle = .fullScreen

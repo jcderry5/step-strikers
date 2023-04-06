@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseFirestore
+import UIKit
 
 
 func setTeams(blueTeam: [RPGCharacter], redTeam: [RPGCharacter]) {
@@ -66,7 +67,6 @@ func refreshStats() {
                 let data = document.data()
                 
                 localCharacter.currHealth = data!["health"] as! Int
-                print("DEBUG: reading update health \(localCharacter.currHealth)")
                 if localCharacter.currHealth <= 0 {
                     localCharacter.isDead = true
                 }
@@ -87,6 +87,12 @@ func refreshStats() {
 }
 
 func endTurn(game: String, player: String) {
+    if checkAllEnemiesDead() {
+        Firestore.firestore().collection("games").document(game).setData([
+            "game_over": true,
+            "game_winner": team
+        ], merge: true)
+    }
     
     // if action has an enemy, or an item was used, update currTarget
     if (actionRequiresEnemy() || rowItemSelected != nil){

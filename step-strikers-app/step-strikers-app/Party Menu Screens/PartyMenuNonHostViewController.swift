@@ -16,6 +16,7 @@ class PartyMenuNonHostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        playBackgroundAudio(fileName: partyMenuMusicFile)
         assignBackground()
         // background faded shoe
         createImage(x: 0, y: 250, w: 375, h: 375, name: "Faded Emblem")
@@ -142,6 +143,7 @@ class PartyMenuNonHostViewController: UIViewController {
     }
     
     @objc func leavePressed(_ sender: Any) {
+        playSoundEffect(fileName: menuSelectEffect)
         // remove player from the team on firebase
         let docRef = Firestore.firestore().collection("teams").document(self.partyCode)
         docRef.getDocument { (document, error) in

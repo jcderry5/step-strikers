@@ -152,11 +152,18 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     @objc func rollPressed(sender: UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         // Decide which type of die to roll
         var rollValue = 0
         if(actionRequiresRoll()) {
             rollValue = rollDie(sides: 20, withAdvantage: localCharacter.hasAdvantage, withDisadvantage: localCharacter.hasDisadvantage)
             // Replace advantage and disadvantage back to false
+            if rollValue == 1 {
+                playSoundEffect(fileName: natOneEffect)
+            } else if rollValue == 20 {
+                playSoundEffect(fileName: natTwentyEffect)
+            }
+            
             localCharacter.hasAdvantage = false
             localCharacter.hasDisadvantage = false
         }
@@ -187,6 +194,7 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     @objc func continuePressed(sender: UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         let sb = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "BattleIdleViewController") as! BattleIdleViewController
         

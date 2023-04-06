@@ -133,6 +133,7 @@ class TeamMatchViewController: UIViewController, UITableViewDelegate, UITableVie
     }
 
     @objc func backButtonPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         // remove your team from the match list
         Firestore.firestore().collection("matchable_teams").document("teams").updateData(["teams": FieldValue.arrayRemove([self.partyCode])])
         
@@ -146,6 +147,7 @@ class TeamMatchViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     @objc func confirmPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
         // remove your team from match list
         Firestore.firestore().collection("matchable_teams").document("teams").updateData(["teams": FieldValue.arrayRemove(["\(self.partyCode)-\(numPlayers)"])])
         

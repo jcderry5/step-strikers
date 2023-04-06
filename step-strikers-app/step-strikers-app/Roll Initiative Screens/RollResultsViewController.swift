@@ -14,6 +14,7 @@ class RollResultsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        playBackgroundAudio(fileName: battleMusicFile)
         assignBackground()
         let d20 = createDiceButton()
         d20.backgroundColor = UIColor.clear
@@ -76,6 +77,7 @@ class RollResultsViewController: UIViewController {
 
     
     @objc func rollDicePressed(_ sender:UIButton) {
+        playSoundEffect(fileName: menuSelectEffect)
         let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let docRef = Firestore.firestore().collection("orders").document(game)
         docRef.getDocument {(document, error) in
