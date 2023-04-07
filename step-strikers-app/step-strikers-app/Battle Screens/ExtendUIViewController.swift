@@ -9,11 +9,7 @@ import UIKit
 import FirebaseFirestore
 
 var enemiesList: [EnemyData] = [EnemyData]()
-var teamList: [TeamData] = [TeamData]()  {
-    didSet {
-        readyForBattleVC = true
-    }
-}
+var teamList: [TeamData] = [TeamData]()
 
 var selectEnemyLabel:UILabel = UILabel()
 var selectPlayerLabel:UILabel = UILabel()

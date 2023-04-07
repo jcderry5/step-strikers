@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 // struct that will hold the name and quantity of an item a player has
 struct Items {
@@ -87,7 +88,26 @@ struct TeamData {
     let userName:String
     let name:String
     let character_class:String
-    var health:Int
+    var health:Int {
+        didSet {
+            let docRef = Firestore.firestore().collection("orders").document(game)
+            docRef.getDocument { (document, error) in
+                if let document = document, document.exists {
+                    
+                    let data = document.data()
+                    let order = data?["order"] as! [String]
+                    
+                    if order[0] == localCharacter.userName {
+                        print("DEBUG: new health was set")
+                        readyForBattleVC += 1
+                    }
+                    if readyForBattleVC == teamList.count {
+                        NotificationCenter.default.post(name: Notification.Name("health"), object: nil)
+                    }
+                }
+            }
+        }
+    }
     var isBlind:Bool
     var isInvisible:Bool
     var hasAdvantage:Bool
