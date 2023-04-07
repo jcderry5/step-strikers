@@ -169,8 +169,14 @@ class RPGCharacter {
     
     // Add weapon to inventory
     func addToInventory(weaponObject: Weapon) {
+        guard weaponObject.name != "Fists" || !(weaponsInInventory.contains(where: {weapon in weapon.name == weaponObject.name})) else {
+            return
+        }
+        
         self.weaponsInInventory += [weaponObject]
     }
+
+
     
     // Returns true is self contains a weapon with that name
     func checkInventory(weaponName: String) -> Bool{
@@ -207,6 +213,11 @@ class RPGCharacter {
     
     // Add Armor to inventory
     func addToInventory(armorObject: Armor) {
+        guard armorObject.name != "No Armor" || !(armorInInventory.contains(where: {armor in armor.name == armorObject.name}))
+        else {
+            return
+        }
+
         self.armorInInventory += [armorObject]
     }
     

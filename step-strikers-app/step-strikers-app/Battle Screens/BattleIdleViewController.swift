@@ -9,6 +9,8 @@ import UIKit
 import FirebaseFirestore
 
 var messages:[String] = [String]()
+var readyForBattleVC = 0
+
 class BattleIdleViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var selectTargetInfoItem :(String, String, String, String, Items)?
@@ -21,6 +23,10 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        readyForBattleVC = 0
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(segue), name: Notification.Name("health"), object: nil)
         
         // check if game is already over
         let gameRef = Firestore.firestore().collection("games").document(game)
@@ -133,6 +139,20 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
     override func viewWillDisappear(_ animated: Bool) {
         self.notificationCenter.removeObserver(self)
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self, name: Notification.Name("health"), object: nil)
+    }
+    
+    @objc func segue() {
+       let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+       let vc = sb.instantiateViewController(withIdentifier: "BattleSelectActionViewController") as! BattleSelectActionViewController
+
+       self.modalPresentationStyle = .fullScreen
+       vc.modalPresentationStyle = .fullScreen
+       self.present(vc, animated: false)
+
+   }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return stats.count
@@ -254,16 +274,15 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
     func updateLists() {
         for i in 0..<teamList.count {
             let playerRef = Firestore.firestore().collection("players").document(teamList[i].userName)
-            playerRef.getDocument { (document2, error) in
-                guard let document2 = document2, document2.exists else {
+            playerRef.getDocument { (document, error) in
+                guard let document = document, document.exists else {
                     print("This player does not exist")
                     return
                 }
                 
-                let data = document2.data()
-                teamList[i].health = data!["health"] as! Int
-                teamList[i].stamina = data!["stamina"] as! Int
-                teamList[i].spellPoints = data!["spell_points"] as! Int
+                teamList[i].health = document.get("health") as! Int
+                teamList[i].stamina = document.get("stamina") as! Int
+                teamList[i].spellPoints = document.get("spell_points") as! Int
             }
         }
         
@@ -286,10 +305,6 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            print("DEBUG: reloading display")
-            for teamMember in teamList {
-                print("DEBUG: \(teamMember.userName)'s health is \(teamMember.health)")
-            }
             statsDisplay.beginUpdates()
             self.stats.removeAll()
             var healthPoints:[Int] = [Int]()
@@ -321,32 +336,13 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
         docRef.getDocument { (document, error) in
             if let document = document, document.exists {
                 docRef.addSnapshotListener {
-                    documentSnapshot, error in guard let document = documentSnapshot else {
+                    documentSnapshot, error in guard let _ = documentSnapshot else {
                         print("Error fetching document: \(error!)")
                         return
                     }
                     
                     if !first {
-                        DispatchQueue.main.async {
-                            self.updateLists()
-                            
-                            let data = document.data()
-                            let order = data?["order"] as! [String]
-                            
-                            if order[0] == localCharacter.userName {
-                                playSoundEffect(fileName: turnStartedEffect)
-                                sleep(2)
-                                
-                                // bring up battle VC
-                                let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                                let vc = sb.instantiateViewController(withIdentifier: "BattleSelectActionViewController") as! BattleSelectActionViewController
-                                
-                                self.modalPresentationStyle = .fullScreen
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: false)
-                                
-                            }
-                        }
+                        self.updateLists()
                     } else {
                         first = false
                     }
@@ -384,6 +380,8 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
                             vc.modalPresentationStyle = .fullScreen
                             self.present(vc, animated: false)
                         }
+                    } else {
+                        print("DEBUG: game not over yet")
                     }
                 }
             }
