@@ -19,6 +19,7 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
     var statsDisplay:UITableView = UITableView()
     var selectTargetInfo :(String, String, String, String, Action)?
     var rollValueToBeat: Int!
+    var notificationCenter = NotificationCenter.default
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,6 +58,14 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         // get rid of grey separator line in between rows
         statsDisplay.separatorColor = UIColor.clear
         self.view.addSubview(statsDisplay)
+    
+        // Track whenever app moves to the background
+        self.notificationCenter.addObserver(self, selector: #selector(pauseMusic), name: UIApplication.willResignActiveNotification, object: nil)
+        self.notificationCenter.addObserver(self, selector: #selector(playMusic), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.notificationCenter.removeObserver(self)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -201,6 +210,14 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         self.modalPresentationStyle = .fullScreen
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated:false)
+    }
+    
+    @objc func pauseMusic() {
+        backgroundMusic.pause()
+    }
+    
+    @objc func playMusic() {
+        backgroundMusic.play()
     }
 
 }

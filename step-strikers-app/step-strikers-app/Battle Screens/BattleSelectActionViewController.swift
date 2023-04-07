@@ -13,6 +13,8 @@ var rowSelected:Action?
 
 var actionLongPressed:Action?
 
+var notificationCenter = NotificationCenter.default
+
 // Dummy currTarget, until gets set by action
 var currTarget: CurrTargetData = CurrTargetData(name: "EmptyPlayer", userName: "emptyPlayer", character_class: "Fighter", health: 30, armor: NoArmor(), modifiedArmorClass: 0, attackModifier: 0, defenseModifier: 0, armorInInventory: [NoArmor()], isBlind: false, isDead: false, isSleep: false, isInvisible: false, magicResistanceModifier: 0, currWeapon: Fists(), weaponInventory: [Fists()], hasAdvantage: false, hasDisadvantage: false, currStamina: 0)
 var actions: [Action] = [Action]()
@@ -147,6 +149,13 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
             isInvisible_label()
         }
        
+        // Track whenever app moves to the background
+        self.notificationCenter.addObserver(self, selector: #selector(pauseMusic), name: UIApplication.willResignActiveNotification, object: nil)
+        self.notificationCenter.addObserver(self, selector: #selector(playMusic), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.notificationCenter.removeObserver(self)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -606,6 +615,14 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
        popView.layer.borderColor = UIColor.black.cgColor
 
        return popView
+    }
+    
+    @objc func pauseMusic() {
+        backgroundMusic.pause()
+    }
+    
+    @objc func playMusic() {
+        backgroundMusic.play()
     }
     
 }

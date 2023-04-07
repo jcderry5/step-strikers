@@ -66,7 +66,7 @@ class HealthKitViewController: UIViewController {
                 }
                 DispatchQueue.main.async {
                     HealthKitViewController().getTodaysSteps() { sum in
-                        steps = sum
+                        steps = Int(sum)
                     }
                 }
                 

@@ -12,6 +12,7 @@ class CodeEntryViewController: UIViewController, UITextFieldDelegate {
     
     var popUp:UIView?
     var textField:UITextField?
+    var notificationCenter = NotificationCenter.default
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +54,14 @@ class CodeEntryViewController: UIViewController, UITextFieldDelegate {
         confirmButton.setTitleColor(.brown, for:.normal)
         confirmButton.addTarget(self, action:#selector(confirmButtonPressed), for:.touchUpInside)
         self.view.addSubview(confirmButton)
+    
+        // Track whenever app moves to the background
+        self.notificationCenter.addObserver(self, selector: #selector(pauseMusic), name: UIApplication.willResignActiveNotification, object: nil)
+        self.notificationCenter.addObserver(self, selector: #selector(playMusic), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.notificationCenter.removeObserver(self)
     }
     
     // Called when 'return' key pressed
@@ -165,5 +174,13 @@ class CodeEntryViewController: UIViewController, UITextFieldDelegate {
         playSoundEffect(fileName: menuSelectEffect)
         // remove pop up
         popUp?.removeFromSuperview()
+    }
+    
+    @objc func pauseMusic() {
+        backgroundMusic.pause()
+    }
+    
+    @objc func playMusic() {
+        backgroundMusic.play()
     }
 }

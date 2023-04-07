@@ -6,6 +6,7 @@
 //
 
 import FirebaseFirestore
+import HealthKit
 
 var messageLog: MessageLog = MessageLog();
 
@@ -65,6 +66,9 @@ class RPGCharacter {
     var darkMode = false
     var blood = true
     
+    // Current step milestone
+    var currMilestone:Int!
+    
     init(characterName: String, userName: String, health: Int,
          stamina: Int, dead: Bool, asleep: Bool, blind: Bool, invisible: Bool, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item], inventoryQuantities: [String:Int]){
         self.characterName = characterName
@@ -85,6 +89,26 @@ class RPGCharacter {
         self.currArmor = currArmor
         self.itemsInInventory = itemsInInventory
         self.inventoryQuantities = inventoryQuantities
+        
+        // Calculate the current step milestone
+        let healthStore = HKHealthStore()
+        if HKHealthStore.isHealthDataAvailable(){
+            let writeDataTypes = dataTypesToWrite()
+            let readDataTypes = dataTypesToWrite()
+            
+            healthStore.requestAuthorization(toShare: writeDataTypes as? Set<HKSampleType>, read: readDataTypes as? Set<HKObjectType>, completion: { (success, error) in
+                if(!success){
+                    print("error")
+                    return
+                }
+                DispatchQueue.main.async {
+                    HealthKitViewController().getTodaysSteps() { sum in
+                        steps = Int(sum)
+                        self.currMilestone = (steps / 3000 + 1) * 3000
+                    }
+                }
+            })
+        }
     }
     
     // Returns a string of the class of the current character
@@ -409,4 +433,11 @@ func getMaxSpellPoints(characterClass: String) -> Int {
         print("Asking for the max health of a class that doesn't exist")
         return 30
     }
+}
+
+func dataTypesToWrite() -> NSSet{
+    let stepsCount = HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.stepCount)
+
+    let returnSet = NSSet(objects: stepsCount!)
+    return returnSet
 }

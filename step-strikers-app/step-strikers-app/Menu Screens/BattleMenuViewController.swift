@@ -11,7 +11,7 @@ import FirebaseFirestore
 class BattleMenuViewController: UIViewController {
     
     let buttonImg = UIImage(named: "Big choice Button")
-    
+    var notificationCenter = NotificationCenter.default
     var background:UIImageView?
 
     override func viewDidLoad() {
@@ -46,6 +46,14 @@ class BattleMenuViewController: UIViewController {
         let swipeRight = UISwipeGestureRecognizer(target:self, action: #selector(swipeRight))
         swipeRight.direction = .right
         swipeView.addGestureRecognizer(swipeRight)
+    
+        // Track whenever app moves to the background
+        self.notificationCenter.addObserver(self, selector: #selector(pauseMusic), name: UIApplication.willResignActiveNotification, object: nil)
+        self.notificationCenter.addObserver(self, selector: #selector(playMusic), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.notificationCenter.removeObserver(self)
     }
     
     @objc func createPressed(_ sender:UIButton!) {
@@ -105,5 +113,13 @@ class BattleMenuViewController: UIViewController {
         } else {
             self.background?.image = UIImage(named: "Background")
         }
+    }
+    
+    @objc func pauseMusic() {
+        backgroundMusic.pause()
+    }
+    
+    @objc func playMusic() {
+        backgroundMusic.play()
     }
 }

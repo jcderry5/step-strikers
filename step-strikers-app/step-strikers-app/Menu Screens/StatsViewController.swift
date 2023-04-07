@@ -7,7 +7,7 @@
 
 import UIKit
 import HealthKit
-var steps:Double = 0.0
+var steps:Int = 0
 
 class StatsViewController: UIViewController {
     
@@ -16,40 +16,16 @@ class StatsViewController: UIViewController {
     var numTillBoost = 0
     
     var background:UIImageView?
+    var notificationCenter = NotificationCenter.default
+    var timer:Timer!
+    
+    var stepsLabel:UILabel!
+    var boostLabel:UILabel!
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // TODO: Pull steps info from firebase and display it here
-        if steps == 0 {
-            let healthStore = HKHealthStore()
-            if HKHealthStore.isHealthDataAvailable(){
-                let writeDataTypes = dataTypesToWrite()
-                let readDataTypes = dataTypesToWrite()
-                
-                healthStore.requestAuthorization(toShare: writeDataTypes as? Set<HKSampleType>, read: readDataTypes as? Set<HKObjectType>, completion: { (success, error) in
-                    if(!success){
-                        print("error")
-                        
-                        return
-                    }
-                    DispatchQueue.main.async {
-                        HealthKitViewController().getTodaysSteps() { sum in
-                            steps = sum
-                            var trackBoost:Double = 0.0
-                            trackBoost = steps.truncatingRemainder(dividingBy: Double(self.boostTotal))
-                            _ = self.createLabel(x: 130, y: 624, w: 253, h: 41, font: "munro", size: 28, text: "\(Int(trackBoost)) steps until boost", align: .left)
-                            _ = self.createLabel(x: 130, y: 653, w: 253, h: 41, font: "munro", size: 28, text: "\(Int(steps)) taken today", align: .left)
-                        }
-                    }
-                    
-                })
-            }
-        } else {
-            var trackBoost:Double = 0.0
-            trackBoost = steps.truncatingRemainder(dividingBy: Double(self.boostTotal))
-            _ = self.createLabel(x: 130, y: 624, w: 253, h: 41, font: "munro", size: 28, text: "\(Int(trackBoost)) steps until boost", align: .left)
-            _ = self.createLabel(x: 130, y: 653, w: 253, h: 41, font: "munro", size: 28, text: "\(Int(steps)) taken today", align: .left)
-        }
+        getStepsData()
     }
     
     override func viewDidLoad() {
@@ -125,6 +101,8 @@ class StatsViewController: UIViewController {
         
         // Display steps info
         _ = createImage(x: 25, y: 618, w: 75, h: 75, name: "brown boots")
+        self.stepsLabel = self.createLabel(x: 130, y: 653, w: 253, h: 41, font: "munro", size: 28, text: "", align: .left)
+        self.boostLabel = self.createLabel(x: 130, y: 624, w: 253, h: 41, font: "munro", size: 28, text: "", align: .left)
         
         // Swipe area
         _ = createImage(x: 140, y: 716, w: 112, h: 112, name: characterClass)
@@ -137,6 +115,10 @@ class StatsViewController: UIViewController {
         let swipeLeft = UISwipeGestureRecognizer(target:self, action: #selector(swipeLeft))
         swipeLeft.direction = .left
         swipeView.addGestureRecognizer(swipeLeft)
+        
+        // Track whenever app moves to the background
+        self.notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
+        self.notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -145,6 +127,10 @@ class StatsViewController: UIViewController {
         } else {
             self.background?.image = UIImage(named: "Background")
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.notificationCenter.removeObserver(self)
     }
     
     func dataTypesToWrite() -> NSSet{
@@ -170,5 +156,87 @@ class StatsViewController: UIViewController {
         self.modalPresentationStyle = .fullScreen
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: false)
+    }
+    
+    @objc func appMovedToBackground() {
+        backgroundMusic.pause()
+        // Allow timers to fire when in background mode
+        var bgTask:UIBackgroundTaskIdentifier!
+        bgTask = UIApplication.shared.beginBackgroundTask(expirationHandler: {
+            UIApplication.shared.endBackgroundTask(bgTask)
+        })
+        
+        self.timer = Timer.scheduledTimer(withTimeInterval: 20, repeats: true, block: { _ in
+            let healthStore = HKHealthStore()
+            if HKHealthStore.isHealthDataAvailable(){
+                let writeDataTypes = self.dataTypesToWrite()
+                let readDataTypes = self.dataTypesToWrite()
+                 
+                healthStore.requestAuthorization(toShare: writeDataTypes as? Set<HKSampleType>, read: readDataTypes as? Set<HKObjectType>, completion: { (success, error) in
+                    if(!success){
+                        print("error")
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        HealthKitViewController().getTodaysSteps() { sum in
+                            steps = Int(sum)
+                            if steps >= localCharacter.currMilestone {
+                                // Send a notification
+                                let content = UNMutableNotificationContent()
+                                content.title = "You found a new item!"
+                                content.sound = UNNotificationSound.default
+                                
+                                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+                                let request = UNNotificationRequest(identifier: "myNotification", content: content, trigger: trigger)
+                                
+                                UNUserNotificationCenter.current().add(request)
+                                
+                                localCharacter.currMilestone += 3000
+                            }
+                        }
+                    }
+                })
+            }
+        })
+    }
+    
+    @objc func appMovedToForeground() {
+        self.timer.invalidate()
+        backgroundMusic.play()
+        getStepsData()
+    }
+    
+    func getStepsData() {
+        let healthStore = HKHealthStore()
+        if HKHealthStore.isHealthDataAvailable(){
+            let writeDataTypes = dataTypesToWrite()
+            let readDataTypes = dataTypesToWrite()
+            
+            healthStore.requestAuthorization(toShare: writeDataTypes as? Set<HKSampleType>, read: readDataTypes as? Set<HKObjectType>, completion: { (success, error) in
+                if(!success){
+                    print("error")
+                    return
+                }
+                DispatchQueue.main.async {
+                    HealthKitViewController().getTodaysSteps() { sum in
+                        steps = Int(sum)
+                        var trackBoost:Int = 0
+                        let boostMod = steps / self.boostTotal + 1
+                        trackBoost = self.boostTotal * boostMod - steps
+                        
+                        self.stepsLabel.text = "\(Int(steps)) taken today"
+                        self.boostLabel.text = "\(Int(trackBoost)) steps until boost"
+                        
+                        if steps >= localCharacter.currMilestone {
+                            // Create popup notifying in-game users
+                            DispatchQueue.main.async {
+                                self.createNotification()
+                            }
+                            localCharacter.currMilestone += 3000
+                        }
+                    }
+                }
+            })
+        }
     }
 }
