@@ -137,11 +137,8 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        self.notificationCenter.removeObserver(self)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self, name: Notification.Name("health"), object: nil)
+        self.notificationCenter.removeObserver(self)
     }
     
     @objc func segue() {
