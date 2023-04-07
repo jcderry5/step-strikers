@@ -349,7 +349,7 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func checkGameOver() {
-        let docRef = Firestore.firestore().collection("game").document(game)
+        let docRef = Firestore.firestore().collection("games").document(game)
         docRef.getDocument { (document, error) in
             if let document = document, document.exists {
                 docRef.addSnapshotListener {
@@ -359,7 +359,7 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
                     }
                     if document.get("game_over") as! Bool {
                         print("DEBUG: game over")
-                        if document.get("winning_team") as! String == team {
+                        if document.get("game_winner") as! String == team {
                             // you win!
                             let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                             let vc = sb.instantiateViewController(withIdentifier: "BattleResultsVictoryViewController") as! BattleResultsVictoryViewController
