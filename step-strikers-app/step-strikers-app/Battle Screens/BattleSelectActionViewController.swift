@@ -40,7 +40,8 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     var selected:Bool = false
     var helpPopUp: UIView?
     var helpButton: UIButton?
-    
+    var notificationCenter = NotificationCenter.default
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
