@@ -17,6 +17,7 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
     var header: [StatsHeaderRow] = [StatsHeaderRow]()
     var stats: [StatsRow] = [StatsRow]()
     var scrollView: UIScrollView!
+    var notificationCenter = NotificationCenter.default
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -123,6 +124,14 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
         segueWhenTurn()
         // listen for when game is over
         checkGameOver()
+    
+        // Track whenever app moves to the background
+        self.notificationCenter.addObserver(self, selector: #selector(pauseMusic), name: UIApplication.willResignActiveNotification, object: nil)
+        self.notificationCenter.addObserver(self, selector: #selector(playMusic), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.notificationCenter.removeObserver(self)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -379,5 +388,13 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
                 }
             }
         }
+    }
+    
+    @objc func pauseMusic() {
+        backgroundMusic.pause()
+    }
+    
+    @objc func playMusic() {
+        backgroundMusic.play()
     }
 }

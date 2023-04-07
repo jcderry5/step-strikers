@@ -10,6 +10,8 @@ import UIKit
 // TODO: route here when battle is over from battle idle screen
 class BattleResultsVictoryViewController: UIViewController {
 
+    var notificationCenter = NotificationCenter.default
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -56,6 +58,13 @@ class BattleResultsVictoryViewController: UIViewController {
         continueButton.setTitleColor(.brown, for: .normal)
         continueButton.addTarget(self, action:#selector(continuePressed), for:.touchUpInside)
         
+        // Track whenever app moves to the background
+        self.notificationCenter.addObserver(self, selector: #selector(pauseMusic), name: UIApplication.willResignActiveNotification, object: nil)
+        self.notificationCenter.addObserver(self, selector: #selector(playMusic), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.notificationCenter.removeObserver(self)
     }
     
     @objc func continuePressed(_ sender:UIButton!) {
@@ -66,5 +75,13 @@ class BattleResultsVictoryViewController: UIViewController {
         self.modalPresentationStyle = .fullScreen
         vc.modalPresentationStyle = .fullScreen
         self.present(vc,animated: false)
+    }
+    
+    @objc func pauseMusic() {
+        backgroundMusic.pause()
+    }
+    
+    @objc func playMusic() {
+        backgroundMusic.play()
     }
 }

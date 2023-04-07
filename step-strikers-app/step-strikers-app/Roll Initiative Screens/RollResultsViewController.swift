@@ -10,6 +10,7 @@ import FirebaseFirestore
 
 class RollResultsViewController: UIViewController {
     var listener: ListenerRegistration!
+    var notificationCenter = NotificationCenter.default
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +23,14 @@ class RollResultsViewController: UIViewController {
         self.view.addSubview(d20)
         renderEnemies(enemyTeam: enemyTeam)
         displayIntiative()
+    
+        // Track whenever app moves to the background
+        self.notificationCenter.addObserver(self, selector: #selector(pauseMusic), name: UIApplication.willResignActiveNotification, object: nil)
+        self.notificationCenter.addObserver(self, selector: #selector(playMusic), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.notificationCenter.removeObserver(self)
     }
     
     func createDiceButton() -> UIButton {
@@ -100,6 +109,14 @@ class RollResultsViewController: UIViewController {
             }
         }
         
+    }
+    
+    @objc func pauseMusic() {
+        backgroundMusic.pause()
+    }
+    
+    @objc func playMusic() {
+        backgroundMusic.play()
     }
 
 }

@@ -159,13 +159,13 @@ class StatsViewController: UIViewController {
     }
     
     @objc func appMovedToBackground() {
+        backgroundMusic.pause()
         // Allow timers to fire when in background mode
         var bgTask:UIBackgroundTaskIdentifier!
         bgTask = UIApplication.shared.beginBackgroundTask(expirationHandler: {
             UIApplication.shared.endBackgroundTask(bgTask)
         })
         
-        print("Creating timer")
         self.timer = Timer.scheduledTimer(withTimeInterval: 20, repeats: true, block: { _ in
             let healthStore = HKHealthStore()
             if HKHealthStore.isHealthDataAvailable(){
@@ -201,8 +201,8 @@ class StatsViewController: UIViewController {
     }
     
     @objc func appMovedToForeground() {
-        print("Stopping timer")
         self.timer.invalidate()
+        backgroundMusic.play()
         getStepsData()
     }
     

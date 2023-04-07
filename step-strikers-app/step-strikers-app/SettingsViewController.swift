@@ -18,6 +18,7 @@ class SettingsViewController: UIViewController {
     var cameFromVC:UIViewController?
     var confirmationView:UIView?
     var background:UIImageView?
+    var notificationCenter = NotificationCenter.default
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,6 +79,14 @@ class SettingsViewController: UIViewController {
         deleteButton.setBackgroundImage(UIImage(named: "Menu Button"), for: .normal)
         self.view.addSubview(deleteButton)
         deleteButton.addTarget(self, action:#selector(deleteButtonPressed), for:.touchUpInside)
+    
+        // Track whenever app moves to the background
+        self.notificationCenter.addObserver(self, selector: #selector(pauseMusic), name: UIApplication.willResignActiveNotification, object: nil)
+        self.notificationCenter.addObserver(self, selector: #selector(playMusic), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.notificationCenter.removeObserver(self)
     }
     
 
@@ -232,6 +241,14 @@ class SettingsViewController: UIViewController {
     @objc func sliderValueDidChange(_ sender:UISlider!) {
         // adjust volume here based on sender.value
         changeVolume(newVolumeLevel: sender.value)
+    }
+    
+    @objc func pauseMusic() {
+        backgroundMusic.pause()
+    }
+    
+    @objc func playMusic() {
+        backgroundMusic.play()
     }
     
 }

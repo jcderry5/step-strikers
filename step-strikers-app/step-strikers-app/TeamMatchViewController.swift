@@ -17,6 +17,7 @@ class TeamMatchViewController: UIViewController, UITableViewDelegate, UITableVie
     var backButton:UIButton = UIButton()
     var partyCode = ""
     var numPlayers = 0
+    var notificationCenter = NotificationCenter.default
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,6 +58,14 @@ class TeamMatchViewController: UIViewController, UITableViewDelegate, UITableVie
                 }
             }
         }
+    
+        // Track whenever app moves to the background
+        self.notificationCenter.addObserver(self, selector: #selector(pauseMusic), name: UIApplication.willResignActiveNotification, object: nil)
+        self.notificationCenter.addObserver(self, selector: #selector(playMusic), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.notificationCenter.removeObserver(self)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -160,4 +169,13 @@ class TeamMatchViewController: UIViewController, UITableViewDelegate, UITableVie
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated:false)
     }
+    
+    @objc func pauseMusic() {
+        backgroundMusic.pause()
+    }
+    
+    @objc func playMusic() {
+        backgroundMusic.play()
+    }
+    
 }

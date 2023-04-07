@@ -14,6 +14,7 @@ class PartyMenuHostViewController: UIViewController {
     var labelText:NSMutableAttributedString?
     var partyCode = ""
     var numPlayers = 0
+    var notificationCenter = NotificationCenter.default
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,6 +60,14 @@ class PartyMenuHostViewController: UIViewController {
         
         // leave button
         let ready = createReadyButton()
+
+        // Track whenever app moves to the background
+        self.notificationCenter.addObserver(self, selector: #selector(pauseMusic), name: UIApplication.willResignActiveNotification, object: nil)
+        self.notificationCenter.addObserver(self, selector: #selector(playMusic), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.notificationCenter.removeObserver(self)
     }
     
     func displayJoinedMembers() -> (UILabel, NSMutableAttributedString) {
@@ -134,5 +143,13 @@ class PartyMenuHostViewController: UIViewController {
         self.modalPresentationStyle = .fullScreen
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: false)
+    }
+    
+    @objc func pauseMusic() {
+        backgroundMusic.pause()
+    }
+    
+    @objc func playMusic() {
+        backgroundMusic.play()
     }
 }

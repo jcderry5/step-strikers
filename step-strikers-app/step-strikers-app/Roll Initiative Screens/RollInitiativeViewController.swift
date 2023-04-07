@@ -10,6 +10,8 @@ import SpriteKit
 
 class RollInitiativeViewController: UIViewController {
     
+    var notificationCenter = NotificationCenter.default
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -17,6 +19,14 @@ class RollInitiativeViewController: UIViewController {
         rollD20()
         
         renderTeam(playerTeam: team)
+    
+        // Track whenever app moves to the background
+        self.notificationCenter.addObserver(self, selector: #selector(pauseMusic), name: UIApplication.willResignActiveNotification, object: nil)
+        self.notificationCenter.addObserver(self, selector: #selector(playMusic), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.notificationCenter.removeObserver(self)
     }
     
     func createDiceButton() -> UIButton {
@@ -82,6 +92,14 @@ class RollInitiativeViewController: UIViewController {
         self.modalPresentationStyle = .fullScreen
         vc.modalPresentationStyle = .fullScreen
         self.present(vc,animated: false)
+    }
+    
+    @objc func pauseMusic() {
+        backgroundMusic.pause()
+    }
+    
+    @objc func playMusic() {
+        backgroundMusic.play()
     }
 
 }

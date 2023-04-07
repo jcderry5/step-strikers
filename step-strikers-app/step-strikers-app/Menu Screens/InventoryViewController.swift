@@ -26,7 +26,7 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
     var itemsButton:UIButton = UIButton()
     
     var segCtrl:UISegmentedControl = UISegmentedControl()
-    
+    var notificationCenter = NotificationCenter.default
     var background:UIImageView?
     
     override func viewDidLoad() {
@@ -106,6 +106,14 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight))
         swipeRight.direction = .right
         swipeView.addGestureRecognizer(swipeRight)
+        
+        // Track whenever app moves to the background
+        self.notificationCenter.addObserver(self, selector: #selector(pauseMusic), name: UIApplication.willResignActiveNotification, object: nil)
+        self.notificationCenter.addObserver(self, selector: #selector(playMusic), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.notificationCenter.removeObserver(self)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -192,6 +200,14 @@ class InventoryViewController: UIViewController, UITableViewDataSource, UITableV
         self.modalPresentationStyle = .fullScreen
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: false)
+    }
+    
+    @objc func pauseMusic() {
+        backgroundMusic.pause()
+    }
+    
+    @objc func playMusic() {
+        backgroundMusic.play()
     }
 
 }
