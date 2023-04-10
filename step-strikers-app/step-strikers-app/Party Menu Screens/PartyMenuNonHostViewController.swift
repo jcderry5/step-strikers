@@ -25,9 +25,9 @@ class PartyMenuNonHostViewController: UIViewController {
         // giant party code text
         let attributes = [NSAttributedString.Key.font: UIFont(name: "Adventurer", size: 55)!, .underlineStyle: 0] as [NSAttributedString.Key : Any]
         var partyCodeText = NSMutableAttributedString(attributedString: NSMutableAttributedString(string: "PARTY CODE:\n", attributes: attributes))
-        let otherAttributes = [NSAttributedString.Key.font: UIFont(name: "munro", size: 20)!, .underlineStyle: 0] as [NSAttributedString.Key : Any]
+        let otherAttributes = [NSAttributedString.Key.font: UIFont(name: "munro", size: 40)!, .underlineStyle: 0] as [NSAttributedString.Key : Any]
         // TODO: replace with actual code
-        let anotherString = NSMutableAttributedString(string: "\nxxxxx", attributes: otherAttributes)
+        let anotherString = NSMutableAttributedString(string: "\n\(partyCode)", attributes: otherAttributes)
         partyCodeText.append(anotherString)
         var partyCodeLabel = UILabel(frame: CGRect(x:10, y: 50, width: 375, height: 200))
         partyCodeLabel.textAlignment = .center

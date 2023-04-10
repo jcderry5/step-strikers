@@ -111,7 +111,14 @@ struct TeamData {
     var isBlind:Bool
     var isInvisible:Bool
     var hasAdvantage:Bool
-    var defenseModifier:Int
+    var hasDisadvantage:Bool
+    var attackModifier: Int
+    var defenseModifier: Int
     var spellPoints: Int
     var stamina: Int
+    var weaponInventory: [Weapon]
+    var currWeapon: Weapon
+    var armorInInventory: [Armor]
+    var currArmor: Armor
+    var magicResistanceModifier: Int
 }

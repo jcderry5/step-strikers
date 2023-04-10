@@ -237,9 +237,16 @@ extension UIViewController {
                     let spellPoints = data!["spell_points"] as! Int
                     let currStamina = data!["stamina"] as! Int
                     let userName = player
+                    let hasDisadvantage = data!["has_disadvantage"] as! Bool
+                    let weaponInventory = rebuildWeaponInventory(weaponInventory: data!["weapon_inventory"] as! [String])
+                    let currWeapon = rebuildWeaponToStore(currWeapon: data!["current_weapon"] as! String)
+                    let armorInventory = rebuildArmorInventory(armorInventory: data!["armor_inventory"] as! [String])
+                    let armor = rebuildArmorToStore(armorToStore: data!["current_armor"] as! String)
+                    let attackModifier = data!["attack_modifier"] as! Int
+                    let magicResistanceModifier = data!["magic_resistance_modifier"] as! Int
+                    // hasDisadvantage attackModifier
                     
-                    
-                    teamList.append(TeamData(userName: userName, name: name, character_class: character_class, health: health, isBlind: isBlind, isInvisible: isInvisible, hasAdvantage: hasAdvantage, defenseModifier: defenseModifier, spellPoints: spellPoints, stamina: currStamina))
+                    teamList.append(TeamData(userName: userName, name: name, character_class: character_class, health: health, isBlind: isBlind, isInvisible: isInvisible, hasAdvantage: hasAdvantage, hasDisadvantage: hasDisadvantage, attackModifier: attackModifier, defenseModifier: defenseModifier, spellPoints: spellPoints, stamina: currStamina, weaponInventory: weaponInventory, currWeapon: currWeapon, armorInInventory: armorInventory, currArmor:armor, magicResistanceModifier:magicResistanceModifier))
                     count = count + 1
                 }
             }
