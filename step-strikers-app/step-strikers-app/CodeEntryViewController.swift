@@ -140,15 +140,6 @@ class CodeEntryViewController: UIViewController, UITextFieldDelegate {
         okButton.addTarget(self, action:#selector(okPressed), for:.touchUpInside)
         popView.addSubview(okButton)
         
-        // x button
-        let xButton = UIButton(frame: CGRect(x: 270, y: 10, width: 20, height: 15))
-        xButton.setTitle("x", for: UIControl.State.normal)
-        xButton.backgroundColor = UIColor.clear
-        xButton.titleLabel!.font = UIFont(name: "American Typewriter", size: 20)
-        xButton.setTitleColor(UIColor.black, for: UIControl.State.normal)
-        xButton.addTarget(self, action: #selector(xPressed), for: .touchUpInside)
-        popView.addSubview(xButton)
-        
         // popView border
         popView.layer.borderWidth = 1.0
         popView.layer.borderColor = UIColor.black.cgColor
@@ -158,7 +149,7 @@ class CodeEntryViewController: UIViewController, UITextFieldDelegate {
     
     @objc func okPressed(_ sender:UIButton!) {
         playSoundEffect(fileName: menuSelectEffect)
-        print("Ok button pressed")
+        popUp?.removeFromSuperview()
         // TODO: Route to next screen
         /*
          let sb = UIStoryboard(name: "Main", bundle: nil)
@@ -168,12 +159,6 @@ class CodeEntryViewController: UIViewController, UITextFieldDelegate {
          vc.modalPresentationStyle = .fullScreen
          self.present(vc, animated:false)
          */
-    }
-    
-    @objc func xPressed(_ sender:UIButton!) {
-        playSoundEffect(fileName: menuSelectEffect)
-        // remove pop up
-        popUp?.removeFromSuperview()
     }
     
     @objc func pauseMusic() {

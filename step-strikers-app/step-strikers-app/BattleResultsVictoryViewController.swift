@@ -33,9 +33,9 @@ class BattleResultsVictoryViewController: UIViewController {
         // enemy 1
         // TODO: add enemeiesList[index].character_class when previous vc's are functional
         // adding now will break everything
-        for (index, enemy) in enemiesList.enumerated() {
+        for (index, team) in teamList.enumerated() {
             var x = 10
-            let drawEnemy = CharacterSprites(name: "Bard")
+            let drawTeam = CharacterSprites(name: team.character_class)
             if index == 0 {
                 x = 10
             } else if index == 1 {
@@ -45,7 +45,7 @@ class BattleResultsVictoryViewController: UIViewController {
             } else if index == 3 {
                 x = 290
             }
-            let enemyImage = drawEnemy.drawCharacter(view: self.view, x: x, y: 500, width: 100, height:120, isInvisible: false, isHurt:false, isDead: false)
+            let teamImage = drawTeam.drawCharacter(view: self.view, x: x, y: 500, width: 100, height:120, isInvisible: false, isHurt:false, isDead: false)
         }
         
         // items collected list

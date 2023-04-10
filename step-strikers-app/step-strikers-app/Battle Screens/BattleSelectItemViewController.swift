@@ -291,7 +291,7 @@ class BattleSelectItemViewController: UIViewController, UITableViewDataSource, U
         var totalStamina:[Int] = [Int]()
         var totalSpellPoints:[Int] = [Int]()
         for member in teamList {
-            nameArray.append(member.userName)
+            nameArray.append(member.name)
             healthPoints.append(member.health)
             spellPoints.append(member.spellPoints)
             staminaPoints.append(member.stamina)

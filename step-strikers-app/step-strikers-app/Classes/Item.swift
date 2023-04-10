@@ -103,21 +103,21 @@ func postItemUseActions(itemUsed: Item, message: String) {
 func randomWinnerItemDrop(newOwner: RPGCharacter) -> [String] {
     
     // 1. New Weapon
-    var tempString: String = allWeapons[Int.random(in: 0..<allWeapons.count)]
+    var tempString: String = allWeapons[Int.random(in: 0..<allWeapons.count-1)]
     var newWeapon: Weapon = rebuildWeapon(weaponName: tempString, useCount: 0)
     while !newWeapon.checkIfProficient(wielderClass: newOwner.getCharacterClass()) {
-        tempString = allWeapons[Int.random(in: 0..<allWeapons.count)]
+        tempString = allWeapons[Int.random(in: 0..<allWeapons.count-1)]
         newWeapon = rebuildWeapon(weaponName: tempString, useCount: 0)
     }
     newOwner.addToInventory(weaponObject: newWeapon)
     
     // 2. New Armor
-    tempString = allArmor[Int.random(in: 0..<allArmor.count)]
+    tempString = allArmor[Int.random(in: 0..<allArmor.count-1)]
     var newArmor: Armor = rebuildArmor(armorName: tempString, useCount: 0)
     // Only non-Wizards have suited Armor, Wizards will get whatever
     if !(newOwner is Wizard) {
-        while !newArmor.checkIfSuited(wearerCharacterType: newOwner.characterName) {
-            tempString = allArmor[Int.random(in: 0..<allArmor.count)]
+        while !newArmor.checkIfSuited(wearerCharacterType: newOwner.getCharacterClass()) {
+            tempString = allArmor[Int.random(in: 0..<allArmor.count-1)]
             newArmor = rebuildArmor(armorName: tempString, useCount: 0)
         }
     }

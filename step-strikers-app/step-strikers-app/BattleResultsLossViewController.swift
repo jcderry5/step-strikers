@@ -27,9 +27,9 @@ class BattleResultsLossViewController: UIViewController {
         self.view.addSubview(skullView)
         
         // draw skeletons
-        for (index, enemy) in enemiesList.enumerated() {
+        for (index, enemy) in teamList.enumerated() {
             var x = 10
-            let drawEnemy = CharacterSprites(name: "Skeleton")
+            let drawTeam = CharacterSprites(name: "Skeleton")
             if index == 0 {
                 x = 10
             } else if index == 1 {
@@ -40,7 +40,7 @@ class BattleResultsLossViewController: UIViewController {
                 x = 290
             }
 
-            let enemyImage = drawEnemy.drawCharacter(view: self.view, x: x, y: 550, width: 100, height:100, isInvisible: false, isHurt: false, isDead: true)
+            let teamImage = drawTeam.drawCharacter(view: self.view, x: x, y: 550, width: 100, height:100, isInvisible: false, isHurt: false, isDead: true)
         }
         
         let bigButton = UIImage(named: "Big choice Button")

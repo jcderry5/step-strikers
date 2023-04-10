@@ -62,7 +62,7 @@ class SettingsViewController: UIViewController {
         
         // create the back button to go to battle meny again
         let backButton = UIButton()
-        backButton.frame = CGRect(x: 160, y:700, width:75, height:60)
+        backButton.frame = CGRect(x: 160, y: 750, width:75, height:60)
         backButton.setTitle("BACK", for:UIControl.State.normal)
         backButton.titleLabel!.font = UIFont(name: "munro", size: 20)
         backButton.setTitleColor(.brown, for:.normal)
@@ -79,6 +79,15 @@ class SettingsViewController: UIViewController {
         deleteButton.setBackgroundImage(UIImage(named: "Menu Button"), for: .normal)
         self.view.addSubview(deleteButton)
         deleteButton.addTarget(self, action:#selector(deleteButtonPressed), for:.touchUpInside)
+        
+        let signOutButton = UIButton()
+        signOutButton.frame = CGRect(x: 125, y: 650, width: 150, height: 75)
+        signOutButton.setTitle("Sign Out", for:UIControl.State.normal)
+        signOutButton.titleLabel!.font = UIFont(name: "munro", size: 20)
+        signOutButton.setTitleColor(.brown, for:.normal)
+        signOutButton.setBackgroundImage(UIImage(named: "Menu Button"), for: .normal)
+        self.view.addSubview(signOutButton)
+        signOutButton.addTarget(self, action:#selector(signOutButtonPressed), for:.touchUpInside)
     
         // Track whenever app moves to the background
         self.notificationCenter.addObserver(self, selector: #selector(pauseMusic), name: UIApplication.willResignActiveNotification, object: nil)
@@ -157,6 +166,46 @@ class SettingsViewController: UIViewController {
         self.view.addSubview(rect)
         return rect
     }
+    
+    func confirmSignOut() -> UIView {
+        let rect = UIView(frame: CGRect(x: 50, y: 310, width: 300, height: 150))
+        rect.backgroundColor = UIColor(red: 0.941, green: 0.851, blue: 0.690, alpha: 1.0)
+        rect.layer.borderColor = UIColor.black.cgColor
+        rect.layer.borderWidth = 2.0
+        let confirmLabel = UILabel(frame: CGRect(x: 5, y: 20, width: 300, height: 100))
+        confirmLabel.numberOfLines = 0
+        confirmLabel.lineBreakMode = .byWordWrapping
+        confirmLabel.text = "Are you sure you want to sign out?"
+        confirmLabel.font = UIFont(name: "munro", size: 20)
+        confirmLabel.textAlignment = .center
+        rect.addSubview(confirmLabel)
+        
+        let confirmButton = UIButton(frame: CGRect(x: 100, y: 100, width: 100, height: 30))
+        confirmButton.setTitle("YES", for: .normal)
+        confirmButton.titleLabel!.font = UIFont(name: "munro", size: 20)
+        confirmButton.backgroundColor = UIColor(red: 0.941, green: 0.651, blue: 0.157, alpha: 1.0)
+        confirmButton.setTitleColor(.brown, for:.normal)
+        confirmButton.layer.borderWidth = 3.0
+        confirmButton.layer.borderColor = UIColor.brown.cgColor
+        confirmButton.addTarget(self, action:#selector(confirmPressed), for:.touchUpInside)
+        rect.addSubview(confirmButton)
+        
+        // x button
+        let xButton = UIButton(frame: CGRect(x: 270, y: 10, width: 20, height: 15))
+        xButton.setTitle("x", for: UIControl.State.normal)
+        xButton.backgroundColor = UIColor.clear
+        xButton.titleLabel!.font = UIFont(name: "American Typewriter", size: 20)
+        xButton.setTitleColor(UIColor.black, for: UIControl.State.normal)
+        xButton.addTarget(self, action: #selector(xPressed), for: .touchUpInside)
+        rect.addSubview(xButton)
+        
+        // popView border
+        rect.layer.borderWidth = 2.0
+        rect.layer.borderColor = UIColor.black.cgColor
+        
+        self.view.addSubview(rect)
+        return rect
+    }
 
     @objc func backButtonPressed(_ sender:UIButton!) {
         playSoundEffect(fileName: menuSelectEffect)
@@ -173,6 +222,11 @@ class SettingsViewController: UIViewController {
     @objc func deleteButtonPressed(_ sender:UIButton!) {
         playSoundEffect(fileName: menuSelectEffect)
         confirmationView = displayConfirmation()
+    }
+    
+    @objc func signOutButtonPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
+        confirmationView = confirmSignOut()
     }
     
     @objc func confirmPressed(_ sender:UIButton!) {

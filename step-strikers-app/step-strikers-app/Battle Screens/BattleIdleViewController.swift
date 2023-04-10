@@ -252,7 +252,7 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
         var totalStamina:[Int] = [Int]()
         var totalSpellPoints:[Int] = [Int]()
         for member in teamList {
-            nameArray.append(member.userName)
+            nameArray.append(member.name)
             healthPoints.append(member.health)
             spellPoints.append(member.spellPoints)
             staminaPoints.append(member.stamina)
@@ -280,6 +280,14 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
                 teamList[i].health = document.get("health") as! Int
                 teamList[i].stamina = document.get("stamina") as! Int
                 teamList[i].spellPoints = document.get("spell_points") as! Int
+                teamList[i].hasAdvantage = document.get("has_advantage") as! Bool
+                teamList[i].hasDisadvantage = document.get("has_disadvantage") as! Bool
+                teamList[i].weaponInventory = rebuildWeaponInventory(weaponInventory: document.get("weapon_inventory") as! [String])
+                teamList[i].currWeapon = rebuildWeaponToStore(currWeapon: document.get("current_weapon") as! String)
+                teamList[i].armorInInventory = rebuildArmorInventory(armorInventory: document.get("armor_inventory") as! [String])
+                teamList[i].currArmor = rebuildArmorToStore(armorToStore: document.get("current_armor") as! String)
+                teamList[i].defenseModifier = document.get("defense_modifier") as! Int
+                teamList[i].magicResistanceModifier = document.get("magic_resistance_modifier") as! Int
             }
         }
         
@@ -298,6 +306,14 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
                 enemiesList[i].isDead = data!["is_dead"] as! Bool
                 enemiesList[i].isSleep = data!["is_asleep"] as! Bool
                 enemiesList[i].isInvisible = data!["is_invisible"] as! Bool
+                enemiesList[i].hasAdvantage = data!["has_advantage"] as! Bool
+                enemiesList[i].hasDisadvantage = data!["has_disadvantage"] as! Bool
+                enemiesList[i].weaponInventory = rebuildWeaponInventory(weaponInventory: data!["weapon_inventory"] as! [String])
+                enemiesList[i].currWeapon = rebuildWeaponToStore(currWeapon: data!["current_weapon"] as! String)
+                enemiesList[i].armorInInventory = rebuildArmorInventory(armorInventory: data!["armor_inventory"] as! [String])
+                enemiesList[i].armor = rebuildArmorToStore(armorToStore: data!["current_armor"] as! String)
+                enemiesList[i].defenseModifier = data!["defense_modifier"] as! Int
+                enemiesList[i].magicResistanceModifier = data!["magic_resistance_modifier"] as! Int
             }
         }
         
