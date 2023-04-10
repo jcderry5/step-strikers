@@ -15,9 +15,8 @@ func setTeams(blueTeam: [RPGCharacter], redTeam: [RPGCharacter]) {
 }
 
 // resets player stats that don't carry over between games
-// TODO: @Kelly call this at some point
-func resetPlayerStats(player:String) {
-    Firestore.firestore().collection("players").document(player).setData([
+func resetPlayerStats() {
+    Firestore.firestore().collection("players").document(localCharacter.userName).setData([
         "is_asleep": false,
         "is_blind": false,
         "is_dead": false,
