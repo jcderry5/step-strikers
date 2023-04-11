@@ -432,6 +432,10 @@ func getMaxSpellPoints(characterClass: String) -> Int {
         return maxSpellPointsPerClass[0].maxSpellPoints
     case maxSpellPointsPerClass[1].characterClass:
         return maxSpellPointsPerClass[1].maxSpellPoints
+    case maxSpellPointsPerClass[2].characterClass:
+        return maxSpellPointsPerClass[2].maxSpellPoints
+    case maxSpellPointsPerClass[3].characterClass:
+        return maxSpellPointsPerClass[3].maxSpellPoints
     default:
         print("Asking for the max health of a class that doesn't exist")
         return 30

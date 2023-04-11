@@ -15,6 +15,7 @@ class BattleResultsVictoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        resetPlayerStats()
         let loot = randomWinnerItemDrop(newOwner: localCharacter)
         
         assignBackground()
@@ -71,7 +72,7 @@ class BattleResultsVictoryViewController: UIViewController {
         playSoundEffect(fileName: menuSelectEffect)
         
         // reset player stats
-        resetPlayerStats()
+        refreshStats()
         
         // route back to stats menu
         let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)

@@ -52,6 +52,7 @@ class StatsViewController: UIViewController {
         let characterClass = localCharacter.getCharacterClass()
         
         // Health stats
+
         let currHealth = localCharacter.currHealth
         let maxHealth = getMaxHealth(characterClass: localCharacter.getCharacterClass())
         _ = createImage(x: 25, y: 251, w: 75, h: 75, name: "health")
@@ -59,10 +60,9 @@ class StatsViewController: UIViewController {
         
         // Magic stats
         var currMagic = 0
-        var maxMagic = 0
+        let maxMagic = getMaxSpellPoints(characterClass: localCharacter.getCharacterClass())
         if let caster = localCharacter as? Caster {
             currMagic = caster.currSpellPoints
-            maxMagic = caster.maxSpellPoints
         }
         _ = createImage(x: 25, y: 326, w: 70, h: 70, name: "SpellPoints")
         _ = createLabel(x: 116, y: 326, w: 150, h: 65, font: "munro", size: 33, text: "\(currMagic)/\(maxMagic)", align: .left)
@@ -71,7 +71,7 @@ class StatsViewController: UIViewController {
         let currStamina = localCharacter.currStamina
         let maxStamina = getMaxStamina(characterClass: localCharacter.getCharacterClass())
         _ = createImage(x: 45, y: 411, w: 45, h: 65, name: "lightningbolt")
-        _ = createLabel(x: 116, y: 411, w: 150, h: 65, font: "munro", size: 33, text: "\(localCharacter.currStamina)/\(localCharacter.maxStamina)", align: .left)
+        _ = createLabel(x: 116, y: 411, w: 150, h: 65, font: "munro", size: 33, text: "\(localCharacter.currStamina)/\(maxStamina)", align: .left)
         
         // Armor class
         let ac = localCharacter.currArmor.armorClass
