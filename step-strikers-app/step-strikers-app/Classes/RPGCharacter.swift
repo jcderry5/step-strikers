@@ -174,6 +174,7 @@ class RPGCharacter {
         }
         
         self.weaponsInInventory += [weaponObject]
+        self.inventoryQuantities[weaponObject.name] = (self.inventoryQuantities[weaponObject.name] ?? 0)+1
     }
 
 
@@ -219,6 +220,7 @@ class RPGCharacter {
         }
 
         self.armorInInventory += [armorObject]
+        self.inventoryQuantities[armorObject.name] = (self.inventoryQuantities[armorObject.name] ?? 0)+1
     }
     
     // Returns true is self contains a weapon with that name
