@@ -143,7 +143,7 @@ func randomWinnerItemDrop(newOwner: RPGCharacter) -> [String] {
 
 func milestoneItemDrop() -> String {
     // Calculate the item tier
-    let tier = min(localCharacter.currMilestone / 3000, 4)
+    let tier = localCharacter.currMilestone / 3000
     
     // Randomly select a new item
     var tempString: String!
@@ -157,7 +157,7 @@ func milestoneItemDrop() -> String {
     case 4:
         tempString = tierFourItems[Int.random(in: 0..<tierFourItems.count)]
     default:
-        print("Error: Tier \(tier) not found")
+        return ""
     }
 
     // Create the new item and add it to the user's inventory

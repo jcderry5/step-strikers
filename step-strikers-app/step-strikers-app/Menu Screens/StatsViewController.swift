@@ -180,7 +180,8 @@ class StatsViewController: UIViewController {
                     DispatchQueue.main.async {
                         HealthKitViewController().getTodaysSteps() { sum in
                             steps = Int(sum)
-                            if steps >= localCharacter.currMilestone {
+                            let milestone = localCharacter.currMilestone!
+                            if milestone <= 12000 && steps >= milestone {
                                 // Send a notification
                                 let content = UNMutableNotificationContent()
                                 content.title = "You found a new item!"
@@ -191,7 +192,7 @@ class StatsViewController: UIViewController {
                                 
                                 UNUserNotificationCenter.current().add(request)
                                 
-                                milestoneItemDrop()
+                                _ = milestoneItemDrop()
                                 localCharacter.currMilestone += 3000
                             }
                         }
@@ -226,15 +227,20 @@ class StatsViewController: UIViewController {
                         trackBoost = self.boostTotal * boostMod - steps
                         
                         self.stepsLabel.text = "\(Int(steps)) taken today"
-                        self.boostLabel.text = "\(Int(trackBoost)) steps until drop"
                         
-                        if steps >= localCharacter.currMilestone {
-                            // Create popup notifying in-game users
-                            let itemName = milestoneItemDrop()
-                            DispatchQueue.main.async {
-                                self.createNotification(itemName: itemName)
+                        if localCharacter.currMilestone <= 12000 {
+                            self.boostLabel.text = "\(Int(trackBoost)) steps until drop"
+                            
+                            if steps >= localCharacter.currMilestone {
+                                // Create popup notifying in-game users
+                                let itemName = milestoneItemDrop()
+                                DispatchQueue.main.async {
+                                    self.createNotification(itemName: itemName)
+                                }
+                                localCharacter.currMilestone += 3000
                             }
-                            localCharacter.currMilestone += 3000
+                        } else {
+                            self.boostLabel.text = "No drops remaining"
                         }
                     }
                 }
