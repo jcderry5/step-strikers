@@ -14,6 +14,7 @@ class BattleResultsLossViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        resetPlayerStats()
         assignBackground()
 
         // Do any additional setup after loading the view.
@@ -61,7 +62,7 @@ class BattleResultsLossViewController: UIViewController {
         playSoundEffect(fileName: menuSelectEffect)
         
         // reset player stats
-        resetPlayerStats()
+        refreshStats()
         
         // route back to stats menu
         let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
