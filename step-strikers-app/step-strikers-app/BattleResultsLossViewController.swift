@@ -14,8 +14,9 @@ class BattleResultsLossViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        resetPlayerStats()
         assignBackground()
-
+        playBackgroundAudio(fileName: defeatBackgroundMusic)
         // Do any additional setup after loading the view.
         // victory Title
         _ = createLabel(x: 50, y: 50, w: 300, h: 200, font: "iso8", size: 55, text: "YOU LOST", align: .center)
@@ -59,6 +60,10 @@ class BattleResultsLossViewController: UIViewController {
     
     @objc func continuePressed(_ sender:UIButton!) {
         playSoundEffect(fileName: menuSelectEffect)
+        
+        // reset player stats
+        refreshStats()
+        
         // route back to stats menu
         let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "StatsViewController") as! StatsViewController

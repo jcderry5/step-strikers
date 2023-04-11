@@ -9,23 +9,21 @@ import Foundation
 import FirebaseFirestore
 import UIKit
 
-
-func setTeams(blueTeam: [RPGCharacter], redTeam: [RPGCharacter]) {
-    // Read the order from fb, s
-}
-
 // resets player stats that don't carry over between games
-// TODO: @Kelly call this at some point
-func resetPlayerStats(player:String) {
-    Firestore.firestore().collection("players").document(player).setData([
+func resetPlayerStats() {
+    Firestore.firestore().collection("players").document(localCharacter.userName).setData([
         "is_asleep": false,
         "is_blind": false,
         "is_dead": false,
+        "is_invisible": false,
         "has_advantage": false,
         "has_disadvantage": false,
         "attack_modifier": 0,
         "defense_modifier": 0,
-        "magic_resistance_modifier": 0
+        "magic_resistance_modifier": 0,
+        "health": getMaxHealth(characterClass: localCharacter.getCharacterClass()),
+        "stamina": getMaxStamina(characterClass: localCharacter.getCharacterClass()),
+        "spell_points": getMaxSpellPoints(characterClass: localCharacter.getCharacterClass())
     ], merge: true)
 }
 
@@ -51,7 +49,6 @@ func rollDie(sides: Int, withAdvantage: Bool? = false, withDisadvantage: Bool? =
     }
 }
 
-// TODO: @Kelly call this at some point?
 func refreshStats() {
     // read updated character info and game stats
     let docRef = Firestore.firestore().collection("players").document(localCharacter.userName)
