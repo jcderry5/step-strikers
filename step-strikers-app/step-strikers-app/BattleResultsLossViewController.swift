@@ -15,7 +15,7 @@ class BattleResultsLossViewController: UIViewController {
         super.viewDidLoad()
 
         assignBackground()
-
+        playBackgroundAudio(fileName: defeatBackgroundMusic)
         // Do any additional setup after loading the view.
         // victory Title
         _ = createLabel(x: 50, y: 50, w: 300, h: 200, font: "iso8", size: 55, text: "YOU LOST", align: .center)
