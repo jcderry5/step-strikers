@@ -101,7 +101,6 @@ func postItemUseActions(itemUsed: Item, message: String) {
 }
 
 func randomWinnerItemDrop(newOwner: RPGCharacter) -> [String] {
-    
     // 1. New Weapon
     var tempString: String = allWeapons[Int.random(in: 0..<allWeapons.count-1)]
     var newWeapon: Weapon = rebuildWeapon(weaponName: tempString, useCount: 0)
@@ -129,10 +128,10 @@ func randomWinnerItemDrop(newOwner: RPGCharacter) -> [String] {
     newOwner.addToInventory(itemObject: newItem)
     
     // write your cool new items to firebase
-    Firestore.firestore().collection("players").document(newOwner.userName).updateData([
-        "weapon_inventory": FieldValue.arrayUnion([getConstructedName(weapon: newWeapon)]),
-        "armor_inventory": FieldValue.arrayUnion([getConstructedName(armor: newArmor)]),
-        "item_inventory": FieldValue.arrayUnion([newItem.name])])
+    Firestore.firestore().collection("players").document(newOwner.userName).setData([
+        "weapon_inventory": getWeaponStrings(weapons: localCharacter.weaponsInInventory),
+        "armor_inventory": getArmorStrings(armors: localCharacter.armorInInventory),
+        "item_inventory": getItemStrings(items: localCharacter.itemsInInventory)], merge: true)
     
     return [newWeapon.name, newArmor.name, newItem.name]
 }
