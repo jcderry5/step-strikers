@@ -101,8 +101,8 @@ class StatsViewController: UIViewController {
         
         // Display steps info
         _ = createImage(x: 25, y: 618, w: 75, h: 75, name: "brown boots")
-        self.stepsLabel = self.createLabel(x: 130, y: 653, w: 253, h: 41, font: "munro", size: 28, text: "", align: .left)
-        self.boostLabel = self.createLabel(x: 130, y: 624, w: 253, h: 41, font: "munro", size: 28, text: "", align: .left)
+        self.stepsLabel = self.createLabel(x: 130, y: 624, w: 253, h: 41, font: "munro", size: 28, text: "", align: .left)
+        self.boostLabel = self.createLabel(x: 130, y: 653, w: 253, h: 41, font: "munro", size: 28, text: "", align: .left)
         
         // Swipe area
         _ = createImage(x: 140, y: 716, w: 112, h: 112, name: characterClass)
