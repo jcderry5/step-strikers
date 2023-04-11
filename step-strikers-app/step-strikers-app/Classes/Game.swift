@@ -20,11 +20,15 @@ func resetPlayerStats() {
         "is_asleep": false,
         "is_blind": false,
         "is_dead": false,
+        "is_invisible": false,
         "has_advantage": false,
         "has_disadvantage": false,
         "attack_modifier": 0,
         "defense_modifier": 0,
-        "magic_resistance_modifier": 0
+        "magic_resistance_modifier": 0,
+        "health": getMaxHealth(characterClass: localCharacter.getCharacterClass()),
+        "stamina": getMaxStamina(characterClass: localCharacter.getCharacterClass()),
+        "spell_points": getMaxSpellPoints(characterClass: localCharacter.getCharacterClass())
     ], merge: true)
 }
 
