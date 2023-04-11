@@ -294,8 +294,13 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
         }
     }
     
-    // TODO: change this array based on actual player data
     func createEquipArray() {
+        // Add Fists in case it's not there
+        if(!localCharacter.weaponsInInventory.contains(where: {weapon in weapon.name == "Fists"})) {
+            print("DEBUG: Didn't have Fists, added it")
+            localCharacter.addToInventory(weaponObject: Fists())
+        }
+        
         let weaponsArr = localCharacter.weaponsInInventory
         var quantities = localCharacter.inventoryQuantities
         for weapon in weaponsArr {
@@ -303,6 +308,12 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
                 equips.append(Equip(name: weapon.name, quantity: "x\(quantities[weapon.name]!)"))
                 quantities.removeValue(forKey: weapon.name)
             }
+        }
+        
+        // Add No Armor in case it's not there
+        if(!localCharacter.armorInInventory.contains(where: {armor in armor.name == "No Armor"})) {
+            print("DEBUG: Didn't have No Armor, added it")
+            localCharacter.addToInventory(armorObject: NoArmor())
         }
         
         let armorArr = localCharacter.armorInInventory
