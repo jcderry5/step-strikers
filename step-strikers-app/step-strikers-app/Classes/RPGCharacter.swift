@@ -174,6 +174,7 @@ class RPGCharacter {
         }
         
         self.weaponsInInventory += [weaponObject]
+        self.inventoryQuantities[weaponObject.name] = (self.inventoryQuantities[weaponObject.name] ?? 0)+1
     }
 
 
@@ -219,6 +220,7 @@ class RPGCharacter {
         }
 
         self.armorInInventory += [armorObject]
+        self.inventoryQuantities[armorObject.name] = (self.inventoryQuantities[armorObject.name] ?? 0)+1
     }
     
     // Returns true is self contains a weapon with that name
@@ -247,6 +249,7 @@ class RPGCharacter {
     func addToInventory(itemObject: Item) {
         if(itemObject.owner.characterName == self.characterName) {
             self.itemsInInventory += [itemObject]
+            self.inventoryQuantities[itemObject.name] = (self.inventoryQuantities[itemObject.name] ?? 0)+1
         } else {
             print("Cannot add \(itemObject.name) to the inventory of \(self.characterName). It is owned by \(itemObject.owner)")
         }
@@ -433,7 +436,6 @@ func getMaxSpellPoints(characterClass: String) -> Int {
         return maxSpellPointsPerClass[2].maxSpellPoints
     case maxSpellPointsPerClass[3].characterClass:
         return maxSpellPointsPerClass[3].maxSpellPoints
-
     default:
         print("Asking for the max health of a class that doesn't exist")
         return 30

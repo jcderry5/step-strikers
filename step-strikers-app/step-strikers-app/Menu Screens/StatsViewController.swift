@@ -52,7 +52,8 @@ class StatsViewController: UIViewController {
         let characterClass = localCharacter.getCharacterClass()
         
         // Health stats
-        var currHealth = localCharacter.currHealth
+
+        let currHealth = localCharacter.currHealth
         let maxHealth = getMaxHealth(characterClass: localCharacter.getCharacterClass())
         _ = createImage(x: 25, y: 251, w: 75, h: 75, name: "health")
         _ = createLabel(x: 116, y: 251, w: 150, h: 65, font: "munro", size: 33, text: "\(currHealth)/\(maxHealth)", align: .left)
