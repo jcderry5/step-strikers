@@ -53,6 +53,7 @@ class BattleRollViewController: UIViewController, UITableViewDataSource, UITable
         statsDisplay.register(StatsHeaderTableViewCell.self, forCellReuseIdentifier: statsHeaderID)
         statsDisplay.backgroundColor = UIColor.clear
         statsDisplay.delegate = self
+        statsDisplay.isScrollEnabled = false
         // cannot press on a row
         statsDisplay.allowsSelection = false
         // get rid of grey separator line in between rows
