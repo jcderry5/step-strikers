@@ -226,7 +226,7 @@ class StatsViewController: UIViewController {
                         let boostMod = steps / self.boostTotal + 1
                         trackBoost = self.boostTotal * boostMod - steps
                         
-                        self.stepsLabel.text = "\(Int(steps)) taken today"
+                        self.stepsLabel.text = "\(Int(steps)) steps taken"
                         
                         if localCharacter.currMilestone <= 12000 {
                             self.boostLabel.text = "\(Int(trackBoost)) steps until drop"
