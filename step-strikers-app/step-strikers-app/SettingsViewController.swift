@@ -263,6 +263,8 @@ class SettingsViewController: UIViewController {
                 print("vibration switch turned on")
             } else if sender == notificationsSwitch {
                 print("notifications switch turned on")
+                // FYI: Notification settings are not stored on Firebase
+                localCharacter.notifications = true
             } else {
                 print("Whoops, this shouldn't happen")
             }
@@ -282,6 +284,8 @@ class SettingsViewController: UIViewController {
                 print("vibration switch turned off")
             } else if sender == notificationsSwitch {
                 print("notifications switch turned off")
+                // FYI: Notification settings are not stored on Firebase
+                localCharacter.notifications = false
             } else {
                 print("Whoops, this shouldn't happen")
             }

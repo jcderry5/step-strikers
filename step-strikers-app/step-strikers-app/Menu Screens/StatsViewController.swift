@@ -181,7 +181,7 @@ class StatsViewController: UIViewController {
                         HealthKitViewController().getTodaysSteps() { sum in
                             steps = Int(sum)
                             let milestone = localCharacter.currMilestone!
-                            if milestone <= 12000 && steps >= milestone {
+                            if milestone <= 12000 && steps >= milestone && localCharacter.notifications {
                                 // Send a notification
                                 let content = UNMutableNotificationContent()
                                 content.title = "You found a new item!"

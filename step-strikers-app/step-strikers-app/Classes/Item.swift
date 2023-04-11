@@ -157,7 +157,7 @@ func milestoneItemDrop() -> String {
     case 4:
         tempString = tierFourItems[Int.random(in: 0..<tierFourItems.count)]
     default:
-        return ""
+        print("Error: Tier \(tier) not found")
     }
 
     // Create the new item and add it to the user's inventory
