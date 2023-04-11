@@ -141,7 +141,7 @@ func randomWinnerItemDrop(newOwner: RPGCharacter) -> [String] {
     return [newWeapon.name, newArmor.name, newItem.name]
 }
 
-func milestoneItemDrop() {
+func milestoneItemDrop() -> String {
     // Calculate the item tier
     let tier = min(localCharacter.currMilestone / 3000, 4)
     
@@ -167,6 +167,8 @@ func milestoneItemDrop() {
     
     // Add the item to Firebase
     Firestore.firestore().collection("players").document(localCharacter.userName).updateData(["item_inventory": FieldValue.arrayUnion([newItem.name])])
+    
+    return tempString
 }
 
 protocol Item {

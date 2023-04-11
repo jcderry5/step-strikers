@@ -226,14 +226,14 @@ class StatsViewController: UIViewController {
                         trackBoost = self.boostTotal * boostMod - steps
                         
                         self.stepsLabel.text = "\(Int(steps)) taken today"
-                        self.boostLabel.text = "\(Int(trackBoost)) steps until boost"
+                        self.boostLabel.text = "\(Int(trackBoost)) steps until drop"
                         
                         if steps >= localCharacter.currMilestone {
                             // Create popup notifying in-game users
+                            let itemName = milestoneItemDrop()
                             DispatchQueue.main.async {
-                                self.createNotification()
+                                self.createNotification(itemName: itemName)
                             }
-                            milestoneItemDrop()
                             localCharacter.currMilestone += 3000
                         }
                     }

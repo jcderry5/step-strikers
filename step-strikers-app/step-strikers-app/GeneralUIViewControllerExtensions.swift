@@ -81,7 +81,7 @@ extension UIViewController {
         return imageView
     }
     
-    func createNotification() {
+    func createNotification(itemName:String) {
         let notificationView = UIView(frame: CGRect(x:8,y:27,width:359,height:90))
         let background = UIImageView(frame: notificationView.frame)
         background.clipsToBounds = true
@@ -95,7 +95,7 @@ extension UIViewController {
         label.font = UIFont(name:"munro", size:24)
         notificationView.addSubview(label)
         let symbol = UIImageView(frame: CGRect(x:25, y:46, width:60, height:54))
-        symbol.image = UIImage(named:"Notification Icon")
+        symbol.image = UIImage(named:itemName)
         notificationView.addSubview(symbol)
         
         // Pressing the banner will redirect the user to the inventory screen
