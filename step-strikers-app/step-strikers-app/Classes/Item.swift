@@ -15,6 +15,10 @@ let smallAmountOfModification: Int = 3
 let moderateAmountOfModification: Int = 5
 let largeAmountOfModification: Int = 7
 let allItems: [String] = ["Potion of Healing", "Elixir of Magic", "Energy Pill", "Antidote", "Awakening", "Potion of Greater Healing", "Elixir of Greater Magic", "Energy Powder", "Resurrection Stone", "Four Leaf Clover", "Leather Armor Pad", "Feather of Vigor", "Scroll of Resistance", "Potion of Superior Healing", "Elixir of Superior Magic", "Energy Root", "Revival Crystal", "Five-Leaf Clover", "Metal Armor Pad", "Vial of Vigor", "Scroll of Greater Resistance", "Potion of Vitality", "Elixir of Sorcery", "Energy Sap", "Miracle of Life", "Seven-leaf Clover", "Heart of Iron"]
+let tierOneItems: [String] = ["Potion of Healing", "Elixir of Magic", "Energy Pill", "Antidote", "Awakening"]
+let tierTwoItems: [String] = ["Potion of Greater Healing", "Elixir of Greater Magic", "Energy Powder", "Resurrection Stone", "Four Leaf Clover", "Leather Armor Pad", "Feather of Vigor", "Scroll of Resistance"]
+let tierThreeItems: [String] = ["Potion of Superior Healing", "Elixir of Superior Magic", "Energy Root", "Revival Crystal", "Five-Leaf Clover", "Metal Armor Pad", "Vial of Vigor", "Scroll of Greater Resistance"]
+let tierFourItems: [String] = ["Potion of Vitality", "Elixir of Sorcery", "Energy Sap", "Miracle of Life", "Seven-leaf Clover", "Heart of Iron"]
 
 func rebuildItem(itemName: String, owner: RPGCharacter) -> Item {
     switch itemName {
