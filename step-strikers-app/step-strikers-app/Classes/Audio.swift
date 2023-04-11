@@ -15,6 +15,9 @@ var soundEffect: AVAudioPlayer!
 let nonCombatBattleMusicFile: String = "Woodland Fantasy"
 let partyMenuMusicFile: String = "Haply"
 let battleMusicFile: String = "Brirfing_theme"
+let registrationMusicFile: String = "Tavern"
+let victoryBackgroundMusic: String = "Victory"
+let defeatBackgroundMusic: String = "defeat"
 // Sound Effect Files
 let menuSelectEffect: String = "MenuSelect"
 let turnStartedEffect: String = "TurnStarted"
@@ -65,5 +68,6 @@ func playSoundEffect(fileName: String){
 
 func changeVolume(newVolumeLevel: Float) {
     backgroundMusic.setVolume(newVolumeLevel, fadeDuration: 1)
+    soundEffect.setVolume(newVolumeLevel, fadeDuration: 1)
     volumeLevel = newVolumeLevel
 }

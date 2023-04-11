@@ -19,9 +19,9 @@ class BattleResultsVictoryViewController: UIViewController {
         let loot = randomWinnerItemDrop(newOwner: localCharacter)
         
         assignBackground()
-
+        playBackgroundAudio(fileName: victoryBackgroundMusic)
         // Do any additional setup after loading the view.
-        // victory Title
+        // Victory Title
         let victory = createLabel(x: 50, y: 50, w: 300, h: 200, font: "iso8", size: 55, text: "VICTORY", align: .center)
         
         // draw victory
