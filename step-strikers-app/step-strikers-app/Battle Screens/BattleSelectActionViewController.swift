@@ -120,6 +120,7 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         statsDisplay = UITableView(frame: CGRect(x: self.view.safeAreaInsets.left+40, y: 140, width: 300, height: 300))
         statsDisplay.translatesAutoresizingMaskIntoConstraints = false
         statsDisplay.dataSource = self
+        statsDisplay.isScrollEnabled = false
         // register the table since it was not created with the storyboard
         // two different types of custom cells hence
         // need to register both types
