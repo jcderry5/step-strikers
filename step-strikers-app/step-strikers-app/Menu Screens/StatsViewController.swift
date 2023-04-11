@@ -53,7 +53,7 @@ class StatsViewController: UIViewController {
         
         // Health stats
         let currHealth = localCharacter.currHealth
-        let maxHealth = localCharacter.maxHealth
+        let maxHealth = getMaxHealth(characterClass: localCharacter.getCharacterClass())
         _ = createImage(x: 25, y: 251, w: 75, h: 75, name: "health")
         _ = createLabel(x: 116, y: 251, w: 150, h: 65, font: "munro", size: 33, text: "\(currHealth)/\(maxHealth)", align: .left)
         
@@ -69,7 +69,7 @@ class StatsViewController: UIViewController {
         
         // Stamina stats
         let currStamina = localCharacter.currStamina
-        let maxStamina = localCharacter.maxStamina
+        let maxStamina = getMaxStamina(characterClass: localCharacter.getCharacterClass())
         _ = createImage(x: 45, y: 411, w: 45, h: 65, name: "lightningbolt")
         _ = createLabel(x: 116, y: 411, w: 150, h: 65, font: "munro", size: 33, text: "\(localCharacter.currStamina)/\(localCharacter.maxStamina)", align: .left)
         
