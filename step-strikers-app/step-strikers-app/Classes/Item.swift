@@ -141,6 +141,37 @@ func randomWinnerItemDrop(newOwner: RPGCharacter) -> [String] {
     return [newWeapon.name, newArmor.name, newItem.name]
 }
 
+func milestoneItemDrop() {
+    // Calculate the item tier
+    let tier = min(localCharacter.currMilestone / 3000, 4)
+    print("Awarding a tier \(tier) item...")
+    
+    // Randomly select a new item
+    var tempString: String!
+    switch tier {
+    case 1:
+        tempString = tierOneItems[Int.random(in: 0..<tierOneItems.count)]
+    case 2:
+        tempString = tierTwoItems[Int.random(in: 0..<tierTwoItems.count)]
+    case 3:
+        tempString = tierThreeItems[Int.random(in: 0..<tierThreeItems.count)]
+    case 4:
+        tempString = tierFourItems[Int.random(in: 0..<tierFourItems.count)]
+    default:
+        print("Error: Tier \(tier) not found")
+    }
+
+    // Create the new item and add it to the user's inventory
+    print("Your new item is: \(tempString!)")
+    let newItem = rebuildItem(itemName: tempString, owner: localCharacter)
+    localCharacter.addToInventory(itemObject: newItem)
+    
+    // Add the item to Firebase
+    Firestore.firestore().collection("players").document(localCharacter.userName).updateData(["item_inventory": FieldValue.arrayUnion([newItem.name])])
+    
+    print("Added to Firebase!")
+}
+
 protocol Item {
     var name: String { get }
     var owner: RPGCharacter { get set }

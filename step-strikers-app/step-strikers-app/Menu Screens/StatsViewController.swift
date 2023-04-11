@@ -191,6 +191,7 @@ class StatsViewController: UIViewController {
                                 
                                 UNUserNotificationCenter.current().add(request)
                                 
+                                milestoneItemDrop()
                                 localCharacter.currMilestone += 3000
                             }
                         }
@@ -232,6 +233,7 @@ class StatsViewController: UIViewController {
                             DispatchQueue.main.async {
                                 self.createNotification()
                             }
+                            milestoneItemDrop()
                             localCharacter.currMilestone += 3000
                         }
                     }
