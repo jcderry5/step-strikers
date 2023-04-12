@@ -341,10 +341,10 @@
 				64CD57F329AFBD69002F4F5A /* BattleRollViewController.swift */,
 				64CD57F429AFBD69002F4F5A /* BattleIdleViewController.swift */,
 				64CD57F529AFBD69002F4F5A /* BattleSelectEquipViewController.swift */,
-				64CD57F629AFBD69002F4F5A /* TableViewCells */,
 				64CD57FD29AFBD69002F4F5A /* BattleSelectActionViewController.swift */,
 				64CD57FE29AFBD69002F4F5A /* ExtendUIViewController.swift */,
 				64CD57FF29AFBD69002F4F5A /* BattleSelectItemViewController.swift */,
+				64CD57F629AFBD69002F4F5A /* TableViewCells */,
 			);
 			path = "Battle Screens";
 			sourceTree = "<group>";

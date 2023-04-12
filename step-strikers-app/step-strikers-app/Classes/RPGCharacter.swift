@@ -444,6 +444,22 @@ func getMaxSpellPoints(characterClass: String) -> Int {
     }
 }
 
+func getCurrSpellPoints(characterClass: String) -> Int {
+    switch characterClass {
+    case "Fighter":
+        return 0
+    case "Rogue":
+        return 0
+    case "Bard":
+        return (localCharacter as! Caster).currSpellPoints
+    case "Wizard":
+        return (localCharacter as! Caster).currSpellPoints
+    default:
+        print("DEBUG: trying to get spell points of class that doesn't exist")
+        return 0
+    }
+}
+
 func dataTypesToWrite() -> NSSet{
     let stepsCount = HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.stepCount)
 

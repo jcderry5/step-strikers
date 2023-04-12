@@ -304,6 +304,7 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
                 let data = document2.data()
                 enemiesList[i].health = data!["health"] as! Int
                 enemiesList[i].stamina = data!["stamina"] as! Int
+                enemiesList[i].spellPoints = data!["spell_points"] as! Int
                 enemiesList[i].isBlind = data!["is_blind"] as! Bool
                 enemiesList[i].isDead = data!["is_dead"] as! Bool
                 enemiesList[i].isSleep = data!["is_asleep"] as! Bool

@@ -109,6 +109,7 @@ extension UIViewController {
                     let character_class = data!["class"] as! String
                     let health = data!["health"] as! Int
                     let stamina = data!["stamina"] as! Int
+                    let spellPoints = data!["spell_points"] as! Int
                     let armor = data!["current_armor"] as! String
                     let defenseModifier = data!["defense_modifier"] as! Int
                     let armorInventory = data!["armor_inventory"] as! [String]
@@ -135,7 +136,7 @@ extension UIViewController {
                     player1Image = UIImageView()
                     player1Image!.backgroundColor = .clear
                     
-                    enemiesList.append(EnemyData(userName: userName, name: name, character_class: character_class, health: health, stamina: stamina, isBlind: isBlind, isInvisible: isInvisible, imageView: player1Image!, armor: currArmorToStore, defenseModifier: defenseModifier, armorInInventory: armorInventoryToStore, isDead: isDead, isSleep: isSleep, magicResistanceModifier: magicResistanceModifier, currWeapon: currWeaponToStore, weaponInventory: weaponInventoryToStore, hasAdvantage: hasAdvantage, hasDisadvantage: hasDisadvantage))
+                    enemiesList.append(EnemyData(userName: userName, name: name, character_class: character_class, health: health, stamina: stamina, spellPoints: spellPoints, isBlind: isBlind, isInvisible: isInvisible, imageView: player1Image!, armor: currArmorToStore, defenseModifier: defenseModifier, armorInInventory: armorInventoryToStore, isDead: isDead, isSleep: isSleep, magicResistanceModifier: magicResistanceModifier, currWeapon: currWeaponToStore, weaponInventory: weaponInventoryToStore, hasAdvantage: hasAdvantage, hasDisadvantage: hasDisadvantage))
                     
                     count = count + 1
                     }
@@ -653,6 +654,7 @@ extension UIViewController {
         currTarget.character_class = enemiesList[enemyIndex].character_class
         currTarget.health = enemiesList[enemyIndex].health
         currTarget.currStamina = enemiesList[enemyIndex].stamina
+        currTarget.spellPoints = enemiesList[enemyIndex].spellPoints
         currTarget.armor = enemiesList[enemyIndex].armor
         currTarget.modifiedArmorClass = calculateModifiedArmorClass()
         currTarget.defenseModifier = enemiesList[enemyIndex].defenseModifier
