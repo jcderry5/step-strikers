@@ -58,7 +58,7 @@ class SettingsViewController: UIViewController {
         // notifications switch
         var notificationsLabel = createLabel(x: 50, y: 490, w: 200, h: 50, font: "munro", size: 25, text: "Notifications:", align: .left)
         self.view.addSubview(notificationsLabel)
-        notificationsSwitch = createToggleButton(x: 300, y: 500, width: 50, height: 50, state: false)
+        notificationsSwitch = createToggleButton(x: 300, y: 500, width: 50, height: 50, state: localCharacter.notifications)
         
         // create the back button to go to battle meny again
         let backButton = UIButton()
@@ -98,7 +98,6 @@ class SettingsViewController: UIViewController {
         self.notificationCenter.removeObserver(self)
     }
     
-
     func createVolumeSlider() -> UISlider {
         var volume = UISlider(frame: CGRect(x: 145, y: 267, width: 200, height: 20))
         volume.backgroundColor = UIColor(red: 0.96, green: 0.80, blue: 0.61, alpha: 1.00)
@@ -278,12 +277,13 @@ class SettingsViewController: UIViewController {
                 let appDelegate = UIApplication.shared.windows.first
                 appDelegate?.overrideUserInterfaceStyle = .dark
                 localCharacter.darkMode = true
-                self.background?.image = UIImage(named: "Background-DarkMode")
-                // TODO: Modify darkmode value in Firebase
+                self.background?.image = UIImage(named: "Background-darkmode")
             } else if sender == vibrationSwitch {
                 print("vibration switch turned on")
             } else if sender == notificationsSwitch {
                 print("notifications switch turned on")
+                // FYI: Notification settings are not stored on Firebase
+                localCharacter.notifications = true
             } else {
                 print("Whoops, this shouldn't happen")
             }
@@ -293,18 +293,18 @@ class SettingsViewController: UIViewController {
                 print("blood switch turned off")
                 localCharacter.blood = false
                 bloodSwitch.setOn(false, animated: true)
-                // TODO: Modify blood in Firebase
             } else if sender == darkModeSwitch {
                 print("dark mode switch turned off")
                 let appDelegate = UIApplication.shared.windows.first
                 appDelegate?.overrideUserInterfaceStyle = .light
                 localCharacter.darkMode = false
                 self.background?.image = UIImage(named: "Background")
-                // TODO: Modify darkmode value in Firebase
             } else if sender == vibrationSwitch {
                 print("vibration switch turned off")
             } else if sender == notificationsSwitch {
                 print("notifications switch turned off")
+                // FYI: Notification settings are not stored on Firebase
+                localCharacter.notifications = false
             } else {
                 print("Whoops, this shouldn't happen")
             }
