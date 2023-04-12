@@ -132,7 +132,7 @@ func endTurn(game: String, player: String) {
     Firestore.firestore().collection("players").document(localCharacter.userName).setData([
         "health": localCharacter.currHealth,
         "stamina": localCharacter.currStamina,
-        "spell_points": currTarget.spellPoints ?? 0,
+        "spell_points": localCharacter.currSpellPoints,
         "is_dead": localCharacter.isDead,
         "is_asleep": false,
         "is_blind": false,

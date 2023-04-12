@@ -40,6 +40,7 @@ class RPGCharacter {
     var currHealth: Int
     var maxStamina: Int
     var currStamina: Int
+    var currSpellPoints: Int
     
     // Dead, Asleep, Blind, Invisible
     var isDead: Bool
@@ -70,13 +71,14 @@ class RPGCharacter {
     var currMilestone:Int!
     
     init(characterName: String, userName: String, health: Int,
-         stamina: Int, dead: Bool, asleep: Bool, blind: Bool, invisible: Bool, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item], inventoryQuantities: [String:Int]){
+         stamina: Int, spellPoints:Int, dead: Bool, asleep: Bool, blind: Bool, invisible: Bool, currWeapon: Weapon, weaponsInInventory: [Weapon], currArmor: Armor, armorInInventory: [Armor], itemsInInventory: [Item], inventoryQuantities: [String:Int]){
         self.characterName = characterName
         self.userName = userName
         self.maxHealth = health
         self.currHealth = health
         self.maxStamina = stamina
         self.currStamina = stamina
+        self.currSpellPoints = spellPoints
         self.isDead = dead
         self.isAsleep = asleep
         self.isBlind = blind
