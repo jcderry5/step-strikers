@@ -265,8 +265,8 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
         // extra to account for header messing everything up
         stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: totalHealth))
         stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: totalHealth))
-        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: spellPoints, totalPoints: totalStamina))
-        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points: staminaPoints, totalPoints: totalSpellPoints))
+        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: spellPoints, totalPoints: totalSpellPoints))
+        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points: staminaPoints, totalPoints: totalStamina))
     }
     
     func updateLists() {
@@ -335,12 +335,13 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
                 staminaPoints.append(member.stamina)
                 totalHealth.append(getMaxHealth(characterClass: member.character_class))
                 totalStamina.append(getMaxStamina(characterClass: member.character_class))
+                print("DEBUG: my max stamina is \(getMaxStamina(characterClass: member.character_class))")
                 totalSpellPoints.append(getMaxSpellPoints(characterClass: member.character_class))
             }
             self.stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: totalHealth))
             self.stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: totalHealth))
-            self.stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: spellPoints, totalPoints: totalStamina))
-            self.stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points: staminaPoints, totalPoints: totalSpellPoints))
+            self.stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: spellPoints, totalPoints: totalSpellPoints))
+            self.stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points: staminaPoints, totalPoints: totalStamina))
             statsDisplay.reloadData()
             statsDisplay.endUpdates()
         }

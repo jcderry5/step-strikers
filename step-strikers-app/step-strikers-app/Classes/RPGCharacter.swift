@@ -304,8 +304,8 @@ class RPGCharacter {
     
     func increaseHealth(amtIncrease: Int){
         self.currHealth += amtIncrease
-        if(self.currHealth > self.maxHealth){
-            self.currHealth = self.maxHealth
+        if(self.currHealth > getMaxHealth(characterClass: localCharacter.getCharacterClass())){
+            self.currHealth = getMaxHealth(characterClass: localCharacter.getCharacterClass())
         }
     }
     
