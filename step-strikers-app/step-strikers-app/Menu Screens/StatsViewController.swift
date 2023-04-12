@@ -24,6 +24,11 @@ class StatsViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        // Track whenever app moves to the background
+        self.notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
+        self.notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        
         // TODO: Pull steps info from firebase and display it here
         getStepsData()
     }
@@ -115,10 +120,6 @@ class StatsViewController: UIViewController {
         let swipeLeft = UISwipeGestureRecognizer(target:self, action: #selector(swipeLeft))
         swipeLeft.direction = .left
         swipeView.addGestureRecognizer(swipeLeft)
-        
-        // Track whenever app moves to the background
-        self.notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
-        self.notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -166,7 +167,7 @@ class StatsViewController: UIViewController {
             UIApplication.shared.endBackgroundTask(bgTask)
         })
         
-        self.timer = Timer.scheduledTimer(withTimeInterval: 20, repeats: true, block: { _ in
+        self.timer = Timer.scheduledTimer(withTimeInterval: 15, repeats: true, block: { _ in
             let healthStore = HKHealthStore()
             if HKHealthStore.isHealthDataAvailable(){
                 let writeDataTypes = self.dataTypesToWrite()

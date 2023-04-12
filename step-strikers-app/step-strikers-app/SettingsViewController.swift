@@ -58,7 +58,7 @@ class SettingsViewController: UIViewController {
         // notifications switch
         var notificationsLabel = createLabel(x: 50, y: 490, w: 200, h: 50, font: "munro", size: 25, text: "Notifications:", align: .left)
         self.view.addSubview(notificationsLabel)
-        notificationsSwitch = createToggleButton(x: 300, y: 500, width: 50, height: 50, state: false)
+        notificationsSwitch = createToggleButton(x: 300, y: 500, width: 50, height: 50, state: localCharacter.notifications)
         
         // create the back button to go to battle meny again
         let backButton = UIButton()
