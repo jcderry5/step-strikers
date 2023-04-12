@@ -75,7 +75,7 @@ class RPGCharacter {
         self.userName = userName
         self.maxHealth = health
         self.currHealth = health
-        self.maxStamina = stamina
+        self.maxStamina = stamina // don't use this
         self.currStamina = stamina
         self.isDead = dead
         self.isAsleep = asleep
@@ -289,7 +289,9 @@ class RPGCharacter {
     func increaseStamina(amtIncrease: Int){
         self.currStamina += amtIncrease
         
-        self.currStamina = min(self.currStamina, self.maxStamina)
+        self.currStamina = min(self.currStamina, getMaxStamina(characterClass: localCharacter.getCharacterClass()))
+        
+        print("DEBUG: energy powder used, stamina is now \(localCharacter.currStamina)")
     }
 
     func decreaseHealth(amtDamage: Int){
