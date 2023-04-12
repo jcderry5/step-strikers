@@ -146,7 +146,7 @@ class SettingsViewController: UIViewController {
         confirmButton.setTitleColor(.brown, for:.normal)
         confirmButton.layer.borderWidth = 3.0
         confirmButton.layer.borderColor = UIColor.brown.cgColor
-        confirmButton.addTarget(self, action:#selector(confirmPressed), for:.touchUpInside)
+        confirmButton.addTarget(self, action:#selector(confirmDeletePressed), for:.touchUpInside)
         rect.addSubview(confirmButton)
         
         // x button
@@ -231,6 +231,25 @@ class SettingsViewController: UIViewController {
     @objc func confirmPressed(_ sender:UIButton!) {
         // save or delete things here!
         playSoundEffect(fileName: menuSelectEffect)
+        
+        // switch to registration screen
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "signupVC") as! RegistrationViewController
+
+        self.modalPresentationStyle = .fullScreen
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated:false)
+    }
+    
+    @objc func confirmDeletePressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
+        
+        // delete player document on firebase
+        Firestore.firestore().collection("players").document(localCharacter.userName).delete() { err in
+            if let err = err {
+                print("DEGUB: Error removing document: \(err)")
+            }
+        }
         
         // switch to registration screen
         let sb = UIStoryboard(name: "Main", bundle: nil)
