@@ -182,19 +182,20 @@ class StatsViewController: UIViewController {
                         HealthKitViewController().getTodaysSteps() { sum in
                             steps = Int(sum)
                             let milestone = localCharacter.currMilestone!
-                            if milestone <= 12000 && steps >= milestone && localCharacter.notifications {
-                                // Send a notification
-                                let content = UNMutableNotificationContent()
-                                content.title = "You found a new item!"
-                                content.sound = UNNotificationSound.default
-                                
-                                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-                                let request = UNNotificationRequest(identifier: "myNotification", content: content, trigger: trigger)
-                                
-                                UNUserNotificationCenter.current().add(request)
-                                
-                                _ = milestoneItemDrop()
-                                localCharacter.currMilestone += 3000
+                            if steps >= milestone && localCharacter.notifications {
+                                if milestoneItemDrop() != "" {
+                                    // Send a notification
+                                    let content = UNMutableNotificationContent()
+                                    content.title = "You found a new item!"
+                                    content.sound = UNNotificationSound.default
+                                    
+                                    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+                                    let request = UNNotificationRequest(identifier: "myNotification", content: content, trigger: trigger)
+                                    
+                                    UNUserNotificationCenter.current().add(request)
+                                    
+                                    localCharacter.currMilestone += 3000
+                                }
                             }
                         }
                     }
@@ -235,10 +236,12 @@ class StatsViewController: UIViewController {
                             if steps >= localCharacter.currMilestone {
                                 // Create popup notifying in-game users
                                 let itemName = milestoneItemDrop()
-                                DispatchQueue.main.async {
-                                    self.createNotification(itemName: itemName)
+                                if itemName != "" {
+                                    DispatchQueue.main.async {
+                                        self.createNotification(itemName: itemName)
+                                    }
+                                    localCharacter.currMilestone += 3000
                                 }
-                                localCharacter.currMilestone += 3000
                             }
                         } else {
                             self.boostLabel.text = "No drops remaining"
