@@ -41,6 +41,8 @@ struct EnemyData {
     var name:String
     var character_class:String
     var health:Int
+    var stamina:Int
+    var spellPoints:Int
     var isBlind:Bool
     var isInvisible:Bool
     var imageView:UIImageView

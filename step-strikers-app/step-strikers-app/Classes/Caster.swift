@@ -25,9 +25,12 @@ class Caster: RPGCharacter {
     
     func increaseSpellPoints(amtIncrease: Int){
         self.currSpellPoints += amtIncrease
+        let maxSpellPoints = getMaxSpellPoints(characterClass: localCharacter.getCharacterClass())
         if(self.currSpellPoints > maxSpellPoints){
             self.currSpellPoints = maxSpellPoints
         }
+
+        print("DEBUG: spell points is now \((localCharacter as! Caster).currSpellPoints)")
     }
     
     func decreaseSpellPoints(amtDecrease: Int){
