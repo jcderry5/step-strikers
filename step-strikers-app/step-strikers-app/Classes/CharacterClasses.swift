@@ -456,7 +456,7 @@ func equipDescription(equipName:String) -> String {
         return "deals 4 damage at the cost of 3 stamina"
     case "Darts":
         return "deals 5 damage at the cost of 4 stamina"
-    case "Cross-Bow":
+    case "Cross Bow":
         return "deals 8 damage at the cost of 5 stamina"
     case "Rapier":
         return "deals 8 damage at the cost of 5 stamina"
@@ -472,7 +472,7 @@ func equipDescription(equipName:String) -> String {
         return "deals 8 damage at the cost of 5 stamina"
     case "Leather":
         return "equips you with 11 AC"
-    case "Padded":
+    case "Padding":
         return "equips you with 11 AC"
     case "Studded Leather":
         return "equips you with 12 AC"
