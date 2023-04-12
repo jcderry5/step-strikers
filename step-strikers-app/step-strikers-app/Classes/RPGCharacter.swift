@@ -76,7 +76,7 @@ class RPGCharacter {
         self.userName = userName
         self.maxHealth = health
         self.currHealth = health
-        self.maxStamina = stamina
+        self.maxStamina = stamina // don't use this
         self.currStamina = stamina
         self.isDead = dead
         self.isAsleep = asleep
@@ -290,7 +290,9 @@ class RPGCharacter {
     func increaseStamina(amtIncrease: Int){
         self.currStamina += amtIncrease
         
-        self.currStamina = min(self.currStamina, self.maxStamina)
+        self.currStamina = min(self.currStamina, getMaxStamina(characterClass: localCharacter.getCharacterClass()))
+        
+        print("DEBUG: energy powder used, stamina is now \(localCharacter.currStamina)")
     }
 
     func decreaseHealth(amtDamage: Int){
@@ -303,8 +305,8 @@ class RPGCharacter {
     
     func increaseHealth(amtIncrease: Int){
         self.currHealth += amtIncrease
-        if(self.currHealth > self.maxHealth){
-            self.currHealth = self.maxHealth
+        if(self.currHealth > getMaxHealth(characterClass: localCharacter.getCharacterClass())){
+            self.currHealth = getMaxHealth(characterClass: localCharacter.getCharacterClass())
         }
     }
     
@@ -440,6 +442,22 @@ func getMaxSpellPoints(characterClass: String) -> Int {
     default:
         print("Asking for the max health of a class that doesn't exist")
         return 30
+    }
+}
+
+func getCurrSpellPoints(characterClass: String) -> Int {
+    switch characterClass {
+    case "Fighter":
+        return 0
+    case "Rogue":
+        return 0
+    case "Bard":
+        return (localCharacter as! Caster).currSpellPoints
+    case "Wizard":
+        return (localCharacter as! Caster).currSpellPoints
+    default:
+        print("DEBUG: trying to get spell points of class that doesn't exist")
+        return 0
     }
 }
 
