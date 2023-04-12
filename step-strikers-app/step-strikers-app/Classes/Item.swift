@@ -15,6 +15,10 @@ let smallAmountOfModification: Int = 3
 let moderateAmountOfModification: Int = 5
 let largeAmountOfModification: Int = 7
 let allItems: [String] = ["Potion of Healing", "Elixir of Magic", "Energy Pill", "Antidote", "Awakening", "Potion of Greater Healing", "Elixir of Greater Magic", "Energy Powder", "Resurrection Stone", "Four Leaf Clover", "Leather Armor Pad", "Feather of Vigor", "Scroll of Resistance", "Potion of Superior Healing", "Elixir of Superior Magic", "Energy Root", "Revival Crystal", "Five-Leaf Clover", "Metal Armor Pad", "Vial of Vigor", "Scroll of Greater Resistance", "Potion of Vitality", "Elixir of Sorcery", "Energy Sap", "Miracle of Life", "Seven-leaf Clover", "Heart of Iron"]
+let tierOneItems: [String] = ["Potion of Healing", "Elixir of Magic", "Energy Pill", "Antidote", "Awakening"]
+let tierTwoItems: [String] = ["Potion of Greater Healing", "Elixir of Greater Magic", "Energy Powder", "Resurrection Stone", "Four Leaf Clover", "Leather Armor Pad", "Feather of Vigor", "Scroll of Resistance"]
+let tierThreeItems: [String] = ["Potion of Superior Healing", "Elixir of Superior Magic", "Energy Root", "Revival Crystal", "Five-Leaf Clover", "Metal Armor Pad", "Vial of Vigor", "Scroll of Greater Resistance"]
+let tierFourItems: [String] = ["Potion of Vitality", "Elixir of Sorcery", "Energy Sap", "Miracle of Life", "Seven-leaf Clover", "Heart of Iron"]
 
 func rebuildItem(itemName: String, owner: RPGCharacter) -> Item {
     switch itemName {
@@ -134,6 +138,37 @@ func randomWinnerItemDrop(newOwner: RPGCharacter) -> [String] {
         "item_inventory": getItemStrings(items: localCharacter.itemsInInventory)], merge: true)
     
     return [newWeapon.name, newArmor.name, newItem.name]
+}
+
+func milestoneItemDrop() -> String {
+    // Calculate the item tier
+    let tier = localCharacter.currMilestone / 3000
+    
+    // Randomly select a new item
+    var tempString: String!
+    switch tier {
+    case 1:
+        tempString = tierOneItems[Int.random(in: 0..<tierOneItems.count)]
+    case 2:
+        tempString = tierTwoItems[Int.random(in: 0..<tierTwoItems.count)]
+    case 3:
+        tempString = tierThreeItems[Int.random(in: 0..<tierThreeItems.count)]
+    case 4:
+        tempString = tierFourItems[Int.random(in: 0..<tierFourItems.count)]
+    default:
+        print("Error: Tier \(tier) not found")
+        return ""
+    }
+
+    // Create the new item and add it to the user's inventory
+    let newItem = rebuildItem(itemName: tempString, owner: localCharacter)
+    localCharacter.addToInventory(itemObject: newItem)
+    localCharacter.inventoryQuantities[tempString] = (localCharacter.inventoryQuantities[tempString] ?? 0)+1
+    
+    // Add the item to Firebase
+    Firestore.firestore().collection("players").document(localCharacter.userName).updateData(["item_inventory": FieldValue.arrayUnion([newItem.name])])
+    
+    return tempString
 }
 
 protocol Item {

@@ -65,6 +65,7 @@ class RPGCharacter {
     // Settings Variables
     var darkMode = false
     var blood = true
+    var notifications = false
     
     // Current step milestone
     var currMilestone:Int!

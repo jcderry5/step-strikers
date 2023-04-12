@@ -24,6 +24,11 @@ class StatsViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        // Track whenever app moves to the background
+        self.notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
+        self.notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        
         // TODO: Pull steps info from firebase and display it here
         getStepsData()
     }
@@ -101,8 +106,8 @@ class StatsViewController: UIViewController {
         
         // Display steps info
         _ = createImage(x: 25, y: 618, w: 75, h: 75, name: "brown boots")
-        self.stepsLabel = self.createLabel(x: 130, y: 653, w: 253, h: 41, font: "munro", size: 28, text: "", align: .left)
-        self.boostLabel = self.createLabel(x: 130, y: 624, w: 253, h: 41, font: "munro", size: 28, text: "", align: .left)
+        self.stepsLabel = self.createLabel(x: 130, y: 624, w: 253, h: 41, font: "munro", size: 28, text: "", align: .left)
+        self.boostLabel = self.createLabel(x: 130, y: 653, w: 253, h: 41, font: "munro", size: 28, text: "", align: .left)
         
         // Swipe area
         _ = createImage(x: 140, y: 716, w: 112, h: 112, name: characterClass)
@@ -115,10 +120,6 @@ class StatsViewController: UIViewController {
         let swipeLeft = UISwipeGestureRecognizer(target:self, action: #selector(swipeLeft))
         swipeLeft.direction = .left
         swipeView.addGestureRecognizer(swipeLeft)
-        
-        // Track whenever app moves to the background
-        self.notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
-        self.notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -166,7 +167,7 @@ class StatsViewController: UIViewController {
             UIApplication.shared.endBackgroundTask(bgTask)
         })
         
-        self.timer = Timer.scheduledTimer(withTimeInterval: 20, repeats: true, block: { _ in
+        self.timer = Timer.scheduledTimer(withTimeInterval: 15, repeats: true, block: { _ in
             let healthStore = HKHealthStore()
             if HKHealthStore.isHealthDataAvailable(){
                 let writeDataTypes = self.dataTypesToWrite()
@@ -180,18 +181,21 @@ class StatsViewController: UIViewController {
                     DispatchQueue.main.async {
                         HealthKitViewController().getTodaysSteps() { sum in
                             steps = Int(sum)
-                            if steps >= localCharacter.currMilestone {
-                                // Send a notification
-                                let content = UNMutableNotificationContent()
-                                content.title = "You found a new item!"
-                                content.sound = UNNotificationSound.default
-                                
-                                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-                                let request = UNNotificationRequest(identifier: "myNotification", content: content, trigger: trigger)
-                                
-                                UNUserNotificationCenter.current().add(request)
-                                
-                                localCharacter.currMilestone += 3000
+                            let milestone = localCharacter.currMilestone!
+                            if steps >= milestone && localCharacter.notifications {
+                                if milestoneItemDrop() != "" {
+                                    // Send a notification
+                                    let content = UNMutableNotificationContent()
+                                    content.title = "You found a new item!"
+                                    content.sound = UNNotificationSound.default
+                                    
+                                    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+                                    let request = UNNotificationRequest(identifier: "myNotification", content: content, trigger: trigger)
+                                    
+                                    UNUserNotificationCenter.current().add(request)
+                                    
+                                    localCharacter.currMilestone += 3000
+                                }
                             }
                         }
                     }
@@ -224,15 +228,23 @@ class StatsViewController: UIViewController {
                         let boostMod = steps / self.boostTotal + 1
                         trackBoost = self.boostTotal * boostMod - steps
                         
-                        self.stepsLabel.text = "\(Int(steps)) taken today"
-                        self.boostLabel.text = "\(Int(trackBoost)) steps until boost"
+                        self.stepsLabel.text = "\(Int(steps)) steps taken"
                         
-                        if steps >= localCharacter.currMilestone {
-                            // Create popup notifying in-game users
-                            DispatchQueue.main.async {
-                                self.createNotification()
+                        if localCharacter.currMilestone <= 12000 {
+                            self.boostLabel.text = "\(Int(trackBoost)) steps until drop"
+                            
+                            if steps >= localCharacter.currMilestone {
+                                // Create popup notifying in-game users
+                                let itemName = milestoneItemDrop()
+                                if itemName != "" {
+                                    DispatchQueue.main.async {
+                                        self.createNotification(itemName: itemName)
+                                    }
+                                    localCharacter.currMilestone += 3000
+                                }
                             }
-                            localCharacter.currMilestone += 3000
+                        } else {
+                            self.boostLabel.text = "No drops remaining"
                         }
                     }
                 }
