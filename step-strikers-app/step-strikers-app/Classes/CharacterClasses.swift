@@ -407,7 +407,7 @@ func itemDescription(itemName:String) -> String {
         return "Restores a moderate amount of stamina"
     case "Resurrection Stone":
         return "Revives the target with small healing"
-    case "Four-leaf Clover":
+    case "Four Leaf Clover":
         return "+2 to attack roll"
     case "Leather Armor Pad":
         return "Increase defense by a small amount"
@@ -423,7 +423,7 @@ func itemDescription(itemName:String) -> String {
         return "Restores a large amount of stamina"
     case "Revival Crystal":
         return "Revives the target with moderate healing"
-    case "Five-leaf Clover":
+    case "Five-Leaf Clover":
         return "+4 to attack roll"
     case "Metal Armor Pad":
         return "Increase defense by a moderate amount"
@@ -456,7 +456,7 @@ func equipDescription(equipName:String) -> String {
         return "deals 4 damage at the cost of 3 stamina"
     case "Darts":
         return "deals 5 damage at the cost of 4 stamina"
-    case "Cross-Bow":
+    case "Cross Bow":
         return "deals 8 damage at the cost of 5 stamina"
     case "Rapier":
         return "deals 8 damage at the cost of 5 stamina"
@@ -472,7 +472,7 @@ func equipDescription(equipName:String) -> String {
         return "deals 8 damage at the cost of 5 stamina"
     case "Leather":
         return "equips you with 11 AC"
-    case "Padded":
+    case "Padding":
         return "equips you with 11 AC"
     case "Studded Leather":
         return "equips you with 12 AC"
