@@ -58,8 +58,11 @@ class PartyMenuHostViewController: UIViewController {
             }
         }
         
-        // leave button
+        // ready button
         let ready = createReadyButton()
+        
+        // leave button
+        let leave = createLeaveButton()
 
         // Track whenever app moves to the background
         self.notificationCenter.addObserver(self, selector: #selector(pauseMusic), name: UIApplication.willResignActiveNotification, object: nil)
@@ -109,28 +112,18 @@ class PartyMenuHostViewController: UIViewController {
         return readyButton
     }
     
-//    func createEjectButtons() -> [UIButton] {
-//        let ejectImage = UIImage(named: "Eject Button")
-//        // eject 1
-//        let eject1 = UIButton(frame: CGRect(x: 300, y: 405, width: 50, height: 50))
-//        eject1.setBackgroundImage(ejectImage, for: .normal)
-//        eject1.setTitle("", for: .normal)
-//        self.view.addSubview(eject1)
-//
-//        // eject 2
-//        let eject2 = UIButton(frame: CGRect(x: 300, y: 455, width: 50, height: 50))
-//        eject2.setBackgroundImage(ejectImage, for: .normal)
-//        eject2.setTitle("", for: .normal)
-//        self.view.addSubview(eject2)
-//
-//        // eject 3
-//        let eject3 = UIButton(frame: CGRect(x: 300, y: 505, width: 50, height: 50))
-//        eject3.setBackgroundImage(ejectImage, for: .normal)
-//        eject3.setTitle("", for: .normal)
-//        self.view.addSubview(eject3)
-//
-//        return [eject1, eject2, eject3]
-//    }
+    func createLeaveButton() -> UIButton {
+        let image = UIImage(named: "Big choice Button")
+        let leaveButton = UIButton(frame: CGRect(x: 125, y: 650, width: 150, height: 75))
+        leaveButton.setBackgroundImage(image, for: .normal)
+        leaveButton.setTitle("LEAVE !", for: .normal)
+        leaveButton.setTitleColor(.brown, for: .normal)
+        leaveButton.titleLabel?.font = UIFont(name: "munro", size: 30)
+        leaveButton.titleLabel?.textAlignment = .center
+        self.view.addSubview(leaveButton)
+        leaveButton.addTarget(self, action:#selector(leavePressed), for:.touchUpInside)
+        return leaveButton
+    }
     
     @objc func readyPressed(_ sender: Any) {
         playSoundEffect(fileName: menuSelectEffect)
@@ -140,6 +133,23 @@ class PartyMenuHostViewController: UIViewController {
         let vc = sb.instantiateViewController(withIdentifier: "TeamMatchViewController") as! TeamMatchViewController
         vc.partyCode = self.partyCode
         vc.numPlayers = self.numPlayers
+        self.modalPresentationStyle = .fullScreen
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false)
+    }
+    
+    @objc func leavePressed(_ sender: Any) {
+        playSoundEffect(fileName: menuSelectEffect)
+        
+        // TODO: create a popup warning them that the team will be disbanded and copy the below code to that popup's confirm button
+        // destroy and leave the team
+        Firestore.firestore().collection("teams").document(self.partyCode).updateData([
+            "players": FieldValue.arrayRemove([localCharacter.userName]),
+            "valid": false])
+
+        // go back to battle menu screen
+        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "BattleMenuViewController") as! BattleMenuViewController
         self.modalPresentationStyle = .fullScreen
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: false)

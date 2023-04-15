@@ -70,11 +70,25 @@ class PartyMenuNonHostViewController: UIViewController {
                         return
                     }
 
+                    // you've been matched
                     if document.get("game_id") != nil {
                         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                         let vc = sb.instantiateViewController(withIdentifier: "TeamMatchViewController") as! TeamMatchViewController
 
                         vc.partyCode = self.partyCode
+                        self.modalPresentationStyle = .fullScreen
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: false)
+                    }
+                    
+                    // the team has been disbanded
+                    if !(document.get("valid") as! Bool) {
+                        // TODO: display pop up saying the host has disbanded the team
+                        // TODO: copy this transition to that popup's okay button
+                        
+                        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                        let vc = sb.instantiateViewController(withIdentifier: "BattleMenuViewController") as! BattleMenuViewController
+
                         self.modalPresentationStyle = .fullScreen
                         vc.modalPresentationStyle = .fullScreen
                         self.present(vc, animated: false)
