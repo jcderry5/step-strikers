@@ -337,21 +337,30 @@ func adjustWeaponCondition(ownerWeaponsInventory: inout [Weapon], currWeaponPoin
     let useCounter: Int = currWeapon.useCount
     
     // Condition of Fists is forever
-        // checks if conditionBoundary contains the useCount, if so change condition
-    if !(currWeapon is Fists) {
-        if conditionBoundary.contains(where: {$0.boundary == useCounter}) {
-            // changingIndex holds the index in conditionBoundary with their previous condition of the weapon
-            let targetIndex = (conditionBoundary.firstIndex(where: {$0.boundary == useCounter}) ?? 0)
-            
-            // new Condition is the new condition of weaponUsed
-            let oldCondition: String = conditionBoundary[(targetIndex)].condition
-            
-            // Set the condition Int in weaponUsed to new Int associated with the newCondition
-            currWeapon.condition = (conditionIntEquivalent[conditionIntEquivalent.firstIndex(where: {$0.condition == oldCondition})!].intEquivalent) - 1
-        } else if (useCounter >= 20){
-            // Take action when weapon is deteriorated and return your fists
-            return destroyWeapon(ownerWeaponsInventory: &ownerWeaponsInventory, weaponToDestroy: currWeapon)
+    guard !(currWeapon is Fists) else {
+        // Make sure Fists do not reach triple-digits
+        if currWeapon.useCount > 95 {
+            removeWeaponFromInventory(weaponToRemove: currWeapon, weaponInventory: &localCharacter.weaponsInInventory)
+            let newFists: Weapon = Fists(useCount: 0)
+            localCharacter.addToInventory(weaponObject: newFists)
+            return newFists
         }
+        return currWeapon
+    }
+    
+    // checks if conditionBoundary contains the useCount, if so change condition
+    if conditionBoundary.contains(where: {$0.boundary == useCounter}) {
+        // changingIndex holds the index in conditionBoundary with their previous condition of the weapon
+        let targetIndex = (conditionBoundary.firstIndex(where: {$0.boundary == useCounter}) ?? 0)
+        
+        // new Condition is the new condition of weaponUsed
+        let oldCondition: String = conditionBoundary[(targetIndex)].condition
+        
+        // Set the condition Int in weaponUsed to new Int associated with the newCondition
+        currWeapon.condition = (conditionIntEquivalent[conditionIntEquivalent.firstIndex(where: {$0.condition == oldCondition})!].intEquivalent) - 1
+    } else if (useCounter >= 20){
+        // Take action when weapon is deteriorated and return your fists
+        return destroyWeapon(ownerWeaponsInventory: &ownerWeaponsInventory, weaponToDestroy: currWeapon)
     }
     return currWeapon
 }

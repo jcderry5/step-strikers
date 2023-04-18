@@ -213,23 +213,34 @@ func calculateModifiedArmorClass() -> Int {
 func adjustArmorCondition(armorUsed: inout Armor) -> Armor{
     armorUsed.useCount += 1
     let useCounter: Int = armorUsed.useCount
-    // Condition of Fists is forever
-        // checks if conditionBoundary contains the useCount, if so change condition
-    if !(armorUsed is NoArmor) {
-        if conditionBoundary.contains(where: {$0.boundary == useCounter}) {
-            // changingIndex holds the index in conditionBoundary with their previous condition of the weapon
-            let targetIndex = conditionBoundary.firstIndex(where: {$0.boundary == useCounter})
-            
-            // new Condition is the new condition of weaponUsed
-            let oldCondition: String = conditionBoundary[(targetIndex)!].condition
-            
-            // Set the condition Int in weaponUsed to new Int associated with the newCondition
-            armorUsed.condition = (conditionIntEquivalent[conditionIntEquivalent.firstIndex(where: {$0.condition == oldCondition})!].intEquivalent) - 1
-            
-        } else if (useCounter >= 20){
-            // Take action when weapon is deteriorated
-            return destroyArmor(armorToDestroy: armorUsed)
+    
+    // Condition of No Armor is forever
+    guard !(armorUsed is NoArmor) else {
+        if armorUsed.useCount > 95 {
+            localCharacter.armorInInventory.removeAll { armor in
+                armor.name == armorUsed.name && armorUsed.useCount > 95
+            }
+            let newArmor: Armor = NoArmor(useCount: 0)
+            localCharacter.addToInventory(armorObject: newArmor)
+            return newArmor
         }
+        return armorUsed
+    }
+    
+    // checks if conditionBoundary contains the useCount, if so change condition
+    if conditionBoundary.contains(where: {$0.boundary == useCounter}) {
+        // changingIndex holds the index in conditionBoundary with their previous condition of the weapon
+        let targetIndex = conditionBoundary.firstIndex(where: {$0.boundary == useCounter})
+        
+        // new Condition is the new condition of weaponUsed
+        let oldCondition: String = conditionBoundary[(targetIndex)!].condition
+        
+        // Set the condition Int in weaponUsed to new Int associated with the newCondition
+        armorUsed.condition = (conditionIntEquivalent[conditionIntEquivalent.firstIndex(where: {$0.condition == oldCondition})!].intEquivalent) - 1
+        
+    } else if (useCounter >= 20){
+        // Take action when weapon is deteriorated
+        return destroyArmor(armorToDestroy: armorUsed)
     }
     return armorUsed
 }
