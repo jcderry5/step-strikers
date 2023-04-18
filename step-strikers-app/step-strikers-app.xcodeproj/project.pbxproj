@@ -24,6 +24,10 @@
 		646DD2BE29A6B6FC001FB2BB /* Weapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646DD2BD29A6B6FC001FB2BB /* Weapon.swift */; };
 		646DD2C029A6B70A001FB2BB /* Armor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646DD2BF29A6B70A001FB2BB /* Armor.swift */; };
 		646DD2C229A6B721001FB2BB /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646DD2C129A6B721001FB2BB /* Item.swift */; };
+		6478FD6A29EF227E00C10ECF /* FistWeapon.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6478FD6929EF227E00C10ECF /* FistWeapon.mp3 */; };
+		6478FD6C29EF229800C10ECF /* MetalWeapon.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6478FD6B29EF229800C10ECF /* MetalWeapon.mp3 */; };
+		6478FD6E29EF22A600C10ECF /* sip.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6478FD6D29EF22A600C10ECF /* sip.mp3 */; };
+		6478FD7029EF22B200C10ECF /* slashing.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6478FD6F29EF22B200C10ECF /* slashing.mp3 */; };
 		647CECA229E5BD750053518C /* Tavern.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 647CECA129E5BD750053518C /* Tavern.mp3 */; };
 		647CECA429E5BF2B0053518C /* Victory.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 647CECA329E5BF2B0053518C /* Victory.mp3 */; };
 		647CECA629E5BF430053518C /* defeat.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 647CECA529E5BF430053518C /* defeat.mp3 */; };
@@ -117,6 +121,10 @@
 		646DD2BD29A6B6FC001FB2BB /* Weapon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weapon.swift; sourceTree = "<group>"; };
 		646DD2BF29A6B70A001FB2BB /* Armor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Armor.swift; sourceTree = "<group>"; };
 		646DD2C129A6B721001FB2BB /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		6478FD6929EF227E00C10ECF /* FistWeapon.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = FistWeapon.mp3; sourceTree = "<group>"; };
+		6478FD6B29EF229800C10ECF /* MetalWeapon.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = MetalWeapon.mp3; sourceTree = "<group>"; };
+		6478FD6D29EF22A600C10ECF /* sip.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sip.mp3; sourceTree = "<group>"; };
+		6478FD6F29EF22B200C10ECF /* slashing.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = slashing.mp3; sourceTree = "<group>"; };
 		647CECA129E5BD750053518C /* Tavern.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Tavern.mp3; sourceTree = "<group>"; };
 		647CECA329E5BF2B0053518C /* Victory.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Victory.mp3; sourceTree = "<group>"; };
 		647CECA529E5BF430053518C /* defeat.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = defeat.mp3; sourceTree = "<group>"; };
@@ -312,11 +320,15 @@
 				649F971729DE244400BCB8E8 /* Brirfing_theme.mp3 */,
 				649F971B29DE244400BCB8E8 /* CastSpell.mp3 */,
 				647CECA529E5BF430053518C /* defeat.mp3 */,
+				6478FD6929EF227E00C10ECF /* FistWeapon.mp3 */,
 				649F971429DE244400BCB8E8 /* Haply.mp3 */,
 				649F971A29DE244400BCB8E8 /* MenuSelect.mp3 */,
+				6478FD6B29EF229800C10ECF /* MetalWeapon.mp3 */,
 				649F971329DE244400BCB8E8 /* Nat1.mp3 */,
 				649F971529DE244400BCB8E8 /* Nat20.mp3 */,
 				649F971929DE244400BCB8E8 /* RollDieAudio.mp3 */,
+				6478FD6D29EF22A600C10ECF /* sip.mp3 */,
+				6478FD6F29EF22B200C10ECF /* slashing.mp3 */,
 				647CECA129E5BD750053518C /* Tavern.mp3 */,
 				649F971629DE244400BCB8E8 /* TurnStarted.mp3 */,
 				649F971829DE244400BCB8E8 /* Woodland Fantasy.mp3 */,
@@ -483,13 +495,17 @@
 				649F972029DE244500BCB8E8 /* Brirfing_theme.mp3 in Resources */,
 				643651142991AA280017AA0E /* LaunchScreen.storyboard in Resources */,
 				649F971E29DE244500BCB8E8 /* Nat20.mp3 in Resources */,
+				6478FD7029EF22B200C10ECF /* slashing.mp3 in Resources */,
 				647CECA429E5BF2B0053518C /* Victory.mp3 in Resources */,
 				649F971F29DE244500BCB8E8 /* TurnStarted.mp3 in Resources */,
 				649F971C29DE244400BCB8E8 /* Nat1.mp3 in Resources */,
+				6478FD6C29EF229800C10ECF /* MetalWeapon.mp3 in Resources */,
+				6478FD6E29EF22A600C10ECF /* sip.mp3 in Resources */,
 				649F972429DE244500BCB8E8 /* CastSpell.mp3 in Resources */,
 				EBC206852995777D00DEB48C /* GoogleService-Info.plist in Resources */,
 				649F972129DE244500BCB8E8 /* Woodland Fantasy.mp3 in Resources */,
 				647CECA629E5BF430053518C /* defeat.mp3 in Resources */,
+				6478FD6A29EF227E00C10ECF /* FistWeapon.mp3 in Resources */,
 				64A2876129A4211D00922509 /* munro.ttf in Resources */,
 				643651112991AA280017AA0E /* Assets.xcassets in Resources */,
 				649F971D29DE244400BCB8E8 /* Haply.mp3 in Resources */,

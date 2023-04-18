@@ -19,11 +19,15 @@ let registrationMusicFile: String = "Tavern"
 let victoryBackgroundMusic: String = "Victory"
 let defeatBackgroundMusic: String = "defeat"
 // Sound Effect Files
+let fistWeaponEffect: String = "FistWeapon"
+let metalWeaponEffect: String = "MetalWeapon"
 let menuSelectEffect: String = "MenuSelect"
 let turnStartedEffect: String = "TurnStarted"
 let castSpellEffect:String = "CastSpell"
 let natOneEffect: String = "Nat1"
 let natTwentyEffect: String = "Nat20"
+let sipEffect: String = "sip"
+let slashingEffect: String = "slashing"
 var volumeLevel: Float = 1.0
 
 func playBackgroundAudio(fileName: String){

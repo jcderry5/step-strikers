@@ -102,6 +102,9 @@ func getItemStrings (items:[Item]) -> [String] {
 func postItemUseActions(itemUsed: Item, message: String) {
     _ = itemUsed.owner.removeFromInventory(itemObject: itemUsed)
     messageLog.addToMessageLog(message: message)
+    
+    // item sound effects
+    playSoundEffect(fileName: sipEffect)
 }
 
 func randomWinnerItemDrop(newOwner: RPGCharacter) -> [String] {
