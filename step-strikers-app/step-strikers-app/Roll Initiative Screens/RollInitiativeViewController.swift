@@ -13,11 +13,19 @@ import SpriteKit
 class RollInitiativeViewController: UIViewController {
         
     var notificationCenter = NotificationCenter.default
+    var hasShaken = false
+    var shakeToRollLabel:UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         assignBackground()
+        
+        shakeToRollLabel = UILabel(frame: CGRect(x: 45, y: 400, width: 300, height: 100))
+        shakeToRollLabel.text = "Shake to roll initiative"
+        shakeToRollLabel.font = UIFont(name: "munro", size: 25)
+        shakeToRollLabel.textAlignment = .center
+        self.view.addSubview(shakeToRollLabel)
         
         renderTeam(playerTeam: team)
     
@@ -27,8 +35,10 @@ class RollInitiativeViewController: UIViewController {
     }
     
     override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
-       if motion == .motionShake {
-          rollD20()
+       if !hasShaken && motion == .motionShake {
+           shakeToRollLabel.removeFromSuperview()
+           hasShaken = true
+           rollD20()
        }
     }
     
