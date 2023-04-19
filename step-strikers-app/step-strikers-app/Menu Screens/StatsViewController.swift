@@ -21,6 +21,9 @@ class StatsViewController: UIViewController {
     
     var stepsLabel:UILabel!
     var boostLabel:UILabel!
+    
+    var player:UIImageView!
+    var count = 28
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -46,15 +49,21 @@ class StatsViewController: UIViewController {
         self.background = assignSwitchableBackground()
         createSettingsButton(x: 325, y: 800, width: 40, height: 40)
         
+        // Pull stats data from LocalCharacter and use as label text
+        let characterClass = localCharacter.getCharacterClass()
+        
+        // animations
+        player = createImage(x: 140, y: 716, w: 112, h: 112, name: "\(characterClass)WalkWithSword_28")
+        timer = Timer.scheduledTimer(
+            timeInterval: 0.3, target: self, selector: #selector(changeWalk),
+            userInfo: nil, repeats: true)
+        
         // Create menu title label
         _ = createImage(x:27, y:0, w:338, h:200, name:"Menu Title Board")
         _ = createLabel(x:53, y:91, w:286, h:89, font:"iso8", size:45, text:"STATS", align:.center)
         
         // Create the display board and its contents
         _ = createImage(x:0, y:219, w:393, h:374, name:"Display Board")
-        
-        // Pull stats data from LocalCharacter and use as label text
-        let characterClass = localCharacter.getCharacterClass()
         
         // Health stats
 
@@ -110,7 +119,6 @@ class StatsViewController: UIViewController {
         self.boostLabel = self.createLabel(x: 130, y: 653, w: 253, h: 41, font: "munro", size: 28, text: "", align: .left)
         
         // Swipe area
-        _ = createImage(x: 140, y: 716, w: 112, h: 112, name: characterClass)
         _ = createLabel(x: 285, y: 690, w: 92, h: 67, font: "munro", size: 20, text: "SWIPE", align: .center)
         _ = createImage(x: 275, y: 739, w: 112, h: 62, name: "right arrow")
         
@@ -132,6 +140,7 @@ class StatsViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         self.notificationCenter.removeObserver(self)
+        timer.invalidate()
     }
     
     func dataTypesToWrite() -> NSSet{
@@ -208,6 +217,17 @@ class StatsViewController: UIViewController {
         self.timer.invalidate()
         backgroundMusic.play()
         getStepsData()
+    }
+    
+    @objc func changeWalk() {
+            UIView.animate(withDuration: 0, animations: {
+                self.player.image = UIImage(named: "\(localCharacter.getCharacterClass())WalkWithSword_\(self.count)")
+            })
+            count += 1
+            if count > 35 {
+                count = 28
+            }
+//        }
     }
     
     func getStepsData() {
