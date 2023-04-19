@@ -111,13 +111,14 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
                     messages = document.get("messages") as! [String]
                     messageLog.replaceMessageLog(newMessages: messages)
                     for i in 0..<messages.count {
+                        print("DEBUG: messages.count has a length of \(messages.count)")
                         labels.append(UILabel())
                         labels[i].text = "\(messages[i])\n"
                         labels[i].numberOfLines = 0
                         labels[i].lineBreakMode = .byWordWrapping
                         labels[i].textColor = UIColor.black
                         labels[i].font = UIFont(name: "munro", size: 20)
-                        labels[i].frame = CGRect(x: 0, y: 50*CGFloat(i), width: scrollView.bounds.size.width, height: 100)
+                        labels[i].frame = CGRect(x: 0, y: 50*CGFloat(i), width: self.scrollView.bounds.size.width, height: 100)
                         labels[i].contentMode = .scaleAspectFill
                         self.scrollView.addSubview(labels[i])
                     }
