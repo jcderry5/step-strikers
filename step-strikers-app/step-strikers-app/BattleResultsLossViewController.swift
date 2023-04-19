@@ -10,7 +10,22 @@ import UIKit
 class BattleResultsLossViewController: UIViewController {
 
     var notificationCenter = NotificationCenter.default
-
+    
+    var player1:UIImageView!
+    var player2:UIImageView!
+    var player3:UIImageView!
+    var player4:UIImageView!
+    
+    var timer1:Timer!
+    var timer2:Timer!
+    var timer3:Timer!
+    var timer4:Timer!
+    
+    var count1 = 0
+    var count2 = 0
+    var count3 = 0
+    var count4 = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,18 +45,33 @@ class BattleResultsLossViewController: UIViewController {
         // draw skeletons
         for (index, enemy) in teamList.enumerated() {
             var x = 10
-            let drawTeam = CharacterSprites(name: "Skeleton")
+            let drawTeam = CharacterSprites(name: "\(enemy.character_class)")
             if index == 0 {
                 x = 10
+                player1 = drawTeam.drawCharacter(view: self.view, x: x, y: 550, width: 100, height:100, isInvisible: false, isHurt: false, isDead: true)
+                timer1 = Timer.scheduledTimer(
+                    timeInterval: 0.3, target: self, selector: #selector(fallDown1),
+                    userInfo: nil, repeats: true)
             } else if index == 1 {
                 x = 100
+                player2 = drawTeam.drawCharacter(view: self.view, x: x, y: 550, width: 100, height:100, isInvisible: false, isHurt: false, isDead: true)
+                timer2 = Timer.scheduledTimer(
+                    timeInterval: 0.3, target: self, selector: #selector(fallDown2),
+                    userInfo: nil, repeats: true)
             } else if index == 2 {
                 x = 200
+                player3 = drawTeam.drawCharacter(view: self.view, x: x, y: 550, width: 100, height:100, isInvisible: false, isHurt: false, isDead: true)
+                timer3 = Timer.scheduledTimer(
+                    timeInterval: 0.3, target: self, selector: #selector(fallDown3),
+                    userInfo: nil, repeats: true)
             } else if index == 3 {
                 x = 290
+                player4 = drawTeam.drawCharacter(view: self.view, x: x, y: 550, width: 100, height:100, isInvisible: false, isHurt: false, isDead: true)
+                timer4 = Timer.scheduledTimer(
+                    timeInterval: 0.3, target: self, selector: #selector(fallDown4),
+                    userInfo: nil, repeats: true)
             }
 
-            let teamImage = drawTeam.drawCharacter(view: self.view, x: x, y: 550, width: 100, height:100, isInvisible: false, isHurt: false, isDead: true)
         }
         
         let bigButton = UIImage(named: "Big choice Button")
@@ -78,6 +108,62 @@ class BattleResultsLossViewController: UIViewController {
     
     @objc func playMusic() {
         backgroundMusic.play()
+    }
+    
+    @objc func fallDown1() {
+        UIView.animate(withDuration: 0, animations: {
+            if self.count1 == 6 {
+                self.player1.image = UIImage(named: "Skeleton")
+            } else {
+                self.player1.image = UIImage(named: "\(teamList[0].character_class)FallDown_0\(self.count1)")
+            }
+        })
+        count1 += 1
+        if count1 > 6 {
+            timer1.invalidate()
+        }
+    }
+    
+    @objc func fallDown2() {
+        UIView.animate(withDuration: 0, animations: {
+            if self.count2 == 6 {
+                self.player2.image = UIImage(named: "Skeleton")
+            } else {
+                self.player2.image = UIImage(named: "\(teamList[1].character_class)FallDown_0\(self.count2)")
+            }
+        })
+        count2 += 1
+        if count2 > 6 {
+            timer2.invalidate()
+        }
+    }
+    
+    @objc func fallDown3() {
+        UIView.animate(withDuration: 0, animations: {
+            if self.count3 == 6 {
+                self.player3.image = UIImage(named: "Skeleton")
+            } else {
+                self.player3.image = UIImage(named: "\(teamList[2].character_class)FallDown_0\(self.count3)")
+            }
+        })
+        count3 += 1
+        if count3 > 6 {
+            timer3.invalidate()
+        }
+    }
+    
+    @objc func fallDown4() {
+        UIView.animate(withDuration: 0, animations: {
+            if self.count4 == 6 {
+                self.player4.image = UIImage(named: "Skeleton")
+            } else {
+                self.player4.image = UIImage(named: "\(teamList[3].character_class)FallDown_0\(self.count4)")
+            }
+        })
+        count4 += 1
+        if count4 > 6 {
+            timer4.invalidate()
+        }
     }
 
 }
