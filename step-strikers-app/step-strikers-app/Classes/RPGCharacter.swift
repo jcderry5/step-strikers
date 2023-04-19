@@ -334,6 +334,16 @@ class RPGCharacter {
         self.attackModifier = 0
         currTarget.defenseModifier = 0
         
+        // currWeapon Sound Effect
+        switch currWeapon.name {
+        case "Dagger","Darts","Cross Bow","Rapier","Short Sword", "Long Sword":
+            playSoundEffect(fileName: metalWeaponEffect)
+        case "Hand Axe","Battle Axe", "Long Bow":
+            playSoundEffect(fileName: slashingEffect)
+        default:
+            playSoundEffect(fileName: fistWeaponEffect)
+        }
+        
         // adjust the condition of the wielder's weapon and the target's armor
         currTarget.armor = adjustArmorCondition(armorUsed: &currTarget.armor)
         self.currWeapon = adjustWeaponCondition(ownerWeaponsInventory: &self.weaponsInInventory, currWeaponPointer: &self.currWeapon)
