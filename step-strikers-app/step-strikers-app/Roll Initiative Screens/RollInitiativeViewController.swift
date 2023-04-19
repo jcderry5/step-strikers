@@ -8,21 +8,28 @@
 import UIKit
 import SpriteKit
 
+// TODO: @alekhya or nick add a label here saying roll to shake that disappears when the dice roll animation appears?
+
 class RollInitiativeViewController: UIViewController {
-    
+        
     var notificationCenter = NotificationCenter.default
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         assignBackground()
-        rollD20()
         
         renderTeam(playerTeam: team)
     
         // Track whenever app moves to the background
         self.notificationCenter.addObserver(self, selector: #selector(pauseMusic), name: UIApplication.willResignActiveNotification, object: nil)
         self.notificationCenter.addObserver(self, selector: #selector(playMusic), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+       if motion == .motionShake {
+          rollD20()
+       }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
