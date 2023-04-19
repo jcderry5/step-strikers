@@ -35,8 +35,7 @@ func rollInitiative(player:String, game: String) -> Int{
     return initiative
 }
 
-func rollDie(sides: Int, withAdvantage: Bool? = false, withDisadvantage: Bool? = false) -> Int {
-    
+func rollDie(sides: Int, withAdvantage: Bool? = false, withDisadvantage: Bool? = false) -> Int {    
     let firstValue = Int.random(in: 1...sides)
     let secondValue = Int.random(in: 1...sides)
     

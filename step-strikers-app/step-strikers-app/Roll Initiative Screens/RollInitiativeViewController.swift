@@ -8,21 +8,38 @@
 import UIKit
 import SpriteKit
 
+// TODO: @alekhya or nick add a label here saying roll to shake that disappears when the dice roll animation appears?
+
 class RollInitiativeViewController: UIViewController {
-    
+        
     var notificationCenter = NotificationCenter.default
+    var hasShaken = false
+    var shakeToRollLabel:UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         assignBackground()
-        rollD20()
+        
+        shakeToRollLabel = UILabel(frame: CGRect(x: 45, y: 400, width: 300, height: 100))
+        shakeToRollLabel.text = "Shake to roll initiative"
+        shakeToRollLabel.font = UIFont(name: "munro", size: 25)
+        shakeToRollLabel.textAlignment = .center
+        self.view.addSubview(shakeToRollLabel)
         
         renderTeam(playerTeam: team)
     
         // Track whenever app moves to the background
         self.notificationCenter.addObserver(self, selector: #selector(pauseMusic), name: UIApplication.willResignActiveNotification, object: nil)
         self.notificationCenter.addObserver(self, selector: #selector(playMusic), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+       if !hasShaken && motion == .motionShake {
+           shakeToRollLabel.removeFromSuperview()
+           hasShaken = true
+           rollD20()
+       }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
