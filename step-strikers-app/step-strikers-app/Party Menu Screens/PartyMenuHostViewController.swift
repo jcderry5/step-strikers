@@ -101,7 +101,7 @@ class PartyMenuHostViewController: UIViewController {
     
     func createReadyButton() -> UIButton {
         let image = UIImage(named: "Big choice Button")
-        let readyButton = UIButton(frame: CGRect(x: 125, y: 700, width: 150, height: 75))
+        let readyButton = UIButton(frame: CGRect(x: 125, y: 675, width: 150, height: 75))
         readyButton.setBackgroundImage(image, for: .normal)
         readyButton.setTitle("READY !", for: .normal)
         readyButton.setTitleColor(.brown, for: .normal)
@@ -113,12 +113,12 @@ class PartyMenuHostViewController: UIViewController {
     }
     
     func createLeaveButton() -> UIButton {
-        let image = UIImage(named: "Big choice Button")
-        let leaveButton = UIButton(frame: CGRect(x: 125, y: 650, width: 150, height: 75))
+        let image = UIImage(named: "Menu Button")
+        let leaveButton = UIButton(frame: CGRect(x: 160, y: 750, width: 75, height: 60))
         leaveButton.setBackgroundImage(image, for: .normal)
-        leaveButton.setTitle("LEAVE !", for: .normal)
+        leaveButton.setTitle("LEAVE", for: .normal)
         leaveButton.setTitleColor(.brown, for: .normal)
-        leaveButton.titleLabel?.font = UIFont(name: "munro", size: 30)
+        leaveButton.titleLabel?.font = UIFont(name: "munro", size: 20)
         leaveButton.titleLabel?.textAlignment = .center
         self.view.addSubview(leaveButton)
         leaveButton.addTarget(self, action:#selector(leavePressed), for:.touchUpInside)
