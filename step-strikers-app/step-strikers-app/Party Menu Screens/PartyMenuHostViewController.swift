@@ -15,6 +15,7 @@ class PartyMenuHostViewController: UIViewController {
     var partyCode = ""
     var numPlayers = 0
     var notificationCenter = NotificationCenter.default
+    var popUp:UIView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -140,8 +141,55 @@ class PartyMenuHostViewController: UIViewController {
     
     @objc func leavePressed(_ sender: Any) {
         playSoundEffect(fileName: menuSelectEffect)
+        popUp = createPopUp()
+    }
+    
+    func createPopUp() -> UIView {
+        // view to display
+        let popView = UIView(frame: CGRect(x: 50, y: 300, width: 300, height: 200))
+        popView.backgroundColor = UIColor(red: 0.941, green: 0.851, blue: 0.690, alpha: 1.0)
         
-        // TODO: create a popup warning them that the team will be disbanded and copy the below code to that popup's confirm button
+        // incorrect party code label
+        let label = UILabel(frame: CGRect(x: 50, y: 5, width: 250, height: 100))
+        label.text = "This will disband the group!"
+        label.font = UIFont(name: "munro", size: 25)
+        label.numberOfLines = 0
+        label.textColor = UIColor.black
+        label.backgroundColor = UIColor.clear
+        popView.addSubview(label)
+        
+        // ok button
+        let okButton = UIButton(frame: CGRect(x: 25, y: 125, width: 250, height: 50))
+        okButton.setTitle("CONFIRM", for: UIControl.State.normal)
+        okButton.titleLabel!.font = UIFont(name: "munro", size: 22)
+        okButton.backgroundColor = UIColor(red: 0.941, green: 0.651, blue: 0.157, alpha: 1.0)
+        okButton.setTitleColor(.brown, for:.normal)
+        okButton.layer.borderWidth = 3.0
+        okButton.layer.borderColor = UIColor.brown.cgColor
+        okButton.addTarget(self, action:#selector(okPressed), for:.touchUpInside)
+        popView.addSubview(okButton)
+        
+        // x button
+        let xButton = UIButton(frame: CGRect(x: 270, y: 10, width: 20, height: 15))
+        xButton.setTitle("x", for: UIControl.State.normal)
+        xButton.backgroundColor = UIColor.clear
+        xButton.titleLabel!.font = UIFont(name: "American Typewriter", size: 20)
+        xButton.setTitleColor(UIColor.black, for: UIControl.State.normal)
+        xButton.addTarget(self, action: #selector(xPressed), for: .touchUpInside)
+        popView.addSubview(xButton)
+        
+        // popView border
+        popView.layer.borderWidth = 1.0
+        popView.layer.borderColor = UIColor.black.cgColor
+        self.view.addSubview(popView)
+        
+        return popView
+    }
+    
+    @objc func okPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
+        popUp?.removeFromSuperview()
+        
         // destroy and leave the team
         Firestore.firestore().collection("teams").document(self.partyCode).updateData([
             "players": FieldValue.arrayRemove([localCharacter.userName]),
@@ -153,6 +201,11 @@ class PartyMenuHostViewController: UIViewController {
         self.modalPresentationStyle = .fullScreen
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: false)
+    }
+    
+    @objc func xPressed(_ sender: UIButton) {
+        playSoundEffect(fileName: menuSelectEffect)
+        popUp?.removeFromSuperview()
     }
     
     @objc func pauseMusic() {
