@@ -204,6 +204,11 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
     // TODO: update with segue to select target view controller when pressed
     // TODO: update with real information about the action selected
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath:IndexPath) {
+        if characterButtons.isEmpty == false {
+            for index in characterButtons.indices {
+                characterButtons[index].removeFromSuperview()
+            }
+       }
         if recentlyTapped == indexPath.row && selected == true {
             selected = false
             if characterButtons.isEmpty == false {
@@ -231,10 +236,7 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
             recentlyTapped = indexPath.row
             if tableView == actionDisplay {
                 for index in enemiesList.indices {
-                    if enemiesList[index].isDead == false {
                         enemiesList[index].imageView.removeFromSuperview()
-                    }
-                    
                 }
                 selectEnemyLabel.removeFromSuperview()
                 if boxArrow.isEmpty == false {
@@ -264,6 +266,9 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
                             }
                             playerButtons = drawPlayerButtons()
                         } else {
+                            for index in enemiesList.indices {
+                                    enemiesList[index].imageView.removeFromSuperview()
+                            }
                             characterButtons = drawEnemiesButton()
                             checkAllEnemiesInvisible()
                         }
@@ -446,8 +451,8 @@ class BattleSelectActionViewController: UIViewController, UITableViewDataSource,
         // extra to account for header messing everything up
         stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: totalHealth))
         stats.append(StatsRow(imageName: UIImage(named: "health"), points: healthPoints, totalPoints: totalHealth))
-        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: spellPoints, totalPoints: totalStamina))
-        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points: staminaPoints, totalPoints: totalSpellPoints))
+        stats.append(StatsRow(imageName: UIImage(named: "SpellPoints"), points: spellPoints, totalPoints: totalSpellPoints))
+        stats.append(StatsRow(imageName: UIImage(named: "lightningbolt"), points: staminaPoints, totalPoints: totalStamina))
     }
     
 
