@@ -13,6 +13,7 @@ class PartyMenuNonHostViewController: UIViewController {
     var labelText:NSMutableAttributedString?
     var partyCode = ""
     var notificationCenter = NotificationCenter.default
+    var popUp:UIView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +71,7 @@ class PartyMenuNonHostViewController: UIViewController {
                         return
                     }
 
+                    // you've been matched
                     if document.get("game_id") != nil {
                         let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                         let vc = sb.instantiateViewController(withIdentifier: "TeamMatchViewController") as! TeamMatchViewController
@@ -79,6 +81,11 @@ class PartyMenuNonHostViewController: UIViewController {
                         vc.modalPresentationStyle = .fullScreen
                         self.present(vc, animated: false)
                     }
+                    
+                    // the team has been disbanded
+                    if !(document.get("valid") as! Bool) {
+                        self.popUp = self.createPopUp()
+                    }
                 }
             }
         }
@@ -86,6 +93,53 @@ class PartyMenuNonHostViewController: UIViewController {
         // Track whenever app moves to the background
         self.notificationCenter.addObserver(self, selector: #selector(pauseMusic), name: UIApplication.willResignActiveNotification, object: nil)
         self.notificationCenter.addObserver(self, selector: #selector(playMusic), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    func createPopUp() -> UIView {
+        // view to display
+        let popView = UIView(frame: CGRect(x: 50, y: 300, width: 300, height: 200))
+        popView.backgroundColor = UIColor(red: 0.941, green: 0.851, blue: 0.690, alpha: 1.0)
+        
+        // incorrect party code label
+        let label = UILabel(frame: CGRect(x: 50, y: 5, width: 250, height: 100))
+        label.text = "The host has disbanded the group"
+        label.numberOfLines = 0
+        label.font = UIFont(name: "munro", size: 25)
+        label.textColor = UIColor.black
+        label.backgroundColor = UIColor.clear
+        popView.addSubview(label)
+        
+        // ok button
+        let okButton = UIButton(frame: CGRect(x: 25, y: 125, width: 250, height: 50))
+        okButton.setTitle("CONFIRM", for: UIControl.State.normal)
+        okButton.titleLabel!.font = UIFont(name: "munro", size: 22)
+        okButton.backgroundColor = UIColor(red: 0.941, green: 0.651, blue: 0.157, alpha: 1.0)
+        okButton.setTitleColor(.brown, for:.normal)
+        okButton.layer.borderWidth = 3.0
+        okButton.layer.borderColor = UIColor.brown.cgColor
+        okButton.addTarget(self, action:#selector(okPressed), for:.touchUpInside)
+        popView.addSubview(okButton)
+        
+        // popView border
+        popView.layer.borderWidth = 1.0
+        popView.layer.borderColor = UIColor.black.cgColor
+        
+        self.view.addSubview(popView)
+        
+        return popView
+    }
+    
+    @objc func okPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
+        popUp?.removeFromSuperview()
+        
+        // go back to battle menu screen
+        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "BattleMenuViewController") as! BattleMenuViewController
+
+        self.modalPresentationStyle = .fullScreen
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

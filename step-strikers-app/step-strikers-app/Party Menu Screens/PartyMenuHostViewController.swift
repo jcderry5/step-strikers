@@ -15,6 +15,7 @@ class PartyMenuHostViewController: UIViewController {
     var partyCode = ""
     var numPlayers = 0
     var notificationCenter = NotificationCenter.default
+    var popUp:UIView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,8 +59,11 @@ class PartyMenuHostViewController: UIViewController {
             }
         }
         
-        // leave button
+        // ready button
         let ready = createReadyButton()
+        
+        // leave button
+        let leave = createLeaveButton()
 
         // Track whenever app moves to the background
         self.notificationCenter.addObserver(self, selector: #selector(pauseMusic), name: UIApplication.willResignActiveNotification, object: nil)
@@ -98,7 +102,7 @@ class PartyMenuHostViewController: UIViewController {
     
     func createReadyButton() -> UIButton {
         let image = UIImage(named: "Big choice Button")
-        let readyButton = UIButton(frame: CGRect(x: 125, y: 700, width: 150, height: 75))
+        let readyButton = UIButton(frame: CGRect(x: 125, y: 675, width: 150, height: 75))
         readyButton.setBackgroundImage(image, for: .normal)
         readyButton.setTitle("READY !", for: .normal)
         readyButton.setTitleColor(.brown, for: .normal)
@@ -109,28 +113,18 @@ class PartyMenuHostViewController: UIViewController {
         return readyButton
     }
     
-//    func createEjectButtons() -> [UIButton] {
-//        let ejectImage = UIImage(named: "Eject Button")
-//        // eject 1
-//        let eject1 = UIButton(frame: CGRect(x: 300, y: 405, width: 50, height: 50))
-//        eject1.setBackgroundImage(ejectImage, for: .normal)
-//        eject1.setTitle("", for: .normal)
-//        self.view.addSubview(eject1)
-//
-//        // eject 2
-//        let eject2 = UIButton(frame: CGRect(x: 300, y: 455, width: 50, height: 50))
-//        eject2.setBackgroundImage(ejectImage, for: .normal)
-//        eject2.setTitle("", for: .normal)
-//        self.view.addSubview(eject2)
-//
-//        // eject 3
-//        let eject3 = UIButton(frame: CGRect(x: 300, y: 505, width: 50, height: 50))
-//        eject3.setBackgroundImage(ejectImage, for: .normal)
-//        eject3.setTitle("", for: .normal)
-//        self.view.addSubview(eject3)
-//
-//        return [eject1, eject2, eject3]
-//    }
+    func createLeaveButton() -> UIButton {
+        let image = UIImage(named: "Menu Button")
+        let leaveButton = UIButton(frame: CGRect(x: 160, y: 750, width: 75, height: 60))
+        leaveButton.setBackgroundImage(image, for: .normal)
+        leaveButton.setTitle("LEAVE", for: .normal)
+        leaveButton.setTitleColor(.brown, for: .normal)
+        leaveButton.titleLabel?.font = UIFont(name: "munro", size: 20)
+        leaveButton.titleLabel?.textAlignment = .center
+        self.view.addSubview(leaveButton)
+        leaveButton.addTarget(self, action:#selector(leavePressed), for:.touchUpInside)
+        return leaveButton
+    }
     
     @objc func readyPressed(_ sender: Any) {
         playSoundEffect(fileName: menuSelectEffect)
@@ -143,6 +137,75 @@ class PartyMenuHostViewController: UIViewController {
         self.modalPresentationStyle = .fullScreen
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: false)
+    }
+    
+    @objc func leavePressed(_ sender: Any) {
+        playSoundEffect(fileName: menuSelectEffect)
+        popUp = createPopUp()
+    }
+    
+    func createPopUp() -> UIView {
+        // view to display
+        let popView = UIView(frame: CGRect(x: 50, y: 300, width: 300, height: 200))
+        popView.backgroundColor = UIColor(red: 0.941, green: 0.851, blue: 0.690, alpha: 1.0)
+        
+        // incorrect party code label
+        let label = UILabel(frame: CGRect(x: 50, y: 5, width: 250, height: 100))
+        label.text = "This will disband the group!"
+        label.font = UIFont(name: "munro", size: 25)
+        label.numberOfLines = 0
+        label.textColor = UIColor.black
+        label.backgroundColor = UIColor.clear
+        popView.addSubview(label)
+        
+        // ok button
+        let okButton = UIButton(frame: CGRect(x: 25, y: 125, width: 250, height: 50))
+        okButton.setTitle("CONFIRM", for: UIControl.State.normal)
+        okButton.titleLabel!.font = UIFont(name: "munro", size: 22)
+        okButton.backgroundColor = UIColor(red: 0.941, green: 0.651, blue: 0.157, alpha: 1.0)
+        okButton.setTitleColor(.brown, for:.normal)
+        okButton.layer.borderWidth = 3.0
+        okButton.layer.borderColor = UIColor.brown.cgColor
+        okButton.addTarget(self, action:#selector(okPressed), for:.touchUpInside)
+        popView.addSubview(okButton)
+        
+        // x button
+        let xButton = UIButton(frame: CGRect(x: 270, y: 10, width: 20, height: 15))
+        xButton.setTitle("x", for: UIControl.State.normal)
+        xButton.backgroundColor = UIColor.clear
+        xButton.titleLabel!.font = UIFont(name: "American Typewriter", size: 20)
+        xButton.setTitleColor(UIColor.black, for: UIControl.State.normal)
+        xButton.addTarget(self, action: #selector(xPressed), for: .touchUpInside)
+        popView.addSubview(xButton)
+        
+        // popView border
+        popView.layer.borderWidth = 1.0
+        popView.layer.borderColor = UIColor.black.cgColor
+        self.view.addSubview(popView)
+        
+        return popView
+    }
+    
+    @objc func okPressed(_ sender:UIButton!) {
+        playSoundEffect(fileName: menuSelectEffect)
+        popUp?.removeFromSuperview()
+        
+        // destroy and leave the team
+        Firestore.firestore().collection("teams").document(self.partyCode).updateData([
+            "players": FieldValue.arrayRemove([localCharacter.userName]),
+            "valid": false])
+
+        // go back to battle menu screen
+        let sb:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "BattleMenuViewController") as! BattleMenuViewController
+        self.modalPresentationStyle = .fullScreen
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false)
+    }
+    
+    @objc func xPressed(_ sender: UIButton) {
+        playSoundEffect(fileName: menuSelectEffect)
+        popUp?.removeFromSuperview()
     }
     
     @objc func pauseMusic() {
