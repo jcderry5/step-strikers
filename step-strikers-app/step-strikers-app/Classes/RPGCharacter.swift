@@ -315,14 +315,17 @@ class RPGCharacter {
         let damageDealt: Int
         if (self.didAttackHit(rollValue: rollValue)) {
             damageDealt =  calculateModifiedDamage()
+            let message = "\(self.characterName) just attacked \(currTarget.name) for \(damageDealt) points of damage"
+            messageLog.addToMessageLog(message: message)
         } else {
             damageDealt = 0
+            let message = "\(self.characterName) attempted to attack \(currTarget.name) but missed!"
+            messageLog.addToMessageLog(message: message)
         }
         
         doConsequencesOfFight(damageDealt: damageDealt)
         
-        let message = "\(self.characterName) just attacked \(currTarget.name) for \(damageDealt) points of damage"
-        messageLog.addToMessageLog(message: message)
+        
     }
     
     func didAttackHit(rollValue: Int) -> Bool {

@@ -259,36 +259,31 @@ class BattleSelectEquipViewController: UIViewController, UITableViewDataSource, 
 
     func equipItem(item: Equip) {
         guard allWeapons.contains(item.name!) || allArmor.contains(item.name!) else {
-            print("\(String(describing: item.name)) is not a weapon nor armor")
+            print("DEBUG: \(String(describing: item.name)) is not a weapon nor armor")
             return
         }
     
         let quantity: Int = Int((item.quantity?.suffix(1))!)!
         
         if allWeapons.contains(item.name!) {
-            // just initializing weaponToEquip with first armor. Will be replaced
-            var weaponToEquip: Weapon = localCharacter.weaponsInInventory[0]
+            
+            var weaponToEquip: Weapon = localCharacter.weaponsInInventory.first(where: {weapon in weapon.name == item.name})!
             if quantity > 1 {
                 for weapon in localCharacter.weaponsInInventory {
                     if weapon.name == item.name! && weapon.useCount > weaponToEquip.useCount {
                         weaponToEquip = weapon
                     }
                 }
-            } else {
-                weaponToEquip = localCharacter.weaponsInInventory.first(where: {weapon in weapon.name == item.name!})!
             }
             localCharacter.wield(weaponObject: weaponToEquip)
         } else {
-            // just initializing armorToEquip with first armor. Will be replaced
-            var armorToEquip: Armor = localCharacter.armorInInventory[0]
+            var armorToEquip: Armor = localCharacter.armorInInventory.first(where: {armor in armor.name == item.name!})!
             if quantity > 1 {
                 for armor in localCharacter.armorInInventory {
                     if armor.name == item.name! && armor.useCount > armorToEquip.useCount {
                         armorToEquip = armor
                     }
                 }
-            } else {
-                armorToEquip = localCharacter.armorInInventory.first(where: {armor in armor.name == item.name!})!
             }
             localCharacter.wear(armorObject: armorToEquip)
         }

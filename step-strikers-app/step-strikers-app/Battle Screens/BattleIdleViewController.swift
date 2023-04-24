@@ -91,11 +91,12 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
         
         // scroll view
         // Set the scrollView's frame to be the size of the screen
-        scrollView = UIScrollView(frame: CGRect(x: view.safeAreaInsets.left+40, y: 640, width: 320, height: 150))
+        scrollView = UIScrollView(frame: CGRect(x: self.view.safeAreaInsets.left+40, y: 640, width: 320, height: 150))
         scrollView.backgroundColor = UIColor.clear
         // Set the contentSize to 100 times the height of the phone's screen so that we can add 100 images in the next step
-        scrollView.contentSize = CGSize(width: scrollView.contentSize.width, height: scrollView.bounds.size.height*25*CGFloat(messages.count))
-        view.addSubview(scrollView!)
+        scrollView.contentSize = CGSize(width: scrollView.contentSize.width, height: scrollView.bounds.size.height)
+        print("DEBUG: scrollViewSize is \(scrollView.bounds.size.height*25*CGFloat(messages.count))")
+        self.view.addSubview(scrollView!)
         var labels = [UILabel]()
         
         // update messages
@@ -111,15 +112,18 @@ class BattleIdleViewController: UIViewController, UITableViewDataSource, UITable
                     messages = document.get("messages") as! [String]
                     messageLog.replaceMessageLog(newMessages: messages)
                     for i in 0..<messages.count {
+                        print("DEBUG: messages.count has a length of \(messages.count)")
                         labels.append(UILabel())
                         labels[i].text = "\(messages[i])\n"
                         labels[i].numberOfLines = 0
                         labels[i].lineBreakMode = .byWordWrapping
                         labels[i].textColor = UIColor.black
                         labels[i].font = UIFont(name: "munro", size: 20)
-                        labels[i].frame = CGRect(x: 0, y: 50*CGFloat(i), width: scrollView.bounds.size.width, height: 100)
+                        labels[i].frame = CGRect(x: 0, y: 50*CGFloat(i), width: self.scrollView.bounds.size.width, height: 100)
                         labels[i].contentMode = .scaleAspectFill
                         self.scrollView.addSubview(labels[i])
+                        self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: self.scrollView.bounds.size.height*CGFloat(messages.count))
+                        print("DEBUG: Is scrollView enabled? \(self.scrollView.isScrollEnabled)")
                     }
                 }
             }
